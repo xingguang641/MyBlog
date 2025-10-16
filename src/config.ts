@@ -31,19 +31,15 @@ export const siteConfig: SiteConfig = {
 	},
 	favicon: [
 		{
-		  src: '/favicon/icon.png',    // favicon 的路径，相对于 /public 目录
-		  theme: 'dark',              // （可选）取值 'light' 或 'dark'，仅在浅色和深色模式有不同图标时设置
-		  sizes: '32x32',              // （可选）favicon 的尺寸，仅在有不同尺寸的图标时设置
-		}
+			src: "/favicon/icon.png", // favicon 的路径，相对于 /public 目录
+			theme: "dark", // （可选）取值 'light' 或 'dark'，仅在浅色和深色模式有不同图标时设置
+			sizes: "32x32", // （可选）favicon 的尺寸，仅在有不同尺寸的图标时设置
+		},
 	],
 };
 
 export const navBarConfig: NavBarConfig = {
-	links: [
-		LinkPreset.Home,
-		LinkPreset.Archive,
-		LinkPreset.About,
-	],
+	links: [LinkPreset.Home, LinkPreset.Archive, LinkPreset.About],
 };
 
 export const profileConfig: ProfileConfig = {
@@ -59,9 +55,9 @@ export const profileConfig: ProfileConfig = {
 			url: "https://space.bilibili.com/471173444",
 		},
 		{
-			name: "Twitter",
-			icon: "fa6-brands:twitter",
-			url: "https://twitter.com",
+			name: "语雀",
+			icon: "simple-icons:yuque",
+			url: "https://www.yuque.com/xiaoxiesheng/ubc4e3?# 《个人知识库》 密码：msz8",
 		},
 		{
 			name: "GitHub",

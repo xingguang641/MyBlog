@@ -1,7 +1,7 @@
 # About
 这里是 [星光](https://xingguang641.com) 的个人博客.
 
-::github{repo="saicaca/fuwari"}
+::github{repo="xingguang641/MyBlog"}
 
 > ### Sources of images used in this site
 > - [Unsplash](https://unsplash.com/)
