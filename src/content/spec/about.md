@@ -1,5 +1,5 @@
 # About
-这里是 [星光](https://xingguang641.com) 的个人博客.
+这里是 [星光](https://xingguang641.com/) 的个人博客.
 
 ::github{repo="xingguang641/MyBlog"}
 

@@ -55,9 +55,9 @@ export const profileConfig: ProfileConfig = {
 			url: "https://space.bilibili.com/471173444",
 		},
 		{
-			name: "语雀",
-			icon: "simple-icons:yuque",
-			url: "https://www.yuque.com/xiaoxiesheng/ubc4e3?# 《个人知识库》 密码：msz8",
+			name: "Yuque",
+			icon: "fa6-brands:twitter", // 临时用 Twitter 图标替代
+			url: "https://www.yuque.com/xiaoxiesheng/ubc4e3",
 		},
 		{
 			name: "GitHub",
