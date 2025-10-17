@@ -30,12 +30,9 @@ export const siteConfig: SiteConfig = {
 		depth: 2, // 目录中显示的最大标题层级，范围 1~3
 	},
 	favicon: [
-		{ src: "/favicon_web/favicon.ico" },
-		{ src: "/favicon_web/favicon.svg" },
-		{ src: "/favicon_web/favicon-96x96.png", sizes: "96x96" },
-		{ src: "/favicon_web/apple-touch-icon.png", sizes: "180x180" },
-		{ src: "/favicon_web/web-app-manifest-192x192.png", sizes: "192x192" },
-		{ src: "/favicon_web/web-app-manifest-512x512.png", sizes: "512x512" },
+		{
+			src: "/favicon/favicon.png"
+		},
 	],
 };
 
