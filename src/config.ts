@@ -30,11 +30,12 @@ export const siteConfig: SiteConfig = {
 		depth: 2, // 目录中显示的最大标题层级，范围 1~3
 	},
 	favicon: [
-		{
-			src: "/favicon/icon.png", // favicon 的路径，相对于 /public 目录
-			theme: "dark", // （可选）取值 'light' 或 'dark'，仅在浅色和深色模式有不同图标时设置
-			sizes: "32x32", // （可选）favicon 的尺寸，仅在有不同尺寸的图标时设置
-		},
+		{ src: "/favicon_web/favicon.ico" },
+		{ src: "/favicon_web/favicon.svg" },
+		{ src: "/favicon_web/favicon-96x96.png", sizes: "96x96" },
+		{ src: "/favicon_web/apple-touch-icon.png", sizes: "180x180" },
+		{ src: "/favicon_web/web-app-manifest-192x192.png", sizes: "192x192" },
+		{ src: "/favicon_web/web-app-manifest-512x512.png", sizes: "512x512" },
 	],
 };
 
