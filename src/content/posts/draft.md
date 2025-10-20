@@ -1,5 +1,5 @@
 ---
-title: Draft Example
+title: 草稿示例
 published: 2022-07-01
 tags: [Markdown, Blogging, Demo]
 category: Examples
