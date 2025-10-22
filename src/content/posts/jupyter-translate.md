@@ -2,8 +2,8 @@
 title: Jupyter Translate 项目教程
 published: 2025-10-21
 description: Jupyter Translate 项目的详细部署教程
-tags: [Translate, Course]
-category: Course
+tags: [Translate, Course, Github]
+category: Github
 draft: false 
 ---
 
@@ -17,7 +17,7 @@ draft: false
 
 照着 readme 安装依赖（挂着梯子可能会导致无法正常安装依赖）
 
-但其实依赖并没有很多，可以依次手动安装 requirements.txt 中的内容
+但其实依赖并没有很多，可以依次手动安装 `requirements.txt` 中的内容
 
 ## 注册API
 
@@ -55,3 +55,5 @@ access_key_secret = xxxxxxxxxxxxxxxxxxxxxxxx
 ```cmd showLineNumbers
 python main.py -e ai "jupyter file/rag_from_scratch_1_to_4.ipynb"
 ```
+
+然后会出现如下的文件 `rag_from_scratch_1_to_4_zh.ipynb`
