@@ -46,3 +46,5 @@ sudo chown -R www-data:www-data 目标目录
 sudo find 目标目录 -type d -exec chmod 755 {} \;
 sudo find 目标目录 -type f -exec chmod 644 {} \;
 ```
+
+只要博客有新的页面出现都要配置这个（出现 `403` 错误输入这三行代码基本都能搞定）

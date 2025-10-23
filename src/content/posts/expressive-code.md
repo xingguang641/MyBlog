@@ -1,6 +1,6 @@
 ---
 title: 丰富的代码示例
-published: 2024-04-10
+published: 2024-05-01
 description: 使用丰富代码功能时，Markdown 中的代码块显示效果示例。
 tags: [Markdown, Blogging, Demo]
 category: Examples
