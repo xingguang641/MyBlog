@@ -36,6 +36,16 @@ draft: false
 
 本单元将介绍归一化和分箱。下一部分“处理分类数据”将介绍其他形式的**预处理**，例如将非数值数据（例如字符串）转换为浮点值。
 
+## 特征工程
+
+[特征工程【斯坦福21秋季：实用机器学习中文版】](https://www.bilibili.com/video/BV1t44y1x7Hw/)
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=976027811&bvid=BV1t44y1x7Hw&cid=423753460&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+[【机器学习】特征工程详解](https://zhuanlan.zhihu.com/p/166356924)
+
+[特征工程9大方法](https://blog.csdn.net/qq_55948984/article/details/136402828)
+
 # 相关视频
 
 ## 数据可视化

@@ -94,7 +94,7 @@ if __name__ == "__main__":
 
 ## 损失函数
 
-与线性回归不同，逻辑回归的损失函数用的是交叉熵损失而不是均方损失，其中一个原因便是在逻辑回归中交叉熵损失函数的图像要比均方损失函数的图像要光滑很多，关于其他的一些原因可以看下面这个视频了解一下
+与线性回归不同，逻辑回归的损失函数用的是交叉熵损失而不是均方损失，其中一个原因便是在逻辑回归中交叉熵损失函数的图像要比均方损失函数的图像要光滑很多，关于其他的一些原因可以看下面这个视频进行了解
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=114675626875309&bvid=BV12VMzzxExF&cid=30475028383&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 

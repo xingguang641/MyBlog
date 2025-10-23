@@ -23,7 +23,7 @@ draft: false
 
 ## 代码讲解
 
-先看代码内容，不懂的地方再看下面的讲解
+先看代码内容，有不懂的地方再看下面的讲解
 
 ```py frame="code" title="main.py"
 import numpy as np
