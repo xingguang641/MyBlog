@@ -21,9 +21,9 @@ draft: false
 
 ![线性回归图像](src/content/posts/linear-regression/线性回归分析1.jpg)
 
-## 代码讲解
+# 代码讲解
 
-先看代码内容，有不懂的地方再看下面的讲解
+先看代码内容，有不懂的地方再看下面的讲解。
 
 ```py frame="code" title="main.py"
 import numpy as np
@@ -87,7 +87,7 @@ if __name__ == "__main__":
     print("cost =", cost)
 ```
 
-### 损失函数
+## 损失函数
 
 线性回归使用的损失函数是最常见的均方误差（Mean Squared Error）
 
@@ -115,7 +115,7 @@ $$
 
 根据线性回归公式 $$\hat{y}_i = \hat{w} x_i + \hat{b}$$ ，替换掉公式中的 $\hat{y}_i$ 即可得到代码中的公式
 
-### 梯度下降
+## 梯度下降
 
 由于这是第一次介绍梯度下降，就把梯度下降的公式放出来吧，梯度下降法更新参数为：
 
