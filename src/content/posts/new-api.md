@@ -2,7 +2,7 @@
 title: NewAPI 项目教程
 published: 2025-10-22
 description: NewAPI 项目的详细部署教程（顺带部署至Docker）
-tags: [APi, Course, Github]
+tags: [API, Course, Github]
 category: Github
 draft: false 
 ---
