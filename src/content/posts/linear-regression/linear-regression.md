@@ -89,7 +89,7 @@ if __name__ == "__main__":
 
 ## 损失函数
 
-线性回归使用的损失函数是最常见的均方误差（Mean Squared Error）
+线性回归使用的损失函数是最常见的均方误损失（Mean Squared Error）。
 
 ```py showLineNumbers
 def loss_func(w, b, data):
@@ -113,11 +113,11 @@ $$
 - $y_i$：第 $i$ 个样本的真实值（真实标签）
 - $\hat{y}_i$：第 $i$ 个样本的预测值
 
-根据线性回归公式 $$\hat{y}_i = \hat{w} x_i + \hat{b}$$ ，替换掉公式中的 $\hat{y}_i$ 即可得到代码中的公式
+根据线性回归公式 $$\hat{y}_i = \hat{w} x_i + \hat{b}$$ ，替换掉公式中的 $\hat{y}_i$ 即可得到代码中的公式。
 
 ## 梯度下降
 
-由于这是第一次介绍梯度下降，就把梯度下降的公式放出来吧，梯度下降法更新参数为：
+由于这是第一次介绍梯度下降，就把梯度下降的公式放出来吧，梯度下降法更新参数的方式如下：
 
 $$
 w \leftarrow w - \alpha \frac{\partial L}{\partial w}
@@ -145,7 +145,7 @@ def grad_desc(cur_w, cur_b, alpha, data):
     return updated_w, updated_b
 ```
 
-梯度下降的关键就是求出偏导数，因此我们推导一下线性回归损失函数的两个偏导数
+梯度下降的关键就是求出偏导数，因此我们推导一下线性回归损失函数的两个偏导数：
 
 $$
 L(w,b) = \frac{1}{n}\sum_{i=1}^n (y_i - \hat{y}_i)^2
