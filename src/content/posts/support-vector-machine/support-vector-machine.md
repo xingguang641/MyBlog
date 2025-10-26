@@ -7,9 +7,13 @@ category: ML Model
 draft: false
 ---
 
-> 写在前面：我们的教程终于来到了机器学习的第一个大难点 ———— 支持向量机。在深度学习盛行的今天，支持向量机是为数不多还能继续使用的传统机器学习算法之一，就让我们来看看大名鼎鼎的支持向量机到底是什么吧！
+> 写在前面：我们的教程终于来到了机器学习的第一个大难点 ———— 支持向量机。在深度学习盛行的今天，支持向量机是为数不多还能继续使用的传统机器学习算法之一，就让我们来看看大名鼎鼎的支持向量机到底是什么吧！（注意本篇的配图都在文字的下方）
 
 # 支持向量机基本原理
+
+> 以下推导部分参考自该视频
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=936042727&bvid=BV16T4y1y7qj&cid=494397114&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
 我们首先来思考这么一个问题，如上图所示，如果要求你画一条直线，使其能够将图中的两类点分开，并且在加入新的点后也尽可能实现这个目的（具有预测能力），你会如何画这个条直线呢？直觉上来讲，这条直线靠近任何一类点都不太可行。因此我们认为，这条直线到任何一个点都足够远时，直线的分类效果最好。
 
@@ -22,10 +26,6 @@ draft: false
 我们将已经找到的超平面上下移动 C 个单位，使其恰好经过某些数据点，我们称这两条直线为间隔上下边界。由于间隔上下边界必然会经过几个数据点，而这几个数据点也是起到了限制间隔上下边界的作用，因此我们称这几个点为 **支持向量** （Support Vector）。这便是 **支持向量机** （Support Vector Machine，简称 SVM）名称的由来。
 
 ![支持向量机图像](src\content\posts\support-vector-machine\支持向量机4.jpg)
-
-> 上述图像截取自该视频内容（包括下面部分图像）
-
-<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=936042727&bvid=BV16T4y1y7qj&cid=494397114&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
 ## 归一化
 
@@ -42,6 +42,272 @@ draft: false
 ![支持向量机图像](src\content\posts\support-vector-machine\支持向量机6.jpg)
 
 答案是否定的。但我们要如何判断什么样的点是异常点呢？或者说，我们可以让算法自己判断是否要忽略某个数据点吗？对此，我们引入了 **损失因子** （Penalty Factor）这个概念。你可以将原本的间隔视为经营的 **收入** ，而将损失看作经营的 **成本** ，那么我们最初的问题则可以转化为最大化 **利润** 。此时的间隔我们称之为 **软间隔** （Soft Margin）。
+
+## 数学建模
+
+基本思想已经讲解清楚了，接下来我们就将我们的猜想转换为数学模型，也就是建模。
+
+> 以下推导部分参考自该视频
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=766832077&bvid=BV13r4y1z7AG&cid=516465204&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+首先我们分别在正负超平面上任意选取一个支持向量点 $x_m$ 和 $x_n$ 。由于它们分别在正负超平面上，所以它们一定满足下列等式：
+
+$$
+w_1 x_{1m} + w_2 x_{2m} + b = 1
+$$
+
+$$
+w_1 x_{1n} + w_2 x_{2n} + b = -1
+$$
+
+我们将上述的两个等式相减后又可以得到下面这个式子：
+
+$$
+w_1 (x_{1m} - x_{1n}) + w_2 (x_{2m} - x_{2n}) = 2
+$$
+
+上面这个式子又相当于下面这个式子：
+
+$$
+\vec{w} \cdot (\vec{x}_{m} - \vec{x}_{n}) = 2
+$$
+
+![支持向量机图像](src\content\posts\support-vector-machine\支持向量机7.jpg)
+
+我们再从决策超平面上随机选取两个点 $x_o$ 和 $x_p$ ，同理我们可以得到下面这个式子：
+
+$$
+\vec{w} \cdot (\vec{x}_{o} - \vec{x}_{p}) = 0
+$$
+
+由此我们可以得知： $\vec{w}$ 与决策超平面垂直。
+
+![支持向量机图像](src\content\posts\support-vector-machine\支持向量机8.jpg)
+
+回到上面的推导过程，我们将上面的点积式子用模长表示：
+
+$$
+\| \vec {x}_m - \vec {x}_n \| * \cos \theta * \| \vec {w} \| = 2
+$$
+
+由于 $\vec{w}$ 与决策超平面垂直，从几何含义可以得到：
+
+$$
+\| \vec {x}_m - \vec {x}_n \| * \cos \theta = L
+$$
+
+其中 $L$ 为间隔宽度。
+
+结合上面的两个式子，我们便可以得到间隔宽度 $L$ 的表达式：
+
+$$
+L = \frac{2}{\| \vec{w} \|}
+$$
+
+![支持向量机图像](src\content\posts\support-vector-machine\支持向量机9.jpg)
+
+我们再来看看约束条件。所有的绿点都属于正类，对应的分类值 $y_i = 1$ ，又因为它们处于正超平面的 上方，因此满足 $\vec{w} \cdot \vec{x}_{i} + b \geq 1$ ；同理，对于所有的黄点来说，它们对应的分类值 $y_i = -1$ ，满足 $\vec{w} \cdot \vec{x}_{i} + b \leq -1$ 。
+
+综上可知，这些数据点均满足下面这个不等式：
+
+$$
+y_i * (\vec{w} \cdot \vec{x}_{i} + b) \geq 1
+$$
+
+![支持向量机图像](src\content\posts\support-vector-machine\支持向量机10.jpg)
+
+从上面的式子我们可以知道，最大化间隔其实就是最小化 $\vec{w}$ 的模长，形式地来讲：
+
+$$
+\min \left\| \vec{w} \right\|_2
+$$
+
+$$
+\text{s.t.} \quad y_i * (\vec{w} \cdot \vec{x}_{i} + b) \geq 1 \quad \forall i = 1,2,\dots,N
+$$
+
+到此，我们成功地将我们的猜想转换成一个带约束的最优化问题。
+
+## 深层理解
+
+看到上面的最优化问题后，许多人的第一反应应该是使用 **拉格朗日乘数法** 来解决，这在一般情况下的确如此。但对于支持向量机来说，为了后续求解的效率，我们往往会将上述最优化问题转化为它的 **拉格朗日对偶问题** 来求解。但我们暂且按下不表，让我们顺着拉格朗日乘数法的思路往下推导，顺便深度了解一下支持向量的含义。
+
+为了后续推导的方便，我们可以将上述的最优化问题做个小变形：
+
+$$
+\min f(w) = \frac{\|\vec{w}\|_2^2}{2}
+$$
+
+$$
+\text{s.t.} \quad g_i(w, b) = y_i * (\vec{w} \cdot \vec{x}_{i} + b) - 1 \geq 0 \quad \forall i = 1,2,\dots,N
+$$
+
+显然转换之后不影响最小值的求解。
+
+对于约束条件是不等式的情况，我们需要引入一个非负变量来将不等式转化为等式：
+
+$$
+\text{s.t.} \quad g_i(w, b) = y_i * (\vec{w} \cdot \vec{x}_{i} + b) - 1 = p_i^2 \quad \forall i = 1,2,\dots,N
+$$
+
+由此我们可以得到下面这个拉格朗日方程式：
+
+$$
+L(w, b, \lambda_i, p_i) = \frac{\| \vec{w} \|^2}{2} - \sum_{i=1}^{s} \lambda_i \left[ y_i (\vec{w} \cdot \vec{x_i} + b) - 1 - p_i^2 \right]
+$$
+
+将拉格朗日函数对 $w$ 、 $b$ 、 $\lambda_i$ 和 $p_i$ 分别求导可得：
+
+$$
+\frac{\partial L}{\partial \vec{w}} = \vec{w} - \sum_{i=1}^{s} \lambda_i y_i \vec{x_i} = 0
+$$
+
+$$
+\frac{\partial L}{\partial b} = - \sum_{i=1}^{N} \lambda_i y_i = 0
+$$
+
+$$
+\frac{\partial L}{\partial p_i} = 2 \lambda_i p_i = 0
+$$
+
+$$
+\frac{\partial L}{\partial \lambda_i} = - \bigl( y_i (\vec{w} \cdot \vec{x_i} + b) - 1 - p_i^2 \bigr) = 0
+$$
+
+联立下面两个等式可以得到：
+
+$$
+\lambda_i(y_i * (\vec{w} \cdot \vec{x}_i + b) - 1) = 0
+$$
+
+根据条件 $y_i * (\vec{w} \cdot \vec{x}_i + b) - 1 \geq 0$ ，所以我们可以知道：
+
+$$
+\begin{cases}
+y_i (\vec{w} \cdot \vec{x_i} + b) - 1 > 0, & \lambda_i = 0 \\[6pt]
+y_i (\vec{w} \cdot \vec{x_i} + b) - 1 = 0, & \lambda_i \ne 0
+\end{cases}
+$$
+
+如果我们将 $\lambda_i$ 看成惩罚因子，那么上面的两种情况可以解释成：当数据点不在正负超平面上时，该数据点不对整体产生贡献；当数据点在正负超平面时，该数据点会对整体产生贡献。这便是支持向量的深层含义：只有 **落在正负超平面上** 的数据点才会对拉格朗日函数 **造成约束** 。这也符合我们在几何空间上的直观理解。
+
+并且我们还能得出拉格朗日的约束系数必须满足 $\lambda_i \geq 0$ ，因为当数据点不满足约束条件时必然有：
+
+$$
+y_i * (\vec{w} \cdot \vec{x}_i + b) - 1 < 0
+$$
+
+如果再加上 $\lambda_i < 0$ 则必然会有拉格朗日约束项小于零，这相当于变相鼓励支持向量机去违反约束条件，显然这种情况是不被允许的。
+
+![支持向量机图像](src\content\posts\support-vector-machine\支持向量机11.jpg)
+
+# 拉格朗日对偶问题
+
+接下来的内容就是本篇博客的重点内容，也是支持向量机的核心难点内容。让我们一起来看一下什么是拉格朗日对偶问题。
+
+> 以下推导部分参考下面两个视频
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=890417318&bvid=BV1HP4y1Y79e&cid=503516018&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+&nbsp;
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=766832077&bvid=BV13r4y1z7AG&cid=516465204&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+## 拉格朗日乘数法
+
+要想理解什么是拉格朗日对偶问题，那就不得不先了解什么是拉格朗日乘数法。不知道读者在第一次接触拉格朗日乘数法的时候是否会感到好奇，为什么这样一顿操作之后就能求解出带约束下函数的极值呢？不如用优美的几何图像与严谨的数学语言来理解一遍吧。
+
+让我们来看一下这样一个简单的带约束优化问题：
+
+$$
+\text{求 } f(x,y) \text{ 的最小值, 并且 } y \leq g(x)
+$$
+
+$$
+L(x,y) = f(x,y) + \lambda (y - g(x))
+$$
+
+$$
+\Downarrow
+$$
+
+$$
+\nabla L(x,y) = 0
+$$
+
+$$
+\Downarrow
+$$
+
+$$
+\begin{cases}
+\dfrac{\partial f(x,y)}{\partial x} + \lambda \dfrac{\partial (y - g(x))}{\partial x} = 0 \\
+\dfrac{\partial f(x,y)}{\partial y} + \lambda \dfrac{\partial (y - g(x))}{\partial y} = 0
+\end{cases}
+$$
+
+如图所示（图中的数学符号不太契合我们现在探讨的问题，因此只需要关注图像即可），圆环套圆环表示类似于旋转抛物面的 $f(x,y)$ 的函数图像，直线则表示 $z = y - g(x) \leq 0$ 的边界线（可以想象是一个柱面投影在 $xOy$ 平面的图像）。
+
+观察图像易得，当圆环与直线相切时，这个切点便是带约束下函数的极值点。并且此时两个函数的梯度 **恰好共线** ，如果再调节 $\lambda$ 的值则有可能使其 **正负相互抵消** ，因此将拉格朗日函数写成上面的形式（将原函数与约束线性组合）后再求导便可以得到带约束条件下函数的极值点。
+
+![拉格朗日对偶问题](src\content\posts\support-vector-machine\拉格朗日对偶问题1.jpg)
+
+我们再来看看在多个约束下的几何图像是什么样的。如图所示，我们再添加一个约束，此时两个约束的相交点为最优解，两个约束的梯度向量的线性组合可能会与函数的梯度向量共线且相等，对拉格朗日函数求导仍然可以得到带约束条件下函数的极值点。
+
+![拉格朗日对偶问题](src\content\posts\support-vector-machine\拉格朗日对偶问题2.jpg)
+
+如果我们再加入一个约束，如图所示，这个新加入的约束并不会改变先前所有约束条件的交集的形状，因此它的加入并不会对答案造成影响。
+
+![拉格朗日对偶问题](src\content\posts\support-vector-machine\拉格朗日对偶问题3.jpg)
+
+这其实是 **KKT 条件** （关于什么是 KKT 条件我会在下文介绍）中 **互补松弛条件** （Complementary Slackness Condition）的几何解释。如果一个条件对答案有影响，那么它对应的 $\lambda_i$ 必然大于零，我们则称其为 **紧致条件** ；如果一个条件对答案没有影响，那么它对应的 $\lambda_i$ 必然等于零，我们则称其为 **松弛条件** （因为 $\lambda < 0$ 会导致约束条件的梯度向量与函数的梯度向量同向而无法相互抵消，因此不可能出现）。由此我们又可以从 **互补松弛的角度** 再次了解什么是支持向量：支持向量是 **支持向量机最优化问题中的紧致条件** 。
+
+## 凸问题与凸优化
+
+拉格朗日乘数法非常强大，但它的缺点也非常明显：只能求解极值点/鞍点。拉格朗日乘数法并不能保证求解出的结果一定是最值点（但一定包含最值点），但如果我们要求解的问题是一个 **凸问题** （Convex Problem），那么这个问题中的极值点就是最值点（凸问题的性质）。
+
+而我们的拉格朗日对偶问题有个非常美妙的结论：原问题的拉格朗日对偶问题 **一定是凸问题** ，这也是为什么我们在[求解支持向量机最优化问题](#深层理解)时需要转换成拉格朗日对偶问题的重要原因。
+
+接下来我们就仔细地讲解一下拉格朗日对偶问题的推导过程，首先需要将拉格朗日问题稍微改写一下：
+
+$$
+\begin{align*}
+\min \quad & f_0(x), \quad x \in \mathbb{R}^n \\
+\text{s.t.} \quad & f_i(x) \leq 0, \quad i = 1, 2, \dots, m \\
+& h_i(x) = 0, \quad i = 1, 2, \dots, q
+\end{align*}
+$$
+
+$$
+\Downarrow
+$$
+
+$$
+L(x, \lambda, \nu) = f_0(x) + \sum_{i=1}^m \lambda_i f_i(x) + \sum_{i=1}^q \nu_i h_i(x) \\
+\text{原问题：} \min_x \max_{\lambda, \nu} L(x, \lambda, \nu) \\
+\quad \text{s.t.} \quad \lambda \geq 0
+$$
+
+当 $x$ 不在可行域内时有： $f_i(x) > 0$ 和 $h_i(x) ≠ 0$ 。若想最大化 $L(x, \lambda, \nu)$ ，我们可以让 $\lambda_i$ 取到正无穷，让 $\nu_i h_i(x)$ 取到正无穷：
+
+$$
+\max_{\lambda, \nu} L(x, \lambda, \nu) = f_0(x) + \infty + \infty = \infty
+$$
+
+当 $x$ 在可行域内时有： $f_i(x) \leq 0$ 和 $h_i(x) = 0$ 。若想最大化 $L(x, \lambda, \nu)$ ，我们可以让 $\lambda_i$ 取到 0 （$\nu_i$ 无论取什么都一样）：
+
+$$
+\max_{\lambda, \nu} L(x, \lambda, \nu) = f_0(x) + 0 + 0 = f_0(x)
+$$
+
+然后在此基础上再取 $min$ 可以得到：
+
+$$
+\min_{x} \max_{\lambda, \nu} L(x, \lambda, \nu) = \min_{x} \{ f_0(x), \infty \}
+$$
+
+因此拉格朗日问题的两种形式是等价的。
 
 # 参考文献
 
