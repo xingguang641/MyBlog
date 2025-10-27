@@ -45,7 +45,7 @@ draft: false
 
 ## 数学建模
 
-基本思想已经讲解清楚了，接下来我们就将我们的猜想转换为数学模型，也就是建模。
+基本思想已经讲解清楚了，接下来我们就将我们的猜想转换为数学模型，也就是建模（由于篇幅的限制，我们将重点介绍硬间隔支持向量机，软间隔向量机将放到代码实现中的[内容拓展](#内容拓展)）。
 
 > 以下推导部分参考自该视频
 
@@ -145,7 +145,7 @@ $$
 
 显然转换之后不影响最小值的求解。
 
-对于约束条件是不等式的情况，我们需要引入一个非负变量来将不等式转化为等式：
+对于约束条件是不等式的情况，我们需要引入一个非负变量来将不等式转化为等式（我们这里之所以要将不等式转化为等式进行处理是为了从零开始推导不等式约束的拉格朗日系数必须非负这个条件，后续使用拉格朗日乘数法时不再使用，可以直接将不等式写入拉格朗日函数）：
 
 $$
 \text{s.t.} \quad g_i(w, b) = y_i * (\vec{w} \cdot \vec{x}_{i} + b) - 1 = p_i^2 \quad \forall i = 1,2,\dots,N
@@ -154,13 +154,13 @@ $$
 由此我们可以得到下面这个拉格朗日方程式：
 
 $$
-L(w, b, \lambda_i, p_i) = \frac{\| \vec{w} \|^2}{2} - \sum_{i=1}^{s} \lambda_i \left[ y_i (\vec{w} \cdot \vec{x_i} + b) - 1 - p_i^2 \right]
+L(w, b, \lambda_i, p_i) = \frac{\| \vec{w} \|^2}{2} - \sum_{i=1}^{N} \lambda_i \left[ y_i (\vec{w} \cdot \vec{x_i} + b) - 1 - p_i^2 \right]
 $$
 
 将拉格朗日函数对 $w$ 、 $b$ 、 $\lambda_i$ 和 $p_i$ 分别求导可得：
 
 $$
-\frac{\partial L}{\partial \vec{w}} = \vec{w} - \sum_{i=1}^{s} \lambda_i y_i \vec{x_i} = 0
+\frac{\partial L}{\partial \vec{w}} = \vec{w} - \sum_{i=1}^{N} \lambda_i y_i \vec{x_i} = 0
 $$
 
 $$
@@ -267,7 +267,7 @@ $$
 
 拉格朗日乘数法非常强大，但它的缺点也非常明显：只能求解极值点/鞍点。拉格朗日乘数法并不能保证求解出的结果一定是最值点（但一定包含最值点），但如果我们要求解的问题是一个 **凸问题** （Convex Problem），那么这个问题中的极值点就是最值点（凸问题的性质）。
 
-而我们的拉格朗日对偶问题有个非常美妙的结论：原问题的拉格朗日对偶问题 **一定是凸问题** ，这也是为什么我们在[求解支持向量机最优化问题](#深层理解)时需要转换成拉格朗日对偶问题的重要原因。
+而我们的拉格朗日对偶问题有个非常美妙的结论：原问题的拉格朗日对偶问题 **一定是凸问题** ，这也是为什么我们在[求解支持向量机最优化问题](#深层理解)时需要转换成拉格朗日对偶问题的原因之一。
 
 接下来我们就仔细地讲解一下拉格朗日对偶问题的推导过程，首先需要将拉格朗日问题稍微改写一下：
 
@@ -295,7 +295,7 @@ $$
 \max_{\lambda, \nu} L(x, \lambda, \nu) = f_0(x) + \infty + \infty = \infty
 $$
 
-当 $x$ 在可行域内时有： $f_i(x) \leq 0$ 和 $h_i(x) = 0$ 。若想最大化 $L(x, \lambda, \nu)$ ，我们可以让 $\lambda_i$ 取到 0 （$\nu_i$ 无论取什么都一样）：
+当 $x$ 在可行域内时有： $f_i(x) \leq 0$ 和 $h_i(x) = 0$ 。若想最大化 $L(x, \lambda, \nu)$ ，我们可以让 $\lambda_i$ 取到 0 （因为 $h_i(x) = 0$ ，所以 $\nu_i$ 取任意值均可）：
 
 $$
 \max_{\lambda, \nu} L(x, \lambda, \nu) = f_0(x) + 0 + 0 = f_0(x)
@@ -308,6 +308,202 @@ $$
 $$
 
 因此拉格朗日问题的两种形式是等价的。
+
+接下来我们看看拉格朗日对偶问题的数学形式：
+
+$$
+\begin{align*}
+\text{对偶函数：} & \quad g(\lambda, \nu) = \min_{x} L(x, \lambda, \nu) \\
+\text{对偶问题：} & \quad \max_{\lambda, \nu} g(\lambda, \nu) = \max_{\lambda, \nu} \min_{x} L(x, \lambda, \nu) \\
+& \quad \text{s.t. } \lambda \geq 0
+\end{align*}
+$$
+
+很明显，原问题就是先求 $max$ 再求 $min$ 的过程，对偶问题就是先求 $min$ 再求 $max$ 的过程。
+
+我们来看看凸问题的定义：当一个问题的约束条件是凸集且问题函数为凸函数时，该问题被称为凸问题。观察对偶函数 $L(x, \lambda, \nu)$ ，如果先对参数 $x$ 做最小值优化，则在做最大值优化的时候， $f_0(x^*)$ 、 $f_i(x^*)$ 和 $h_i(x^*)$ 都是常数，也就是说：此时的对偶函数 &g(\lambda, \nu)& 是一个 **线性函数** ，而线性函数是一个 **凸函数** 。再加上对偶问题的约束条件是 $\lambda \geq 0$ ，这是一个 **半空间** ，而半空间是一个 **凸集** 。综上所述，对偶问题是一个 **凸问题** 。
+
+$$
+g(\lambda, \nu) = f_0(x^*) + \sum_{i=1}^m \lambda_i f_i(x^*) + \sum_{i=1}^q \nu_i h_i(x^*)
+$$
+
+## 弱对偶与强对偶
+
+到此为止，我们已经知道了什么是拉格朗日对偶问题，也弄懂为什么拉格朗日对偶问题一定是一个凸问题。但我们要想用拉格朗日对偶问题来解决原问题，就必须证明两个问题之间是等价的，否则对偶问题有再多优美的性质，也无法帮我们去解决原问题。所以接下来，就让我们来看一下拉格朗日问题与其对偶问题之间的关系吧。
+
+首先我们可以轻松地证明出：拉格朗日问题的解包含其对偶问题的解。下面是证明过程：
+
+$$
+\max_{\lambda, \nu} L(x, \lambda, \nu) \ge L(x, \lambda, \nu) \ge \min_{x} L(x, \lambda, \nu)
+$$
+
+$$
+A(x) = \max_{\lambda, \nu} L(x, \lambda, \nu) \ge L(x, \lambda, \nu) \ge \min_{x} L(x, \lambda, \nu) = I(\lambda, \nu)
+$$
+
+$$
+A(x) \ge I(\lambda, \nu) \quad (\forall\, x, \lambda, \nu)
+$$
+
+$$
+A(x) \ge \min_{x} A(x) \ge \max_{\lambda, \nu} I(\lambda, \nu) \ge I(\lambda, \nu)
+$$
+
+$$
+P^{*} = \min_{x} A(x) \ge \max_{\lambda, \nu} I(\lambda, \nu) = D^{*}
+$$
+
+而上述这个性质我们称之为 **弱对偶性** （Weak Duality Theorem）。也就是说：拉格朗日对偶问题与原问题 **一定满足弱对偶性** 。但我们真正想要的是强对偶性，那么拉格朗日对偶问题在什么条件下与原问题之间满足强对偶性呢？当原问题是 **凸问题** 且满足一定的 **正则条件** （Slater 条件就是其中之一）时，原问题与其对偶问题满足强对偶性（具体证明不再给出，需要的读者可以观看下面这个 PDF）。
+
+[对偶理论（Duality）](https://bolei-zhang.github.io/course/06be4d689c17514cfe26a9a14ddff12d3911cd62/slides/lec5_duality_1-2.pdf)
+
+但另一个问题也随之而来：既然原问题已经是凸问题，为什么仍要引出对偶问题这个概念呢？原因就是原问题虽然也是凸问题，但原问题本身往往非常复杂，求解起来十分困难，而对偶问题将繁杂的约束条件融入到拉格朗日函数中，求解起来十分简单，因此我们都更倾向于将原问题转化成它的对偶问题来进行求解。
+
+## KKT 条件
+
+原理部分讲到这里其实已经足够了，但在[讲解拉格朗日乘数法](#拉格朗日乘数法)时所提到的 KKT 条件究竟是什么我们尚未弄清楚，因此在这里详细地讲解一下 KKT 条件：
+
+$$
+\begin{cases}
+\nabla f(x^*) + \sum_{i=1}^m \lambda_i \nabla g_i(x^*) + \sum_{j=1}^p \nu_j \nabla h_j(x^*) = 0 & \text{(Stationarity)} \\[1.2em]
+g_i(x^*) \le 0, \quad i = 1, \dots, m & \text{(Primal feasibility)} \\[0.8em]
+h_j(x^*) = 0, \quad j = 1, \dots, p & \text{(Equality constraints)} \\[0.8em]
+\lambda_i \ge 0, \quad i = 1, \dots m, & \text{(Dual feasibility)} \\[0.8em]
+\lambda_i g_i(x^*) = 0, \quad i = 1, \dots, m & \text{(Complementary slackness)}
+\end{cases}
+$$
+
+KKT 条件的作用就是能让我们快速判断一个问题是否是强对偶问题：在绝大多数条件下（少数情况仅出现在理论中人为构造，实际应用相当罕见），只要满足 KKT 条件的问题就是强队偶问题。
+
+# 代码实现
+
+根据拉格朗日对偶问题的原理，我们来推导一下支持向量机问题的对偶问题：
+
+引入拉格朗日乘子 $\alpha_i$ 并写出拉格朗日函数：
+
+$$
+L(w, b, \alpha_i) = \frac{\| \vec{w} \|^2}{2} - \sum_{i=1}^{N} \alpha_i \left[ y_i (\vec{w} \cdot \vec{x_i} + b) - 1 \right]
+$$
+
+将其对 $\vec{w}$ 和 $b$ 求偏导：
+
+$$
+\frac{\partial L}{\partial \vec{w}} = \vec{w} - \sum_{i=1}^{s} \alpha_i y_i \vec{x_i}
+$$
+
+$$
+\frac{\partial L}{\partial b} = - \sum_{i=1}^{s} \alpha_i y_i
+$$
+
+令偏导为零并带入拉格朗日函数可得到支持向量机问题的对偶问题：
+
+$$
+\begin{align*}
+\max_{\alpha} \quad & \sum_{i=1}^{n} \alpha_i - \frac{1}{2} \sum_{i=1}^{n} \sum_{j=1}^{n} \alpha_i \alpha_j y_i y_j \vec{x_i} \cdot \vec{x_j} \\
+\text{s.t.} \quad & \alpha_i \ge 0, \quad \sum_{i=1}^{n} \alpha_i y_i = 0
+\end{align*}
+$$
+
+接下来我们只需要用梯度上升（这是求 $max$）的方式求解出参数 $\alpha$ 即可。
+
+```py frame="code" title="main.py"
+import numpy as np
+
+# 假设 X: (n_samples, n_features), y: (n_samples,) 且值为 +1/-1
+def linear_svm_train(X, y, lr=0.001, epochs=1000):
+    n_samples, n_features = X.shape
+    alpha = np.zeros(n_samples)
+
+    # 梯度上升求解对偶问题
+    for _ in range(epochs):
+        for i in range(n_samples):
+            # 对 α_i 的梯度
+            grad = 1 - np.sum(alpha * y * y[i] * np.dot(X, X[i]))
+            alpha[i] += lr * grad
+            alpha[i] = max(alpha[i], 0)  # 保证 α_i >= 0
+
+    # 计算 w
+    w = np.sum((alpha * y)[:, None] * X, axis=0)
+
+    # 找一个支持向量求 b
+    sv_idx = np.where(alpha > 1e-5)[0][0]
+    b = y[sv_idx] - np.dot(w, X[sv_idx])
+
+    return w, b
+
+def linear_svm_predict(X, w, b):
+    # 加 sign 是为了做判别分析
+    return np.sign(np.dot(X, w) + b)
+```
+
+## 内容拓展
+
+支持向量机其实还有很多可以优化的点。
+
+首先就是上面的梯度上升算法：对于支持向量机来说，直接使用梯度上升算法是不太行的，由于对偶问题有 **等式约束** ，直接梯度很难保持约束。不仅如此，计算梯度还会遇到开销大、收敛慢等问题。因此我们往往会使用 **SMO 算法** 来替代梯度上升算法（SMO 算法的具体内容可以看下面的博客）。
+
+[详细推导序列最小优化SMO算法](https://zhuanlan.zhihu.com/p/560529392)
+
+然后就是对于线性不可分的数据：我们在前面这么长的推导过程其实都有一个前提假设 ———— 数据是线性可分的。但是在大多数情况下，数据往往是线性不可分的，那我们就得要引出我们的 **核技巧** （Kernel Trick）了。
+
+核技巧的原理非常简单，就是想办法将数据升维后，再进行支持向量机的构建，因为 **维度越高数据越有可能线性可分** （具体讲解可以看下面这个视频，限于篇幅原因不过多讲解）。
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=637192057&bvid=BV1Nb4y1s7pE&cid=547472956&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+最后就是软间隔问题了：在[上文](#软间隔)我们讲到过什么是软间隔，但我们没有过多解释软间隔的数学原理，如果读者感兴趣可以观看下面的视频。
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=682759064&bvid=BV1AS4y1K7Jf&cid=565289579&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+&nbsp;
+
+# 深层问题思考
+
+1. 为什么说支持向量机是一个自带 L2 正则化的机器学习算法？（什么是合叶损失函数？）
+
+> 以下推导部分参考自该视频
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=549434532&bvid=BV1zq4y1g74J&cid=449456397&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+首先给出软间隔下的支持向量机最优化问题：
+
+$$
+\begin{align*}
+\min_{W,b,\xi} \quad & \frac{1}{2} W^T W + C \sum_{i=1}^N \xi_i \\
+\text{s.t.} \quad & 1 - Y^{(i)} (W^T X^{(i)} + b) \leq \xi_i, \quad i = 1, 2, \dots, N \\
+& \xi_i \geq 0, \quad i = 1, 2, \dots, N
+\end{align*}
+$$
+
+然后转换成如下形式：
+
+$$
+\begin{align*}
+\min_{W,b,\xi} \quad & \frac{1}{2} W^T W + C \cdot \sum_{i=1}^N \xi_i \\
+\text{s.t.} \quad & 
+\begin{aligned}
+\xi_i &\geq \max\left\{0, 1 - Y^{(i)}(W^T \cdot X^{(i)} + b)\right\}, & i = 1, 2, \dots, N \\
+&= \left[1 - Y^{(i)}(W^T \cdot X^{(i)} + b)\right]_+, & i = 1, 2, \dots, N
+\end{aligned}
+\end{align*}
+$$
+
+最后将问题转化为拉格朗日函数可得：
+
+$$
+\min \frac{1}{2} W^T W + C \sum_{i=1}^{N} \left[ 1 - Y^{(i)} (W^T X^{(i)} + b) \right]_+
+$$
+
+$$
+\Downarrow
+$$
+
+$$
+\min \underbrace{\sum_{i=1}^{N} \left[ 1 - Y^{(i)} (W^T X^{(i)} + b) \right]_+}_{\textcolor{green}{\text{经验损失项}}} 
++ 
+\underbrace{\lambda \frac{1}{2} W^T W}_{\textcolor{green}{\text{正则化项}}}
+$$
+
+上述形式中 “经验损失项” 就是所谓的 “合叶损失函数” ，“正则化项” 就是 “L2 正则化” 。
 
 # 参考文献
 
