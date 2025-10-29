@@ -43,6 +43,8 @@ $$
 
 值得注意的是：高斯混合模型并不在意每个数据点究竟属于哪个类别（只是推导过程关注于单个数据点）。它想要做的事情是让多个高斯模型去拟合整个数据集，从而去预测新数据属于哪哪个高斯分布。
 
+![高斯混合模型图像](src\content\posts\gaussian-mixture-module\高斯混合模型1.jpg)
+
 ## 梯度下降的局限
 
 写出高斯混合模型的对数似然函数：
@@ -109,31 +111,84 @@ $$
 $$
 \begin{align*}
 L(\theta) &= \log P(X | \theta) = \mathbb{E}_{Z \sim P(Z | X, \theta^{(t)})} \left[ \log P(X | \theta) \right] \\
-&= Q(\theta; \theta^{(t)}) + \text{KL}(P(Z | X, \theta^{(t)}) \parallel P(Z | X, \theta))
+&= Q(\theta \mid \theta^{(t)}) + \text{KL}(P(Z | X, \theta^{(t)}) \parallel P(Z | X, \theta))
 \end{align*}
 $$
 
-这里我们将 $ELBO(\theta | q^{(t)}, X)$ 记为 $Q(\theta; \theta^{(t)})$ ：
+这里我们将 $ELBO(\theta | q^{(t)}, X)$ 记为 $Q(\theta \mid \theta^{(t)})$ ：
 
 $$
-Q(\theta; \theta^{(t)}) = \mathbb{E}_{Z \sim P(Z | X,\theta^{(t)})} \left[ \log P(X,Z | \theta) \right] + H(P(Z | X,\theta^{(t)}))
+Q(\theta \mid \theta^{(t)}) = \mathbb{E}_{Z \sim P(Z | X,\theta^{(t)})} \left[ \log P(X,Z | \theta) \right] + H(P(Z | X,\theta^{(t)}))
 $$
 
 ### M-step
 
-由于信息熵为常数项，因此最大化 $Q(\theta; \theta^{(t)})$ 等价于将对数似然 $\log P(X, Z | \theta)$ 的期望最大化：
+由于信息熵为常数项，因此最大化 $Q(\theta \mid \theta^{(t)})$ 等价于将对数似然 $\log P(X, Z | \theta)$ 的期望最大化：
 
 $$
-\theta^{(t+1)} = \arg \max_{\theta} Q(\theta; \theta^{(t)}) = \arg \max_{\theta} \mathbb{E}_{Z \sim P(Z|X,\theta^{(t)})} \left[ \log P(X, Z | \theta) \right]
+\theta^{(t+1)} = \arg \max_{\theta} Q(\theta \mid \theta^{(t)}) = \arg \max_{\theta} \mathbb{E}_{Z \sim P(Z|X,\theta^{(t)})} \left[ \log P(X, Z | \theta) \right]
 $$
 
-## 流程解析
+## 理论推导
 
 > 以下推导部分参考自该视频
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=1400527903&bvid=BV1Q6421u7qb&cid=1448856301&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
+我们先用 **琴声不等式** （Jensen's inequality）放缩的方式求解出 ELBO：
 
+$$
+\begin{align*}
+L(\theta) &= \sum_{X} \log P(X \mid \theta) = \sum_{X} \log \left[ \sum_{Z} P(X,Z \mid \theta) \right] \\
+&= \sum_{X} \log \left[ \sum_{Z} q^{(t)}(Z)\, \frac{P(X,Z \mid \theta)}{q^{(t)}(Z)} \right] = \sum_{X} \log \mathbb{E}_{Z\sim q^{(t)}(Z)} \left[ \frac{P(X,Z \mid \theta)}{q^{(t)}(Z)} \right] \\
+&\ge \sum_{X} \mathbb{E}_{Z\sim q^{(t)}(Z)} \left[ \log \frac{P(X,Z \mid \theta)}{q^{(t)}(Z)} \right] = \sum_{X}\sum_{Z} q^{(t)}(Z) \log \frac{P(X,Z \mid \theta)}{q^{(t)}(Z)}.
+\end{align*}
+$$
+
+根据琴声不等式的取等条件我们可知：
+
+$$
+\frac{P(X, Z \mid \theta^{(t)})}{q^{(t)}(Z)} = C \quad \text{where } \sum_{Z} q^{(t)}(Z) = 1
+$$
+
+将 $q^{(t)}(Z)$ 乘到等式的右侧可得：
+
+$$
+P(X, Z \mid \theta^{(t)}) = C \cdot q^{(t)}(Z)
+$$
+
+因为 $q^{(t)}(Z)$ 对变量 $Z$ 的积分为 1，因此我们将两边同时对 $Z$ 进行积分：
+
+$$
+\sum_{Z} P(X, Z \mid \theta^{(t)}) = \sum_{Z} C \cdot q^{(t)}(Z) = C \sum_{Z} q^{(t)}(Z) = C
+$$
+
+将上式重新代入琴声不等式的取等条件中：
+
+$$
+q^{(t)}(Z) = \frac{P(X, Z \mid \theta^{(t)})}{\sum_{Z} P(X, Z \mid \theta^{(t)})} = \frac{P(X, Z \mid \theta^{(t)})}{P(X \mid \theta^{(t)})} = P(Z \mid X, \theta^{(t)})
+$$
+
+于是我们就轻松求解出 E-step 中的 $q^{(t)}(Z)$ 了。
+
+由于不等式已经取等，因此有：
+
+$$
+\begin{align*}
+L(\theta) &= \sum_{X} \sum_{Z} q^{(t)}(Z) \log \left[ \frac{P(X, Z \mid \theta^{(t)})}{q^{(t)}(Z)} \right] \\
+&= \sum_{X, Z} q^{(t)}(Z) \log P(X, Z \mid \theta^{(t)}) - \sum_{X, Z} q^{(t)}(Z) \log q^{(t)}(Z) \\
+&= \mathbb{E}_{Z\sim q^{(t)}(Z)} \left[ L(X, Z \mid \theta^{(t)}) \right] - \sum_{X, Z} P(Z \mid X, \theta^{(t)}) \log P(Z \mid X, \theta^{(t)})
+\end{align*}
+$$
+
+由于后面的信息熵为常数，所以 $\theta$ 的极大似然估计为：
+
+$$
+\begin{align*}
+\theta^{(t+1)} &= \arg \max_{\theta} \sum_{X} \sum_{Z} q^{(t)}(Z) \log \left[ \frac{P(X, Z \mid \theta^{(t)})}{q^{(t)}(Z)} \right] \\
+&= \arg \max_{\theta} \mathbb{E}_{Z\sim P(Z \mid X, \theta^{(t)})} \left[ \log P(X, Z | \theta) \right]
+\end{align*}
+$$
 
 ## 收敛性证明
 

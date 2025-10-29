@@ -22,13 +22,13 @@ $$
 标签 $y = 1$ 的后验概率为:
 
 $$
-p(y = 1 \mid x) = \sigma(w^{\rm T} x) = \frac{1}{1 + e^{-w^{\rm T} x}}
+P(y = 1 \mid x) = \sigma(w^{\rm T} x) = \frac{1}{1 + e^{-w^{\rm T} x}}
 $$
 
 这里 $$\mathbf{x} = [x_1, \cdots, x_D, 1]^{\rm T}$$ 和 $$\mathbf{w} = [w_1, \cdots, w_D, b]^{\rm T}$$ 分别为 $D + 1$ 维的增广特征向量与增广权重向量，标签 $y = 0$ 的后验概率为：
 
 $$
-p(y=0 \mid \mathbf{x}) = 1 - p(y=1 \mid \mathbf{x}) 
+P(y=0 \mid \mathbf{x}) = 1 - P(y=1 \mid \mathbf{x}) 
 = 1 - \sigma(\mathbf{w}^{\rm T} \mathbf{x}) 
 = \frac{e^{- \mathbf{w}^{\rm T} \mathbf{x}}}{1 + e^{- \mathbf{w}^{\rm T} \mathbf{x}}}
 $$
@@ -111,7 +111,7 @@ loss_func = lambda X, y, w: -np.mean(
 交叉熵损失函数的数学表达式如下：
 
 $$
-L = -\frac{1}{N} \sum_{i=1}^{N} [y_i \log(\hat{y}_i) + (1 - y_i)\log(1 - \hat{y}_i)]
+L(w) = -\frac{1}{N} \sum_{i=1}^{N} \left[ y_i \log(\hat{y}_i) + (1 - y_i)\log(1 - \hat{y}_i) \right]
 $$
 
 把 $$\hat{y} = \sigma(Xw)$$ 带入上面的式子便可以直接得到上述代码中的公式了。
@@ -135,7 +135,7 @@ $$
 $$
 
 $$
-J(w) = -\frac{1}{N} \sum_{i=1}^{N} \Big[ y_i \log(\hat{y}_i) + (1 - y_i)\log(1 - \hat{y}_i) \Big]
+L(w) = -\frac{1}{N} \sum_{i=1}^{N} \Big[ y_i \log(\hat{y}_i) + (1 - y_i)\log(1 - \hat{y}_i) \Big]
 $$
 
 将 $$\hat{y}_i = \sigma(X_i w)$$ 代入，并对 $w$ 求导，得到：
