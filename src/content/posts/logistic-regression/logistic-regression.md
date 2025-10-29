@@ -37,8 +37,8 @@ $$
 
 $$
 \mathbf{w}^{\rm T} \mathbf{x} 
-= \log \frac{p(y=1 \mid \mathbf{x})}{1 - p(y=1 \mid \mathbf{x})} 
-= \log \frac{p(y=1 \mid \mathbf{x})}{p(y=0 \mid \mathbf{x})}
+= \log \frac{P(y=1 \mid \mathbf{x})}{1 - P(y=1 \mid \mathbf{x})} 
+= \log \frac{P(y=1 \mid \mathbf{x})}{P(y=0 \mid \mathbf{x})}
 $$
 
 上式左边为线性函数，右边为正反后验概率比值（几率）取对数，因此 Logistic 回归也称为 **对数几率回归**
@@ -111,7 +111,7 @@ loss_func = lambda X, y, w: -np.mean(
 交叉熵损失函数的数学表达式如下：
 
 $$
-L(w) = -\frac{1}{N} \sum_{i=1}^{N} \left[ y_i \log(\hat{y}_i) + (1 - y_i)\log(1 - \hat{y}_i) \right]
+L(w) = -\frac{1}{N} \sum_{i=1}^{N} \Big[ y_i \log(\hat{y}_i) + (1 - y_i)\log(1 - \hat{y}_i) \Big]
 $$
 
 把 $$\hat{y} = \sigma(Xw)$$ 带入上面的式子便可以直接得到上述代码中的公式了。

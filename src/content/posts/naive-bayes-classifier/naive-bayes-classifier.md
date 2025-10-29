@@ -26,7 +26,7 @@ $$
 我们的任务是寻找一个判定准则 $h : X \mapsto Y$ ，以最小化总体风险：
 
 $$
-R(h) = \mathbb{E}_{x} \left[ R(h(x)|x) \right]
+R(h) = \mathbb{E}_{x} \Big[ R(h(x)|x) \Big]
 $$
 
 显然，对每个样本 $x$ 若 $h$ 能最小化条件风险 $R(h(x) \mid x)$ ，则总体风险 $R(h)$ 也将被最小化，这就产生了贝叶斯判定准则（Bayes Decision Rule）：为最小化总体风险，只需在每个样本上选择那个能使条件风险 $R(c \mid x)$ 最小的类别标记（要想均值最小化，只需要最小化每一个样本）。
@@ -154,7 +154,7 @@ if __name__ == "__main__":
 对于多项式贝叶斯分类器，假设分布如下：
 
 $$
-P(x \mid y) = \frac{(\sum_i x_i)!}{\prod_i x_i!} 
+P(x_i \mid y) = \frac{(\sum_i x_i)!}{\prod_i x_i!} 
 \prod_i \theta_{y,i}^{x_i} 
 \quad \text{where } 
 \theta_{y,i} = \frac{N_{y,i} + \alpha}{\sum_j (N_{y,j} + \alpha)}
@@ -194,7 +194,7 @@ if __name__ == "__main__":
 对于伯努利贝叶斯分类器，假设分布如下：
 
 $$
-P(x \mid y) = \prod_i p_{y,i}^{x_i} (1 - p_{y,i})^{1 - x_i} 
+P(x_i \mid y) = \prod_i p_{y,i}^{x_i} (1 - p_{y,i})^{1 - x_i} 
 \quad \text{where } 
 p_{y,i} = \frac{N_{y,i} + \alpha}{N_y + 2\alpha}
 $$
@@ -244,10 +244,10 @@ if __name__ == "__main__":
 **独依赖估计** （One-Dependent Estimator, 简称 ODE）是半朴素贝叶斯分类器最常用的一种策略。顾名思议，所谓 “独依赖” 就是假设每个属性在类别之外最多仅依赖于一个其他属性，即：
 
 $$
-P(c|x) \propto P(c) \prod_{i=1}^d P(x_i|c, pa(i))
+P(c \mid x) \propto P(c) \prod_{i=1}^d P(x_i \mid c, pa(i))
 $$
 
-其中 $pa(i)$ 为属性 $x_i$ 所依赖的属性，称为 $x_i$ 的父属性。此时，对每个属性 $x_i$ 若其父属性 $pa(i)$ 已知，则可采用频率估计概率的办法来估计概率值 $P(x_i|c, pa(i))$ 。于是，问题的关键就转化为如何确定每个属性的父属性，不同的做法产生不同的独依赖分类器。
+其中 $pa(i)$ 为属性 $x_i$ 所依赖的属性，称为 $x_i$ 的父属性。此时，对每个属性 $x_i$ 若其父属性 $pa(i)$ 已知，则可采用频率估计概率的办法来估计概率值 $P(x_i \mid c, pa(i))$ 。于是，问题的关键就转化为如何确定每个属性的父属性，不同的做法产生不同的独依赖分类器。
 
 - SPODE（Super-Parent ODE）方法假设所有属性都依赖于同一个属性，然后通过交叉验证等模型选择方法来确定超父属性
 - TAN（Tree Augmented naive Bayes）则是通过计算任意两个属性之间的条件互信息，构建最大带权生成树，从而将属性间依赖关系约简为树形结构，仅保留强相关属性之间的依赖性，条件互信息的公式为：
@@ -262,7 +262,7 @@ $$
 - AOED（Averaged One-Dependent Estimator）是一种集成学习机制的独依赖分类器，尝试将每个属性作为超父来构建 SPODE，然后将那些具有足够训练数据支撑的 SPODE 集成起来作为最终结果，即：
 
 $$
-P(c \mid \mathbf{x}) \propto 
+P(c \mid x) \propto 
 \sum_{\substack{i=1 \\ |D_{x_i}| \ge m'}}^{d} 
 P(c, x_i) 
 \prod_{j=1}^{d} P(x_j \mid c, x_i)

@@ -20,7 +20,7 @@ draft: false
 - 样本的分类 $y$ 服从伯努利分布：
 
 $$
-p(y) =
+P(y) =
 \begin{cases}
 \phi^{y}(1 - \phi)^{1 - y} & y = 0, 1 \\\\
 0 & y \ne 0, 1
@@ -30,7 +30,7 @@ $$
 - 正负样本均符合正态分布：
 
 $$
-p(x \mid y = 0)
+P(x \mid y = 0)
 = \frac{1}{(2\pi)^{\frac{n}{2}} |\Sigma|^{\frac{1}{2}}}
 \exp\!\left(
     -\frac{1}{2} (x - \mu_0)^{\rm T} \Sigma^{-1} (x - \mu_0)
@@ -38,7 +38,7 @@ p(x \mid y = 0)
 $$
 
 $$
-p(x \mid y = 1)
+P(x \mid y = 1)
 = \frac{1}{(2\pi)^{\frac{n}{2}} |\Sigma|^{\frac{1}{2}}}
 \exp\!\left(
     -\frac{1}{2} (x - \mu_1)^{\rm T} \Sigma^{-1} (x - \mu_1)
@@ -56,30 +56,30 @@ $$
 首先我们要求出对数似然函数，对于整个数据集，似然函数是：
 
 $$
-\prod_{i=1}^m p(x^{(i)}, y^{(i)} \mid \phi, \Sigma, \mu_0, \mu_1) = \prod_{i=1}^m p(x^{(i)} \mid y^{(i)}) p(y^{(i)})
+\prod_{i=1}^m P(x^{(i)}, y^{(i)} \mid \phi, \Sigma, \mu_0, \mu_1) = \prod_{i=1}^m P(x^{(i)} \mid y^{(i)}) P(y^{(i)})
 $$
 
 取对数后，得到的对数似然函数为：
 
 $$
-L(\phi, \Sigma, \mu_0, \mu_1) = \sum_{i=1}^m \left[ \log p(x^{(i)}  |  y^{(i)}) + \log p(y^{(i)}) \right]
+L(\phi, \Sigma, \mu_0, \mu_1) = \sum_{i=1}^m \left[ \log P(x^{(i)} \mid y^{(i)}) + \log P(y^{(i)}) \right]
 $$
 
-为了便于处理不同类别的数据，我们将条件概率项 $\log p(x^{(i)} \mid y^{(i)})$ 根据 $y^{(i)}$ 的值进行分解。由于 $y^{(i)}$ 是二值的（0或1），我们可以使用 $y^{(i)}$ 作为指示函数：
+为了便于处理不同类别的数据，我们将条件概率项 $\log P(x^{(i)} \mid y^{(i)})$ 根据 $y^{(i)}$ 的值进行分解。由于 $y^{(i)}$ 是二值的（0或1），我们可以使用 $y^{(i)}$ 作为指示函数：
 
-- 当 $y^{(i)} = 1$ 时， $\log p(x^{(i)} \mid y^{(i)}) = \log p(x^{(i)} \mid y^{(i)} = 1)$
-- 当 $y^{(i)} = 0$ 时， $\log p(x^{(i)} \mid y^{(i)}) = \log p(x^{(i)} \mid y^{(i)} = 0)$
+- 当 $y^{(i)} = 1$ 时， $\log P(x^{(i)} \mid y^{(i)}) = \log P(x^{(i)} \mid y^{(i)} = 1)$
+- 当 $y^{(i)} = 0$ 时， $\log P(x^{(i)} \mid y^{(i)}) = \log P(x^{(i)} \mid y^{(i)} = 0)$
 
 因此，求和项可以重写为：
 
 $$
-\sum_{i=1}^m \log p(x^{(i)} \mid y^{(i)}) = \sum_{i=1}^m \left[ y^{(i)} \log p(x^{(i)} \mid y=1) + (1-y^{(i)}) \log p(x^{(i)} \mid y=0) \right]
+\sum_{i=1}^m \log P(x^{(i)} \mid y^{(i)}) = \sum_{i=1}^m \left[ y^{(i)} \log P(x^{(i)} \mid y=1) + (1-y^{(i)}) \log P(x^{(i)} \mid y=0) \right]
 $$
 
 带入对数似然函数可得：
 
 $$
-L(\phi, \Sigma, \mu_0, \mu_1) = \sum_{i=1}^m \left[ y^{(i)} \log p(x^{(i)} \mid y=1) + (1-y^{(i)}) \log p(x^{(i)} \mid y=0) \right] + \sum_{i=1}^m \log p(y^{(i)})
+L(\phi, \Sigma, \mu_0, \mu_1) = \sum_{i=1}^m \left[ y^{(i)} \log P(x^{(i)} \mid y=1) + (1-y^{(i)}) \log P(x^{(i)} \mid y=0) \right] + \sum_{i=1}^m \log P(y^{(i)})
 $$
 
 # 代码讲解
@@ -175,7 +175,7 @@ def fit(self, X, y):
 $$
 \begin{aligned}
 \frac{\partial L(\phi, \Sigma, \mu_0, \mu_1)}{\partial \phi} 
-&= \frac{\partial \sum_{i=1}^m \log p(y^{(i)})}{\partial \phi} \\
+&= \frac{\partial \sum_{i=1}^m \log P(y^{(i)})}{\partial \phi} \\
 &= \frac{\partial \sum_{i=1}^m \log \phi^{y^{(i)}}(1 - \phi)^{1 - y^{(i)}}}{\partial \phi} \\
 &= \frac{\partial \sum_{i=1}^m y^{(i)} \log \phi + (1 - y^{(i)}) \log (1 - \phi)}{\partial \phi} \\
 &= \sum_{i=1}^m y^{(i)} \frac{1}{\phi} - (1 - y^{(i)}) \frac{1}{1 - \phi}
@@ -193,7 +193,7 @@ $$
 $$
 \begin{aligned}
 \frac{\partial L(\phi, \Sigma, \mu_0, \mu_1)}{\partial \Sigma} 
-&= \frac{\partial \sum_{i=1}^m y^{(i)} \log p(x^{(i)} | y^{(i)} = 1) + \sum_{i=1}^m (1 - y^{(i)}) \log p(x^{(i)} | y^{(i)} = 0)}{\partial \Sigma} \\
+&= \frac{\partial \sum_{i=1}^m y^{(i)} \log P(x^{(i)} | y^{(i)} = 1) + \sum_{i=1}^m (1 - y^{(i)}) \log P(x^{(i)} | y^{(i)} = 0)}{\partial \Sigma} \\
 &= \frac{\partial \sum_{i=1}^m \log \frac{1}{(2\pi)^{\frac{n}{2}} |\Sigma|^{\frac{1}{2}}} - \frac{1}{2} \sum_{i=1}^m (x^{(i)} - \mu_{y^{(i)}})^{\rm T} \Sigma^{-1}(x^{(i)} - \mu_{y^{(i)}})}{\partial \Sigma} \\
 &= \frac{\partial - \frac{m}{2} (n \log 2\pi + \log |\Sigma|) - \frac{1}{2} \sum_{i=1}^m (x^{(i)} - \mu_{y^{(i)}})^{\rm T} \Sigma^{-1}(x^{(i)} - \mu_{y^{(i)}})}{\partial \Sigma} \\
 &= - \frac{m}{2} \Sigma^{-1} - \frac{1}{2} \sum_{i=1}^m (x^{(i)} - \mu_{y^{(i)}})(x^{(i)} - \mu_{y^{(i)}})^{\rm T} (\Sigma^{-1})^2
@@ -211,7 +211,7 @@ $$
 $$
 \begin{aligned}
 \frac{\partial L(\phi, \Sigma, \mu_0, \mu_1)}{\partial \mu_1} 
-&= \frac{\partial \sum_{i=1}^m y^{(i)} \log p(x^{(i)} | y^{(i)} = 1)}{\partial \mu_1} \\
+&= \frac{\partial \sum_{i=1}^m y^{(i)} \log P(x^{(i)} | y^{(i)} = 1)}{\partial \mu_1} \\
 &= \frac{\partial \sum_{i=1}^m y^{(i)} \log \frac{1}{(2\pi)^{\frac{n}{2}} |\Sigma|^{\frac{1}{2}}} \exp(-\frac{1}{2}(x - \mu_1)^{\rm T} \Sigma^{-1}(x - \mu_1))}{\partial \mu_1} \\
 &= \sum_{i=1}^m y^{(i)} \Sigma^{-1}(x^{(i)} - \mu_1)
 \end{aligned}
@@ -254,25 +254,25 @@ def predict_proba(self, X):
 GDA 的核心是计算后验概率：
 
 $$
-P(y=1|x) = \frac{P(x|y=1)P(y=1)}{P(x|y=0)P(y=0) + P(x|y=1)P(y=1)}
+P(y=1 \mid x) = \frac{P(x \mid y=1)P(y=1)}{P(x \mid y=0)P(y=0) + P(x \mid y=1)P(y=1)}
 $$
 
 为了方便分类，我们用对数几率来求解：
 
 $$
-\delta(x) = \log \frac{P(y = 1|x)}{P(y = 0|x)} = \log \frac{P(x|y = 1)P(y = 1)}{P(x|y = 0)P(y = 0)} = \log \frac{P(y=1)}{P(y=0)} + \log \frac{P(x|y=1)}{P(x|y=0)}
+\delta(x) = \log \frac{P(y = 1 \mid x)}{P(y = 0 \mid x)} = \log \frac{P(x \mid y = 1)P(y = 1)}{P(x \mid y = 0)P(y = 0)} = \log \frac{P(y=1)}{P(y=0)} + \log \frac{P(x \mid y=1)}{P(x \mid y=0)}
 $$
 
 仔细观察上面的[先验条件](#先验假设)，其实我们假设了正例跟负例的协方差矩阵相同，因此条件概率密度公式可以写成：
 
 $$
-P(x|y = k) = \frac{1}{(2\pi)^{\frac{n}{2}}|\Sigma|^{\frac{1}{2}}} \exp\left(-\frac{1}{2}(x-\mu_k)^{\rm T}\Sigma^{-1}(x-\mu_k)\right)
+P(x \mid y = k) = \frac{1}{(2\pi)^{\frac{n}{2}}|\Sigma|^{\frac{1}{2}}} \exp\left(-\frac{1}{2}(x-\mu_k)^{\rm T}\Sigma^{-1}(x-\mu_k)\right)
 $$
 
 代入 $\delta(x)$ 的尾项可得：
 
 $$
-\log\frac{P(x|y=1)}{P(x|y=0)} = - \frac{1}{2}(x - \mu_1)^{\rm T}\Sigma^{-1}(x - \mu_1) + \frac{1}{2}(x - \mu_0)^{\rm T}\Sigma^{-1}(x - \mu_0)
+\log\frac{P(x \mid y=1)}{P(x \mid y=0)} = - \frac{1}{2}(x - \mu_1)^{\rm T}\Sigma^{-1}(x - \mu_1) + \frac{1}{2}(x - \mu_0)^{\rm T}\Sigma^{-1}(x - \mu_0)
 $$
 
 最后展开平方项并化简可得：

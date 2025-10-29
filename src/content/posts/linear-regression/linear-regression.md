@@ -103,7 +103,7 @@ def loss_func(w, b, data):
 均方损失函数的数学表达式如下：
 
 $$
-L = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
+L(w, b) = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
 $$
 
 其中：
@@ -155,7 +155,7 @@ $$
 我们先对 $w$ 求偏导，令误差 $e_i = y_i - (w x_i + b)$ ，那么：
 
 $$
-L = \frac{1}{n}\sum_{i=1}^n e_i^2
+L(w, b) = \frac{1}{n}\sum_{i=1}^n e_i^2
 $$
 
 对 $w$ 求导（分步）：
@@ -168,7 +168,7 @@ $$
 
 $$
 \begin{aligned}
-\frac{\partial L}{\partial w}
+\frac{\partial L(w, b)}{\partial w}
 &= \frac{1}{n}\sum_{i=1}^n 2 e_i \left(-x_i\right) = -\frac{2}{n}\sum_{i=1}^n e_i x_i \\
 &= -\frac{2}{n}\sum_{i=1}^n \bigl(y_i - (w x_i + b)\bigr) x_i
 \end{aligned}
@@ -178,7 +178,7 @@ $$
 
 $$
 \begin{aligned}
-\frac{\partial L}{\partial b}
+\frac{\partial L(w, b)}{\partial b}
 &= \frac{1}{n}\sum_{i=1}^n 2 e_i \left(-1\right) = -\frac{2}{n}\sum_{i=1}^n e_i \\
 &= -\frac{2}{n}\sum_{i=1}^n \bigl(y_i - (w x_i + b)\bigr)
 \end{aligned}

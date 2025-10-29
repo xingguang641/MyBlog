@@ -41,7 +41,7 @@ $$
 P(x) = \sum_{k=1}^K p_k \mathcal{N}(x|\mu_k,\Sigma_k)
 $$
 
-值得注意的是：高斯混合模型并不在意每个数据点究竟属于哪个类别（只是推导过程关注于单个数据点）。它想要做的事情是让多个高斯模型去拟合整个数据集，从而去预测新数据属于哪哪个高斯分布。
+值得注意的是：高斯混合模型并 **不在意** 每个数据点究竟属于哪个类别（只是推导过程关注于单个数据点）。它想要做的事情是让多个高斯模型去拟合整个数据集，从而去预测新数据属于哪哪个高斯分布。另外，高斯混合模型也 **不能确定** 究竟要用多少个高斯云（即高斯分布的图像）去拟合图像，因此要自己设置初始值 K。
 
 ![高斯混合模型图像](src\content\posts\gaussian-mixture-module\高斯混合模型1.jpg)
 
@@ -51,7 +51,7 @@ $$
 
 $$
 \begin{align*}
-L(\theta) &= \sum_{i=1}^{N} \log p(x_i) = \sum_{i=1}^{N} \log \sum_{k=1}^{K} p_k \mathcal{N}(x_i \mid \mu_k, \Sigma_k)
+L(\theta) &= \sum_{i=1}^{N} \log P(x_i) = \sum_{i=1}^{N} \log \sum_{k=1}^{K} p_k \mathcal{N}(x_i | \mu_k, \Sigma_k)
 \end{align*}
 $$
 
@@ -67,7 +67,7 @@ $$
 
 ## 证据下界
 
-我们可以先假设 $Z$ 服从的分布为 $Z \sim q(Z \mid \theta)$ ，于是有：
+我们可以先假设 $Z$ 服从的分布为 $Z \sim q(Z | \theta)$ ，于是有：
 
 $$
 \begin{align*}
@@ -76,13 +76,13 @@ $$
 \end{align*}
 $$
 
-两边同时关于 $Z \sim q(Z \mid \theta)$ 同时计算期望：
+两边同时关于 $Z \sim q(Z | \theta)$ 同时计算期望：
 
 $$
 \begin{align*}
 \log P(X | \theta) &= \sum_{Z} q(Z | \theta) \log \frac{P(X, Z | \theta)}{q(Z | \theta)} - \sum_{Z} q(Z | \theta) \log \frac{P(Z | X, \theta)}{q(Z | \theta)} \\
-&= \mathbb{E}_{Z \sim P(Z|X,\theta^{(t)})} [\log P(X, Z | \theta)] - \sum_{Z} q(Z | \theta) \log q(Z | \theta) + \operatorname{KL}(q(Z | \theta) \parallel P(Z | X, \theta)) \\
-&= \mathbb{E}_{Z \sim P(Z|X,\theta^{(t)})} [\log P(X, Z | \theta)] + H(q(Z | \theta)) + \operatorname{KL}(q(Z | \theta) \parallel P(Z | X, \theta)) \\
+&= \mathbb{E}_{Z \sim P(Z|X,\theta^{(t)})} \Big[ \log P(X, Z | \theta) \Big] - \sum_{Z} q(Z | \theta) \log q(Z | \theta) + \operatorname{KL}(q(Z | \theta) \parallel P(Z | X, \theta)) \\
+&= \mathbb{E}_{Z \sim P(Z|X,\theta^{(t)})} \Big[\log P(X, Z | \theta) \Big] + H(q(Z | \theta)) + \operatorname{KL}(q(Z | \theta) \parallel P(Z | X, \theta)) \\
 &= ELBO(q, \theta | X) + \operatorname{KL}(q(Z | \theta) \parallel P(Z | X, \theta))
 \end{align*}
 $$
@@ -95,8 +95,8 @@ $$
 
 EM 算法本质上是通过最大化 ELBO 来间接最大化对数似然函数。具体步骤分为 E-step 和 M-step。
 
-- 寻找使得 KL 散度最小的 $q^{(t)}(Z) = P\left( Z | X, \theta^{(t)} \right)$ ，使得 ELBO 进一步逼近 $L(\theta)$
-- 寻找 $ELBO(\theta | q^{(t)}, X)$ 的极大值点作为新参数 $\theta^{(t+1)}$
+- 寻找使得 KL 散度最小的 $q^{(t+1)}(Z) = P\left( Z | X, \theta^{(t)} \right)$ ，使得 ELBO 进一步逼近 $L(\theta)$
+- 寻找 $ELBO(\theta | q^{(t+1)}, X)$ 的极大值点作为新参数 $\theta^{(t+1)}$
 
 两者交替迭代，最终收敛到局部最优解。
 
@@ -106,27 +106,27 @@ $$
 L(\theta) - \text{ELBO}(q,\theta | X) = \text{KL}(q \parallel P(Z | X,\theta))
 $$
 
-要使 ELBO 逼近 $L(\theta)$ ，就要让 KL 散度最小，先通过当前参数 $\theta^{(t)}$ 估计 $q^{(t)}$ ，得 $q^{(t)}(Z) = P\left(Z | X, \theta^{(t)}\right)$ ，于是有：
+要使 ELBO 逼近 $L(\theta)$ ，就要让 KL 散度最小，先通过当前参数 $\theta^{(t)}$ 估计 $q^{(t+1)}$ ，得 $q^{(t+1)}(Z) = P\left(Z | X, \theta^{(t)}\right)$ ，于是有：
 
 $$
 \begin{align*}
-L(\theta) &= \log P(X | \theta) = \mathbb{E}_{Z \sim P(Z | X, \theta^{(t)})} \left[ \log P(X | \theta) \right] \\
-&= Q(\theta \mid \theta^{(t)}) + \text{KL}(P(Z | X, \theta^{(t)}) \parallel P(Z | X, \theta))
+L(\theta) &= \log P(X | \theta) = \mathbb{E}_{Z \sim P(Z | X, \theta^{(t)})} \Big[ \log P(X | \theta) \Big] \\
+&= Q(\theta | \theta^{(t)}) + \text{KL}(P(Z | X, \theta^{(t)}) \parallel P(Z | X, \theta))
 \end{align*}
 $$
 
-这里我们将 $ELBO(\theta | q^{(t)}, X)$ 记为 $Q(\theta \mid \theta^{(t)})$ ：
+这里我们将 $ELBO(\theta | q^{(t+1)}, X)$ 记为 $Q(\theta | \theta^{(t)})$ ：
 
 $$
-Q(\theta \mid \theta^{(t)}) = \mathbb{E}_{Z \sim P(Z | X,\theta^{(t)})} \left[ \log P(X,Z | \theta) \right] + H(P(Z | X,\theta^{(t)}))
+Q(\theta | \theta^{(t)}) = \mathbb{E}_{Z \sim P(Z | X,\theta^{(t)})} \Big[ \log P(X,Z | \theta) \Big] + H(P(Z | X,\theta^{(t)}))
 $$
 
 ### M-step
 
-由于信息熵为常数项，因此最大化 $Q(\theta \mid \theta^{(t)})$ 等价于将对数似然 $\log P(X, Z | \theta)$ 的期望最大化：
+由于信息熵为常数项，因此最大化 $Q(\theta | \theta^{(t)})$ 等价于将对数似然 $\log P(X, Z | \theta)$ 的期望最大化：
 
 $$
-\theta^{(t+1)} = \arg \max_{\theta} Q(\theta \mid \theta^{(t)}) = \arg \max_{\theta} \mathbb{E}_{Z \sim P(Z|X,\theta^{(t)})} \left[ \log P(X, Z | \theta) \right]
+\theta^{(t+1)} = \arg \max_{\theta} Q(\theta | \theta^{(t)}) = \arg \max_{\theta} \mathbb{E}_{Z \sim P(Z|X,\theta^{(t)})} \Big[ \log P(X, Z | \theta) \Big]
 $$
 
 ## 理论推导
@@ -139,45 +139,45 @@ $$
 
 $$
 \begin{align*}
-L(\theta) &= \sum_{X} \log P(X \mid \theta) = \sum_{X} \log \left[ \sum_{Z} P(X,Z \mid \theta) \right] \\
-&= \sum_{X} \log \left[ \sum_{Z} q^{(t)}(Z)\, \frac{P(X,Z \mid \theta)}{q^{(t)}(Z)} \right] = \sum_{X} \log \mathbb{E}_{Z\sim q^{(t)}(Z)} \left[ \frac{P(X,Z \mid \theta)}{q^{(t)}(Z)} \right] \\
-&\ge \sum_{X} \mathbb{E}_{Z\sim q^{(t)}(Z)} \left[ \log \frac{P(X,Z \mid \theta)}{q^{(t)}(Z)} \right] = \sum_{X}\sum_{Z} q^{(t)}(Z) \log \frac{P(X,Z \mid \theta)}{q^{(t)}(Z)}.
+L(\theta^{(t)}) &= \sum_{X} \log P(X | \theta^{(t)}) = \sum_{X} \log \left[ \sum_{Z} P(X,Z | \theta^{(t)}) \right] \\
+&= \sum_{X} \log \left[ \sum_{Z} q^{(t+1)}(Z)\, \frac{P(X,Z | \theta^{(t)})}{q^{(t+1)}(Z)} \right] = \sum_{X} \log \mathbb{E}_{Z\sim q^{(t+1)}(Z)} \Big[ \frac{P(X,Z | \theta^{(t)})}{q^{(t+1)}(Z)} \Big] \\
+&\ge \sum_{X} \mathbb{E}_{Z\sim q^{(t+1)}(Z)} \Big[ \log \frac{P(X,Z | \theta^{(t)})}{q^{(t+1)}(Z)} \Big] = \sum_{X}\sum_{Z} q^{(t+1)}(Z) \log \frac{P(X,Z | \theta^{(t)})}{q^{(t+1)}(Z)}
 \end{align*}
 $$
 
 根据琴声不等式的取等条件我们可知：
 
 $$
-\frac{P(X, Z \mid \theta^{(t)})}{q^{(t)}(Z)} = C \quad \text{where } \sum_{Z} q^{(t)}(Z) = 1
+\frac{P(X, Z | \theta^{(t)})}{q^{(t+1)}(Z)} = C \quad \text{where } \sum_{Z} q^{(t+1)}(Z) = 1
 $$
 
-将 $q^{(t)}(Z)$ 乘到等式的右侧可得：
+将 $q^{(t+1)}(Z)$ 乘到等式的右侧可得：
 
 $$
-P(X, Z \mid \theta^{(t)}) = C \cdot q^{(t)}(Z)
+P(X, Z | \theta^{(t)}) = C \cdot q^{(t+1)}(Z)
 $$
 
-因为 $q^{(t)}(Z)$ 对变量 $Z$ 的积分为 1，因此我们将两边同时对 $Z$ 进行积分：
+因为 $q^{(t+1)}(Z)$ 对变量 $Z$ 的积分为 1，因此我们将两边同时对 $Z$ 进行积分：
 
 $$
-\sum_{Z} P(X, Z \mid \theta^{(t)}) = \sum_{Z} C \cdot q^{(t)}(Z) = C \sum_{Z} q^{(t)}(Z) = C
+\sum_{Z} P(X, Z | \theta^{(t)}) = \sum_{Z} C \cdot q^{(t+1)}(Z) = C \sum_{Z} q^{(t+1)}(Z) = C
 $$
 
 将上式重新代入琴声不等式的取等条件中：
 
 $$
-q^{(t)}(Z) = \frac{P(X, Z \mid \theta^{(t)})}{\sum_{Z} P(X, Z \mid \theta^{(t)})} = \frac{P(X, Z \mid \theta^{(t)})}{P(X \mid \theta^{(t)})} = P(Z \mid X, \theta^{(t)})
+q^{(t+1)}(Z) = \frac{P(X, Z | \theta^{(t)})}{\sum_{Z} P(X, Z | \theta^{(t)})} = \frac{P(X, Z | \theta^{(t)})}{P(X | \theta^{(t)})} = P(Z | X, \theta^{(t)})
 $$
 
-于是我们就轻松求解出 E-step 中的 $q^{(t)}(Z)$ 了。
+于是我们就轻松求解出 E-step 中的 $q^{(t+1)}(Z)$ 了。
 
 由于不等式已经取等，因此有：
 
 $$
 \begin{align*}
-L(\theta) &= \sum_{X} \sum_{Z} q^{(t)}(Z) \log \left[ \frac{P(X, Z \mid \theta^{(t)})}{q^{(t)}(Z)} \right] \\
-&= \sum_{X, Z} q^{(t)}(Z) \log P(X, Z \mid \theta^{(t)}) - \sum_{X, Z} q^{(t)}(Z) \log q^{(t)}(Z) \\
-&= \mathbb{E}_{Z\sim q^{(t)}(Z)} \left[ L(X, Z \mid \theta^{(t)}) \right] - \sum_{X, Z} P(Z \mid X, \theta^{(t)}) \log P(Z \mid X, \theta^{(t)})
+L(\theta^{(t)}) &= \sum_{X} \sum_{Z} q^{(t+1)}(Z) \log \left[ \frac{P(X, Z | \theta^{(t)})}{q^{(t+1)}(Z)} \right] \\
+&= \sum_{X, Z} q^{(t+1)}(Z) \log P(X, Z | \theta^{(t)}) - \sum_{X, Z} q^{(t+1)}(Z) \log q^{(t+1)}(Z) \\
+&= \mathbb{E}_{Z\sim q^{(t+1)}(Z)} \Big[ L(X, Z | \theta^{(t)}) \Big] - \sum_{X, Z} P(Z | X, \theta^{(t)}) \log P(Z | X, \theta^{(t)})
 \end{align*}
 $$
 
@@ -185,25 +185,214 @@ $$
 
 $$
 \begin{align*}
-\theta^{(t+1)} &= \arg \max_{\theta} \sum_{X} \sum_{Z} q^{(t)}(Z) \log \left[ \frac{P(X, Z \mid \theta^{(t)})}{q^{(t)}(Z)} \right] \\
-&= \arg \max_{\theta} \mathbb{E}_{Z\sim P(Z \mid X, \theta^{(t)})} \left[ \log P(X, Z | \theta) \right]
+\theta^{(t+1)} &= \arg \max_{\theta} \sum_{X} \sum_{Z} q^{(t+1)}(Z) \log \left[ \frac{P(X, Z | \theta)}{q^{(t+1)}(Z)} \right] \\
+&= \arg \max_{\theta} \mathbb{E}_{Z\sim P(Z | X, \theta)} \Big[ \log P(X, Z | \theta^{(t)}) \Big]
 \end{align*}
 $$
 
 ## 收敛性证明
 
-EM 算法的流程并不复杂，但是还有两个问题需要我们思考：
+EM 算法的流程并不复杂，但是还有一个很重要的问题需要我们思考：EM 算法收敛吗？如果 EM 算法无法正常收敛，那么这个算法的过程无论多么精美都没用。就让我们再证明一下 EM 算法的收敛性吧。
 
-- EM 算法能保证收敛吗？
-- EM 算法如果收敛，那能保证收敛到全局最大值吗？
+根据单调有界原理，如果数列单调递增且有界，那么该数列收敛。
 
-首先我们来看第一个问题：要证明 EM 算法收敛，我们则需要证明对数似然函数在迭代的过程中一直在增大。形式地说：
+- 首先我们来看看有界性。
 
+定义似然函数：
 
+$$
+L(\theta) = \sum_{X} \log P(X | \theta)
+$$
+
+由于概率值有界，而有界函数的有限次线性组合仍然有界，因此 $L(\theta)$ 有界。
+
+- 然后我们来看看单调性。
+
+不妨设函数 $F(q, \theta)$ ：
+
+$$
+F(q, \theta) = \sum_{X}\sum_{Z} q(Z) \log \frac{P(X,Z | \theta)}{q(Z)}
+$$
+
+其中 $q(Z)$ 可以是任意分布。
+
+在 EM 算法执行之前，根据琴声不等式，对于任意的 $q$ ，有下列关系：
+
+$$
+L(\theta^{(t)}) \geq F(q, \theta^{(t)})
+$$
+
+经过 E-step 的迭代后，因为 E-step 的目的就是让琴声不等式取等，所以有：
+
+$$
+L(\theta^{(t)}) \geq F(q^{(t+1)}, \theta^{(t)})
+$$
+
+因为 M-step 的目标如下：
+
+$$
+\theta^{(t+1)} = \arg \max_{\theta} F(q^{(t+1)}, \theta)
+$$
+
+显然有下列关系：
+
+$$
+F(q^{(t+1)}, \theta^{(t+1)}) \geq F(q^{(t+1)}, \theta^{(t)})
+$$
+
+回到最上面的关系，令 $q = q^{(t+1)}$
+
+$$
+L(\theta^{(t+1)}) \geq F(q^{(t+1)}, \theta^{(t+1)})
+$$
+
+将上面所有步骤组成不等式链可得：
+
+$$
+L(\theta^{(t+1)}) \ge F(q^{(t+1)}, \theta^{(t+1)}) \ge F(q^{(t+1)}, \theta^{(t)}) = L(\theta^{(t)})
+$$
+
+因此函数 $L(\theta)$ 具有单调性。
 
 # 代码实现
 
+准备了这么多，终于可以来看一下 GMM 的代码了。
 
+```py frame="code" title="main.py"
+import numpy as np
+np.random.seed(0)
+X1 = np.random.multivariate_normal([0,0], [[1,0],[0,1]], 100)
+X2 = np.random.multivariate_normal([5,5], [[1,0],[0,1]], 100)
+X = np.vstack([X1, X2])
+
+
+# 计算多维高斯概率密度函数
+def gaussian_pdf(x, mean, cov):
+    D = x.shape[0]
+    cov_det = np.linalg.det(cov)
+    cov_inv = np.linalg.inv(cov)
+    norm_const = 1.0 / np.sqrt((2 * np.pi)**D * cov_det)
+    diff = x - mean
+    return norm_const * np.exp(-0.5 * diff.T @ cov_inv @ diff)
+
+class GMM:
+    def __init__(self, n_components, tol=1e-6, max_iter=100):
+        self.K = n_components
+        self.tol = tol
+        self.max_iter = max_iter
+
+    def fit(self, X):
+        # 初始化参数
+        N, _ = X.shape
+        self.p = np.ones(self.K) / self.K
+        self.mu = X[np.random.choice(N, self.K, replace=False)]
+        self.Sigma = np.array([np.cov(X, rowvar=False)] * self.K)
+
+        log_likelihood_old = 0
+        for _ in range(self.max_iter):
+            # E-step
+            gamma = np.zeros((N, self.K))
+            for i in range(N):
+                for k in range(self.K):
+                    gamma[i, k] = self.p[k] * gaussian_pdf(X[i], self.mu[k], self.Sigma[k])
+                gamma[i, :] /= np.sum(gamma[i, :])
+
+            # M-step
+            N_k = np.sum(gamma, axis=0)
+            self.p = N_k / N
+            self.mu = (gamma.T @ X) / N_k[:, np.newaxis]
+            for k in range(self.K):
+                diff = X - self.mu[k]
+                self.Sigma[k] = (gamma[:, k][:, np.newaxis] * diff).T @ diff / N_k[k]
+
+            # 计算对数似然函数判断是否收敛
+            log_likelihood = 0
+            for i in range(N):
+                temp = 0
+                for k in range(self.K):
+                    temp += self.p[k] * gaussian_pdf(X[i], self.mu[k], self.Sigma[k])
+                log_likelihood += np.log(temp)
+
+            if np.abs(log_likelihood - log_likelihood_old) < self.tol:
+                break
+            log_likelihood_old = log_likelihood
+
+        return self
+
+    # 软预测函数
+    def predict_proba(self, X):
+        N = X.shape[0]
+        gamma = np.zeros((N, self.K))
+        for i in range(N):
+            for k in range(self.K):
+                gamma[i, k] = self.p[k] * gaussian_pdf(X[i], self.mu[k], self.Sigma[k])
+            gamma[i, :] /= np.sum(gamma[i, :])
+        return gamma
+
+    # 硬预测函数
+    def predict(self, X):
+        return np.argmax(self.predict_proba(X), axis=1)
+
+
+# 执行代码
+if __name__ == "__main__":
+    gmm = GMM(n_components=2)
+    gmm.fit(X)
+
+    labels = gmm.predict(X)
+    print("混合系数 p:", gmm.p)
+    print("均值 mu:", gmm.mu)
+    print("协方差 Sigma:", gmm.Sigma)
+```
+
+## E-step
+
+E-step 的目标是计算每个数据点属于每个分量的 **后验概率** ，因此有：
+
+$$
+\gamma_{ik} = P(z_{ik} = 1 \mid x_i, \theta^{(t)}) = \frac{p_k^{(t)} \, \mathcal{N}(x_i \mid \mu_k^{(t)}, \Sigma_k^{(t)})}{\sum_{j=1}^K p_j^{(t)} \, \mathcal{N}(x_i \mid \mu_j^{(t)}, \Sigma_j^{(t)})}
+$$
+
+这里 $\gamma_{ik}$ 通常称为 **responsibility** ，表示第 $K$ 个高斯对 $x_i$ 的责任。
+
+```py showLineNumbers
+gamma = np.zeros((N, self.K))
+for i in range(N):
+    for k in range(self.K):
+        gamma[i, k] = self.p[k] * gaussian_pdf(X[i], self.mu[k], self.Sigma[k])
+    gamma[i, :] /= np.sum(gamma[i, :])
+```
+
+## M-step
+
+M-step 是最大化 期望的完整数据对数似然：
+
+$$
+Q(\theta | \theta^{(t)}) = \sum_{i=1}^N \sum_{k=1}^K \gamma_{ik} \, \log \big( p_k \, \mathcal{N}(x_i \mid \mu_k, \Sigma_k) \big)
+$$
+
+根据定义可以知道 **混合系数$p_k$** 、 **均值$\mu_k$** 和 **协方差$Sigma_k$** 的更新公式：
+
+$$
+p_k^{(t+1)} = \frac{1}{N} \sum_{i=1}^N \gamma_{ik}
+$$
+
+$$
+\mu_k^{(t+1)} = \frac{\sum_{i=1}^N \gamma_{ik} x_i}{\sum_{i=1}^N \gamma_{ik}}
+$$
+
+$$
+\Sigma_k^{(t+1)} = \frac{\sum_{i=1}^N \left[ \gamma_{ik} (x_i - \mu_k^{(t+1)}) \right]^{\rm T} (x_i - \mu_k^{(t+1)})}{\sum_{i=1}^N \gamma_{ik}}
+$$
+
+```py showLineNumbers
+N_k = np.sum(gamma, axis=0)
+self.p = N_k / N
+self.mu = (gamma.T @ X) / N_k[:, np.newaxis]
+for k in range(self.K):
+    diff = X - self.mu[k]
+    self.Sigma[k] = (gamma[:, k][:, np.newaxis] * diff).T @ diff / N_k[k]
+```
 
 # 参考文献
 
