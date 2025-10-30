@@ -225,7 +225,7 @@ $$
 经过 E-step 的迭代后，因为 E-step 的目的就是让琴声不等式取等，所以有：
 
 $$
-L(\theta^{(t)}) \geq F(q^{(t+1)}, \theta^{(t)})
+L(\theta^{(t)}) = F(q^{(t+1)}, \theta^{(t)})
 $$
 
 因为 M-step 的目标如下：
@@ -368,7 +368,7 @@ for i in range(N):
 M-step 是最大化 期望的完整数据对数似然：
 
 $$
-Q(\theta | \theta^{(t)}) = \sum_{i=1}^N \sum_{k=1}^K \gamma_{ik} \, \log \big( p_k \, \mathcal{N}(x_i \mid \mu_k, \Sigma_k) \big)
+Q(\theta \mid \theta^{(t)}) = \sum_{i=1}^N \sum_{k=1}^K \gamma_{ik} \, \log \big( p_k \, \mathcal{N}(x_i \mid \mu_k, \Sigma_k) \big)
 $$
 
 根据定义可以知道 **混合系数$p_k$** 、 **均值$\mu_k$** 和 **协方差$Sigma_k$** 的更新公式：
