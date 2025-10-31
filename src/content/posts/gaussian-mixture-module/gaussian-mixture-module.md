@@ -111,7 +111,7 @@ $$
 $$
 \begin{align*}
 L(\theta) &= \log P(X | \theta) = \mathbb{E}_{Z \sim P(Z | X, \theta^{(t)})} \Big[ \log P(X | \theta) \Big] \\
-&= Q(\theta | \theta^{(t)}) + \text{KL}(P(Z | X, \theta^{(t)}) \parallel P(Z | X, \theta))
+&= ELBO(\theta | q^{(t+1)}, X) + \text{KL}(P(Z | X, \theta^{(t)}) \parallel P(Z | X, \theta))
 \end{align*}
 $$
 
@@ -169,7 +169,7 @@ $$
 q^{(t+1)}(Z) = \frac{P(X, Z | \theta^{(t)})}{\sum_{Z} P(X, Z | \theta^{(t)})} = \frac{P(X, Z | \theta^{(t)})}{P(X | \theta^{(t)})} = P(Z | X, \theta^{(t)})
 $$
 
-于是我们就轻松求解出 E-step 中的 $q^{(t+1)}(Z)$ 了。
+于是我们就轻松地求解出 E-step 中的 $q^{(t+1)}(Z)$ 了。
 
 由于不等式已经取等，因此有：
 
@@ -365,13 +365,13 @@ for i in range(N):
 
 ## M-step
 
-M-step 是最大化 期望的完整数据对数似然：
+M-step 是最大化 **期望的完整数据对数似然** ：
 
 $$
 Q(\theta \mid \theta^{(t)}) = \sum_{i=1}^N \sum_{k=1}^K \gamma_{ik} \, \log \big( p_k \, \mathcal{N}(x_i \mid \mu_k, \Sigma_k) \big)
 $$
 
-根据定义可以知道 **混合系数$p_k$** 、 **均值$\mu_k$** 和 **协方差$Sigma_k$** 的更新公式：
+将似然函数对每个参数分别求偏导可得 **混合系数$p_k$** 、 **均值$\mu_k$** 和 **协方差$Sigma_k$** 的更新公式：
 
 $$
 p_k^{(t+1)} = \frac{1}{N} \sum_{i=1}^N \gamma_{ik}
