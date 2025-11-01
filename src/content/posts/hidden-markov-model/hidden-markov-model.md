@@ -7,7 +7,7 @@ category: ML Model
 draft: false
 ---
 
-> 写在前面：隐马尔可夫模型是机器学习基本模型中的第二个大难点，并且本篇博客不仅要讲解隐马尔可夫模型，同时也会把最大熵马尔可夫模型一并搞定（因为 MEMM 是为了解决 HMM 的一些痛点而产生的），因此综合难度较大。
+> 写在前面：隐马尔可夫模型是机器学习基本模型中的第二个大难点，也是我们讲到的第一个概率图模型。
 
 # 隐马尔可夫模型基本原理
 
@@ -603,7 +603,7 @@ $$
 
 # 隐马尔可夫模型代码讲解
 
-虽然 HMM 的代码比之前所有模型都要长，但其实就是一些简单的函数，原理已在上文中讲清。
+虽然 HMM 的代码比之前所有模型都要长，但其实就是一些简单的函数，原理已在上文中讲过。
 
 ```py frame="code" title="main.py"
 import numpy as np
@@ -751,6 +751,8 @@ if __name__ == '__main__':
 
 ## 计算问题
 
+这个部分的代码可以观看[上面的讲解](#计算问题)对照学习。
+
 ```py showLineNumbers
 # 发射概率
 def _emission_logprob(self, obs):
@@ -797,9 +799,9 @@ def score(self, obs):
     return float(_logsumexp(alpha[-1]))
 ```
 
-这个部分的代码可以观看[上面的讲解](#计算问题)对照学习。
-
 ## 学习问题
+
+这个部分的代码可以观看[上面的讲解](#baum-welch-算法)对照学习。
 
 ```py showLineNumbers
 def fit(self, sequences, max_iter=100, tol=1e-4, verbose=False):
@@ -842,9 +844,9 @@ def fit(self, sequences, max_iter=100, tol=1e-4, verbose=False):
     return self
 ```
 
-这个部分的代码可以观看[上面的讲解](#baum-welch-算法)对照学习。
-
 ## 预测问题
+
+这个部分的代码可以观看[上面的讲解](#viterbi-算法)对照学习。
 
 ```py showLineNumbers
 def viterbi(self, obs):
@@ -866,23 +868,9 @@ def viterbi(self, obs):
     return states
 ```
 
-这个部分的代码可以观看[上面的讲解](#viterbi-算法)对照学习。
-
-# 最大熵马尔可夫模型基本原理
-
-
-
-# 最大熵马尔可夫模型实现难点
-
-
-
-# 最大熵马尔可夫模型代码讲解
-
-
-
 # 深层问题思考
 
-1. BW 算法是特殊的 EM 算法，它究竟特殊在哪里？
+1. HMM 中用到的 BW 算法是特殊的 EM 算法，它究竟特殊在哪里？
 
 HMM 的 Baum–Welch 算法是 **EM 算法的一个特例** ，它特殊的地方在于它的 **隐变量结构** 和 **E 步的计算方式** 。
 
@@ -900,8 +888,6 @@ $$
 
 # 参考文献
 
-## 隐马尔可夫模型
-
 1. [机器学习-12-隐马尔可夫模型HMM](https://www.cnblogs.com/Cnoized/p/18916857)
 
 2. [隐马尔可夫模型](https://zhuanlan.zhihu.com/p/28412002248)
@@ -917,6 +903,3 @@ $$
 7. [【机器学习】马尔可夫模型与隐马尔科夫模型](https://blog.csdn.net/m0_53700832/article/details/140442722)
 
 8. [隐马尔可夫模型（HMM）及其三个基本问题](https://sm1les.com/2019/04/10/hidden-markov-model/)
-
-## 最大熵马尔可夫模型
-
