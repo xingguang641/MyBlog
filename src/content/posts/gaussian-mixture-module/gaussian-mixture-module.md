@@ -102,6 +102,10 @@ EM 算法本质上是通过最大化 ELBO 来间接最大化对数似然函数�
 
 ### E-step
 
+> E-step 的核心是求解对数似然函数的期望
+
+将上面的式子稍微变形：
+
 $$
 L(\theta) - \text{ELBO}(q,\theta | X) = \text{KL}(q \parallel P(Z | X,\theta))
 $$
@@ -123,6 +127,8 @@ $$
 
 ### M-step
 
+> M-step 的核心是最大化对数似然函数的期望
+
 由于信息熵为常数项，因此最大化 $Q(\theta | \theta^{(t)})$ 等价于将对数似然 $\log P(X, Z | \theta)$ 的期望最大化：
 
 $$
@@ -134,6 +140,8 @@ $$
 > 以下推导部分参考自该视频
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=1400527903&bvid=BV1Q6421u7qb&cid=1448856301&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+### E-step
 
 我们先用 **琴声不等式** （Jensen's inequality）放缩的方式求解出 ELBO：
 
@@ -171,6 +179,8 @@ $$
 
 于是我们就轻松地求解出 E-step 中的 $q^{(t+1)}(Z)$ 了。
 
+### M-step
+
 由于不等式已经取等，因此有：
 
 $$
@@ -196,7 +206,7 @@ EM 算法的流程并不复杂，但是还有一个很重要的问题需要我�
 
 根据单调有界原理，如果数列单调递增且有界，那么该数列收敛。
 
-- 首先我们来看看有界性。
+> 首先我们来看看有界性
 
 定义似然函数：
 
@@ -204,9 +214,9 @@ $$
 L(\theta) = \sum_{X} \log P(X | \theta)
 $$
 
-由于概率值有界，而有界函数的有限次线性组合仍然有界，因此 $L(\theta)$ 有界。
+由于概率值有界，而有界函数的有限次线性组合仍然有界， $L(\theta)$ 有界。
 
-- 然后我们来看看单调性。
+> 然后我们来看看单调性
 
 不妨设函数 $F(q, \theta)$ ：
 
@@ -347,13 +357,7 @@ if __name__ == "__main__":
 
 ## E-step
 
-E-step 的目标是计算每个数据点属于每个分量的 **后验概率** ，因此有：
-
-$$
-\gamma_{ik} = P(z_{ik} = 1 \mid x_i, \theta^{(t)}) = \frac{p_k^{(t)} \, \mathcal{N}(x_i \mid \mu_k^{(t)}, \Sigma_k^{(t)})}{\sum_{j=1}^K p_j^{(t)} \, \mathcal{N}(x_i \mid \mu_j^{(t)}, \Sigma_j^{(t)})}
-$$
-
-这里 $\gamma_{ik}$ 通常称为 **responsibility** ，表示第 $K$ 个高斯对 $x_i$ 的责任。
+下面给出 E-step 的代码。
 
 ```py showLineNumbers
 gamma = np.zeros((N, self.K))
@@ -363,9 +367,28 @@ for i in range(N):
     gamma[i, :] /= np.sum(gamma[i, :])
 ```
 
+E-step 的目标是计算每个数据点属于每个分量的 **后验概率** ，因此有：
+
+$$
+\gamma_{ik} = P(z_{ik} = 1 \mid x_i, \theta^{(t)}) = \frac{p_k^{(t)} \, \mathcal{N}(x_i \mid \mu_k^{(t)}, \Sigma_k^{(t)})}{\sum_{j=1}^K p_j^{(t)} \, \mathcal{N}(x_i \mid \mu_j^{(t)}, \Sigma_j^{(t)})}
+$$
+
+这里 $\gamma_{ik}$ 通常称为 **responsibility** ，表示第 $K$ 个高斯对 $x_i$ 的责任。
+
 ## M-step
 
-M-step 是最大化 **期望的完整数据对数似然** ：
+下面给出 M-step 的代码。
+
+```py showLineNumbers
+N_k = np.sum(gamma, axis=0)
+self.p = N_k / N
+self.mu = (gamma.T @ X) / N_k[:, np.newaxis]
+for k in range(self.K):
+    diff = X - self.mu[k]
+    self.Sigma[k] = (gamma[:, k][:, np.newaxis] * diff).T @ diff / N_k[k]
+```
+
+M-step 的目的则是最大化 **期望的完整数据对数似然** ：
 
 $$
 Q(\theta \mid \theta^{(t)}) = \sum_{i=1}^N \sum_{k=1}^K \gamma_{ik} \, \log \big( p_k \, \mathcal{N}(x_i \mid \mu_k, \Sigma_k) \big)
@@ -385,16 +408,19 @@ $$
 \Sigma_k^{(t+1)} = \frac{\sum_{i=1}^N \left[ \gamma_{ik} (x_i - \mu_k^{(t+1)}) \right]^{\rm T} (x_i - \mu_k^{(t+1)})}{\sum_{i=1}^N \gamma_{ik}}
 $$
 
-```py showLineNumbers
-N_k = np.sum(gamma, axis=0)
-self.p = N_k / N
-self.mu = (gamma.T @ X) / N_k[:, np.newaxis]
-for k in range(self.K):
-    diff = X - self.mu[k]
-    self.Sigma[k] = (gamma[:, k][:, np.newaxis] * diff).T @ diff / N_k[k]
-```
-
 # 参考文献
+
+## EM 算法
+
+1. [EM算法的理解和详细推导](https://jaredddddd.github.io/2024/01/01/EM/)
+
+2. [深入理解EM算法（ELBO+KL形式）](https://zhuanlan.zhihu.com/p/365641813)
+
+3. [深入剖析EM算法：原理、推导与应用](https://blog.csdn.net/2501_90186640/article/details/147234092)
+
+4. [EM算法详解](https://luyiyun.github.io/2020/12/08/methods/methods-em/)
+
+5. [EM（最大期望）算法推导、GMM的应用与代码实现](https://www.cnblogs.com/qizhou/p/13100817.html)
 
 ## 高斯混合模型
 
@@ -419,15 +445,3 @@ for k in range(self.K):
 10. [GMM (Gaussian Mixture Model)](https://aandds.com/blog/gmm.html)
 
 11. [【ScikitLearn】高斯混合模型](https://scikit-learn.cn/stable/modules/mixture.html)
-
-## EM 算法
-
-1. [EM算法的理解和详细推导](https://jaredddddd.github.io/2024/01/01/EM/)
-
-2. [深入理解EM算法（ELBO+KL形式）](https://zhuanlan.zhihu.com/p/365641813)
-
-3. [深入剖析EM算法：原理、推导与应用](https://blog.csdn.net/2501_90186640/article/details/147234092)
-
-4. [EM算法详解](https://luyiyun.github.io/2020/12/08/methods/methods-em/)
-
-5. [EM（最大期望）算法推导、GMM的应用与代码实现](https://www.cnblogs.com/qizhou/p/13100817.html)

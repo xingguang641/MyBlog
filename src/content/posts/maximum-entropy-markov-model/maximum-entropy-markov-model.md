@@ -108,7 +108,7 @@ $$
 上式便为 MaxEnt 中需要满足的约束，给定 $n$ 个特征函数 $f_i(x, y)$ ，则有 $n$ 个约束条件，用 $C$ 表示满足约束的模型集合：
 
 $$
-C = \{ P|\mathbb{E}_{P}(f_i) = \mathbb{E}_{\bar{P}}(_i), I = 1, 2, \ldots, n \}
+C = \{ P|\mathbb{E}_{P}\big[f_i\big] = \mathbb{E}_{\bar{P}}\big[f_i\big], I = 1, 2, \ldots, n \}
 $$
 
 从满足约束的模型集合 $C$ 中找到使得 $P(Y|X)$ 的熵最大的即为 MaxEnt 模型了。
@@ -130,11 +130,8 @@ $$
 给定数据集 $\{(x_i, y_i)\}_{i=1}^N$ ，特征函数 $f_i(x, y) \quad (i = 1, 2 \ldots, n)$ ，根据经验分布得到满足约束集的模型集合：
 
 $$
-\min_{P \in C} \sum_{x,y} \bar{P}(x) P(y|x) \log P(y|x)
-$$
-
-$$
 \begin{align*}
+\min_{P \in C} & \sum_{x,y} \bar{P}(x) P(y|x) \log P(y|x) \\
 \text{s.t.} \quad & \mathbb{E}_p\big[f_i\big] = \mathbb{E}_{\bar{P}}\big[f_i\big] \\
 & \sum_y P(y|x) = 1
 \end{align*}
@@ -252,7 +249,7 @@ $$
 L_{\bar{P}}(P_w) = \sum_{x, y} \bar{P}(x, y) \log P(y|x)
 $$
 
-将 $P_w(y|x)$ 带入上述公式可得：
+将上文得到的 $P_w(y|x)$ 的表达式带入对数似然函数可得：
 
 $$
 L_{\bar{P}}(P_w) = \sum_{x, y} \bar{P}(x, y) \sum_{i=1}^{n}w_if_i(x, y) - \sum_x \bar{P}(x) \log Z_w(x)
@@ -270,13 +267,13 @@ $$
 
 其中 $N$ 式可能的状态数， $M$ 是可能的观测数。
 
-$O$ 是长度为 $T$ 的观测序列， $I$ 是对应的状态序列：
+$O$ 是长度为 $T$ 的 **观测序列** ， $I$ 是对应的 **状态序列** ：
 
 $$
 O = \{ o_1, o_2, \ldots, o_T \}, I = \{ i_1, i_2, \ldots, i_T \}
 $$
 
-在已知观测序列 $O$ 的条件下，状态序列为 $I$ 的概率为：
+在已知观测序列 $O$ 的条件下，状态序列为 $I$ 的概率为（下面用到了最大熵模型的结论）：
 
 $$
 \begin{align*}
@@ -300,15 +297,227 @@ $$
 
 # 最大熵马尔可夫模型实现难点
 
+与 HMM 相同，要想构建出 MEMM，就必须要解决以下三个问题：
 
+- 计算问题：在给定模型参数 $w_k(k = 1, 2, \ldots, K)$ 、观测序列 $O = (o_1, o_2, \ldots, o_T)$ 和状态序列 $I = (i_1, i_2, \ldots, i_T)$ 的条件下，计算条件概率 $P(I|O)$
+
+- 学习问题：在给定观测序列 $O = (o_1, o_2, \ldots, o_T)$ 和状态序列 $I = (i_1, i_2, i_T)$ 的条件下，估计模型参数 $w_k(k = 1, 2, \ldots, K)$ ，使得条件概率 $P(I|O)$ 达到最大
+
+- 预测问题：也称为解码问题，已知模型参数 $w_k(k = 1, 2, \ldots, K)$ 和观测序列 $O = (o_1, o_2, \ldots, o_T)$ ，求条件概率 $P(I|O)$ 达到最大的状态序列
+
+下面就详细讲解一下这三个问题的解决方案。
+
+## 计算问题
+
+由于 MEMM 属于判别式模型，对于判别式模型来说，给定了模型参数 $w_k(k = 1, 2, \ldots, K)$ 和观测序列 $O = (o_1, o_2, \ldots, o_T)$ ，直接套用模型的定义就可以计算出条件概率 $P(I|O)$ 。
+
+## 学习问题
+
+- 既有观测序列 $O = (o_1, o_2, \ldots, o_T)$ 也有状态序列 $I = (i_1, i_2, \ldots, i_T)$ 时：
+
+此时 MEMM 类似于最大熵模型，所以能用于估计最大熵模型参数的策略和算法均可用于 MEMM。
+
+- 只有观测序列 $O = (o_1, o_2, \ldots, o_T)$ 而没有状态序列 $I = (i_1, i_2, \ldots, i_T)$ 时：
+
+此时 MEMM 是一个含有隐变量的模型，对于含有隐变量的模型，则可以使用 EM 算法对其进行参数估计。
+
+## 预测问题
+
+我们在上一篇文章中说到的 Viterbi 算法一样可以用在 MEMM 的预测问题中，具体算法如下：
+
+定义在时刻 $t$ 状态为 $q_i$ 的所有单个路径 $(i_1, i_2, \ldots, i_t)$ 中概率最大值为：
+
+$$
+\delta_t(i) = \max_{i_1, i_2, \ldots, i_{t-1}} P(i_1, \ldots, i_{t-1}, i_t = q_i | O) \quad i = 1, 2, \ldots, N
+$$
+
+由此定义可推得：
+
+$$
+\delta_1(i) = P(i_1 = q_i|i_0 = 0, O)
+$$
+
+$$
+\delta_2(i) = \max_{1 \leq j \leq N} \big[\delta_1(j) \cdot P(i_2 = q_i|i_1 = q_j, O)\big]
+$$
+
+$$
+\delta_3(i) = \max_{1 \leq j \leq N} \big[\delta_2(j) \cdot P(i_3 = q_i|i_2 = q_j, O)\big]
+$$
+
+依次此类推可得如下递推公式：
+
+$$
+\delta_t(i) = \max_{1 \leq j \leq N} \big[\delta_{t-1}(j) \cdot P(i_t = q_i|i_{t-1} = q_j, O)\big]
+$$
+
+同样再定义在时刻 $t$ 状态为 $q_i$ 的所有单个路径 $(i_1, i_2, \ldots, i_t)$ 中概率最大的路径的第 $t-1$ 个节点为：
+
+$$
+\Psi_t(i) = \arg\max_{1 \leq j \leq N} \big[\delta_{t-1}(j) \cdot P(i_t = q_i | i_{t-1} = q_j, O)\big]
+$$
+
+令 $i_T^* = \arg \max_{1 \leq i \leq N} \delta_T(i)$ 可得：
+
+$$
+i_{T-1}^* = \Psi_T(i_T^*), i_{T-2}^* = \Psi_{T-1}(i_{T-1}^*), \ldots, i_1^* = \Psi_2(i_2^*)
+$$
+
+由于 MEMM 模型本身的问题，用维特比算法求出来的最优序列 $I^* = (i_1^*, i_2^*, \ldots, i_T^*)$ **并不是真正意义上的最优状态序列** ，下面举例说明。
+
+假设已知的观测序列为 $O = (o_1, o_2, o_3, o_4)$ ，所有可能的状态的集合为 $O = (1, 2, 3, 4, 5)$ ，各个时刻之间的状态转移概率如下图所示：
+
+![最大熵马尔可夫模型图像](src\content\posts\maximum-entropy-markov-model\最大熵马尔可夫模型2.jpg)
+
+由维特比算法易算得最优状态序列 $I^* = (1, 1, 1, 1)$ ，但是结合的实际情形可知，状态序列 $\bar{I} = (1, 2, 2, 2)$ 显然比 $I^*$ 更加合理，因为 $\bar{I}$ 每个时刻之间的状态转移都比 $I^*$ 更加 **自信** 。
+
+因此 $I^*$ 一定不是真正意义上的最优状态序列，这就是 MEMM 的 **标注偏置问题** （The Label Bias Problem）
+
+导致标注偏置的主要原因是MEMM对各个时刻的状态取值的概率 $P(i_t|i_{t-1}, o_t)$ 都进行了局部归一化，也就是：
+
+$$
+\sum_{i_t} P(i_t | i_{t-1}, O) = \sum_{i_t} \frac{1}{Z(i_{t-1}, O)} \exp\left(\sum_{k=1}^K w_k f_k(i_t, i_{t-1}, O)\right) = 1
+$$
+
+显然进行局部归一化后它们的转移概率是不相等的，所以对于那些可转移状态较少的状态来说，它们转移到下一个状态的概率通常都会比那些可转移状态多的状态转到下一个状态的概率要高。如果要解决标注偏置问题，只需取消局部归一化或者换成全局归一化即可解决标注偏置问题。
 
 # 最大熵马尔可夫模型代码讲解
 
+下面给出 MEMM 的代码，具体原理自行观看上述证明。
+
+```py frame="code" title="main.py"
+from typing import List
+import numpy as np
+from sklearn.feature_extraction import DictVectorizer
+from sklearn.linear_model import LogisticRegression
+train_sents = [
+    ['John', 'loves', 'Mary'],
+    ['Mary', 'hates', 'Bob'],
+    ['Bob', 'likes', 'Alice'],
+]
+train_tags = [
+    ['NNP', 'VBZ', 'NNP'],
+    ['NNP', 'VBZ', 'NNP'],
+    ['NNP', 'VBZ', 'NNP'],
+]
 
 
-# 深层问题思考
+def default_feature_extractor(sentence: List[str], i: int, prev_tag: str) -> dict:
+    token = sentence[i]
+    features = {}
+    features[f"word={token}"] = 1
+    features[f"word_lower={token.lower()}"] = 1
+    if len(token) >= 3:
+        features[f"suffix3={token[-3:]}"] = 1
+    features[f"is_title={token[0].isupper()}"] = 1
+    features[f"is_digit={token.isdigit()}"] = 1
+    # 前后词
+    if i > 0:
+        features[f"prev_word={sentence[i-1]}"] = 1
+    else:
+        features["BOS"] = 1
+    if i < len(sentence)-1:
+        features[f"next_word={sentence[i+1]}"] = 1
+    else:
+        features["EOS"] = 1
+    # 把前一标签也作为一个特征（MEMM 的关键点）
+    features[f"prev_tag={prev_tag}"] = 1
+    return features
+
+class MEMM:
+    def __init__(self, feature_extractor=default_feature_extractor, solver='lbfgs', max_iter=200):
+        self.feature_extractor = feature_extractor
+        self.vec = DictVectorizer(sparse=True)
+        self.clf = LogisticRegression(multi_class='multinomial', solver=solver, max_iter=max_iter)
+        self.label_to_index = {}
+        self.index_to_label = []
+        self.fitted = False
+
+    def _gather_training_instances(self, sents: List[List[str]], tags: List[List[str]]):
+        X_dicts = []; y = []
+        for sent, tag_seq in zip(sents, tags):
+            for i in range(len(sent)):
+                prev_tag = tag_seq[i-1] if i > 0 else '<START>'
+                feats = self.feature_extractor(sent, i, prev_tag)
+                X_dicts.append(feats)
+                y.append(tag_seq[i])
+        return X_dicts, y
+
+    def fit(self, sents: List[List[str]], tags: List[List[str]]):
+        X_dicts, y = self._gather_training_instances(sents, tags)
+        # 记录标签映射
+        labels = sorted(set(y))
+        self.index_to_label = labels
+        self.label_to_index = {lab: i for i, lab in enumerate(labels)}
+        # vectorize
+        X = self.vec.fit_transform(X_dicts)
+        y_idx = np.array([self.label_to_index[lab] for lab in y])
+        # 训练分类器
+        self.clf.fit(X, y_idx)
+        self.fitted = True
+        return self
+
+    def _local_log_probs(self, sentence: List[str], position: int, prev_tag: str) -> np.ndarray:
+        feats = self.feature_extractor(sentence, position, prev_tag)
+        X = self.vec.transform([feats])
+        logp = self.clf.predict_log_proba(X)[0]
+        return logp
+
+    def viterbi(self, sentence: List[str]) -> List[str]:
+        assert self.fitted, "模型尚未训练，请先调用 fit()"
+        n_tags = len(self.index_to_label)
+        T = len(sentence)
+        # dp[t, j] = 最佳路径到位置 t 且标签为 j 的对数概率
+        dp = np.full((T, n_tags), -np.inf)
+        backptr = np.zeros((T, n_tags), dtype=int)
+        # 初始步 t=0，prev_tag = '<START>'
+        for j in range(n_tags):
+            cur_tag = self.index_to_label[j]
+            logp = self._local_log_probs(sentence, 0, '<START>')
+            dp[0, j] = logp[j]
+            backptr[0, j] = -1
+
+        # 递推
+        for t in range(1, T):
+            for j in range(n_tags):
+                cur_tag = self.index_to_label[j]
+                best_score = -np.inf
+                best_prev = 0
+                # 对每个可能的前一标签 i
+                for i in range(n_tags):
+                    prev_tag = self.index_to_label[i]
+                    # 计算在 prev_tag 下转移到 cur_tag 的 log 概率
+                    logp = self._local_log_probs(sentence, t, prev_tag)
+                    score = dp[t-1, i] + logp[j]
+                    if score > best_score:
+                        best_score = score
+                        best_prev = i
+                dp[t, j] = best_score
+                backptr[t, j] = best_prev
+
+        # 回溯
+        best_last = int(np.argmax(dp[T-1]))
+        tags_idx = [best_last]
+        for t in range(T-1, 0, -1):
+            best_prev = backptr[t, tags_idx[-1]]
+            tags_idx.append(int(best_prev))
+        tags_idx.reverse()
+        return [self.index_to_label[i] for i in tags_idx]
+
+    def predict(self, sentence: List[str]) -> List[str]:
+        return self.viterbi(sentence)
 
 
+# 执行代码
+if __name__ == '__main__':
+    memm = MEMM()
+    memm.fit(train_sents, train_tags)
+
+    test = ['Alice', 'loves', 'Bob']
+    print('Test sentence:', test)
+    pred = memm.predict(test)
+    print('Predicted tags:', pred)
+```
 
 # 参考文献
 

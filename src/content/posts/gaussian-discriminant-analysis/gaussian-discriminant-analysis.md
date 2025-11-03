@@ -263,7 +263,7 @@ $$
 \delta(x) = \log \frac{P(y = 1 \mid x)}{P(y = 0 \mid x)} = \log \frac{P(x \mid y = 1)P(y = 1)}{P(x \mid y = 0)P(y = 0)} = \log \frac{P(y=1)}{P(y=0)} + \log \frac{P(x \mid y=1)}{P(x \mid y=0)}
 $$
 
-仔细观察上面的[先验条件](#先验假设)，其实我们假设了正例跟负例的协方差矩阵相同，因此条件概率密度公式可以写成：
+仔细观察[上面](#先验假设)的先验条件，其实我们假设了正例跟负例的协方差矩阵相同，因此条件概率密度公式可以写成：
 
 $$
 P(x \mid y = k) = \frac{1}{(2\pi)^{\frac{n}{2}}|\Sigma|^{\frac{1}{2}}} \exp\left(-\frac{1}{2}(x-\mu_k)^{\rm T}\Sigma^{-1}(x-\mu_k)\right)
