@@ -15,7 +15,7 @@ draft: false
 
 ::github{repo="jexonn/jupyter-translate"}
 
-照着 readme 安装依赖（挂着梯子可能会导致无法正常安装依赖）
+照着 readme 安装依赖（挂梯子可能会导致依赖无法正常安装）
 
 但其实依赖并没有很多，可以依次手动安装 `requirements.txt` 中的内容
 
