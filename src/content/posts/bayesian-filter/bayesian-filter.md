@@ -1,13 +1,13 @@
 ---
-title: 【机器学习基本模型】第九节：卡尔曼滤波
-published: 2025-11-04
+title: 【机器学习基本模型】第十节：贝叶斯滤波
+published: 2025-11-05
 description: 介绍机器学习常见的算法模型
 tags: [Machine Learning, Course]
 category: ML Model
 draft: false
 ---
 
-# 卡尔曼滤波基本原理
+# 贝叶斯滤波基本原理
 
 
 

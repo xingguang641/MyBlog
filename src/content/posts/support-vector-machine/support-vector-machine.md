@@ -517,6 +517,6 @@ $$
 
 6. [看了这篇文章你还不懂SVM你就来打我](https://zhuanlan.zhihu.com/p/49331510)
 
-7. [支持向量机的工作原理](https://ww2.mathworks.cn/discovery/support-vector-machine.html)
+7. [【MathWorks】支持向量机的工作原理](https://ww2.mathworks.cn/discovery/support-vector-machine.html)
 
 8. [【图解数学】支持向量机](https://note.wcoder.com/MachineLearning/图解数学/files/支持向量机.pdf)

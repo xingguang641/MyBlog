@@ -75,7 +75,7 @@ $$
 
 > 特征函数与约束条件
 
-在最大熵模型中，我们通过一组特征函数 $f(x,y)$ 描述输入 $x$ 和输出 $y$ 之间的关系：
+在最大熵模型中，我们通过一组特征函数 $f(x,y)$ 描述输入 $x$ 和输出 $y$ 之间的关系。其形式如下：
 
 $$
 f(x,y) = 
@@ -85,7 +85,7 @@ f(x,y) =
 \end{cases}
 $$
 
-每个特征函数对应一个可能的关系（或约束），不同的训练样本可能激活不同的特征函数。同一个样本也可能激活多个特征函数。
+每个特征函数对应一个可能的输入输出关系或约束，不同的训练样本可能激活不同的特征函数，并且同一个样本可能激活多个特征函数。
 
 特征函数 $f(x,y)$ 关于经验分布 $\bar{P}(X, Y)$ 的期望值，用 $\mathbb{E}_{\bar{P}}\big[ f \big]$ 表示:
 
@@ -93,25 +93,25 @@ $$
 \mathbb{E}_{\bar{P}}\big[ f \big] = \sum_{x, y} \bar{P}(x, y)f(x, y) = \frac{1}{N} \sum_{x, y} f(x, y)
 $$
 
-由于特征函数是对建立概率模型有益的特征，所以应该让 MaxEnt 模型来满足这一约束，所以模型 $P(Y|X)$ 关于函数 $f$ 的期望应该等于经验分布关于 $f$ 的期望，模型 $P(Y|X)$ 关于 $f$ 的期望为：
+由于特征函数在构建概率模型时扮演重要角色，我们希望最大熵模型能满足这些约束条件。因此我们要求模型 $P(Y|X)$ 关于函数 $f$ 的期望应该等于经验分布关于 $f$ 的期望。模型 $P(Y|X)$ 关于 $f$ 的期望为：
 
 $$
 \mathbb{E}_{P}\big[ f \big] = \sum_{x, y} P(x, y)f(x, y) ≈ \sum_{x, y} \bar{P}(x)P(y|x)f(x, y)
 $$
 
-经验分布与特征函数结合便能代表概率模型需要满足的约束，只需让 $\mathbb{E}_{\bar{P}}\big[ f \big] = \mathbb{E}_{P}\big[ f \big]$ ：
+因此我们需要使得模型的期望满足以下约束（确保模型的特征函数期望与训练数据一致）：
 
 $$
 \sum_{x, y} \bar{P}(x)P(y|x)f(x, y) = \sum_{x, y} \bar{P}(x, y)f(x, y)
 $$
 
-上式便为 MaxEnt 中需要满足的约束，给定 $n$ 个特征函数 $f_i(x, y)$ ，则有 $n$ 个约束条件，用 $C$ 表示满足约束的模型集合：
+上述式子便是最大熵模型中所要求满足的约束条件。给定 $n$ 个特征函数 $f_i(x, y)$ ，则有 $n$ 个约束条件。用 $C$ 表示满足约束的模型集合：
 
 $$
 C = \{ P|\mathbb{E}_{P}\big[f_i\big] = \mathbb{E}_{\bar{P}}\big[f_i\big], I = 1, 2, \ldots, n \}
 $$
 
-从满足约束的模型集合 $C$ 中找到使得 $P(Y|X)$ 的熵最大的即为 MaxEnt 模型了。
+我们通过从满足约束的模型集合 $C$ 中选出熵最大的模型，就可以得到最终的最大熵模型。
 
 > 最大熵模型定义
 
@@ -131,7 +131,7 @@ $$
 
 $$
 \begin{align*}
-\min_{P \in C} & \sum_{x,y} \bar{P}(x) P(y|x) \log P(y|x) \\
+\min_{P \in C} \quad & \sum_{x,y} \bar{P}(x) P(y|x) \log P(y|x) \\
 \text{s.t.} \quad & \mathbb{E}_p\big[f_i\big] = \mathbb{E}_{\bar{P}}\big[f_i\big] \\
 & \sum_y P(y|x) = 1
 \end{align*}
@@ -303,7 +303,7 @@ $$
 
 - 学习问题：在给定观测序列 $O = (o_1, o_2, \ldots, o_T)$ 和状态序列 $I = (i_1, i_2, i_T)$ 的条件下，估计模型参数 $w_k(k = 1, 2, \ldots, K)$ ，使得条件概率 $P(I|O)$ 达到最大
 
-- 预测问题：也称为解码问题，已知模型参数 $w_k(k = 1, 2, \ldots, K)$ 和观测序列 $O = (o_1, o_2, \ldots, o_T)$ ，求条件概率 $P(I|O)$ 达到最大的状态序列
+- 预测问题：已知模型参数 $w_k(k = 1, 2, \ldots, K)$ 和观测序列 $O = (o_1, o_2, \ldots, o_T)$ ，求条件概率 $P(I|O)$ 达到最大的状态序列
 
 下面就详细讲解一下这三个问题的解决方案。
 
@@ -519,6 +519,129 @@ if __name__ == '__main__':
     pred = memm.predict(test)
     print('Predicted tags:', pred)
 ```
+
+## 学习问题
+
+这个部分的代码可以观看[上面的讲解](#学习问题)对照学习。
+
+```py showLineNumbers
+def default_feature_extractor(sentence: List[str], i: int, prev_tag: str) -> dict:
+    token = sentence[i]
+    features = {}
+    features[f"word={token}"] = 1
+    features[f"word_lower={token.lower()}"] = 1
+    if len(token) >= 3:
+        features[f"suffix3={token[-3:]}"] = 1
+    features[f"is_title={token[0].isupper()}"] = 1
+    features[f"is_digit={token.isdigit()}"] = 1
+    # 前后词
+    if i > 0:
+        features[f"prev_word={sentence[i-1]}"] = 1
+    else:
+        features["BOS"] = 1
+    if i < len(sentence)-1:
+        features[f"next_word={sentence[i+1]}"] = 1
+    else:
+        features["EOS"] = 1
+    # 把前一标签也作为一个特征（MEMM 的关键点）
+    features[f"prev_tag={prev_tag}"] = 1
+    return features
+
+def _gather_training_instances(self, sents: List[List[str]], tags: List[List[str]]):
+    X_dicts = []; y = []
+    for sent, tag_seq in zip(sents, tags):
+        for i in range(len(sent)):
+            prev_tag = tag_seq[i-1] if i > 0 else '<START>'
+            feats = self.feature_extractor(sent, i, prev_tag)
+            X_dicts.append(feats)
+            y.append(tag_seq[i])
+    return X_dicts, y
+
+# 既有观测序列也有状态序列
+def fit(self, sents: List[List[str]], tags: List[List[str]]):
+    X_dicts, y = self._gather_training_instances(sents, tags)
+    # 记录标签映射
+    labels = sorted(set(y))
+    self.index_to_label = labels
+    self.label_to_index = {lab: i for i, lab in enumerate(labels)}
+    # vectorize
+    X = self.vec.fit_transform(X_dicts)
+    y_idx = np.array([self.label_to_index[lab] for lab in y])
+    # 训练分类器
+    self.clf.fit(X, y_idx)
+    self.fitted = True
+    return self
+```
+
+## 预测问题
+
+这个部分的代码可以观看[上面的讲解](#预测问题)对照学习。
+
+```py showLineNumbers
+def _local_log_probs(self, sentence: List[str], position: int, prev_tag: str) -> np.ndarray:
+    feats = self.feature_extractor(sentence, position, prev_tag)
+    X = self.vec.transform([feats])
+    logp = self.clf.predict_log_proba(X)[0]
+    return logp
+
+def viterbi(self, sentence: List[str]) -> List[str]:
+    assert self.fitted, "模型尚未训练，请先调用 fit()"
+    n_tags = len(self.index_to_label)
+    T = len(sentence)
+    # dp[t, j] = 最佳路径到位置 t 且标签为 j 的对数概率
+    dp = np.full((T, n_tags), -np.inf)
+    backptr = np.zeros((T, n_tags), dtype=int)
+    # 初始步 t=0，prev_tag = '<START>'
+    for j in range(n_tags):
+        cur_tag = self.index_to_label[j]
+        logp = self._local_log_probs(sentence, 0, '<START>')
+        dp[0, j] = logp[j]
+        backptr[0, j] = -1
+
+    # 递推
+    for t in range(1, T):
+        for j in range(n_tags):
+            cur_tag = self.index_to_label[j]
+            best_score = -np.inf
+            best_prev = 0
+            # 对每个可能的前一标签 i
+            for i in range(n_tags):
+                prev_tag = self.index_to_label[i]
+                # 计算在 prev_tag 下转移到 cur_tag 的 log 概率
+                logp = self._local_log_probs(sentence, t, prev_tag)
+                score = dp[t-1, i] + logp[j]
+                if score > best_score:
+                    best_score = score
+                    best_prev = i
+            dp[t, j] = best_score
+            backptr[t, j] = best_prev
+
+    # 回溯
+    best_last = int(np.argmax(dp[T-1]))
+    tags_idx = [best_last]
+    for t in range(T-1, 0, -1):
+        best_prev = backptr[t, tags_idx[-1]]
+        tags_idx.append(int(best_prev))
+    tags_idx.reverse()
+    return [self.index_to_label[i] for i in tags_idx]
+
+def predict(self, sentence: List[str]) -> List[str]:
+    return self.viterbi(sentence)
+```
+
+# 深层问题思考
+
+1. 为什么最大熵模型最大化的是条件熵？
+
+问题引用自该话题：[最大熵模型，为什么最大的是条件熵？](https://www.zhihu.com/question/35295907)
+
+最大熵原理的目标是选择一个 **不做额外假设、不偏不倚** 的模型，在给定已知条件下，保留最大的不确定性。
+
+最大熵模型的核心是让模型在已知输入 $X$ 的条件下，尽可能保持 **最大的不确定性** 。这就意味着，给定输入 $X$ ，我们不希望模型对输出 $Y$ 做出过于确定的猜测，除非有足够的证据支持某些标签。
+
+条件熵 $H(Y|X)$ 衡量的是：在给定 $X$ 的条件下， $Y$ 的不确定性。通过最大化条件熵，我们实际上是在 **最大化所有可能输出 $Y$ 的不确定性** ，并且通过约束条件来确保它符合训练数据中的真实模式。
+
+最大化条件熵能保证我们选择的模型在已知信息的条件下保持最小的偏向性，从而避免引入不必要的假设。
 
 # 参考文献
 

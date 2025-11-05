@@ -162,7 +162,7 @@ $$
 
 - 使用链式法则 $\dfrac{\partial}{\partial w} e_i^2 = 2 e_i \dfrac{\partial e_i}{\partial w}$
 
-- 而 $\dfrac{\partial e_i}{\partial w} = \dfrac{\partial}{\partial w}\bigl(y_i - (w x_i + b)\bigr) = -x_i$
+- 然后有 $\dfrac{\partial e_i}{\partial w} = \dfrac{\partial}{\partial w}\bigl(y_i - (w x_i + b)\bigr) = -x_i$
 
 把这些代回：
 

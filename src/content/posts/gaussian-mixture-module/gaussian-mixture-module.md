@@ -55,7 +55,7 @@ L(\theta) &= \sum_{i=1}^{N} \log P(x_i) = \sum_{i=1}^{N} \log \sum_{k=1}^{K} p_k
 \end{align*}
 $$
 
-其中 $\theta = \{p_1, p_2, \dots, p_K, \mu_1, \mu_2, \dots, \mu_K, \Sigma_1, \Sigma_2, \dots, \Sigma_K\}$
+其中 $\theta = \{p_1, p_2, \dots, p_K, \mu_1, \mu_2, \dots, \mu_K, \Sigma_1, \Sigma_2, \dots, \Sigma_K\}$ 。
 
 对这个表达式直接通过求导，由于连加号的存在，会无法得到解析解。因此我们无法直接根据极大似然估计的原理对这个式子使用常见的梯度下降算法。
 

@@ -33,7 +33,7 @@ draft: false
 
 # 参考文献
 
-# 栈相关博客
+## 栈相关博客
 
 1. [【OI WiKi】栈相关知识讲解](https://oi-wiki.org/ds/stack/)
 
@@ -43,7 +43,7 @@ draft: false
 
 4. [【数据结构】栈（Stack）超详细教学](https://blog.csdn.net/2401_87820834/article/details/145663154)
 
-# 队列相关博客
+## 队列相关博客
 
 1. [【OI WiKi】队列相关知识讲解](https://oi-wiki.org/ds/queue/)
 

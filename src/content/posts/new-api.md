@@ -117,6 +117,6 @@ volumes:
 
 首先就要下载 Docker 跟 Docker Compose，然后跟着下面的 Blog 一步步走就行了
 
-https://linux.do/t/topic/968954
+[Docker Compose 部署 New API 指南](https://www.newapi.ai/installation/docker-compose-installation/)
 
 这样你就有一个 API 管理中心了，不用再为如何保存数量繁多的 API 而发愁
