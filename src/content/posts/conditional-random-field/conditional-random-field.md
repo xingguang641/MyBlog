@@ -19,7 +19,7 @@ draft: false
 
 在条件随机场的一般定义中并没有要求 $X$ 和 $Y$ 具有相同的图结构，但是实际运用中一般假设 $X$ 和 $Y$ 具有相同的图结构，并且线性链条件随机场也同样作此假设。线性链条件随机场的定义如下：
 
-![条件随机场图像](src\content\posts\conditional-random-field\条件随机场1.jpg)
+![条件随机场图像](src\content\posts\conditional-random-field\条件随机场1.png)
 
 ## 基本形式定义
 
@@ -219,12 +219,9 @@ $$
 \begin{align*}
 &\mathbb{E}_{P(Y|X)} \Big[ f_k(Y, X) \Big] \\
 = &\sum_Y P(Y|X) f_k(Y, X) = \sum_Y \left[ P(Y|X) \sum_{i=1}^{n+1} f_k(y_{i-1}, y_i, X, i) \right] \\
-= &\sum_Y \Big[ P(Y|X) f_k(y_0, y_1, X, i) + \ldots + P(Y|X) f_k(y_n, y_{n+1}, X, i) \Big] \\
-= &\sum_Y P(Y|X) f_k(y_0, y_1, X, i) + \ldots + \sum_Y P(Y|X) f_k(y_n, y_{n+1}, X, i) \\
-= &\sum_{y_0, y_1} f_k(y_0, y_1, X, i) \sum_{y_2, \ldots, y_{n+1}} P(Y|X) + \ldots + \sum_{y_n, y_{n+1}} f_k(y_n, y_{n+1}, X, i) \sum_{y_0, \ldots, y_{n-1}} P(Y|X) \\
-= &\sum_{y_0, y_1} f_k(y_0, y_1, X, i) P(y_0, y_1|X) + \ldots + \sum_{y_n, y_{n+1}} f_k(y_n, y_{n+1}, X, i) P(y_n, y_{n+1}|X) \\
-= &\sum_{i=1}^{n+1} \sum_{j=1,k=1}^m f_k(y_{i-1} = q_j, y_i = q_k, X, i) P(y_{i-1} = q_j, y_i = q_k|X) \\
-= &\sum_{i=1}^{n+1} \sum_{j=1,k=1}^m \left[ f_k(y_{i-1} = q_j, y_i = q_k, X, i) \frac{\alpha_{i-1}(y_{i-1} = q_j|X) M_i(q_j, q_k|X) \beta_i(y_i = q_k|X)}{Z(X)} \right]
+= &\sum_Y \sum_{i=1}^{n+1} P(Y|X) f_k(y_{i-1}, y_i, X, i) = \sum_{i=1}^{n+1} \sum_Y P(Y|X) f_k(y_{i-1}, y_i, X, i) \\
+= &\sum_{i=1}^{n+1} \sum_{j=1}^m \sum_{k=1}^m \Big[ f_k(y_{i-1} = q_j, y_i = q_k, X, i) P(y_{i-1} = q_j, y_i = q_k | X) \Big] \\
+= &\sum_{i=1}^{n+1} \sum_{j=1}^m \sum_{k=1}^m \left[ f_k(y_{i-1} = q_j, y_i = q_k, X, i) \cdot \frac{\alpha_{i-1}(y_{i-1} = q_j | X) \, M_i(q_j, q_k | X) \, \beta_i(y_i = q_k | X)}{Z(X)} \right]
 \end{align*}
 $$
 

@@ -13,7 +13,7 @@ draft: false
 
 隐马尔可夫模型（Hidden Markov Model，简称 HMM）是一种用于时序数据分析的 **概率图模型** 。它刻画了一个由隐藏状态组成的马尔可夫链，这个链在时间上生成一个不可直接观测的 **状态序列** ，并且每个状态都会根据一定的概率分布产生一个可观测的输出，从而形成 **观测序列** 。换句话说：HMM 描述了隐藏的状态在时间上按马尔可夫过程演化，而每个时刻的观测值则由对应的隐藏状态随机生成。其形式定义如下：
 
-![隐马尔可夫模型1](src\content\posts\hidden-markov-model\隐马尔可夫模型1.jpg)
+![隐马尔可夫模型1](src\content\posts\hidden-markov-model\隐马尔可夫模型1.png)
 
 ## 概念介绍
 
@@ -145,7 +145,7 @@ $$
 \alpha_t(i) = P(o_1, o_2, \ldots, o_t, i_t = q_i|\lambda)
 $$
 
-![前向算法图像](src\content\posts\hidden-markov-model\前向算法1.jpg)
+![前向算法图像](src\content\posts\hidden-markov-model\前向算法1.png)
 
 根据前向概率的定义可推得：
 
@@ -183,7 +183,7 @@ $$
 \beta_t(i) = P(o_{t+1}, o_{t+2}, \ldots, o_T|i_t = q_i, \lambda)
 $$
 
-![后向算法图像](src\content\posts\hidden-markov-model\后向算法1.jpg)
+![后向算法图像](src\content\posts\hidden-markov-model\后向算法1.png)
 
 根据后向概率的定义可推得（将后向概率转为前向概率后带入前向概率的公式）：
 
