@@ -1,7 +1,7 @@
 ---
 title: 【机器学习基本模型】第三节：高斯判别分析
 published: 2025-10-24
-description: 介绍机器学习常见的算法模型
+description: 介绍机器学习常见的模型
 tags: [Machine Learning, Course]
 category: ML Model
 draft: false

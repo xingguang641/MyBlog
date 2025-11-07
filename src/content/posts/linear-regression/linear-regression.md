@@ -1,7 +1,7 @@
 ---
 title: 【机器学习基本模型】第一节：线性回归
 published: 2025-10-23
-description: 介绍机器学习常见的算法模型
+description: 介绍机器学习常见的模型
 tags: [Machine Learning, Course]
 category: ML Model
 draft: false
