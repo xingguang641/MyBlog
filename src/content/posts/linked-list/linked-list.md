@@ -11,7 +11,15 @@ draft: false
 
 
 
-# 参考文献
+# 栈相关教程
+
+## 栈相关视频
+
+> 栈的实现与可视化
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=664924086&bvid=BV1ea4y1r75V&cid=1370356359&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+## 栈相关博客
 
 1. [【数据结构】链表(单链表实现+详解+原码)](https://blog.csdn.net/Edward_Asia/article/details/120876314)
 
