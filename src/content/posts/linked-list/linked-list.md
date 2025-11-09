@@ -11,11 +11,11 @@ draft: false
 
 链表（Linked List）是一种在物理存储单元中 **非连续、非顺序** 的存储结构。它由一系列结点（每个元素称为一个结点）组成，结点可以 **动态创建** 。每个结点通常包含两个部分：一个是用于存放数据元素的 **数据域** ，另一个是用于指向下一个结点地址的 **指针域** 。
 
-与数组一样，链表也可用于数据存储。但与数组不同，链表这种链式的动态存储结构有效地解决了两个主要问题：其一，当数组空间已满时，无法再插入新的数据；其二，数组在预留过多空间时容易造成存储浪费。
+与数组一样，链表也可用于数据存储。但与数组的顺序存储不同，链表采用链式的动态存储方式，能够有效地解决两个主要问题：其一，当数组空间已满时，无法再插入新的数据；其二，数组在预留过多空间时容易造成存储浪费。
 
 ## 单向链表基本原理
 
-单向链表是链表中最基本的一种形式。顾名思义，它的每个结点中都只包含一个指向后继结点的指针，因此链表中的结点只能沿着单一方向（从头到尾）依次访问。
+单向链表是链表中最基本的一种形式。顾名思义，它的每个结点中都只包含一个指向 **后继结点** 的指针，因此链表中的结点只能沿着单一方向（从头到尾）依次访问。这种结构实现简单，但不便于从中间位置向前遍历或删除结点。
 
 ### 单向链表的创建
 
@@ -222,7 +222,7 @@ void Delete_position(Linklist *head, int k) { //k表示要删除第k个节点
 
 ## 单向链表代码讲解
 
-下面给出单向链表的完整代码，包括上方没有提到的一些基本操作都有。
+下面给出单向链表的完整代码实现，其中包含了前面未提到的一些常用基础操作，便于更全面地理解单向链表的结构与实现方式。
 
 ```cpp showLineNumbers
 #include <stdio.h>
@@ -429,6 +429,372 @@ int main() {
 	puts("链表为空");
 
     return 0;
+}
+```
+
+## 双向链表基本原理
+
+双向链表也叫双链表，其每个数据结点中都有两个指针，分别指向直接 **后继** 和直接 **前驱** 。与单向链表相比，双向链表既可以正向遍历，也可以反向遍历。这使得在查找某个结点的前驱时，无需像单向链表那样重新遍历整个链表，从而大幅提高了操作效率。
+
+### 双向链表的创建
+
+双向链表的单个节点含有两个指针域和一个值域。
+
+![双向链表图像](src\content\posts\linked-list\双向链表1.png)
+
+```cpp showLineNumbers
+typedef int Elemtype;
+
+typedef struct Node {
+
+    Elemtype data;
+    struct Node *prior; //前驱指针
+    struct Node *next; //后驱指针
+
+} Duplist;
+```
+
+从结构上看，双向链表可以看作是在单向链表的基础上，为每个结点 **额外增加了一个指向前驱结点的指针** 。通过这种方式，链表中的结点不仅能与后继建立链接关系，也能与前驱结点互相连接。
+
+在创建初始的双向链表时，通常采用尾插法来依次插入新结点。
+
+![双向链表图像](src\content\posts\linked-list\双向链表2.png)
+
+```cpp showLineNumbers
+//创建初始化双向链表(头节点有数据，便于表头插入)
+Duplist* Create_DuplexLinklist(Duplist *head, int n) {
+    head = (Duplist*)malloc(sizeof(Duplist));
+    head->next = NULL;
+    head->prior = NULL;            
+    Duplist *end = head;                       
+
+    printf("创建双向链表输入 %d 个数据: ", n);
+    scanf("%d", &head->data);
+    for (int i = 1; i < n; i++) {
+	Duplist *node = (Duplist *)malloc(sizeof(Duplist));
+	node->prior = NULL;
+	node->next = NULL;
+	scanf("%d", &node->data);
+
+	end->next = node; //end的next指向新节点node
+	node->prior = end; //新节点node的前驱prior指向之前的end
+	end = node; //end指向最后的node节点
+    }
+    return head;
+}
+```
+
+### 双向链表插入操作
+
+双向链表的头插法与单向链表类似，只是在操作时需要同时维护前驱指针。具体步骤如下：
+
+- 将原头结点 `head` 的 `prior` 指向新结点 `node`
+- 将新结点 `node` 的 `next` 指向原头结点 `head`
+- 更新头指针 `head = node` ，使新结点成为新的表头
+
+> 头插法图解
+
+![双向链表图像](src\content\posts\linked-list\双向链表3.png)
+
+![双向链表图像](src\content\posts\linked-list\双向链表4.png)
+
+双向链表的尾插法与单向链表类似，只是在操作时需要同时维护前驱指针。具体步骤如下：
+
+- 将当前尾结点 `end` 的 `next` 指向新结点 `node`
+- 将新结点 `node` 的 `prior` 指向原尾结点 `end`
+- 更新尾指针 `end = node` ，使其成为新的链表尾部
+
+>  尾插法图解
+
+![双向链表图像](src\content\posts\linked-list\双向链表7.png)
+
+![双向链表图像](src\content\posts\linked-list\双向链表8.png)
+
+双向链表在指定位置插入节点的操作与上面一样，需要同时维护前驱和后继。具体步骤如下：
+
+- 将新结点 `node` 的 `next` 指向 `p -> next`
+- 将新结点 `node` 的 `prior` 指向 `p`
+- 若 `p -> next` 不为空，则将 `p -> next -> prior` 指向 `node`
+- 最后将 `p -> next` 指向 `node`
+
+>  指定位置插入操作图解
+
+![双向链表图像](src\content\posts\linked-list\双向链表5.png)
+
+![双向链表图像](src\content\posts\linked-list\双向链表6.png)
+
+```cpp showLineNumbers
+//插入新节点(包含三种情况 头插 尾插 和 指定位置插入)
+Duplist *Insert_DuplexLinklist(Duplist *head, int pos, int data) {
+	Duplist *node = (Duplist *)malloc(sizeof(Duplist));
+	node->data = data;
+	node->prior = NULL;
+	node->next = NULL;
+	//pos表示要插入的位置（head为1）
+	if (pos == 1) { //插在链表头的情况
+		node->next = head; //新节点node的next指向之前的头head
+		head->prior = node; //之前的head的前驱prior指向了node
+		head = node; //head重新指向了插在表头的新节点
+	} else {
+		Duplist *t = head; //t为遍历指针
+		for (int i = 1; i < pos - 1; i++) //t指向要插入位置的前一个节点
+			t = t->next;
+
+		if (t->next == NULL) { //插在链表尾的情况
+			t->next = node; //t指向表尾，t的next指向新节点node
+			node->prior = t; //新节点node的前驱prior指向t
+		} else {
+			//插在表中的情况
+			t->next->prior = node; //t的下一个节点(要代替位置的节点)的前驱指向新node
+			node->next = t->next; //新node的next指向了之前t的下一个节点
+			t->next = node; //t的next重新指向新node
+			node->prior = t; //node前驱prior指向了t
+		}
+	}
+
+	return head;
+}
+```
+
+### 双向链表删除操作
+
+在双向链表中删除结点时，需要同时维护其前驱和后继结点的连接关系。不同于单向链表，双向链表可以通过前驱指针直接找到要删除结点的前一个结点，因此无需遍历整个链表。
+
+删除结点后，只需让前驱与后继重新建立连接即可。若删除的是表头或表尾结点，还需要相应地更新头指针或尾指针。
+
+这种结构使得双向链表的删除操作更加高效、灵活。
+
+>  节点删除图解
+
+![双向链表图像](src\content\posts\linked-list\双向链表9.png)
+
+下面给出双向链表删除操作的代码。
+
+```cpp showLineNumbers
+//删除指定位置节点
+Duplist* Delete_DuplexLinklist(Duplist *head, int pos) {
+	Duplist *t = head;
+	for (int i = 1; i < pos; i++)
+		t = t->next; //找到要删除的节点
+
+	if (t != NULL) {
+		if (t->prior == NULL) { //如果是头节点
+			head = t->next; //head往后移
+			free(t);
+			head->prior = NULL;
+			return head;
+		} else if (t->next == NULL) { //如果是尾节点
+			t->prior->next = NULL; //表尾的前一个节点的next置NULL
+			free(t);
+			return head;
+		} else { //删除表中节点的情况
+			t->prior->next = t->next; //要删除节点的前一个节点的next跨越直接指向下下个节点
+			t->next->prior = t->prior; //要删除节点的后一个节点的prior跨越指向上上个节点
+			free(t);
+			return head;
+		}
+	} else
+		printf("节点不存在\n");
+
+    return head;
+}
+```
+
+## 双向链表代码讲解
+
+下面给出双向链表的完整代码实现，其中包含了前面未提到的一些常用基础操作，便于更全面地理解单向链表的结构与实现方式。
+
+```cpp showLineNumbers
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef int Elemtype;
+
+typedef struct Node {
+
+	Elemtype data;
+	struct Node *prior; //前驱指针
+	struct Node *next; //后驱指针
+
+} Duplist;
+
+//创建初始化双向链表(头节点有数据，便于表头插入，要与单向链表区分)
+Duplist *Create_DuplexLinklist(Duplist *head, int n) {
+	head = (Duplist*)malloc(sizeof(Duplist));
+	head->next = NULL;
+	head->prior = NULL;            
+	Duplist *end = head; //用于在尾部插入新节点
+
+	printf("创建双向链表输入 %d 个数据: ", n);
+	scanf("%d", &head->data);
+	for (int i = 1; i < n; i++) {
+		Duplist *node = (Duplist *)malloc(sizeof(Duplist));
+		node->prior = NULL;
+		node->next = NULL;
+		scanf("%d", &node->data);
+
+		end->next = node; //之前的end的next指向新节点node
+		node->prior = end; //新节点node的前驱prior指向之前的end
+		end = node; //end永远指向最后的node节点
+	}
+
+	return head;
+}
+
+//插入新节点(包含三种情况 头插 尾插 和 指定位置插入)
+Duplist *Insert_DuplexLinklist(Duplist *head, int pos, int data) {
+	Duplist *node = (Duplist *)malloc(sizeof(Duplist));
+	node->data = data;
+	node->prior = NULL;
+	node->next = NULL;
+	//pos表示要插入的位置（head为1）
+	if (pos == 1) { //插在链表头的情况
+		node->next = head; //新节点node的next指向之前的头head
+		head->prior = node; //之前的head的前驱prior指向了node
+		head = node; //head重新指向了插在表头的新节点
+	} else {
+		Duplist *t = head; //t为遍历指针
+		for (int i = 1; i < pos - 1; i++) //t指向要插入位置的前一个节点
+			t = t->next;
+
+		if (t->next == NULL) { //插在链表尾的情况
+			t->next = node; //t指向表尾，t的next指向新节点node
+			node->prior = t; //新节点node的前驱prior指向t
+		} else {
+			//插在表中的情况
+			t->next->prior = node; //t的下一个节点(要代替位置的节点)的前驱指向新node
+			node->next = t->next; //新node的next指向了之前t的下一个节点
+			t->next = node; //t的next重新指向新node
+			node->prior = t; //node前驱prior指向了t
+		}
+	}
+
+	return head;
+}
+
+//删除指定位置节点
+Duplist* Delete_DuplexLinklist(Duplist *head, int pos) {
+	Duplist *t = head;
+	for (int i = 1; i < pos; i++)
+		t = t->next; //找到要删除的节点
+
+	if (t != NULL) {
+		if (t->prior == NULL) { //如果是头节点
+			head = t->next; //head往后移
+			free(t);
+			head->prior = NULL;
+			return head;
+		} else if (t->next == NULL) { //如果是尾节点
+			t->prior->next = NULL; //表尾的前一个节点的next置NULL
+			free(t);
+			return head;
+		} else { //删除表中节点的情况
+			t->prior->next = t->next; //要删除节点的前一个节点的next跨越直接指向下下个节点
+			t->next->prior = t->prior; //要删除节点的后一个节点的prior跨越指向上上个节点
+			free(t);
+			return head;
+		}
+	} else
+		printf("节点不存在\n");
+
+    return head;
+}
+
+//读取单个数据
+void Read_DuplexLinklist(Duplist *head, int pos) {
+	Duplist *t = head;
+	for (int i = 1; i < pos; i++)
+		t = t->next;
+
+	if (t != NULL)
+		printf("第 %d 个位置的数据为 %d", pos, t->data);
+	else
+		puts("节点不存在");
+}
+
+//改变指定位置数据
+Duplist* Change_DuplexLinklist(Duplist *head, int pos, int data){
+	Duplist *t = head;
+	for(int i = 1; i < pos; i++)
+		t = t->next;
+
+	if(t != NULL)
+		t->data = data;
+	else
+		puts("节点不存在");
+
+	return head;
+}
+
+//查找数据返回下标
+int Find_DuplexLinklist(Duplist *head, int n) {
+	Duplist *t = head;
+	int pos = 1;
+	while (t != NULL) {
+		if (t->data == n) {
+			printf("该数据的位置为 %d", pos);
+		}
+		t = t->next;
+		pos++;
+	}
+	return -1;
+}
+
+//遍历打印双向链表
+void Show_DuplexLinklist(Duplist *head) {
+	Duplist *t = head;
+	while (t != NULL) {
+		printf("%d ", t->data);
+		t = t->next;
+	}
+	printf("\n");
+}
+
+//反向打印双向链表  
+void Reverse_DuplexLinklist(Duplist *head){
+	Duplist *t = head;
+	while (t->next != NULL) //指向最后一个节点
+		t = t->next;
+
+	while (t != NULL)
+	{
+		printf("%d ",t->data);
+		t = t->prior;
+	}
+	printf("\n");
+}
+
+int main() {
+	Duplist *mylist = NULL; 
+
+	mylist = Create_DuplexLinklist(mylist, 10);
+	puts("初始状态双向链表:");
+	Show_DuplexLinklist(mylist);
+	printf("\n");
+
+    mylist = Insert_DuplexLinklist(mylist, 11, 30);
+	mylist = Insert_DuplexLinklist(mylist, 1, 30);
+	puts("在头和尾 的位置插入数据30后:");
+	Show_DuplexLinklist(mylist);
+	printf("\n");
+
+	mylist = Change_DuplexLinklist(mylist,5,22);
+	puts("改变第 5 的位置数据为 22 后:");
+	Show_DuplexLinklist(mylist);
+	printf("\n");
+
+	mylist = Delete_DuplexLinklist(mylist, 8);
+	mylist = Delete_DuplexLinklist(mylist, 1);
+	puts("删除第 1 和 8 的位置数据后:");
+	Show_DuplexLinklist(mylist);
+	printf("\n");
+
+	puts("双向链表反向输出:");
+	Reverse_DuplexLinklist(mylist);
+	printf("\n");
+
+	return 0;
 }
 ```
 

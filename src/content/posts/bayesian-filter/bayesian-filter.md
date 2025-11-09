@@ -27,7 +27,7 @@ draft: false
 
 这正是滤波算法要解决的问题。
 
-“滤波” 这个名字其实很形象：就像在嘈杂的信号中筛出干净的部分一样，滤波算法的目标就是在充满噪声的不确定观测中，提取出最可能的真实状态。从概率论的角度来看，滤波本质上就是一种 **去噪估计** （Noise Reduction Estimation）。在随机过程理论中，这种 “利用有噪观测去恢复隐藏状态” 的过程，被定义为 ———— **滤波**（Filtering）。
+“滤波” 这个名字其实很形象：就像在嘈杂的信号中筛出干净的部分一样，滤波算法的目标就是在充满噪声的不确定观测中，提取出最可能的真实状态。从概率论的角度来看，滤波本质上就是一种 **去噪估计** （Noise Reduction Estimation）。在随机过程理论中，这种 “利用有噪观测去恢复隐藏状态” 的过程被称为 ———— **滤波**（Filtering）。
 
 ## 滤波的数学定义
 
@@ -144,6 +144,24 @@ $$
 
 接下来我们将详细介绍这三个具体的滤波算法。
 
+# 卡尔曼滤基本原理
+
+在现实世界中，任何测量都伴随着噪声和不确定性。无论是追踪卫星轨迹、预测经济指标，还是实现自动驾驶汽车的精准定位，我们都需要一种方法从杂乱的数据中提取出真实的信号。 **卡尔曼滤波** （Kalman Filter）正是为解决这一问题而诞生的强大工具。
+
+在1960年，卡尔曼发表了他著名的用递归方法解决离散数据线性滤波问题的论文。从那以后，得益于数字计算技术的进步，卡尔曼滤波器已经衍生出来多种版本的滤波器。
+
+卡尔曼滤波是一种高效率的递归滤波器（自回归滤波器），如果不以人名命名，则其名称是 **线性二次估计** （linear quadratic estimation），它能够从一系列的不完全及包含噪声的测量中，估计动态系统的状态。
+
+![卡尔曼滤波图像](src\content\posts\bayesian-filter\卡尔曼滤波1.jpg)
+
+## 先验假设
+
+在上面的贝叶斯滤波框架介绍我们知道：卡尔曼滤波是贝叶斯滤波在特定假设下的简化版本。或者更准确地说，是贝叶斯滤波在 **线性高斯假设** （Linear Gaussian Assumption）下的解析解。
+
+下面我们详细讲清楚这背后的前提假设：
+
+
+
 # 参考文献
 
 ## 贝叶斯滤波
@@ -160,15 +178,13 @@ $$
 
 2. [【万字长文】让你一文轻松掌握卡尔曼滤波](https://www.cnblogs.com/SkyXZ/p/18660856)
 
-3. [卡尔曼滤波（Kalman Filtering）详解](https://blog.csdn.net/ouok000/article/details/125578636)
+3. [Kalman滤波器的原理与实现](https://www.cnblogs.com/CrescentWind/p/18132934)
 
-4. [Kalman滤波器的原理与实现](https://www.cnblogs.com/CrescentWind/p/18132934)
+4. [卡尔曼滤波（DezemingFamily）](https://zhengyu.tech/upload/2023/08/Kalman%20Filter.pdf)
 
-5. [卡尔曼滤波（DezemingFamily）](https://zhengyu.tech/upload/2023/08/Kalman%20Filter.pdf)
+5. [从贝叶斯到卡尔曼滤波](https://www.cnblogs.com/ishen/p/14987878.html)
 
-6. [从贝叶斯到卡尔曼滤波](https://www.cnblogs.com/ishen/p/14987878.html)
-
-7. [从贝叶斯估计到卡尔曼滤波（详细推导）](https://zhuanlan.zhihu.com/p/521538539)
+6. [从贝叶斯估计到卡尔曼滤波（详细推导）](https://zhuanlan.zhihu.com/p/521538539)
 
 ## 扩展卡尔曼滤波
 
