@@ -9,9 +9,9 @@ draft: false
 
 # 贝叶斯滤波框架介绍
 
-从这一节开始，我们正式进入 **滤波算法** （Filtering Algorithms） 的章节。提到滤波算法，就不得不先讲讲它的理论核心 ———— **贝叶斯滤波（Bayesian Filtering）** 。严格来说，贝叶斯滤波其实并不是一种具体的算法/模型，而是一种 **通用的思想框架** 。它告诉我们：如果我们知道系统是如何变化的，以及观测数据与真实状态之间的关系，那么就能通过 “更新信念” 的方式，不断修正对当前状态的估计。
+从这一节开始，我们正式进入 **滤波算法** （Filtering Algorithms） 的章节。提到滤波算法，就不得不先讲讲它的理论核心 ———— **贝叶斯滤波** （Bayesian Filtering）。严格来说，贝叶斯滤波其实并不是一种具体的算法/模型，而是一种 **通用的思想框架** 。它告诉我们：如果我们知道系统是如何变化的，以及观测数据与真实状态之间的关系，那么就能通过 “更新信念” 的方式，不断修正对当前状态的估计。
 
-但在正式讲解贝叶斯滤波之前，我们首先要了解什么是 **滤波算法（Filtering Algorithms）** 。
+但在正式讲解贝叶斯滤波之前，我们首先要了解什么是 **滤波算法** （Filtering Algorithms）。
 
 想象这样一个场景：
 
@@ -120,13 +120,13 @@ $$
 首先直接用贝叶斯公式：
 
 $$
-P(x_t | z_{1:t}) = \frac{P(z_t | x_t, z_{1:t-1}) P(x_t | z_{1:t-1})}{P(z_t | z_{1:t-1})}.
+P(x_t | z_{1:t}) = \frac{P(z_t | x_t, z_{1:t-1}) P(x_t | z_{1:t-1})}{P(z_t | z_{1:t-1})}
 $$
 
-利用观测条件独立性 $P(z_t | x_t, z_{1:t-1}) = P(z_t | x_t)$ 将分子化简为 $P(z_t | x_t) P(x_t | z_{1:t-1})$ 。归一化常数（分母）由全概率给出：
+利用观测条件独立性 $P(z_t | x_t, z_{1:t-1}) = P(z_t | x_t)$ 将分子化简为 $P(z_t | x_t) P(x_t | z_{1:t-1})$ 。其中的归一化常数（分母）由全概率给出：
 
 $$
-P(z_t | z_{1:t-1}) = \int P(z_t | x_t) P(x_t | z_{1:t-1}) \, dx_t.
+P(z_t | z_{1:t-1}) = \int P(z_t | x_t) P(x_t | z_{1:t-1}) \, dx_t
 $$
 
 因此得到标准更新公式：
@@ -149,9 +149,9 @@ $$
 
 在现实世界中，任何测量都伴随着噪声和不确定性。无论是追踪卫星轨迹、预测经济指标，还是实现自动驾驶汽车的精准定位，我们都需要一种方法从杂乱的数据中提取出真实的信号。 **卡尔曼滤波** （Kalman Filter）正是为解决这一问题而诞生的强大工具。
 
-在1960年，卡尔曼发表了他著名的用递归方法解决离散数据线性滤波问题的论文。从那以后，得益于数字计算技术的进步，卡尔曼滤波器已经衍生出来多种版本的滤波器。
+在 1960 年，卡尔曼发表了他著名的用递归方法解决离散数据线性滤波问题的论文。从那以后，得益于数字计算技术的进步，卡尔曼滤波器已经衍生出来多种版本的滤波器。
 
-卡尔曼滤波是一种高效率的递归滤波器（自回归滤波器），如果不以人名命名，则其名称是 **线性二次估计** （linear quadratic estimation），它能够从一系列的不完全及包含噪声的测量中，估计动态系统的状态。
+卡尔曼滤波是一种高效率的递归滤波器（自回归滤波器），如果不以人名命名，则其名称是 **线性二次估计** （Linear Quadratic Estimation），它能够从一系列的不完全及包含噪声的测量中，估计动态系统的状态。
 
 ![卡尔曼滤波图像](src\content\posts\filtering-algorithms\卡尔曼滤波1.jpg)
 
@@ -216,7 +216,7 @@ $$
 假设我们已经在时刻 $t-1$ 时获得了状态后验分布：
 
 $$
-x_{t-1} \sim \mathcal{N}(\hat{x}_{t-1|t-1}, P_{t-1|t-1})
+x_{t-1} | z_{t-1} \sim \mathcal{N}(\hat{x}_{t-1|t-1}, P_{t-1|t-1})
 $$
 
 因此直接可以得到：
@@ -231,7 +231,7 @@ $$
 x_t = Ax_{t-1} + Bu_t + w_t \quad w_t \sim \mathcal{N}(0, Q)
 $$
 
-由于上述公式中出现的所有变量都服从高斯分布，因此 $x_t$ 在给定 $x_{t-1}$ 的情况下仍然是高斯分布（这里还运用了马尔可夫性）：
+由于上述公式中出现的所有变量都服从高斯分布，因此 $x_t$ 在给定 $x_{t-1}$ 的情况下仍然是高斯分布（这里的 $u_t$ 是已知的控制输入，而 $x_{t-1}$ 是给定的条件，因此真正的变量只有 $w_t$ ，所以最终得到的分布的方差为 $Q$ ）：
 
 $$
 x_t|x_{t-1} \sim \mathcal{N}(Ax_{t-1} + Bu_t, Q)
@@ -249,7 +249,7 @@ $$
 P(x_t | z_{1:t-1}) = \int P(x_t | x_{t-1})\,P(x_{t-1} | z_{1:t-1})\,dx_{t-1}
 $$
 
-因为高斯分布的线性卷积仍为高斯分布，所以 $P(x_t|z_{1:t-1})$ 仍然是高斯分布。因此我们可以直接写出 $P(x_t|z_{1:t-1})$ 的均值和协方差（下面的证明过程展示了线性系统假设的作用）：
+因为高斯分布的线性卷积仍为高斯分布，所以 $P(x_t|z_{1:t-1})$ 也同样是高斯分布。因此我们可以直接推导 $P(x_t|z_{1:t-1})$ 的均值和协方差从而确定出分布 $P(x_t|z_{1:t-1})$ ：
 
 $$
 P(x_t|z_{1:t-1}) = \mathcal{N}(\hat{x}_{t|t-1}, P_{t|t-1})
@@ -283,7 +283,6 @@ $$
 p(x_t | z_{1:t-1}) =
 \frac{1}{(2\pi)^{\frac{n}{2}} |P_{t|t-1}|^{\frac{1}{2}}}
 \exp \Big( -\frac{1}{2} (x_t - \hat{x}_{t|t-1})^{\rm T} P_{t|t-1}^{-1} (x_t - \hat{x}_{t|t-1}) \Big)
-
 $$
 
 当新的观测值 $z_t$ 到达时，我们利用观测方程：
@@ -304,7 +303,7 @@ $$
 
 $$
 \begin{aligned}
-p(x_t | z_{1:t}) 
+P(x_t | z_{1:t}) 
 &\propto 
 \exp \Big( -\frac{1}{2} (x_t - \hat{x}_{t|t-1})^{\rm T} P_{t|t-1}^{-1} (x_t - \hat{x}_{t|t-1}) \Big)
 \exp \Big( -\frac{1}{2} (z_t - H x_t)^{\rm T} R^{-1} (z_t - H x_t) \Big) \\
@@ -315,7 +314,7 @@ $$
 现在想办法将上述公式化简成如下形式：
 
 $$
-p(x_t | z_{1:t}) \propto 
+P(x_t | z_{1:t}) \propto 
 \exp \Big( -\frac{1}{2} (x_t - \hat{x}_{t|t})^{\rm T} P_{t|t}^{-1} (x_t - \hat{x}_{t|t}) \Big)
 $$
 
@@ -331,10 +330,10 @@ $$
 x_t^{\rm T} (P_{t|t-1}^{-1} + H^{\rm T} R^{-1} H) x_t - 2 x_t^{\rm T} (P_{t|t-1}^{-1} \hat{x}_{t|t-1} + H^{\rm T} R^{-1} z_t) + z_t^{\rm T} R^{-1} z_t
 $$
 
-对比二次型形式 $x_t^{\rm T} A x_t - 2 x_t^{\rm T} b$ ，忽略常数后不难得出：
+对比二次型形式 $x_t^{\rm T} a x_t - 2 x_t^{\rm T} b$ ，忽略常数项（不含 $x_t$ 的项）后不难得出：
 
 $$
-A = P_{t|t-1}^{-1} + H^{\rm T} R^{-1} H \quad b = P_{t|t-1}^{-1} \hat{x}_{t|t-1} + H^{\rm T} R^{-1} z_t
+a = P_{t|t-1}^{-1} + H^{\rm T} R^{-1} H \quad b = P_{t|t-1}^{-1} \hat{x}_{t|t-1} + H^{\rm T} R^{-1} z_t
 $$
 
 综合上述信息不难得到：
@@ -360,7 +359,7 @@ class KalmanFilter:
         self.x = x0 # 后验均值
         self.P = P0 # 后验协方差
 
-    def predict(self, u = None):
+    def predict(self, u=None):
         if u is None:
             u = np.zeros((self.B.shape[1],))
         # 预测状态均值
@@ -427,6 +426,12 @@ $$
 \end{bmatrix}
 $$
 
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=113553197499694&bvid=BV1WvBQYsEkL&cid=27052212975&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+&nbsp;
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=966638278&bvid=BV1DW4y1F7gB&cid=28736554042&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
 对非线性状态函数 $f(x_{t-1}, u_t)$ 在当前状态估计 $\hat{x}_{t-1|t-1}$ 附近进行一阶展开：
 
 $$
@@ -443,7 +448,7 @@ $$
 
 其中 $H_{t}$ 是观测方程的雅可比矩阵。
 
-通过上述线性化，原本的非线性系统就被 局部近似线性系统：
+通过上述线性化，原本的非线性系统就被局部近似线性系统：
 
 $$
 \begin{cases}
@@ -453,7 +458,29 @@ z_t \approx h(\hat{x}_{t|t-1}) + H_t (x_t - \hat{x}_{t|t-1}) + v_t \quad & v_t \
 \end{cases}
 $$
 
-此时就可以 **直接套用线性卡尔曼滤波的预测和更新公式** ，只是需要用雅可比矩阵 $F_{t-1}$ 和 $H_t$ 替代原来的线性矩阵 $A$ 和 $H$ ，并在每个时间步重新计算。
+引入 **状态偏移量** 和 **观测偏移量**：
+
+$$
+\bar{x}_{t-1} = x_{t-1} - \hat{x}_{t-1|t-1} \quad \bar{x}_t = x_t - f(\hat{x}_{t-1|t-1}, u_t)
+$$
+
+$$
+\bar{x}_t = x_t - \hat{x}_{t|t-1} \quad \bar{z}_t = z_t - h(\hat{x}_{t|t-1})
+$$
+
+其中 $\hat{x}_{t-1|t-1}$ 、 $f(\hat{x}_{t-1|t-1}, u_t)$ 和 $h(\hat{x}_{t|t-1})$ 都是已知的，并且还有 $\hat{x}_{t|t-1} = f(\hat{x}_{t-1|t-1}, u_t)$ 。
+
+经过简单的变形可得：
+
+$$
+\begin{cases}
+\bar{x}_t = F_{t-1} \bar{x}_{t-1} + w_t \quad & w_t \sim \mathcal{N}(0, Q) \\
+\\
+\bar{z}_t = H_t \bar{x}_t + v_t \quad & v_t \sim \mathcal{N}(0, R)
+\end{cases}
+$$
+
+这样就可以 **直接套用线性卡尔曼滤波的预测和更新公式** ，只是需要用雅可比矩阵 $F_{t-1}$ 和 $H_t$ 替代原来的线性矩阵 $A$ 和 $H$ ，并在每个时间步重新计算。
 
 # 扩展卡尔曼滤波代码讲解
 
@@ -505,17 +532,19 @@ class ExtendedKalmanFilter:
 
 直观地说，粒子滤波就像在迷雾中寻找宝藏：每个粒子代表一个可能的位置，而其权重反映了该位置与观测结果的匹配程度。随着观测不断更新，粒子会逐渐集中到更可能的区域，从而逼近真实的状态分布。
 
+![粒子滤波图像](src\content\posts\filtering-algorithms\粒子滤波1.jpg)
+
 ## 蒙特卡洛近似
 
-当系统的状态转移或观测模型存在 强非线性或非高斯噪声 时，贝叶斯滤波往往无法解析求解。为此粒子滤波引入了蒙特卡罗方法来对后验分布进行数值近似。
+当系统的状态转移或观测模型存在强非线性或非高斯噪声时，贝叶斯滤波往往无法解析求解。为此粒子滤波引入了蒙特卡罗方法来对后验分布进行数值近似。
 
-设函数 $g(x)$ 关于分布 $p(x)$ 的期望为：
+设函数 $g(x)$ 关于分布 $P(x)$ 的期望为：
 
 $$
-\mathbb{E} \Big[ g(x) \Big] = \int g(x) p(x) \, dx
+\mathbb{E} \Big[ g(x) \Big] = \int g(x) P(x) \, dx
 $$
 
-若能够从分布 $p(x)$ 中独立采样得到 $N$ 个样本 ${x^{(i)}}_{i=1}^N$，则该期望可以用样本均值近似为：
+若能够从分布 $P(x)$ 中独立采样得到 $N$ 个样本 $\{x^{(i)}\}_{i=1}^N$，则该期望可以用样本均值近似为：
 
 $$
 \mathbb{E} \Big[ g(x) \Big] \approx \frac{1}{N} \sum_{i=1}^{N} g(x^i)
@@ -525,13 +554,12 @@ $$
 
 ## 序贯重要性采样
 
-在实际问题中，我们通常无法直接从后验分布 $P(x_t | z_{1:t})$ 中采样。为此粒子滤波采用了 **重要性采样** （Importance Sampling） 的思想（具体的流程会在后续的章节中给出）：从一个更容易采样的 **提议分布** $Q(x_t | x_{t-1}, z_t)$ 中生成样本（粒子），再通过加权修正来逼近真实后验分布。
+在实际问题中，我们通常无法直接从后验分布 $P(x_t | z_{1:t})$ 中采样。为此粒子滤波采用了 **重要性采样** （Importance Sampling） 的思想（具体介绍会在后续的章节中给出）：从一个更容易采样的 **提议分布** $Q(x_t | x_{t-1}, z_t)$ 中生成样本（粒子），再通过加权修正来逼近真实后验分布。
 
-在序贯估计问题中，我们考虑完整的状态轨迹 $x_{0:t}$ ，目标是从后验分布
-$P(x_{0:t} | z_{1:t})$ 中抽样。引入提议分布 $Q(x_{0:t} | z_{1:t})$，则其重要性权重定义为：
+在序贯估计问题中，我们考虑完整的状态轨迹 $x_{0:t}$ ，目标是从后验分布 $P(x_{0:t} | z_{1:t})$ 中抽样。引入提议分布 $Q(x_{0:t} | z_{1:t})$ ，则其重要性权重定义为：
 
 $$
-w_t = \frac{P(x_{0:t} | z_{1:t})}{Q(x_{0:t} | z_{1:t})}
+\lambda_t = \frac{P(x_{0:t} | z_{1:t})}{Q(x_{0:t} | z_{1:t})}
 $$
 
 若状态满足马尔可夫性质、观测满足条件独立性，则有：
@@ -543,60 +571,20 @@ $$
 将两式结合，可得权重的递推形式：
 
 $$
-w_t = \frac{P(z_t | x_t) P(x_t | x_{t-1})}{Q(x_t | x_{0:t-1}, z_{1:t})} w_{t-1}
+\lambda_t = \frac{P(z_t | x_t) P(x_t | x_{t-1})}{Q(x_t | x_{0:t-1}, z_{1:t})} \lambda_{t-1}
 $$
 
-在常见的设置中，我们通常选用状态转移概率作为提议分布，即 $Q(x_t | x_{0:t-1}, z_{1:t}) = P(x_t | x_{t-1}),$ ，此时权重更新公式可简化为：
+在常见的设置中，我们通常选用状态转移概率作为提议分布，即 $Q(x_t | x_{0:t-1}, z_{1:t}) = P(x_t | x_{t-1})$ ，此时权重更新公式可简化为：
 
 $$
-w_t = P(z_t | x_t) w_{t-1}
+\lambda_t = P(z_t | x_t) \lambda_{t-1}
 $$
 
 最后对所有粒子的权重进行归一化：
 
 $$
-\bar{w}_t^i = \frac{w_t^i}{\sum_{j=1}^{N} w_t^j}
+\bar{\lambda}_t^i = \frac{\lambda_t^i}{\sum_{j=1}^{N} \lambda_t^j}
 $$
-
-随着时间的推进，权重方差往往会逐渐增大，导致大部分粒子权重趋近于零，这种现象称为 **粒子退化问题** （Degeneracy Problem）。可以证明在最优提议分布 $Q^*(x_t | x_{t-1}, z_t) = P(x_t | x_{t-1}, z_t)$ 下，权重方差最小。
-
-最优提议分布可以表示为：
-
-$$
-P(x_t | x_{t-1}, z_t) = \frac{P(z_t | x_t) P(x_t | x_{t-1})}{P(z_t | x_{t-1})}
-$$
-
-其中归一化因子为：
-
-$$
-P(z_t | x_{t-1}) = \int P(z_t | x_t) P(x_t | x_{t-1}) dx_t
-$$
-
-使用最优提议分布时，权重更新公式变为：
-
-$$
-w_t = P(z_t | x_{t-1}) w_{t-1} = w_{t-1} \int P(z_t | x_t) P(x_t | x_{t-1}) dx_t
-$$
-
-粒子滤波器的性能可以通过 **克拉默-拉奥下界** （Cramér–Rao Lower Bound，简称CRLB）进行分析，它提供了无偏估计器方差的下界：
-
-$$
-\text{Var}(\hat{\theta}) \geq \frac{1}{I(\theta)}
-$$
-
-其中 $I(\theta)$ 为 **费舍信息量** （Fisher Information），定义为：
-
-$$
-I(\theta) = \mathbb{E}\Bigg[\Big(\frac{\partial}{\partial \theta} \log p(x | \theta)\Big)^2\Bigg] = -\mathbb{E}\Bigg[\frac{\partial^2}{\partial \theta^2} \log p(x | \theta)\Bigg]
-$$
-
-对于粒子滤波估计而言，可以推得粒子数 $N$ 与估计方差之间的关系近似为：
-
-$$
-\text{Var}(\hat{x}_t) \propto \frac{1}{N}
-$$
-
-这意味着在粒子数增加时，估计精度也会随之提升。
 
 ## FPK 方程
 
@@ -608,21 +596,229 @@ $$
 
 其中 $f(x_t, t)$ 表示系统的漂移项（drift term）， $G(x_t, t)$ 为扩散系数矩阵（diffusion matrix）， $W_t$ 是 **维纳过程** （Wiener Process），用于描述系统中的随机扰动。
 
-对应于上述随机过程，系统状态的概率密度函数 $p(x, t)$ 满足 Fokker–Planck–Kolmogorov（FPK）方程：
+对应于上述随机过程，系统状态的概率密度函数 $P(x, t)$ 满足 Fokker–Planck–Kolmogorov（FPK）方程：
 
 $$
-\frac{\partial p(x,t)}{\partial t} = -\sum_{i=1}^{n} \frac{\partial}{\partial x_i} \Big[ f_i(x,t) p(x,t) \Big] + \frac{1}{2} \sum_{i=1}^{n} \sum_{j=1}^{n} \frac{\partial^2}{\partial x_i \partial x_j} \Big[ (GG^{\rm T})_{ij} p(x,t) \Big]
+\frac{\partial P(x,t)}{\partial t} = -\sum_{i=1}^{n} \frac{\partial}{\partial x_i} \Big[ f_i(x,t) P(x,t) \Big] + \frac{1}{2} \sum_{i=1}^{n} \sum_{j=1}^{n} \frac{\partial^2}{\partial x_i \partial x_j} \Big[ (GG^{\rm T})_{ij} P(x,t) \Big]
 $$
 
 第一项表示 **漂移项的影响** （由系统动力学 $f(x,t)$ 导致的概率流动），第二项则反映 **扩散项的影响** （由噪声传播引起的概率扩散）。
 
 FPK 方程描述了系统状态概率密度在时间上的演化过程。然而在实际问题中直接求解该偏微分方程往往十分困难，尤其是当系统维度较高时。
 
-粒子滤波的核心思想正是通过蒙特卡洛方法来近似求解这一方程：通过在状态空间中生成大量样本（粒子）并随时间演化，用样本的加权分布去逼近 $p(x,t)$ 的动态变化，从而实现对系统状态的估计。
+粒子滤波的核心思想正是通过蒙特卡洛方法来近似求解这一方程：通过在状态空间中生成大量样本（粒子）并随时间演化，用样本的加权分布去逼近 $P(x,t)$ 的动态变化，从而实现对系统状态的估计（这里并不需要完全了解什么是随机微分方程，我们会在扩散模型章节详细讲解这部分的内容）。
 
 ## 理论基础
 
+粒子滤波建立在贝叶斯滤波框架之上，因此同样包含贝叶斯滤波的两个核心步骤： **预测** （Prediction）与 **更新** （Update）。
 
+然而，与传统的解析贝叶斯滤波不同，粒子滤波引入了蒙特卡洛方法与重要性采样技术来对复杂的非线性、非高斯分布进行数值近似。为了克服粒子退化问题并获得更稳定的估计结果，粒子滤波在此基础上又增加了 **重采样** （Resampling）与 **状态估计** （Estimation）步骤。
+
+接下来，我们将对粒子滤波的完整推导过程进行详细说明。
+
+### Initialization Step
+
+粒子滤波的第一步是 **初始化** （Initialization），其目标是根据系统的先验分布 $P(x_0)$ 生成初始粒子集合，用以表示系统在初始时刻的状态不确定性。
+
+我们从先验分布中采样得到 $N$ 个粒子（具体粒子个数由人工设定）：
+
+$$
+x_0^{(i)} \sim P(x_0) \quad i = 1, 2, \ldots, N
+$$
+
+每个粒子代表系统在状态空间中的一个可能位置。由于在初始时刻通常没有观测信息可用于修正先验分布，因此所有粒子的初始权重均相等：
+
+$$
+\lambda_0^{(i)} = \frac{1}{N}
+$$
+
+此时整组粒子 $\{x_0^{(i)}, \lambda_0^{(i)}\}_{i=1}^N$ 就构成了对初始状态分布 $P(x_0)$ 的离散近似：
+
+$$
+P(x_0) \approx \sum_{i=1}^{N} \lambda_0^{(i)} \delta(x_0 - x_0^{(i)})
+$$
+
+其中 $\delta(\cdot)$ 为狄拉克 delta 函数，表示概率质量集中在粒子所在的位置（可以参考下方视频了解其直观含义）。
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=114646350566949&bvid=BV1ZCTDz6E15&cid=30384260188&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+通过这种方式，连续的概率分布被一组带权样本所替代，为后续的预测与更新步骤提供了基础。
+
+### Prediction Step
+
+假设我们已经得到了上一个时刻的后验分布的离散近似：
+
+$$
+P(x_{t-1} | z_{1:t-1}) \approx \sum_{i=1}^{N} \lambda_{t-1}^{(i)} \delta(x_{t-1} - x_{t-1}^{(i)})
+$$
+
+将上述离散近似公式带入预测公式：
+
+$$
+\begin{align*}
+P(x_t | z_{1:t-1}) &= \int P(x_t | x_{t-1}) \sum_{i=1}^{N} \lambda_{t-1}^{(i)} \delta(x_{t-1} - x_{t-1}^{(i)}) \, dx_{t-1} \\
+&= \sum_{i=1}^{N} \lambda_{t-1}^{(i)} \int P(x_t | x_{t-1}) \delta(x_{t-1} - x_{t-1}^{(i)}) \, dx_{t-1} \\
+&= \sum_{i=1}^{N} \lambda_{t-1}^{(i)} P(x_t | x_{t-1}^{(i)})
+\end{align*}
+$$
+
+> 这个公式告诉我们：预测分布可以看成上一时刻每个粒子通过系统模型推进后的状态分布的加权和。
+
+然而我们 **并不需要** 显式求解出 “上一时刻每个粒子通过系统模型推进后的状态分布” 后再对这个分布采样来得到 $x_t^{(i)}$ （下面的推导是预测步骤的核心关键点）。
+
+因为上一时刻的粒子 $x_{t-1}^{(i)}$ 已经是已知的样本点，根据系统状态方程：
+
+$$
+x_t^{(i)} = f(x_{t-1}^{(i)}) + w_t^{(i)}
+$$
+
+我们可以当前状态 $x_t$ 的随机性完全来自过程噪声 $w_t^{(i)}$ ，因此我们只需要将原本的粒子 **做一次非线性变换后再随机加噪** 就可以得到新粒子 $x_t^{(i)}$ 。
+这些新粒子等价于从条件分布 $P(x_t | x_{t-1}^{(i)})$ 中采样得到的样本。
+
+换言之，每一个新粒子都代表一个条件分布 $P(x_t | x_{t-1}^{(i)})$ ，所有的新粒子及其对应的权重（当前阶段的权重沿用上一次迭代的结果）共同构成了预测分布 $P(x_t | z_{1:t-1})$ 的离散近似。
+
+### Update Step
+
+预测步骤给出了系统在时刻 $t$ 的先验分布的离散近似：
+
+$$
+P(x_t | z_{1:t-1}) \approx \sum_{i=1}^{N} \lambda_{t-1}^{(i)} \delta(x_t - x_t^{(i)})
+$$
+
+此时新的观测量 $z_t$ 到达，我们希望利用该观测信息对预测结果进行修正，从而得到更接近真实状态的后验分布。
+
+根据贝叶斯滤波更新公式可得：
+
+$$
+P(x_t | z_{1:t}) \propto \sum_{i=1}^{N} \lambda_{t-1}^{(i)} P(z_t | x_t^{(i)}) \delta(x_t - x_t^{(i)})
+$$
+
+这意味着每个粒子根据其与观测的一致程度（即观测似然）获得新的权重，权重更新公式为：
+
+$$
+\lambda_t^{(i)} = \lambda_{t-1}^{(i)} P(z_t | x_t^{(i)})
+$$
+
+根据系统观测方程：
+
+$$
+z_t = h(x_t) + v_t
+$$
+
+在给定 $x_t$ 的情况下，当前观测 $z_t$ 的随机性完全来自观测噪声 $v_t$ ，因此可以直接写出观测似然 $P(z_t | x_t)$ ：
+
+$$
+p(z_t | x_t) =
+\frac{1}{(2\pi)^{\frac{m}{2}} |R|^{\frac{1}{2}}}
+\exp \Big( -\frac{1}{2} (z_t - h(x_t))^{\rm T} R^{-1} (z_t - h(x_t)) \Big)
+$$
+
+然后直接代入每个 Prediction Step 得到的粒子参数计算出新的权重，最后还需要进行归一化操作：
+
+$$
+\bar{\lambda}_t^{(i)} = \frac{\lambda_t^{(i)}}{\sum_{j=1}^{N} \lambda_t^{(j)}}
+$$
+
+### Resampling Step
+
+经过预测和更新后，粒子权重可能出现 **退化现象** ：大部分粒子的权重非常小，只有少数粒子权重占据主导。
+
+这会导致计算效率低下，甚至状态估计失真。为了解决这个问题，需要进行 **重采样** （Resampling），保留高权重粒子，舍弃低权重粒子，同时恢复粒子数量。
+
+假设我们在更新步骤后得到了权重归一化的粒子集合为 $\{x_t^{(i)}, \bar{\lambda}_t^{(i)}\}_{i=1}^N$ 。
+
+然后我们根据归一化权重 $\bar{\lambda}_t^{(i)}$ 构造离散概率分布，并从该分布中 **有放回** 地采样 $N$ 个粒子得到新的粒子集合，权重全部重新设置为 $\frac{1}{N}$ 。
+
+接下来重复 Prediction Step 直至循环结束即可。
+
+## 渐进性分析
+
+粒子滤波使用 $N$ 个粒子对后验分布 $P(x_t|z_{1:t})$ 进行离散近似：
+
+$$
+P(x_t | z_{1:t}) \approx \sum_{i=1}^{N} w_t^i \delta(x_t - x_t^i)
+$$
+
+对任意可积函数 $\phi$ ，用 $\displaystyle \hat{\phi}_N = \sum_{i=1}^{N} w_t^i \phi(x_t^i)$ 作为 $\displaystyle \int \phi(x) \, P(x | z_{1:t}) \, dx$ 的蒙特卡洛估计。
+
+定义蒙特卡洛误差：
+
+$$
+\varepsilon_N = \hat{\phi}_N - \int \phi(x) P(x | z_{1:t}) dx
+$$
+
+如果粒子通过最优提议分布采样，并且经过重采样去掉权重偏差，可以将 $\{\phi(x_t^i)\}$ 看作独立同分布样本。
+
+根据中心极限定理：
+
+$$
+\sqrt{N} \varepsilon_N = \sqrt{N} \left( \hat{\phi}_N - \mathbb{E}[\phi(x_t)] \right) \rightarrow \mathcal{N}(0, \sigma_\phi^2)
+$$
+
+$$
+\text{where } \sigma_\phi^2 = \text{Var}[\phi(x_t)] = \int \left( \phi(x) - \int \phi(x') P(x' | z_{1:t}) dx' \right)^2 P(x | z_{1:t}) dx
+$$
+
+当粒子数量 $N \to \infty$ 时，粒子滤波的蒙特卡洛估计 $\hat{\phi}_N$ **渐近无偏** ，且服从正态分布误差衰减，说明粒子滤波能逼近真实贝叶斯后验。
+
+# 粒子滤波代码讲解
+
+粒子滤波是一种基于序贯重要性采样（SIS）的非参数贝叶斯滤波方法，用于对非线性、非高斯系统进行状态估计。它通过一组带权粒子来离散化表示状态分布，并在每个时间步执行 **预测、更新、重采样** 递推。
+
+下面的 Python 代码展示了一个粒子滤波的完整实现：
+
+```py frame="code" title="main.py"
+import numpy as np
+
+class ParticleFilter:
+    def __init__(self, N, f, h, Q, R, x0_prior):
+        self.N = N
+        self.f = f; self.Q = Q
+        self.h = h; self.R = R
+
+        # 初始化粒子集合
+        self.particles = x0_prior(N)
+        self.weights = np.ones(N) / N
+
+    def predict(self):
+        for i in range(self.N):
+            w = np.random.multivariate_normal(np.zeros(self.Q.shape[0]), self.Q)
+            self.particles[i] = self.f(self.particles[i]) + w
+
+    def update(self, z):
+        for i in range(self.N):
+            v = z - self.h(self.particles[i])
+            # 高斯观测似然
+            likelihood = np.exp(-0.5 * v.T @ np.linalg.inv(self.R) @ v)
+            likelihood /= np.sqrt((2*np.pi)**len(z) * np.linalg.det(self.R))
+            self.weights[i] *= likelihood
+        # 归一化权重
+        self.weights /= np.sum(self.weights)
+
+    def resample(self):
+        indices = np.random.choice(self.N, size=self.N, p=self.weights)
+        self.particles = self.particles[indices]
+        self.weights.fill(1.0 / self.N)
+
+    def estimate(self):
+        return np.average(self.particles, weights=self.weights, axis=0)
+```
+
+# 深层问题思考
+
+1. 在粒子滤波的序贯重要性采样理论中，我们为什么通常会选择状态转移概率作为提议分布？
+
+在序贯重要性采样中，随着时间的推移，粒子的权重方差会不断增大，导致大多数粒子的权重接近于零，这一现象称为粒子退化问题。选择合适的提议分布可以有效减缓粒子退化问题。理论上可以证明，在最优提议分布 $Q^*(x_t | x_{t-1}, z_t) = P(x_t | x_{t-1}, z_t)$ 下权重方差最小（具体内容可以看下面这个博客）。
+
+[AMCL深入解析 2/4 - 粒子滤波理论](https://zhuanlan.zhihu.com/p/676901879)
+
+在实际应用中，最优提议分布往往难以直接采样，因此通常采用状态转移概率 $P(x_t | x_{t-1})$ 作为近似。粒子滤波正是基于这一思想：在其预测步骤中，粒子通过状态转移模型采样。
+
+$$
+x_t^{(i)} \sim p(x_t | x_{t-1}^{(i)})
+$$
+
+这实际上等价于在序贯重要性采样框架下选用状态转移概率作为提议分布。
 
 # 参考文献
 
@@ -669,5 +865,3 @@ FPK 方程描述了系统状态概率密度在时间上的演化过程。然而�
 3. [粒子滤波器解读](https://blog.csdn.net/qq_44648285/article/details/148074482)
 
 4. [粒子滤波理论、方法及其在多目标跟踪中的应用](https://www.researchgate.net/publication/292354427_Particle_filtering_Theory_approach_and_application_for_multitarget_tracking)
-
-5. [粒子滤波 particle filter 的理论及实践（matlab版）](https://blog.csdn.net/weixin_44044161/article/details/125445579)
