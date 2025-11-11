@@ -413,6 +413,8 @@ $$
 f(x, y) \approx f(x_0, y_0) + \frac{\partial f}{\partial x}\Big|_{(x_0, y_0)} (x - x_0) + \frac{\partial f}{\partial y}\Big|_{(x_0, y_0)} (y - y_0)
 $$
 
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=113553197499694&bvid=BV1WvBQYsEkL&cid=27052212975&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
 - 多输出函数对输入向量求导公式（雅可比矩阵）
 
 $$
@@ -425,10 +427,6 @@ $$
 \dfrac{\partial f_m}{\partial x_1} \quad & \dfrac{\partial f_m}{\partial x_2} \quad & \cdots \quad & \dfrac{\partial f_m}{\partial x_n}
 \end{bmatrix}
 $$
-
-<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=113553197499694&bvid=BV1WvBQYsEkL&cid=27052212975&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
-
-&nbsp;
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=966638278&bvid=BV1DW4y1F7gB&cid=28736554042&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
@@ -756,7 +754,7 @@ $$
 $$
 
 $$
-\text{where } \sigma_\phi^2 = \text{Var}[\phi(x_t)] = \int \left( \phi(x) - \int \phi(x') P(x' | z_{1:t}) dx' \right)^2 P(x | z_{1:t}) dx
+\sigma_\phi^2 = \text{Var}[\phi(x_t)] = \int \left( \phi(x) - \int \phi(x') P(x' | z_{1:t}) dx' \right)^2 P(x | z_{1:t}) dx
 $$
 
 当粒子数量 $N \to \infty$ 时，粒子滤波的蒙特卡洛估计 $\hat{\phi}_N$ **渐近无偏** ，且服从正态分布误差衰减，说明粒子滤波能逼近真实贝叶斯后验。
@@ -815,7 +813,7 @@ class ParticleFilter:
 在实际应用中，最优提议分布往往难以直接采样，因此通常采用状态转移概率 $P(x_t | x_{t-1})$ 作为近似。粒子滤波正是基于这一思想：在其预测步骤中，粒子通过状态转移模型采样。
 
 $$
-x_t^{(i)} \sim p(x_t | x_{t-1}^{(i)})
+x_t^{(i)} \sim P(x_t | x_{t-1}^{(i)})
 $$
 
 这实际上等价于在序贯重要性采样框架下选用状态转移概率作为提议分布。

@@ -177,21 +177,13 @@ $$
 把这些代回原式：
 
 $$
-\begin{aligned}
-\frac{\partial L(w, b)}{\partial w}
-&= \frac{1}{n}\sum_{i=1}^n 2 e_i \left(-x_i\right) = -\frac{2}{n}\sum_{i=1}^n e_i x_i \\
-&= -\frac{2}{n}\sum_{i=1}^n \bigl(y_i - (w x_i + b)\bigr) x_i
-\end{aligned}
+\frac{\partial L(w, b)}{\partial w} = \frac{1}{n}\sum_{i=1}^n 2 e_i \left(-x_i\right) = -\frac{2}{n}\sum_{i=1}^n e_i x_i = -\frac{2}{n}\sum_{i=1}^n \bigl(y_i - (w x_i + b)\bigr) x_i
 $$
 
 同理，对 $b$ 求导 $\dfrac{\partial e_i}{\partial b} = -1$ ，因此：
 
 $$
-\begin{aligned}
-\frac{\partial L(w, b)}{\partial b}
-&= \frac{1}{n}\sum_{i=1}^n 2 e_i \left(-1\right) = -\frac{2}{n}\sum_{i=1}^n e_i \\
-&= -\frac{2}{n}\sum_{i=1}^n \bigl(y_i - (w x_i + b)\bigr)
-\end{aligned}
+\frac{\partial L(w, b)}{\partial b} = \frac{1}{n}\sum_{i=1}^n 2 e_i \left(-1\right) = -\frac{2}{n}\sum_{i=1}^n e_i = -\frac{2}{n}\sum_{i=1}^n \bigl(y_i - (w x_i + b)\bigr)
 $$
 
 # 参考文献
