@@ -22,13 +22,13 @@ $$
 标签 $y = 1$ 的后验概率为:
 
 $$
-P(y = 1 \mid x) = \sigma(w^{\rm T} x) = \frac{1}{1 + e^{-w^{\rm T} x}}
+P(y = 1 | x) = \sigma(w^{\rm T} x) = \frac{1}{1 + e^{-w^{\rm T} x}}
 $$
 
-这里 $$\mathbf{x} = [x_1, \cdots, x_D, 1]^{\rm T}$$ 和 $$\mathbf{w} = [w_1, \cdots, w_D, b]^{\rm T}$$ 分别为 $D + 1$ 维的增广特征向量与增广权重向量，标签 $y = 0$ 的后验概率为：
+这里 $\mathbf{x} = [x_1, \cdots, x_D, 1]^{\rm T}$ 和 $\mathbf{w} = [w_1, \cdots, w_D, b]^{\rm T}$ 分别为 $D + 1$ 维的增广特征向量与增广权重向量，标签 $y = 0$ 的后验概率为：
 
 $$
-P(y=0 \mid \mathbf{x}) = 1 - P(y=1 \mid \mathbf{x}) 
+P(y=0 | \mathbf{x}) = 1 - P(y=1 | \mathbf{x}) 
 = 1 - \sigma(\mathbf{w}^{\rm T} \mathbf{x}) 
 = \frac{e^{- \mathbf{w}^{\rm T} \mathbf{x}}}{1 + e^{- \mathbf{w}^{\rm T} \mathbf{x}}}
 $$
@@ -37,17 +37,17 @@ $$
 
 $$
 \mathbf{w}^{\rm T} \mathbf{x} 
-= \log \frac{P(y=1 \mid \mathbf{x})}{1 - P(y=1 \mid \mathbf{x})} 
-= \log \frac{P(y=1 \mid \mathbf{x})}{P(y=0 \mid \mathbf{x})}
+= \log \frac{P(y=1 | \mathbf{x})}{1 - P(y=1 | \mathbf{x})} 
+= \log \frac{P(y=1 | \mathbf{x})}{P(y=0 | \mathbf{x})}
 $$
 
-上式左边为线性函数，右边为正反后验概率比值（几率）取对数，因此 Logistic 回归也称为 **对数几率回归**
+上式左边为线性函数，右边为正反后验概率比值（几率）取对数，因此 Logistic 回归也称为 **对数几率回归** 。
 
 ![逻辑回归图像](src\content\posts\logistic-regression\逻辑回归分析1.jpg)
 
 # 代码讲解
 
-这次的代码我们将使用大量的匿名函数来简化我们的代码（如果不懂匿名函数的也没关系，看一下就懂了）。
+下面通过 Python 实现一个简单的逻辑回归模型。这次我们会用一些 **匿名函数** 来简化我们的代码（如果不懂匿名函数的也没关系，看一下就懂了）。
 
 ```py frame="code" title="main.py"
 import numpy as np
@@ -114,7 +114,7 @@ $$
 L(w) = -\frac{1}{N} \sum_{i=1}^{N} \Big[ y_i \log(\hat{y}_i) + (1 - y_i)\log(1 - \hat{y}_i) \Big]
 $$
 
-把 $$\hat{y} = \sigma(Xw)$$ 带入上面的式子便可以直接得到上述代码中的公式了。
+把 $$\hat{y}_i = \sigma(X_iw)$$ 带入上面的式子便可以直接得到上述代码中的公式了。
 
 ## 梯度下降
 
@@ -167,11 +167,11 @@ Logistic 回归不仅可以用于线性可分的数据，还能够通过一定�
 逻辑回归假设：
  
 $$
-P(y=1 \mid x) = \sigma(w^{\rm T} x + b)
+P(y=1 | x) = \sigma(w^{\rm T} x + b)
 $$
 
 $$
-P(y=0 \mid x) = 1 - \sigma(w^{\rm T} x + b)
+P(y=0 | x) = 1 - \sigma(w^{\rm T} x + b)
 $$
 
 > 我们认为样本属于正类的 **对数几率（log odds）** 与输入的线性组合成正比。
@@ -179,7 +179,7 @@ $$
 用公式表示就是：
 
 $$
-\log \frac{P(y=1 \mid x)}{P(y=0 \mid x)} = w^{\rm T} x + b
+\log \frac{P(y=1 | x)}{P(y=0 | x)} = w^{\rm T} x + b
 $$
 
 这叫作 **logit 变换** ，而 Sigmoid 函数正好是这个对数几率函数的 **逆变换** 。
