@@ -9,7 +9,7 @@ draft: false
 
 # 逻辑回归基本原理
 
-在模式识别问题中，我们通常关心的是 **分类任务** ，例如判断一个人是否患有某种疾病。这时就不能简单地使用线性回归模型来解决。为此我们引入了一个非线性激活函数 $g: \mathbb{R} \to (0,1)$ 来预测类别标签的后验概率 $P(y = 1 | x)$ ，其中 $y \in \{0, 1\}$ ，函数 $g$ 的作用是把线性函数的值域从实数区间挤压到 0 和 1 之间。
+在模式识别问题中，我们通常关心的是 **分类任务** ，例如判断一个人是否患有某种疾病。这时就不能简单地使用线性回归模型来解决。为此我们在模型中引入了一个非线性激活函数 $g: \mathbb{R} \to (0,1)$ 来预测类别标签的后验概率 $P(y = 1 | x)$ ，其中 $y \in \{0, 1\}$ ，函数 $g$ 的作用是把线性函数的值域从实数区间挤压到 0 和 1 之间。
 
 ## 对数几率回归介绍
 
@@ -25,20 +25,20 @@ $$
 P(y = 1 | x) = \sigma(w^{\rm T} x) = \frac{1}{1 + e^{-w^{\rm T} x}}
 $$
 
-这里 $\mathbf{x} = [x_1, \cdots, x_D, 1]^{\rm T}$ 和 $\mathbf{w} = [w_1, \cdots, w_D, b]^{\rm T}$ 分别为 $D + 1$ 维的增广特征向量与增广权重向量，标签 $y = 0$ 的后验概率为：
+这里 $x = [x_1, \cdots, x_D, 1]^{\rm T}$ 和 $w = [w_1, \cdots, w_D, b]^{\rm T}$ 分别为 $D + 1$ 维的增广特征向量与增广权重向量，标签 $y = 0$ 的后验概率为：
 
 $$
-P(y=0 | \mathbf{x}) = 1 - P(y=1 | \mathbf{x}) 
-= 1 - \sigma(\mathbf{w}^{\rm T} \mathbf{x}) 
-= \frac{e^{- \mathbf{w}^{\rm T} \mathbf{x}}}{1 + e^{- \mathbf{w}^{\rm T} \mathbf{x}}}
+P(y=0 | x) = 1 - P(y=1 | x) 
+= 1 - \sigma(w^{\rm T} x) 
+= \frac{e^{- w^{\rm T} x}}{1 + e^{- w^{\rm T} x}}
 $$
 
 综上可得：
 
 $$
-\mathbf{w}^{\rm T} \mathbf{x} 
-= \log \frac{P(y=1 | \mathbf{x})}{1 - P(y=1 | \mathbf{x})} 
-= \log \frac{P(y=1 | \mathbf{x})}{P(y=0 | \mathbf{x})}
+w^{\rm T} x 
+= \log \frac{P(y=1 | x)}{1 - P(y=1 | x)} 
+= \log \frac{P(y=1 | x)}{P(y=0 | x)}
 $$
 
 上式左边为线性函数，右边为正反后验概率比值（几率）取对数，因此 Logistic 回归也称为 **对数几率回归** 。
@@ -141,7 +141,7 @@ $$
 将 $$\hat{y}_i = \sigma(X_i w)$$ 代入，并对 $w$ 求导，得到：
 
 $$
-\nabla_w J(w) = \frac{\partial J(w)}{\partial w}
+\nabla J(w) = \frac{\partial J(w)}{\partial w}
 = \frac{1}{N} X^{\rm T} (\hat{y} - y)
 $$
 
@@ -174,7 +174,7 @@ $$
 P(y=0 | x) = 1 - \sigma(w^{\rm T} x + b)
 $$
 
-> 我们认为样本属于正类的 **对数几率（log odds）** 与输入的线性组合成正比。
+> 我们认为样本属于正类的 **对数几率** （log odds）与输入的线性组合成正比。
 
 用公式表示就是：
 
