@@ -19,6 +19,8 @@ draft: false
 
 然而我们要真正理解高斯过程回归的思想，首先需要从它的简化形式出发，也就是 **贝叶斯线性回归** （Bayesian Linear Regression）。高斯过程回归正是基于贝叶斯回归思想的一种推广与扩展。
 
+![高斯过程回归图像](src\content\posts\gaussian-process-regression\高斯过程回归1.jpg)
+
 ## 贝叶斯线性回归
 
 在线性回归中，我们假设输入特征 $x$ 与输出 $y$ 之间满足线性关系：
@@ -37,13 +39,17 @@ $$
 
 这种方法得到的是参数 $w$ 的 **点估计** （point estimate），这是一个确定的结果。然而在现实中，训练数据往往 **有限、带噪声甚至存在异常点** ，因此我们在对参数估计时应该要参杂一点 “不确定性” 。
 
+> 下面的教程舍去了不必要的证明过程，如果感兴趣的读者可以观看这篇博客
+
+[浅述贝叶斯线性回归](https://zhuanlan.zhihu.com/p/305042203)
+
 ### 贝叶斯思想
 
 在贝叶斯线性回归中，我们引入一个重要的思想：
 
 > 我们不把参数 $w$ 看作确定值，而是把它当作一个 **随机变量** ，用概率分布来描述我们对它的信念。
 
-也就是说，我们要建模的是 $P(w|\mathcal{D})$ 。即给定数据集 $\mathcal{D} = \{ (x_i, y_i) \}_{i=1}^N$ 的条件下，参数 $w$ 的 **后验分布** 。
+也就是说，我们要建模的是 $P(w|\mathcal{D})$ ：即给定数据集 $\mathcal{D} = \{ (x_i, y_i) \}_{i=1}^N$ 的条件下，参数 $w$ 的 **后验分布** 。
 
 这个分布告诉我们：在观察到数据之后，哪些 $w$ 是更可能的，哪些是不太可能的。这样我们不仅能够得到预测结果，还能量化预测的 “置信度” 。
 
@@ -75,7 +81,7 @@ $$
 
 其中 $X$ 是特征矩阵， $y$ 是观测输出， $\beta$ 表示观测噪声的精度。
 
-### 学习问题
+### 学习过程
 
 正如上面所说：在贝叶斯线性回归中，我们的目标不再是寻找一个最优参数 $\hat{w}$ ，而是希望通过数据推断出参数的后验分布：
 
@@ -99,7 +105,7 @@ $$
 
 直观上看： $\mathbf{S}_N$ 的第一项 $\alpha \mathbf{I}$ 来源于先验，对参数起到正则化作用；第二项 $\beta X^{\rm T} X$ 来源于数据。因此当样本数量增加或噪声变小（ $\beta$ 变大）时，模型会更信任数据，后验分布变得更 “尖锐” 。
 
-### 预测问题
+### 预测过程
 
 在获得参数的后验分布 $P(w | X, y)$ 后，我们就可以对新样本 $x_*$ 进行预测。与传统线性回归直接使用单一参数 $\hat{w}$ 不同，贝叶斯线性回归会综合考虑所有可能的参数值，并按照其后验概率加权平均：
 
@@ -162,7 +168,7 @@ f(x) \sim \mathcal{GP}(m(x), k(x, x'))
 $$
 
 - $\displaystyle m(x) = \mathbb{E}\Big[f(x)\Big]$ 为 **均值函数** ，描述函数在输入空间的平均趋势
-- $\displaystyle k(x, x') = \mathbb{E}\Big[(f(x) - m(x))(f(x') - m(x'))\Big]$ 为 **核函数** ，刻画任意两个输入点之间的相关性
+- $\displaystyle k(x, x') = \mathbb{E}\Big[\big(f(x) - m(x)\big)\big(f(x') - m(x')\big)\Big]$ 为 **核函数** ，刻画任意两个输入点之间的相关性
 
 为了理解高斯过程的由来，我们可以从贝叶斯线性回归出发。
 
@@ -181,10 +187,10 @@ $$
 那么我们可以计算出函数值的期望与协方差：
 
 $$
-\mathbb{E}\Big[f(x)\Big] = 0 \quad \text{Cov}\Big(f(x), f(x')\Big) &= \alpha^{-1} \phi(x)^{\rm T} \phi(x')
+\mathbb{E}\Big[f(x)\Big] = 0 \quad \text{Cov}\Big(f(x), f(x')\Big) = \alpha^{-1} \phi(x)^{\rm T} \phi(x')
 $$
 
-说明在这种假设下， $f(x)$ 本身服从一个高斯过程，其协方差函数为：
+说明在这种假设下 $f(x)$ 本身服从一个高斯过程，其协方差函数为：
 
 $$
 k(x, x') = \alpha^{-1} \phi(x)^{\rm T} \phi(x')
@@ -192,40 +198,446 @@ $$
 
 也就是说，贝叶斯线性回归天然地隐含了一个高斯过程假设。如果我们令特征映射 $\phi(x)$ 的维度趋于无穷，并用核函数直接定义 $k(x, x')$ ，就得到了 **高斯过程回归** ———— 贝叶斯线性回归的无限维形式。
 
+# 代码实现
+
+在前面的讨论中我们已经知道：高斯过程是一种直接对函数建立分布的建模方式。它不再依赖具体的参数向量 $w$ ，而是通过核函数 $k(x, x')$ 来刻画不同输入点之间的相关性。基于这种思想，我们现在来正式推导高斯过程回归的完整过程。
+
+为了便于理解，我们将对照代码进行讲解。
+
+```py frame="code" title="main.py"
+import numpy as np
+from scipy.optimize import minimize
+np.random.seed(42)
+X_train = np.linspace(-5, 5, 12).reshape(-1, 1)
+y_train = np.sin(X_train) + 0.3 * np.random.randn(*X_train.shape)
+
+
+# 定义 RBF 核函数
+def rbf_kernel(X1, X2, length_scale=1.0, variance=1.0):
+    X1 = np.atleast_2d(X1); X2 = np.atleast_2d(X2)
+    sqdist = np.sum(X1**2, 1).reshape(-1, 1) + np.sum(X2**2, 1) - 2 * X1 @ X2.T
+    return variance * np.exp(-0.5 / (length_scale**2) * sqdist)
+
+class GaussianProcessRegressor:
+    def __init__(self, kernel, noise=1e-6):
+        self.kernel = kernel
+        self.noise = noise
+        self.is_fit = False
+
+    def fit(self, X_train, y_train):
+        self.X_train = np.atleast_2d(X_train)
+        self.y_train = np.atleast_2d(y_train).reshape(-1, 1)
+        K = self.kernel(self.X_train, self.X_train)
+        K_y = K + self.noise * np.eye(len(self.X_train))
+        self.L = np.linalg.cholesky(K_y)
+        self.alpha = np.linalg.solve(self.L.T, np.linalg.solve(self.L, self.y_train))
+        self.is_fit = True
+
+    def predict(self, X_test, return_cov=False):
+        if not self.is_fit:
+            raise RuntimeError("模型尚未训练，请先调用 fit()。")
+        X_test = np.atleast_2d(X_test)
+        K_s = self.kernel(self.X_train, X_test)
+        K_ss = self.kernel(X_test, X_test)
+        mu = K_s.T @ self.alpha
+        v = np.linalg.solve(self.L, K_s)
+        cov = K_ss - v.T @ v
+        if return_cov:
+            return mu.ravel(), cov
+        else:
+            return mu.ravel()
+
+    def log_marginal_likelihood(self):
+        y = self.y_train
+        L = self.L
+        n = len(y)
+        term1 = -0.5 * y.T @ self.alpha
+        term2 = -np.sum(np.log(np.diag(L)))
+        term3 = -0.5 * n * np.log(2 * np.pi)
+        return (term1 + term2 + term3).ravel()[0]
+
+# 超参数优化函数
+def optimize_rbf_hyperparameters(X_train, y_train, noise=0.1**2):
+    def objective(params):
+        # 对数变换保证参数 >0
+        length_scale = np.exp(params[0])
+        variance = np.exp(params[1])
+        kernel = lambda X1, X2: rbf_kernel(X1, X2, length_scale=length_scale, variance=variance)
+        gp = GaussianProcessRegressor(kernel=kernel, noise=noise)
+        gp.fit(X_train, y_train)
+        return -gp.log_marginal_likelihood()
+
+    res = minimize(objective, x0=np.log([1.0, 1.0]), bounds=[(-5, 5), (-5, 5)])
+    best_length_scale, best_variance = np.exp(res.x)
+    return best_length_scale, best_variance
+
+# 执行代码
+noise = 0.1**2
+if __name__ == "__main__":
+    # 优化所有核参数
+    best_l, best_v = optimize_rbf_hyperparameters(X_train, y_train, noise=noise)
+    print(f"优化得到的 length_scale: {best_l:.4f}, variance: {best_v:.4f}")
+    # 使用优化后的核参数重新训练模型
+    gp = GaussianProcessRegressor(
+        kernel=lambda x, y: rbf_kernel(x, y, length_scale=best_l, variance=best_v),
+        noise=noise
+    )
+    gp.fit(X_train, y_train)
+
+    # 预测过程
+    X_test = np.linspace(-6, 6, 200).reshape(-1, 1)
+    mean, cov = gp.predict(X_test, return_cov=True)
+    std = np.sqrt(np.diag(cov))
+    print("Posterior mean (前5个):", mean[:5])
+    print("Posterior std  (前5个):", std[:5])
+    print("Log Marginal Likelihood:", gp.log_marginal_likelihood())
+```
+
+## 准备过程
+
+高斯过程回归依赖 **核函数** 来刻画输入点之间的相关性。核函数的参数通常可以由人工设定，但也可以通过 **最大化边际似然** （Max Marginal Likelihood） 自动学习得到。
+
+边际似然描述了在给定核参数 $\theta$ 下，模型生成训练数据 $y$ 的概率分布：
+
+$$
+P(y | X, \theta) = \mathcal{N}(0, K + \sigma_n^2 \mathbf{I})
+$$
+
+其对数形式为：
+
+$$
+\log P(y | X, \theta) = -\frac{1}{2} y^{\rm T} (K + \sigma_n^2 \mathbf{I})^{-1} y - \frac{1}{2} \log |K + \sigma_n^2 \mathbf{I}| - \frac{N}{2} \log 2\pi
+$$
+
+通过最大化这个对数边际似然，我们可以找到最优的核函数超参数 $\theta$ 。在实际计算中，常用的方法包括梯度下降或 L-BFGS 等数值优化算法。
+
+```py showLineNumbers
+# 定义 RBF 核函数
+def rbf_kernel(X1, X2, length_scale=1.0, variance=1.0):
+    X1 = np.atleast_2d(X1); X2 = np.atleast_2d(X2)
+    sqdist = np.sum(X1**2, 1).reshape(-1, 1) + np.sum(X2**2, 1) - 2 * X1 @ X2.T
+    return variance * np.exp(-0.5 / (length_scale**2) * sqdist)
+
+# 对数边际似然函数
+def log_marginal_likelihood(self):
+    y = self.y_train
+    L = self.L
+    n = len(y)
+    term1 = -0.5 * y.T @ self.alpha
+    term2 = -np.sum(np.log(np.diag(L)))
+    term3 = -0.5 * n * np.log(2 * np.pi)
+    return (term1 + term2 + term3).ravel()[0]
+
+# 超参数优化函数
+def optimize_rbf_hyperparameters(X_train, y_train, noise=0.1**2):
+    def objective(params):
+        # 对数变换保证参数 >0
+        length_scale = np.exp(params[0])
+        variance = np.exp(params[1])
+        kernel = lambda X1, X2: rbf_kernel(X1, X2, length_scale=length_scale, variance=variance)
+        gp = GaussianProcessRegressor(kernel=kernel, noise=noise)
+        gp.fit(X_train, y_train)
+        return -gp.log_marginal_likelihood()
+
+    res = minimize(objective, x0=np.log([1.0, 1.0]), bounds=[(-5, 5), (-5, 5)])
+    best_length_scale, best_variance = np.exp(res.x)
+    return best_length_scale, best_variance
+```
+
+## 学习过程
+
+假设我们有一组训练数据：
+
+$$
+\mathcal{D} = \{(x_i, y_i)\}_{i=1}^N
+$$
+
+其中观测值 $y_i$ 由真实函数 $f(x_i)$ 加上噪声生成：
+
+$$
+y_i = f(x_i) + \epsilon_i \quad \epsilon_i \sim \mathcal{N}(0, \sigma_n^2)
+$$
+
+我们假设函数 $f(x)$ 服从一个高斯过程：
+
+$$
+f(x) \sim \mathcal{GP}(m(x), k(x, x'))
+$$
+
+为简化推导，通常设 $m(x) = 0$ （均值函数为零）。
+
+于是对任意有限个输入点 ${x_1, x_2, \dots, x_N}$ ，其函数值向量服从多元高斯分布：
+
+$$
+\mathbf{f} = [f(x_1), f(x_2), \ldots, f(x_N)]^{\rm T} \sim \mathcal{N}(0, K)
+$$
+
+其中协方差矩阵 $K$ 的元素由核函数给出：
+
+$$
+K_{ij} = k(x_i, x_j)
+$$
+
+由于观测值 $y$ 受到噪声影响，其分布为：
+
+$$
+y \sim \mathcal{N}(0, K + \sigma_n^2 \mathbf{I})
+$$
+
+在实际实现中，我们需要求解预测参数 $\alpha$ ：
+
+$$
+\alpha = (K + \sigma_n^2 \mathbf{I})^{-1} y
+$$
+
+这样可以在预测新点时简化均值的计算：
+
+$$
+\mathbb{E}\Big[f_*\Big] = K(X_*, X_{\text{train}}) \alpha
+$$
+
+直接求逆既费时又可能造成数值不稳定，因此通常采用 Cholesky 分解：
+
+$$
+K + \sigma_n^2 \mathbf{I} = LL^{\rm T}
+$$
+
+其中 $L$ 是下三角矩阵，然后通过两次三角求解得到 $\alpha$ ：
+
+$$
+Lz = y \quad \Rightarrow \quad L^{\rm T} \alpha = z
+$$
+
+```py showLineNumbers
+def fit(self, X_train, y_train):
+    self.X_train = np.atleast_2d(X_train)
+    self.y_train = np.atleast_2d(y_train).reshape(-1, 1)
+    K = self.kernel(self.X_train, self.X_train)
+    K_y = K + self.noise * np.eye(len(self.X_train))
+    # Cholesky 分解提高数值稳定性
+    self.L = np.linalg.cholesky(K_y)
+    self.alpha = np.linalg.solve(self.L.T, np.linalg.solve(self.L, self.y_train))
+    self.is_fit = True
+```
+
+## 预测过程
+
+现在我们已经训练好了模型，现在要预测新的输入点 $X_*$ 的输出 $f_*$ 。
+
+高斯过程预测给出的是 **条件高斯分布** ：
+
+$$
+f_* | X_*, X_{\text{train}}, y \sim \mathcal{N}(\mu_*, \Sigma_*)
+$$
+
+$$
+\mu_* = K(X_*, X_{\text{train}}) \alpha
+$$
+
+$$
+\Sigma_* = K(X_*, X_*) - K(X_{\text{train}}, X_*)^{\rm T} (K + \sigma_n^2 I)^{-1} K(X_{\text{train}}, X_*)
+$$
+
+将辅助矩阵 $v = L^{-1} K(X_{\text{train}}, X_*)$ 代入公式可将协方差化简为：
+
+$$
+\Sigma_* = K(X_*, X_*) - v^{\rm T} v
+$$
+
+```py showLineNumbers
+def predict(self, X_test, return_cov=False):
+    if not self.is_fit:
+        raise RuntimeError("模型尚未训练，请先调用 fit()。")
+    X_test = np.atleast_2d(X_test)
+    K_s = self.kernel(self.X_train, X_test)
+    K_ss = self.kernel(X_test, X_test)
+    mu = K_s.T @ self.alpha
+    v = np.linalg.solve(self.L, K_s)
+    cov = K_ss - v.T @ v
+    if return_cov:
+        return mu.ravel(), cov
+    else:
+        return mu.ravel()
+```
+
+# 深层问题思考
+
+1. 贝叶斯思想中的先验分布和似然函数为什么是那样子的？（为什么贝叶斯线性回归优于普通线性回归？）
+
+我们先来讲解一下为什么似然函数要设成：
+
+$$
+P(y | x, w) = \mathcal{N}(y | w^{\rm T} x, \beta^{-1})
+$$
+
+似然函数反映的是：
+
+> 在参数 $w$ 已知的情况下，观测到数据 $y$ 的 “可能性” 有多大。
+
+换句话说，它描述了数据的生成机制：
+
+$$
+y = w^{\rm T} x + \epsilon
+$$
+
+其中 $\epsilon$ 是噪声项，用来表示真实观测和理想模型之间的偏差。
+
+我们假设 $\epsilon \sim \mathcal{N}(0, \beta^{-1})$ ，于是可以得到：
+
+$$
+y | x, w \sim \mathcal{N}(w^{\rm T} x, \beta^{-1})
+$$
+
+那为什么先验分布要设成：
+
+$$
+P(w) = \mathcal{N}(w | 0, \alpha^{-1} \mathbf{I})
+$$
+
+这里有 **数学便利性** 和 **建模含义** 两个方面的原因：
+
+- 数学便利性
+
+在贝叶斯推断中，我们要计算后验分布：
+
+$$
+P(w | X, y) \propto P(y | X, w) P(w)
+$$
+
+我们已经通过分析得到似然函数 $P(y | X, w)$ 服从高斯分布，如果我们将先验分布 $P(w)$ 也选择为高斯分布，那么先验函数和似然函数就满足 **高斯共轭性** （Gaussian Conjugacy），使得后验分布也会是高斯分布。
+
+这不仅简化了推导过程，还能得到后验的闭式解，避免数值近似或采样操作。
+
+- 建模含义
+
+在没有观测数据之前，我们对参数 $w$ 的了解是模糊的。于是我们假设每个参数 $w_j$ 相互独立、均值为 0、方差有限：
+
+$$
+w_j \sim \mathcal{N}(0, \alpha^{-1})
+$$
+
+这表示我们对参数的 **先验信念** ：模型应尽可能简单，除非数据强烈表明某个特征确实重要。
+
+在最大后验估计（MAP）框架下：
+
+$$
+\arg\max_w P(w | X, y) = \arg\max_w P(y | X, w) P(w)
+$$
+
+取对数后可以得到：
+
+$$
+\arg\max_w \log P(y|X, w) - \frac{\alpha}{2} \|w\|^2
+$$
+
+> 这其实就对应了 **L2 正则化** 的思想
+
+因此从优化角度看，给参数 $w$ 加上高斯先验等价于在目标函数中加入 L2 正则化项。这意味着贝叶斯线性回归在建模阶段就自然地抑制了过大的参数，从而减少过拟合、提升泛化能力。
+
+2. 高斯过程对函数分布的建模为什么是那样子的？（什么是函数的高斯分布？为什么函数的高斯分布只需要两个参数就可以表达？）
+
+- 核心思想：从 “有限维高斯分布” 推广到 “函数的高斯分布”
+
+在普通的高斯分布中，我们描述的是 **有限维随机向量** ：
+
+$$
+y = [y_1, y_2, \dots, y_n]^{\rm T} \sim \mathcal{N}(\mu, \Sigma)
+$$
+
+只要给定均值向量 $\mu$ 和协方差矩阵 $\Sigma$ ，这个随机向量的分布就可以被 **完全刻画** 。
+
+现在我们希望对一个函数 $f(x)$ 建模。但函数在每个 $x$ 上都有对应的取值，因此它相当于包含了 **无限多个随机变量** 。换句话说，若把函数视作 “随机变量的集合” ，那么它的分布就应是一个定义在函数空间上的分布，即 “函数的分布” 。
+
+- 形式化定义：高斯过程的 “闭合性” 定义
+
+为了让 “函数的分布” 有意义，我们要求：
+
+> 对任意有限个输入点 $x_1, x_2, \ldots, x_n$ ，对应的函数值：
+> 
+> $$
+> [f(x_1), f(x_2), \ldots, f(x_n)]^{\rm T}
+> $$
+>
+> 都服从一个 **联合高斯分布** 。
+
+只要满足这一条件，我们就称函数 $f(x)$ 服从一个高斯过程。这是一种 “从有限维高斯分布推广到无限维函数分布” 的自然方式。
+
+高斯过程可定义为：
+
+$$
+f(x) \sim \mathcal{GP}(m(x), k(x, x'))
+$$
+
+等价地说，对于任意有限集合 ${x_1, \ldots, x_n}$ 都有：
+
+$$
+[f(x_1), f(x_2), \ldots, f(x_n)]^{\rm T} \sim \mathcal{N}(\mathbf{m}, \mathbf{K})
+$$
+
+$$
+\mathbf{m}_i = m(x_i) \quad \mathbf{K}_{ij} = k(x_i, x_j)
+$$
+
+在有限维情形下，一个高斯分布完全由 **均值向量** 和 **协方差矩阵** 唯一确定。同理在函数空间中，高斯过程也由 **均值函数** $m(x)$ 和 **协方差函数** （核函数） $k(x, x')$ 唯一确定。
+
+3. 为什么优化核函数超参数的时候用的是边际似然而不是普通的似然函数？ 
+
+如果我们已知具体的函数 $f$ ，则观测数据的似然函数可以写为：
+
+$$
+P(y|f, \beta) = \mathcal{N}(y|f, \beta^{-1}\mathbf{I})
+$$
+
+然而问题在于：
+
+> 我们并不知道真实的 $f$ ———— 它本身是一个随机变量。
+
+因此直接最大化这个 “条件似然” 是没意义的，因为 $f$ 是未知的。
+
+既然我们不知道 $f$ ，就要利用积分来将其边缘化：
+
+$$
+P(y|X, \theta, \beta) = \int P(y|f, \beta) P(f|X, \theta) \, df
+$$
+
+这个积分结果被称为 **边际似然** （Marginal Likelihood），也常称为 **模型证据** （Model Evidence）。它衡量了在给定核函数超参数 $\theta$ 的情况下，模型整体上对观测数据 $y$ 的解释能力。
+
+通过最大化边际似然，我们能够自动选择那些既能很好拟合数据、又不会过度复杂化模型的核参数，从而实现一种 **贝叶斯式的自动正则化** 。
+
 # 参考文献
 
 ## 贝叶斯线性回归
 
 1. [贝叶斯线性回归（Bayesian Linear Regression）](https://blog.csdn.net/daunxx/article/details/51725086)
 
-2. [浅入浅出贝叶斯线性回归 (Bayesian Linear Regression)](https://zhuanlan.zhihu.com/p/130974579)
+2. [如何通俗地解释贝叶斯线性回归的基本原理？](https://www.zhihu.com/question/22007264/answers/updated)
 
-3. [如何通俗地解释贝叶斯线性回归的基本原理？](https://www.zhihu.com/question/22007264/answers/updated)
+3. [多元线性回归贝叶斯模型](https://andrewwang.rbind.io/courses/bayesian_statistics/notes/Ch7_h.pdf)
 
-4. [浅述贝叶斯线性回归](https://zhuanlan.zhihu.com/p/305042203)
+4. [贝叶斯数据分析(七)——贝叶斯线性回归](https://blog.vicayang.cc/Note-Bayesian-Linear-Regression/)
 
-5. [多元线性回归贝叶斯模型](https://andrewwang.rbind.io/courses/bayesian_statistics/notes/Ch7_h.pdf)
+5. [贝叶斯线性回归与贝叶斯逻辑回归](https://weirping.github.io/blog/Bayesian-Probabilities-in-ML.html)
 
-6. [贝叶斯数据分析(七)——贝叶斯线性回归](https://blog.vicayang.cc/Note-Bayesian-Linear-Regression/)
+## 高斯过程
 
-7. [贝叶斯线性回归与贝叶斯逻辑回归](https://weirping.github.io/blog/Bayesian-Probabilities-in-ML.html)
+1. [高斯过程 Gaussian Processes 原理、可视化及代码实现](https://borgwang.github.io/ml/2019/07/28/gaussian-processes.html)
+
+2. [高斯过程 Gaussian Process](https://www.superui.cc/machine-learning/gaussian-process/)
+
+3. [24秋机器学习笔记-07-高斯过程](https://blog.imyangty.com/note-ml2024fall/gaussian-process/)
+
+4. [【ScikitLearn】高斯过程用于机器学习](https://scikit-learn.cn/stable/auto_examples/gaussian_process/index.html)
 
 ## 高斯过程回归
 
 1. [高斯过程回归(Gaussian Processes Regression, GPR)简介](https://blog.csdn.net/HelloWorldTM/article/details/126980872)
 
-2. [【ScikitLearn】高斯过程用于机器学习](https://scikit-learn.cn/stable/auto_examples/gaussian_process/index.html)
+2. [【ScikitLearn】高斯过程回归与高斯过程分析](https://scikit-learn.cn/stable/modules/gaussian_process.html)
 
-3. [【ScikitLearn】高斯过程回归与高斯过程分析](https://scikit-learn.cn/stable/modules/gaussian_process.html)
+3. [高斯过程回归【详细数学推导】](https://blog.csdn.net/v20000727/article/details/138086802)
 
-4. [高斯过程回归【详细数学推导】](https://blog.csdn.net/v20000727/article/details/138086802)
+4. [贝叶斯建模-高斯过程回归](https://bookdown.org/xiangyun/masr/gaussian-processes-regression.html)
 
-5. [高斯过程 Gaussian Processes 原理、可视化及代码实现](https://zhuanlan.zhihu.com/p/75589452)
+5. [高斯过程回归（GPR）原理与实现](https://zhuanlan.zhihu.com/p/697071644)
 
-6. [贝叶斯建模-高斯过程回归](https://bookdown.org/xiangyun/masr/gaussian-processes-regression.html)
-
-7. [高斯过程回归（GPR）原理与实现](https://zhuanlan.zhihu.com/p/697071644)
-
-8. [深度学习基础（高斯过程）](https://sirlis.cn/posts/deep-learning-gaussian-process/)
-
-9. [Gaussian Processes](https://borgwang.github.io/ml/2019/07/28/gaussian-processes.html)
+6. [深度学习基础（高斯过程）](https://sirlis.cn/posts/deep-learning-gaussian-process/)
