@@ -430,6 +430,8 @@ $$
 f_* | X_*, X_{\text{train}}, y \sim \mathcal{N}(\mu_*, \Sigma_*)
 $$
 
+其中的均值与协方差的解析式为：
+
 $$
 \mu_* = K(X_*, X_{\text{train}}) \alpha
 $$
@@ -536,6 +538,8 @@ $$
 
 2. 高斯过程对函数分布的建模为什么是那样子的？（什么是函数的高斯分布？为什么函数的高斯分布只需要两个参数就可以表达？）
 
+我们可以从两个相互关联的角度来讨论这个问题：一是从直观和概念层面理解其核心思想，二是从形式化定义的角度揭示其数学本质。
+
 - 核心思想：从 “有限维高斯分布” 推广到 “函数的高斯分布”
 
 在普通的高斯分布中，我们描述的是 **有限维随机向量** ：
@@ -632,7 +636,7 @@ $$
 
 1. [高斯过程回归(Gaussian Processes Regression, GPR)简介](https://blog.csdn.net/HelloWorldTM/article/details/126980872)
 
-2. [【ScikitLearn】高斯过程回归与高斯过程分析](https://scikit-learn.cn/stable/modules/gaussian_process.html)
+2. [【ScikitLearn】高斯过程回归与高斯过程分类](https://scikit-learn.cn/stable/modules/gaussian_process.html)
 
 3. [高斯过程回归【详细数学推导】](https://blog.csdn.net/v20000727/article/details/138086802)
 
