@@ -101,8 +101,6 @@ $$
 \mathbf{m}_N = \beta \mathbf{S}_N X^{\rm T} y \quad \mathbf{S}_N = (\alpha \mathbf{I} + \beta X^{\rm T} X)^{-1}
 $$
 
-其中 $\mathbf{m}_N$ 表示后验分布的均值，可视作参数 $w$ 的 “最有可能值” ； $\mathbf{S}_N$ 表示后验分布的协方差矩阵，反映了我们对参数不确定性的估计。
-
 ### 预测过程
 
 在获得参数的后验分布 $P(w | X, y)$ 后，我们就可以对新样本 $x_*$ 进行预测。与传统线性回归直接使用单一参数 $\hat{w}$ 不同，贝叶斯线性回归会综合考虑所有可能的参数值，并按照其后验概率加权平均：
@@ -121,13 +119,11 @@ $$
 P(y_* | x_*, X, y) = \mathcal{N}(y_* | \mu_*, \sigma_*^2)
 $$
 
-将后验分布（我们学习得到的模型）和似然函数带入积分后，可以得到预测分别的参数解析式：
+将后验分布（我们学习得到的模型）和似然函数带入积分后，可以得到预测分布的参数解析式：
 
 $$
 \mu_* = \mathbf{m}_N^{\rm T} x_* \quad \sigma_*^2 = \frac{1}{\beta} + x_*^{\rm T} \mathbf{S}_N x_*
 $$
-
-其中 $\mu_*$ 表示模型的期望预测结果， $\sigma_*^2$ 则量化预测的不确定性。
 
 ## 高斯过程
 
@@ -295,28 +291,24 @@ $$
 \mathbf{f} = [f(x_1), f(x_2), \ldots, f(x_N)]^{\rm T} \sim \mathcal{N}(0, K)
 $$
 
-其中协方差矩阵 $K$ 的元素由核函数给出：
-
-$$
-K_{ij} = k(x_i, x_j)
-$$
+其中协方差矩阵 $K$ 的元素由核函数 $K_{ij} = k(x_i, x_j)$ 给出。
 
 由于观测值 $y$ 受到噪声影响，其分布为：
 
 $$
-\mathbf{y} \sim \mathcal{N}(0, K + \sigma_n^2 \mathbf{I})
+y \sim \mathcal{N}(0, K + \sigma_n^2 \mathbf{I})
 $$
 
-综上所述，边际似然描述了在给定核参数 $\theta$ 下，模型生成训练数据 $y$ 的概率分布：
+这意味着 $P(y|f)$ 也是高斯分布，且边缘化潜在函数 $f$ 后的边际似然依然是高斯：
 
 $$
-P(\mathbf{y} | X, \theta) = \mathcal{N}(0, K + \sigma_n^2 \mathbf{I})
+P(y|X, \theta) = \int P(y|f) P(f|X, \theta) \, df = \mathcal{N}(0, K + \sigma_n^2 \mathbf{I})
 $$
 
 其对数形式为：
 
 $$
-\log P(\mathbf{y} | X, \theta) = -\frac{1}{2} \mathbf{y}^{\rm T} (K + \sigma_n^2 \mathbf{I})^{-1} \mathbf{y} - \frac{1}{2} \log |K + \sigma_n^2 \mathbf{I}| - \frac{N}{2} \log 2\pi
+\log P(y | X, \theta) = -\frac{1}{2} y^{\rm T} (K + \sigma_n^2 \mathbf{I})^{-1} y - \frac{1}{2} \log |K + \sigma_n^2 \mathbf{I}| - \frac{N}{2} \log 2\pi
 $$
 
 通过最大化这个对数边际似然，我们可以找到最优的核函数超参数 $\theta$ 。在实际计算中，常用的方法包括梯度下降或 L-BFGS 等数值优化算法。
@@ -359,24 +351,22 @@ def optimize_rbf_hyperparameters(X_train, y_train, noise=0.1**2):
 在准备阶段中我们已经推导出观测向量满足：
 
 $$
-\mathbf{y} \sim \mathcal{N}(0, K + \sigma_n^2 \mathbf{I})
+y \sim \mathcal{N}(0, K + \sigma_n^2 \mathbf{I})
 $$
 
 但在实际的代码实现中，我们并不直接显式使用该分布的均值和协方差，而是希望得到预测时需要用到的关键参数：
 
 $$
-\alpha = (K + \sigma_n^2 \mathbf{I})^{-1} \mathbf{y}
+\alpha = (K + \sigma_n^2 \mathbf{I})^{-1} y
 $$
 
-这样在预测新输入时，均值即可简化为：
+这样在预测新输入时，均值可以简化为（这样可以避免反复求逆带来的开销）：
 
 $$
 \mathbb{E}\Big[f_*\Big] = K(X_*, X_{\text{train}}) \alpha
 $$
 
-这样可以避免反复求逆带来的开销。
-
-同时，矩阵直接求逆不仅计算代价高，而且数值稳定性较差，因此通常采用 Cholesky 分解：
+由于对矩阵直接求逆不仅计算代价高、数值稳定性较差，因此通常采用 Cholesky 分解：
 
 $$
 K + \sigma_n^2 \mathbf{I} = LL^{\rm T}
@@ -385,7 +375,7 @@ $$
 其中 $L$ 为下三角矩阵，可以通过两次三角求解得到 $\alpha$ ：
 
 $$
-Lz = \mathbf{y}  \quad \Rightarrow \quad L^{\rm T} \alpha = z
+Lz = y  \quad \Rightarrow \quad L^{\rm T} \alpha = z
 $$
 
 需要注意的是，这些用于预测的关键参数（包括 $\alpha$ 和 $L$ ）都依赖于核矩阵：
@@ -394,7 +384,7 @@ $$
 K_\theta = K(X_{\text{train}}, X_{\text{train}}; \theta)
 $$
 
-该核函数已在准备过程中学习得到。
+该矩阵已在上述的准备过程中学习得到。
 
 ```py showLineNumbers
 def fit(self, X_train, y_train):
@@ -530,60 +520,12 @@ $$
 
 因此从优化角度看，给参数 $w$ 加上高斯先验等价于在目标函数中加入 L2 正则化项。这意味着贝叶斯线性回归在建模阶段就自然地抑制了过大的参数，从而减少过拟合、提升泛化能力。
 
-2. 什么是函数的高斯分布？（为什么函数的高斯分布只需要两个参数就可以表达？）
-
-我们可以从两个相互关联的角度来讨论这个问题：一是从直观和概念层面理解其核心思想，二是从形式化定义的角度揭示其数学本质。
-
-- 核心思想：从 “有限维高斯分布” 推广到 “函数的高斯分布”
-
-在普通的高斯分布中，我们描述的是 **有限维随机向量** ：
-
-$$
-y = [y_1, y_2, \dots, y_n]^{\rm T} \sim \mathcal{N}(\mu, \Sigma)
-$$
-
-只要给定均值向量 $\mu$ 和协方差矩阵 $\Sigma$ ，这个随机向量的分布就可以被 **完全刻画** 。
-
-现在我们希望对一个函数 $f(x)$ 建模。但函数在每个 $x$ 上都有对应的取值，因此它相当于包含了 **无限多个随机变量** 。换句话说，若把函数视作 “随机变量的集合” ，那么它的分布就应是一个定义在函数空间上的分布，即 “函数的分布” 。
-
-- 形式化定义：高斯过程的 “闭合性” 定义
-
-为了让 “函数的分布” 有意义，我们要求：
-
-> 对任意有限个输入点 $x_1, x_2, \ldots, x_n$ ，对应的函数值：
-> 
-> $$
-> [f(x_1), f(x_2), \ldots, f(x_n)]^{\rm T}
-> $$
->
-> 都服从一个 **联合高斯分布** 。
-
-只要满足这一条件，我们就称函数 $f(x)$ 服从一个高斯过程。这是一种 “从有限维高斯分布推广到无限维函数分布” 的自然方式。
-
-高斯过程可定义为：
-
-$$
-f(x) \sim \mathcal{GP}(m(x), k(x, x'))
-$$
-
-等价地说，对于任意有限集合 ${x_1, \ldots, x_n}$ 都有：
-
-$$
-[f(x_1), f(x_2), \ldots, f(x_n)]^{\rm T} \sim \mathcal{N}(\mathbf{m}, \mathbf{K})
-$$
-
-$$
-\mathbf{m}_i = m(x_i) \quad \mathbf{K}_{ij} = k(x_i, x_j)
-$$
-
-在有限维情形下，一个高斯分布完全由 **均值向量** 和 **协方差矩阵** 唯一确定。同理在函数空间中，高斯过程也由 **均值函数** $m(x)$ 和 **协方差函数** （核函数） $k(x, x')$ 唯一确定。
-
-3. 为什么优化核函数超参数的时候用的是边际似然而不是普通的似然函数？ 
+2. 为什么优化核函数超参数的时候用的是边际似然而不是普通的似然函数？ 
 
 如果我们已知具体的函数 $f$ ，则观测数据的似然函数可以写为：
 
 $$
-P(y|f, \beta) = \mathcal{N}(y|f, \beta^{-1}\mathbf{I})
+P(y|f) = \mathcal{N}(y|f, \beta^{-1}\mathbf{I})
 $$
 
 然而问题在于：
@@ -595,7 +537,7 @@ $$
 既然我们不知道 $f$ ，就要利用积分来将其边缘化：
 
 $$
-P(y|X, \theta, \beta) = \int P(y|f, \beta) P(f|X, \theta) \, df
+P(y|X, \theta) = \int P(y|f) P(f|X, \theta) \, df
 $$
 
 这个积分结果被称为 **边际似然** （Marginal Likelihood），也常称为 **模型证据** （Model Evidence）。它衡量了在给定核函数超参数 $\theta$ 的情况下，模型整体上对观测数据 $y$ 的解释能力。
