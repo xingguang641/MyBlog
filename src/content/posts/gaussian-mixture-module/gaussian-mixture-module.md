@@ -434,14 +434,10 @@ $$
 
 5. [GMM：高斯混合模型原理实现与应用](https://zhuanlan.zhihu.com/p/619191372)
 
-6. [混合高斯模型](https://blog.csdn.net/u013172930/article/details/144853287)
+6. [高斯混合模型(Gaussian Mixture Model)与EM算法原理(一)](https://zhuanlan.zhihu.com/p/60649774)
 
-7. [高斯混合模型的数学基础与理论分析](https://juejin.cn/post/7321778862785544202)
+7. [高斯混合模型(Gaussian Mixture Model)与EM算法原理(二)](https://zhuanlan.zhihu.com/p/61103099)
 
-8. [高斯混合模型(Gaussian Mixture Model)与EM算法原理(一)](https://zhuanlan.zhihu.com/p/60649774)
+8. [GMM (Gaussian Mixture Model)](https://aandds.com/blog/gmm.html)
 
-9. [高斯混合模型(Gaussian Mixture Model)与EM算法原理(二)](https://zhuanlan.zhihu.com/p/61103099)
-
-10. [GMM (Gaussian Mixture Model)](https://aandds.com/blog/gmm.html)
-
-11. [【ScikitLearn】高斯混合模型](https://scikit-learn.cn/stable/modules/mixture.html)
+9. [【ScikitLearn】高斯混合模型](https://scikit-learn.cn/stable/modules/mixture.html)
