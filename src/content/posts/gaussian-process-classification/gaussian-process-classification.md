@@ -19,6 +19,8 @@ draft: false
 
 不过要真正理解高斯过程分类背后的思想，我们需要从它的 “简化形式” 开始构建直觉 ———— 这便是 **贝叶斯逻辑回归** （Bayesian Logistic Regression）。可以将 GPC 看作是 “将贝叶斯逻辑回归扩展到无限维函数空间” 的自然结果：当我们把线性模型替换为高斯过程先验，逻辑回归便以一种更强大、更优雅的方式被泛化到非线性情形之中。
 
+![高斯过程回归分类](src\content\posts\gaussian-process-classification\高斯过程分类1.jpg)
+
 ## 贝叶斯逻辑回归
 
 传统逻辑回归通常采用最大似然（MLE）学习参数 $w$ ，但这种做法存在两显著个局限：
@@ -385,7 +387,7 @@ $$
 其中第一项是似然项，直接套用对数伯努利似然公式即可：
 
 $$
-\log P(y | f_{\text{MAP}}, X) = \sum_i \Big[ y_i \log \sigma(f_{\text{MAP},i}) + (1 - y_i) \log (1 - \sigma(f_{\text{MAP},i})) \Big]
+\log P(y | f_{\text{MAP}}, X) = \sum_i \Big[ y_i \log \sigma(f_{\text{MAP},i}) + (1 - y_i) \log \big(1 - \sigma(f_{\text{MAP},i})\big) \Big]
 $$
 
 第二项是先验项，我们依旧假设先验服从高斯分布 $f \sim \mathcal{N}(0, K_{\theta})$ ，取对数后可得：
@@ -459,7 +461,7 @@ def optimize_rbf_hyperparameters(X_train, y_train):
 
 ## 学习过程
 
-在 GPC 中，训练目标是学习潜在函数 $f$ 的分布，使得它能够解释训练标签 $y$ 的观测情况。由于伯努利似然与高斯先验不兼容，后验 $P(f|X, y, \theta)$ 不再是高斯，无法直接解析求解。
+在高斯过程分类中，训练目标是学习潜在函数 $f$ 的分布，使得它能够解释训练标签 $y$ 的观测情况。由于伯努利似然与高斯先验不兼容，后验 $P(f|X, y, \theta)$ 不再是高斯，无法直接解析求解。
 
 因此学习过程的核心是对后验进行近似，最常用的是 **拉普拉斯近似**：
 
@@ -471,6 +473,20 @@ $$
 
 $$
 \log P(f | X, y, \theta) = \log P(y | f) + \log P(f | X, \theta)
+$$
+
+然后对 $f$ 求导并令其为零可得：
+
+$$
+\nabla_f \log P(f | X, y, \theta) = 0
+$$
+
+这通常通过 **牛顿法** 求解，因为 $\log P(y|f)$ 的形式是非线性的。
+
+只要得到了 $f_\text{MAP}$ ，Hessian 矩阵则可以直接由公式计算得出：
+
+$$
+H = -\nabla_f^2 \log P(f | X, y, \theta) \Big|_{f = f_{\text{MAP}}}
 $$
 
 ```py showLineNumbers
@@ -517,7 +533,35 @@ def fit(self, X_train, y_train):
 
 ## 预测过程
 
+假设我们在学习阶段得到了后验的拉普拉斯近似，现在要对新的输入点 $X_*$ 预测潜在函数值 $f_*$ 以及标签 $y_*$ 。
 
+- 潜在函数预测
+
+潜在函数 $f_*$ 的条件分布为：
+
+$$
+f_* | X_*, X, f_{\text{MAP}}, \theta \sim \mathcal{N}(\mu_*, \sigma_*^2)
+$$
+
+其中的参数解析式为（直接套用高维高斯分布的参数公式）：
+
+$$
+\mu_* = K(X_*, X) K^{-1} f_{\text{MAP}}
+$$
+
+$$
+\sigma_*^2 = K(X_*, X_*) - K(X_*, X) (K + W^{-1})^{-1} K(X, X_*)
+$$
+
+- 标签预测
+
+由于输出是二分类，我们需要将潜在函数 $f_*$ 经过 sigmoid 映射得到类别概率：
+
+$$
+P(y_* = 1 | X_*, X, y) = \int \sigma(f_*) P(f_* | X_*, X, y) \, df_*
+$$
+
+这个积分通常没有解析解，因此常用近似方法，这里不再给出。
 
 ```py showLineNumbers
 def predict(self, X_test):
