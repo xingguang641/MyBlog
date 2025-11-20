@@ -219,51 +219,51 @@ $$
 
 1. 给定模型参数 $\lambda$ 和观测 $O$ ，在时刻 $t$ 处于状态 $q_i$ 的概率，记：
 
-$$
-\gamma_t(i) = P(i_t = q_i|O, \lambda)
-$$
+    $$
+    \gamma_t(i) = P(i_t = q_i|O, \lambda)
+    $$
 
-可以通过前向概率和后向概率进行计算，推导如下：
+    可以通过前向概率和后向概率进行计算，推导如下：
 
-$$
-\gamma_t(i) = P(i_t = q_i|O, \lambda) = \frac{P(i_t = q_i, O|\lambda)}{P(O|\lambda)}
-$$
+    $$
+    \gamma_t(i) = P(i_t = q_i|O, \lambda) = \frac{P(i_t = q_i, O|\lambda)}{P(O|\lambda)}
+    $$
 
-又由前向概率和后向概率的定义可知：
+    又由前向概率和后向概率的定义可知：
 
-$$
-\alpha_t(i) \beta_t(i) =  P(i_t = q_i, O|\lambda)
-$$
+    $$
+    \alpha_t(i) \beta_t(i) =  P(i_t = q_i, O|\lambda)
+    $$
 
-因此有：
+    因此有：
 
-$$
-\gamma_t(i) = \frac{P(i_t = q_i, O|\lambda)}{P(O|\lambda)} = \frac{P(i_t = q_i, O|\lambda)}{\sum_{j=1}^{N} P(i_t = q_j, O|\lambda)} = \frac{\alpha_t(i) \beta_t(i)}{\sum_{j=1}^{N} \alpha_t(j) \beta_t(j)}
-$$
+    $$
+    \gamma_t(i) = \frac{P(i_t = q_i, O|\lambda)}{P(O|\lambda)} = \frac{P(i_t = q_i, O|\lambda)}{\sum_{j=1}^{N} P(i_t = q_j, O|\lambda)} = \frac{\alpha_t(i) \beta_t(i)}{\sum_{j=1}^{N} \alpha_t(j) \beta_t(j)}
+    $$
 
 2. 给定模型参数 $\lambda$ 和观测 $O$ ，在时刻 $t$ 处于状态 $q_i$ 且在时刻 $t+1$ 处于状态 $q_j$ 的概率，记:
 
-$$
-\xi_t(i, j) = P(i_t = q_i, i_{t+1} = q_j|O,\lambda)
-$$
+    $$
+    \xi_t(i, j) = P(i_t = q_i, i_{t+1} = q_j|O,\lambda)
+    $$
 
-可以通过前向后向概率进行计算，推导如下：
+    可以通过前向后向概率进行计算，推导如下：
 
-$$
-\xi_t(i, j) = \frac{P(i_t = q_i, i_{t+1} = q_j, O|\lambda)}{P(O|\lambda)} = \frac{P(i_t = q_i, i_{t+1} = q_j, O|\lambda)}{\sum_{i=1}^{N} \sum_{j=1}^{N} P(i_t = q_i, i_{t+1} = q_j, O|\lambda)}
-$$
+    $$
+    \xi_t(i, j) = \frac{P(i_t = q_i, i_{t+1} = q_j, O|\lambda)}{P(O|\lambda)} = \frac{P(i_t = q_i, i_{t+1} = q_j, O|\lambda)}{\sum_{i=1}^{N} \sum_{j=1}^{N} P(i_t = q_i, i_{t+1} = q_j, O|\lambda)}
+    $$
 
-其中：
+    其中：
 
-$$
-P(i_t = q_i, i_{t+1} = q_j, O|\lambda) = \alpha_t(i) a_{ij} b_{jo_{t+1}} \beta_{t+1}(j)
-$$
+    $$
+    P(i_t = q_i, i_{t+1} = q_j, O|\lambda) = \alpha_t(i) a_{ij} b_{jo_{t+1}} \beta_{t+1}(j)
+    $$
 
-因此有：
+    因此有：
 
-$$
-\xi_t(i, j) = \frac{\alpha_t(i) a_{ij} b_{jo_{t+1}} \beta_{t+1}(j)}{\sum_{i=1}^{N} \sum_{j=1}^{N} \alpha_t(i) a_{ij} b_{jo_{t+1}} \beta_{t+1}(j)}
-$$
+    $$
+    \xi_t(i, j) = \frac{\alpha_t(i) a_{ij} b_{jo_{t+1}} \beta_{t+1}(j)}{\sum_{i=1}^{N} \sum_{j=1}^{N} \alpha_t(i) a_{ij} b_{jo_{t+1}} \beta_{t+1}(j)}
+    $$
 
 ## 学习问题
 
@@ -327,207 +327,207 @@ $$
 
 1. 确定完全数据的对数似然函数
 
-此时观测数据为 $O = (o_1, o_2, \ldots, o_T)$ ，未观测数据为 $I = (i_1, i_2, \ldots, i_T)$ ，则完全数据为 $(O, I) = (o_1, o_2, \ldots, o_T, i_1, i_2, \ldots, i_T)$ ，完全数据的对数似然函数为：
+    此时观测数据为 $O = (o_1, o_2, \ldots, o_T)$ ，未观测数据为 $I = (i_1, i_2, \ldots, i_T)$ ，则完全数据为 $(O, I) = (o_1, o_2, \ldots, o_T, i_1, i_2, \ldots, i_T)$ ，完全数据的对数似然函数为：
 
-$$
-\log P(O, I|\lambda) = \log \left[ \pi_{i_1} \left( \prod_{t=1}^{T-1} b_{i_to_t}a_{i_ti_{t+1}} \right) b_{i_To_T} \right] = \log \pi_{i_1} + \sum_{t=1}^{T-1} \log a_{i_ti_{t+1}} + \sum_{t=1}^{T} \log b_{i_to_t}
-$$
+    $$
+    \log P(O, I|\lambda) = \log \left[ \pi_{i_1} \left( \prod_{t=1}^{T-1} b_{i_to_t}a_{i_ti_{t+1}} \right) b_{i_To_T} \right] = \log \pi_{i_1} + \sum_{t=1}^{T-1} \log a_{i_ti_{t+1}} + \sum_{t=1}^{T} \log b_{i_to_t}
+    $$
 
 2. EM 算法 E 步：求解 $Q$ 函数
 
-写出对完整数据的 **条件期望对数似然函数** ：
+    写出对完整数据的 **条件期望对数似然函数** ：
 
-$$
-Q(\lambda, \bar{\lambda}) = \sum_I P(I|O, \bar{\lambda}) \log P(O, I|\lambda)
-$$
+    $$
+    Q(\lambda, \bar{\lambda}) = \sum_I P(I|O, \bar{\lambda}) \log P(O, I|\lambda)
+    $$
 
-其中 $\bar{\lambda}$ 是隐马尔可夫模型参数的当前估计值， $\lambda$ 是要极大化的隐马尔可夫模型参数。为了便于后续计算， $Q$ 函数还可以作如下恒等变形：
+    其中 $\bar{\lambda}$ 是隐马尔可夫模型参数的当前估计值， $\lambda$ 是要极大化的隐马尔可夫模型参数。为了便于后续计算， $Q$ 函数还可以作如下恒等变形：
 
-$$
+    $$
 
-\begin{align*}
-Q(\lambda, \bar{\lambda}) &= \sum_{I} P(I|O, \bar{\lambda}) \log P(O, I|\lambda) \\
-&= \sum_{I} \frac{P(I|O, \bar{\lambda})P(O|\bar{\lambda})}{P(O|\bar{\lambda})} \log P(O, I|\lambda) \\
-&= \sum_{I} \frac{P(O, I|\bar{\lambda})}{P(O|\bar{\lambda})} \log P(O, I|\lambda)
-\end{align*}
-$$
+    \begin{align*}
+    Q(\lambda, \bar{\lambda}) &= \sum_{I} P(I|O, \bar{\lambda}) \log P(O, I|\lambda) \\
+    &= \sum_{I} \frac{P(I|O, \bar{\lambda})P(O|\bar{\lambda})}{P(O|\bar{\lambda})} \log P(O, I|\lambda) \\
+    &= \sum_{I} \frac{P(O, I|\bar{\lambda})}{P(O|\bar{\lambda})} \log P(O, I|\lambda)
+    \end{align*}
+    $$
 
-由于接下来仅极大化 $\lambda$ ，所以 $P(O|\bar{\lambda})$ 可以看做常数项进行略去，所以 $Q$ 函数可以进一步化简：
+    由于接下来仅极大化 $\lambda$ ，所以 $P(O|\bar{\lambda})$ 可以看做常数项进行略去，所以 $Q$ 函数可以进一步化简：
 
-$$
-\begin{aligned}
-Q(\lambda, \bar{\lambda}) &= \sum_{I} P(O, I| \bar{\lambda}) \log P(O, I|\lambda) = \sum_{I} P(O, I| \bar{\lambda}) \left( \log \pi_{i_1} + \sum_{t=1}^{T-1} \log a_{i_t i_{t+1}} + \sum_{t=1}^{T} \log b_{i_t o_t} \right) \\
-&= \sum_{I} P(O, I| \bar{\lambda}) \log \pi_{i_1} + \sum_{I} P(O, I| \bar{\lambda}) \left( \sum_{t=1}^{T-1} \log a_{i_t i_{t+1}} \right) + \sum_{I} P(O, I| \bar{\lambda}) \left( \sum_{t=1}^{T} \log b_{i_t o_t} \right)
-\end{aligned}
-$$
+    $$
+    \begin{aligned}
+    Q(\lambda, \bar{\lambda}) &= \sum_{I} P(O, I| \bar{\lambda}) \log P(O, I|\lambda) = \sum_{I} P(O, I| \bar{\lambda}) \left( \log \pi_{i_1} + \sum_{t=1}^{T-1} \log a_{i_t i_{t+1}} + \sum_{t=1}^{T} \log b_{i_t o_t} \right) \\
+    &= \sum_{I} P(O, I| \bar{\lambda}) \log \pi_{i_1} + \sum_{I} P(O, I| \bar{\lambda}) \left( \sum_{t=1}^{T-1} \log a_{i_t i_{t+1}} \right) + \sum_{I} P(O, I| \bar{\lambda}) \left( \sum_{t=1}^{T} \log b_{i_t o_t} \right)
+    \end{aligned}
+    $$
 
 3. EM 算法 M 步：极大化 $Q$ 函数
 
-由于要极大化的三个参数在上式中单独地出现在每个项中，所以只需对各项分别极大化。
+    由于要极大化的三个参数在上式中单独地出现在每个项中，所以只需对各项分别极大化。
 
-- 求解 **初始状态概率**
+    - 求解 **初始状态概率**
 
-上述 $Q$ 函数的第一项可以写成：
+        上述 $Q$ 函数的第一项可以写成：
 
-$$
-\begin{aligned}
-\sum_I P(O, I|\bar{\lambda}) \log \pi_{i_1} &= \sum_{i=1}^{N} \log \pi_i \left[ \sum_{i_2, i_3, \ldots, i_T} P(O, i_1 = q_1, i_2, i_3, \ldots, i_T|\bar{\lambda}) \right] \\
-&= \sum_{i=1}^{N} \log \pi_i P(O, i_1 = q_1|\bar{\lambda}) = \sum_{i=1}^{N} \log \pi_i P(O, i_1 = q_i|\bar{\lambda})
-\end{aligned}
-$$
+        $$
+        \begin{aligned}
+        \sum_I P(O, I|\bar{\lambda}) \log \pi_{i_1} &= \sum_{i=1}^{N} \log \pi_i \left[ \sum_{i_2, i_3, \ldots, i_T} P(O, i_1 = q_1, i_2, i_3, \ldots, i_T|\bar{\lambda}) \right] \\
+        &= \sum_{i=1}^{N} \log \pi_i P(O, i_1 = q_1|\bar{\lambda}) = \sum_{i=1}^{N} \log \pi_i P(O, i_1 = q_i|\bar{\lambda})
+        \end{aligned}
+        $$
 
-由于 $\pi_i$ 需要满足约束 $\sum_{i=1}^{N} \pi_i = 1$ ，利用拉格朗日乘数法，写出拉格朗日函数：
+        由于 $\pi_i$ 需要满足约束 $\sum_{i=1}^{N} \pi_i = 1$ ，利用拉格朗日乘数法，写出拉格朗日函数：
 
-$$
-L(\pi_i, \eta) = \sum_{i=1}^N \log \pi_i P(O,i_1 = q_i|\bar{\lambda}) + \eta \left( \sum_{i=1}^N \pi_i - 1 \right)
-$$
+        $$
+        L(\pi_i, \eta) = \sum_{i=1}^N \log \pi_i P(O,i_1 = q_i|\bar{\lambda}) + \eta \left( \sum_{i=1}^N \pi_i - 1 \right)
+        $$
 
-对其关于 $\pi_i$ 偏导并令其结果为 0 可得:
+        对其关于 $\pi_i$ 偏导并令其结果为 0 可得:
 
-$$
-\frac{\partial}{\partial \pi_i} \left[ \sum_{i=1}^N \ln \pi_i P(O, i_1 = q_i | \bar{\lambda}) + \eta \left( \sum_{i=1}^N \pi_i - 1 \right) \right] = 0
-$$
+        $$
+        \frac{\partial}{\partial \pi_i} \left[ \sum_{i=1}^N \ln \pi_i P(O, i_1 = q_i | \bar{\lambda}) + \eta \left( \sum_{i=1}^N \pi_i - 1 \right) \right] = 0
+        $$
 
-$$
-P(O, i_1 = q_i|\bar{\lambda}) + \eta \pi_i = 0
-$$
+        $$
+        P(O, i_1 = q_i|\bar{\lambda}) + \eta \pi_i = 0
+        $$
 
-对上式关于 $i$ 求和可得：
+        对上式关于 $i$ 求和可得：
 
-$$
-\sum_{i=1}^{N} P(O, i_1 = q_i|\bar{\lambda}) + \sum_{i=1}^{N} \eta \pi_i = 0
-$$
+        $$
+        \sum_{i=1}^{N} P(O, i_1 = q_i|\bar{\lambda}) + \sum_{i=1}^{N} \eta \pi_i = 0
+        $$
 
-$$
-P(O|\bar{\lambda}) + \eta = 0
-$$
+        $$
+        P(O|\bar{\lambda}) + \eta = 0
+        $$
 
-将 $\eta$ 代回原式可得：
+        将 $\eta$ 代回原式可得：
 
-$$
-P(O, i_1 = q_i|\bar{\lambda}) - P(O|\bar{\lambda}) \pi_i = 0
-$$
+        $$
+        P(O, i_1 = q_i|\bar{\lambda}) - P(O|\bar{\lambda}) \pi_i = 0
+        $$
 
-$$
-\pi_i = \frac{P(O, i_1 = q_i|\bar{\lambda})}{P(O|\bar{\lambda})}
-$$
+        $$
+        \pi_i = \frac{P(O, i_1 = q_i|\bar{\lambda})}{P(O|\bar{\lambda})}
+        $$
 
-$$
-\pi_i = \gamma_1(i)
-$$
+        $$
+        \pi_i = \gamma_1(i)
+        $$
 
-其中 $\gamma$ 就是[算法推广](#算法推广)中求解的 $\gamma$ 。
+        其中 $\gamma$ 就是[算法推广](#算法推广)中求解的 $\gamma$ 。
 
-- 求解 **状态转移概率**
+    - 求解 **状态转移概率**
 
-上述 $Q$ 函数的第二项可以写成：
+        上述 $Q$ 函数的第二项可以写成：
 
-$$
-\begin{aligned}
-&\sum_I P(O,I|\bar{\lambda}) \left( \sum_{t=1}^{T-1} \log a_{i_t i_{t+1}} \right) \\
-= &\sum_{t=1}^{T-1} \sum_{i=1}^N \sum_{j=1}^N \log a_{ij} \left[ \sum_{(i_1,\ldots,i_{t-1},i_{t+2},\ldots,i_T)} P(O, i_1, \ldots, i_t = q_i, i_{t+1} = q_j, \ldots, i_T|\bar{\lambda}) \right] \\
-= &\sum_{t=1}^{T-1} \sum_{i=1}^N \sum_{j=1}^N \log a_{ij} P(O,i_t = q_i,i_{t+1} = q_j | \bar{\lambda})
-\end{aligned}
-$$
+        $$
+        \begin{aligned}
+        &\sum_I P(O,I|\bar{\lambda}) \left( \sum_{t=1}^{T-1} \log a_{i_t i_{t+1}} \right) \\
+        = &\sum_{t=1}^{T-1} \sum_{i=1}^N \sum_{j=1}^N \log a_{ij} \left[ \sum_{(i_1,\ldots,i_{t-1},i_{t+2},\ldots,i_T)} P(O, i_1, \ldots, i_t = q_i, i_{t+1} = q_j, \ldots, i_T|\bar{\lambda}) \right] \\
+        = &\sum_{t=1}^{T-1} \sum_{i=1}^N \sum_{j=1}^N \log a_{ij} P(O,i_t = q_i,i_{t+1} = q_j | \bar{\lambda})
+        \end{aligned}
+        $$
 
-由于 $a_{ij}$ 满足约束 $\sum_{j=1}^{N} a_{ij} = 1$ ，同样利用拉格朗日乘数法，写出拉格朗日函数：
+        由于 $a_{ij}$ 满足约束 $\sum_{j=1}^{N} a_{ij} = 1$ ，同样利用拉格朗日乘数法，写出拉格朗日函数：
 
-$$
-L(a_{ij}, \eta) = \sum_{t=1}^{T-1} \sum_{i=1}^{N} \sum_{j=1}^{N} \log a_{ij} P(O, i_t = q_i, i_{t+1} = q_j|\bar{\lambda}) + \eta \left( \sum_{j=1}^{N} a_{ij} - 1 \right)
-$$
+        $$
+        L(a_{ij}, \eta) = \sum_{t=1}^{T-1} \sum_{i=1}^{N} \sum_{j=1}^{N} \log a_{ij} P(O, i_t = q_i, i_{t+1} = q_j|\bar{\lambda}) + \eta \left( \sum_{j=1}^{N} a_{ij} - 1 \right)
+        $$
 
-对其关于 $a_{ij}$ 偏导并令其结果为 0 可得:
+        对其关于 $a_{ij}$ 偏导并令其结果为 0 可得:
 
-$$
-\frac{\partial}{\partial a_{ij}} \left[ \sum_{t=1}^{T-1} \sum_{i=1}^{N} \sum_{j=1}^{N} \log a_{ij} P(O, i_t = q_i, i_{t+1} = q_j | \bar{\lambda}) + \eta \left( \sum_{j=1}^{N} a_{ij} - 1 \right) \right] = 0
-$$
+        $$
+        \frac{\partial}{\partial a_{ij}} \left[ \sum_{t=1}^{T-1} \sum_{i=1}^{N} \sum_{j=1}^{N} \log a_{ij} P(O, i_t = q_i, i_{t+1} = q_j | \bar{\lambda}) + \eta \left( \sum_{j=1}^{N} a_{ij} - 1 \right) \right] = 0
+        $$
 
-$$
-\sum_{t=1}^{T-1} P(O, i_t = q_i, i_{t+1} = q_j | \bar{\lambda}) + \eta a_{ij} = 0
-$$
+        $$
+        \sum_{t=1}^{T-1} P(O, i_t = q_i, i_{t+1} = q_j | \bar{\lambda}) + \eta a_{ij} = 0
+        $$
 
-对上式关于 $j$ 求和可得：
+        对上式关于 $j$ 求和可得：
 
-$$
-\sum_{j=1}^{N} \sum_{t=1}^{T-1} P(O, i_t = q_i, i_{t+1} = q_j | \bar{\lambda}) + \sum_{j=1}^{N} \eta a_{ij} = 0
-$$
+        $$
+        \sum_{j=1}^{N} \sum_{t=1}^{T-1} P(O, i_t = q_i, i_{t+1} = q_j | \bar{\lambda}) + \sum_{j=1}^{N} \eta a_{ij} = 0
+        $$
 
-$$
-\sum_{t=1}^{T-1} P(O, i_t = q_i|\bar{\lambda}) + \eta = 0
-$$
+        $$
+        \sum_{t=1}^{T-1} P(O, i_t = q_i|\bar{\lambda}) + \eta = 0
+        $$
 
-将 $\eta$ 代回原式可得：
+        将 $\eta$ 代回原式可得：
 
-$$
-\sum_{t=1}^{T-1} P(O, i_t = q_i, i_{t+1} = q_j | \bar{\lambda}) - \sum_{t=1}^{T-1} P(O, i_t = q_i | \bar{\lambda}) \cdot a_{ij} = 0
-$$
+        $$
+        \sum_{t=1}^{T-1} P(O, i_t = q_i, i_{t+1} = q_j | \bar{\lambda}) - \sum_{t=1}^{T-1} P(O, i_t = q_i | \bar{\lambda}) \cdot a_{ij} = 0
+        $$
 
-$$
-a_{ij} = \frac{\sum_{t=1}^{T-1} P(O, i_t = q_i, i_{t+1} = q_j | \bar{\lambda})}{\sum_{t=1}^{T-1} P(O, i_t = q_i | \bar{\lambda})}
-$$
+        $$
+        a_{ij} = \frac{\sum_{t=1}^{T-1} P(O, i_t = q_i, i_{t+1} = q_j | \bar{\lambda})}{\sum_{t=1}^{T-1} P(O, i_t = q_i | \bar{\lambda})}
+        $$
 
-分子分母同时除以 $P(O|\bar{\lambda})$ 可得：
+        分子分母同时除以 $P(O|\bar{\lambda})$ 可得：
 
-$$
-a_{ij} = \frac{\displaystyle\frac{\sum_{t=1}^{T-1} P(O, i_t = q_i, i_{t+1} = q_j | \bar{\lambda})}{P(O|\bar{\lambda})}}{\displaystyle\frac{\sum_{t=1}^{T-1} P(O, i_t = q_i | \bar{\lambda})}{P(O|\bar{\lambda})}} = \frac{\sum_{t=1}^{T-1} P(i_t = q_i, i_{t+1} = q_j | O, \bar{\lambda})}{\sum_{t=1}^{T-1} P(i_t = q_i | O, \bar{\lambda})} = \frac{\sum_{t=1}^{T-1} \xi_t(i, j)}{\sum_{t=1}^{T-1} \gamma_t(i)}
-$$
+        $$
+        a_{ij} = \frac{\displaystyle\frac{\sum_{t=1}^{T-1} P(O, i_t = q_i, i_{t+1} = q_j | \bar{\lambda})}{P(O|\bar{\lambda})}}{\displaystyle\frac{\sum_{t=1}^{T-1} P(O, i_t = q_i | \bar{\lambda})}{P(O|\bar{\lambda})}} = \frac{\sum_{t=1}^{T-1} P(i_t = q_i, i_{t+1} = q_j | O, \bar{\lambda})}{\sum_{t=1}^{T-1} P(i_t = q_i | O, \bar{\lambda})} = \frac{\sum_{t=1}^{T-1} \xi_t(i, j)}{\sum_{t=1}^{T-1} \gamma_t(i)}
+        $$
 
-其中 $\gamma$ 和 $\xi$ 就是[算法推广](#算法推广)中求解的 $\gamma$ 和 $\xi$ 。
+        其中 $\gamma$ 和 $\xi$ 就是[算法推广](#算法推广)中求解的 $\gamma$ 和 $\xi$ 。
 
-- 求解 **观测（发射）概率**
+    - 求解 **观测（发射）概率**
 
-上述 $Q$ 函数的第三项可以写成：
+        上述 $Q$ 函数的第三项可以写成：
 
-$$
-\begin{aligned}
-\sum_{I} P(O, I|\bar{\lambda}) \left( \sum_{t=1}^{T} \log b_{i_t o_t} \right) &= \sum_{t=1}^{T} \sum_{j=1}^{N} \log b_{j o_t} \left[ \sum_{i_1, \ldots, i_{t-1}, i_{t+1}, \ldots, i_T} P(O, i_1, \ldots, i_t = q_j, \ldots, i_T|\bar{\lambda}) \right] \\
-&= \sum_{t=1}^{T} \sum_{j=1}^{N} \log b_{j o_t} P(O, i_t = q_j|\bar{\lambda})
-\end{aligned}
-$$
+        $$
+        \begin{aligned}
+        \sum_{I} P(O, I|\bar{\lambda}) \left( \sum_{t=1}^{T} \log b_{i_t o_t} \right) &= \sum_{t=1}^{T} \sum_{j=1}^{N} \log b_{j o_t} \left[ \sum_{i_1, \ldots, i_{t-1}, i_{t+1}, \ldots, i_T} P(O, i_1, \ldots, i_t = q_j, \ldots, i_T|\bar{\lambda}) \right] \\
+        &= \sum_{t=1}^{T} \sum_{j=1}^{N} \log b_{j o_t} P(O, i_t = q_j|\bar{\lambda})
+        \end{aligned}
+        $$
 
-由于 $b_{jk}$ 满足约束 $\sum_{k=1}^{M} b_{jk} = 1$ ，同样利用拉格朗日乘数法，写出拉格朗日函数：
+        由于 $b_{jk}$ 满足约束 $\sum_{k=1}^{M} b_{jk} = 1$ ，同样利用拉格朗日乘数法，写出拉格朗日函数：
 
-$$
-L(b_{jk}, \eta) = \sum_{t=1}^{T} \sum_{j=1}^{N} \ln b_{j o_t} P(O, i_t = q_j | \bar{\lambda}) + \eta \left( \sum_{k=1}^{M} b_{jk} - 1 \right)
-$$
+        $$
+        L(b_{jk}, \eta) = \sum_{t=1}^{T} \sum_{j=1}^{N} \ln b_{j o_t} P(O, i_t = q_j | \bar{\lambda}) + \eta \left( \sum_{k=1}^{M} b_{jk} - 1 \right)
+        $$
 
-对其关于 $b_{jk}$ 偏导并令其结果为 0 可得:
+        对其关于 $b_{jk}$ 偏导并令其结果为 0 可得:
 
-$$
-\frac{\partial}{\partial b_{jk}} \left[ \sum_{t=1}^{T} \sum_{j=1}^{N} \ln b_{j o_t} P(O, i_t = q_j | \bar{\lambda}) + \eta \left( \sum_{k=1}^{M} b_{jk} - 1 \right) \right] = 0
-$$
+        $$
+        \frac{\partial}{\partial b_{jk}} \left[ \sum_{t=1}^{T} \sum_{j=1}^{N} \ln b_{j o_t} P(O, i_t = q_j | \bar{\lambda}) + \eta \left( \sum_{k=1}^{M} b_{jk} - 1 \right) \right] = 0
+        $$
 
-$$
-\sum_{t=1}^{T} P(O, i_t = q_j | \bar{\lambda}) \mathbb{I}(o_t = v_k) + \eta b_{jk} = 0
-$$
+        $$
+        \sum_{t=1}^{T} P(O, i_t = q_j | \bar{\lambda}) \mathbb{I}(o_t = v_k) + \eta b_{jk} = 0
+        $$
 
-对上式关于 $k$ 求和可得：
+        对上式关于 $k$ 求和可得：
 
-$$
-\sum_{k=1}^{M} \sum_{t=1}^{T} P(O, i_t = q_j | \bar{\lambda}) \mathbb{I}(o_t = v_k) + \sum_{k=1}^{M} \eta b_{jk} = 0
-$$
+        $$
+        \sum_{k=1}^{M} \sum_{t=1}^{T} P(O, i_t = q_j | \bar{\lambda}) \mathbb{I}(o_t = v_k) + \sum_{k=1}^{M} \eta b_{jk} = 0
+        $$
 
-$$
-\sum_{t=1}^{T} P(O, i_t = q_j|\bar{\lambda}) + \eta = 0
-$$
+        $$
+        \sum_{t=1}^{T} P(O, i_t = q_j|\bar{\lambda}) + \eta = 0
+        $$
 
-将 $\eta$ 代回原式可得：
+        将 $\eta$ 代回原式可得：
 
-$$
-\sum_{t=1}^{T} P(O, i_t = q_j | \bar{\lambda}) \mathbb{I}(o_t = v_k) - \sum_{t=1}^{T} P(O, i_t = q_j | \bar{\lambda}) \cdot b_{jk} = 0
-$$
+        $$
+        \sum_{t=1}^{T} P(O, i_t = q_j | \bar{\lambda}) \mathbb{I}(o_t = v_k) - \sum_{t=1}^{T} P(O, i_t = q_j | \bar{\lambda}) \cdot b_{jk} = 0
+        $$
 
-$$
-b_{jk} = \frac{\sum_{t=1}^{T} P(O, i_t = q_j | \bar{\lambda}) \mathbb{I}(o_t = v_k)}{\sum_{t=1}^{T} P(O, i_t = q_j | \bar{\lambda})}
-$$
+        $$
+        b_{jk} = \frac{\sum_{t=1}^{T} P(O, i_t = q_j | \bar{\lambda}) \mathbb{I}(o_t = v_k)}{\sum_{t=1}^{T} P(O, i_t = q_j | \bar{\lambda})}
+        $$
 
-分子分母同时除以 $P(O|\bar{\lambda})$ 可得：
+        分子分母同时除以 $P(O|\bar{\lambda})$ 可得：
 
-$$
-b_{jk} = \frac{\displaystyle\frac{\sum_{t=1}^{T} P(O, i_t = q_j | \bar{\lambda}) \mathbb{I}(o_t = v_k)}{P(O|\bar{\lambda})}}{\displaystyle\frac{\sum_{t=1}^{T} P(O, i_t = q_j | \bar{\lambda})}{P(O|\bar{\lambda})}} = \frac{\sum_{t=1}^{T} P(i_t = q_j | O, \bar{\lambda}) \mathbb{I}(o_t = v_k)}{\sum_{t=1}^{T} P(i_t = q_j | O, \bar{\lambda})} = \frac{\sum_{t=1, o_t = v_k}^{T} \gamma_t(j)}{\sum_{t=1}^{T} \gamma_t(j)}
-$$
+        $$
+        b_{jk} = \frac{\displaystyle\frac{\sum_{t=1}^{T} P(O, i_t = q_j | \bar{\lambda}) \mathbb{I}(o_t = v_k)}{P(O|\bar{\lambda})}}{\displaystyle\frac{\sum_{t=1}^{T} P(O, i_t = q_j | \bar{\lambda})}{P(O|\bar{\lambda})}} = \frac{\sum_{t=1}^{T} P(i_t = q_j | O, \bar{\lambda}) \mathbb{I}(o_t = v_k)}{\sum_{t=1}^{T} P(i_t = q_j | O, \bar{\lambda})} = \frac{\sum_{t=1, o_t = v_k}^{T} \gamma_t(j)}{\sum_{t=1}^{T} \gamma_t(j)}
+        $$
 
-其中 $\gamma$ 就是[算法推广](#算法推广)中求解的 $\gamma$ 。
+        其中 $\gamma$ 就是[算法推广](#算法推广)中求解的 $\gamma$ 。
 
 ## 预测问题
 
@@ -872,19 +872,19 @@ def viterbi(self, obs):
 
 1. HMM 中用到的 BW 算法是特殊的 EM 算法，它究竟特殊在哪里？
 
-HMM 的 Baum–Welch 算法是 **EM 算法的一个特例** ，它特殊的地方在于它的 **隐变量结构** 和 **E 步的计算方式** 。
+    HMM 的 Baum–Welch 算法是 **EM 算法的一个特例** ，它特殊的地方在于它的 **隐变量结构** 和 **E 步的计算方式** 。
 
-- 特殊的隐变量结构 ———— 马尔可夫链
+    - 特殊的隐变量结构 ———— 马尔可夫链
 
-普通 EM 假设隐藏变量是独立的或结构简单的，而 HMM 的隐藏变量 $I$ 是一个马尔可夫链。它的依赖关系是：
+        普通 EM 假设隐藏变量是独立的或结构简单的，而 HMM 的隐藏变量 $I$ 是一个马尔可夫链。它的依赖关系是：
 
-$$
-P(I) = P(i_1) \prod_{t=2}^{T} P(i_t \mid i_{t-1})
-$$
+        $$
+        P(I) = P(i_1) \prod_{t=2}^{T} P(i_t \mid i_{t-1})
+        $$
 
-- E 步可解析计算 ———— 不用采样或者积分
+    - E 步可解析计算 ———— 不用采样或者积分
 
-在一般 EM 中，E步往往要对所有隐变量求期望，复杂度极高。但在 HMM 中，隐状态间满足 **马尔可夫性** ，因此可以用 **前向-后向算法** 高效求解期望。
+        在一般 EM 中，E步往往要对所有隐变量求期望，复杂度极高。但在 HMM 中，隐状态间满足 **马尔可夫性** ，因此可以用 **前向-后向算法** 高效求解期望。
 
 # 参考文献
 

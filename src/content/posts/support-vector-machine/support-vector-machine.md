@@ -442,15 +442,15 @@ $$
 
 - 首先就是上面的梯度上升算法：对于支持向量机来说，直接使用梯度上升算法是不太行的，由于对偶问题有 **等式约束** ，直接梯度很难保持约束。不仅如此，计算梯度还会遇到开销大、收敛慢等问题。因此我们往往会使用 **SMO 算法** 来替代梯度上升算法（SMO 算法的具体内容可以看下面的博客）。
 
-[详细推导序列最小优化SMO算法](https://zhuanlan.zhihu.com/p/560529392)
+    [详细推导序列最小优化SMO算法](https://zhuanlan.zhihu.com/p/560529392)
 
 - 然后就是对于线性不可分的数据：我们在前面这么长的推导过程其实都有一个前提假设 ———— 数据是线性可分的。但是在大多数情况下，数据往往是线性不可分的，那我们就得要引出我们的 **核技巧** （Kernel Trick）了。核技巧的原理非常简单，就是想办法将数据升维后，再进行支持向量机的构建，因为 **维度越高数据越有可能线性可分** （具体讲解可以看下面这个视频，限于篇幅原因不过多讲解）。
 
-<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=637192057&bvid=BV1Nb4y1s7pE&cid=547472956&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+    <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=637192057&bvid=BV1Nb4y1s7pE&cid=547472956&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
 - 最后就是软间隔问题了：在[上文](#软间隔)我们讲到过什么是软间隔，但我们没有过多解释软间隔的数学原理，如果读者感兴趣可以观看下面的视频。
 
-<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=682759064&bvid=BV1AS4y1K7Jf&cid=565289579&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+    <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=682759064&bvid=BV1AS4y1K7Jf&cid=565289579&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
 &nbsp;
 
@@ -458,50 +458,50 @@ $$
 
 1. 为什么说支持向量机是一个自带 L2 正则化的机器学习算法？（什么是合叶损失函数？）
 
-> 以下推导部分参考自该视频
+    > 以下推导部分参考自该视频
 
-<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=549434532&bvid=BV1zq4y1g74J&cid=449456397&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+    <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=549434532&bvid=BV1zq4y1g74J&cid=449456397&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
-首先给出软间隔下的支持向量机最优化问题：
+    首先给出软间隔下的支持向量机最优化问题：
 
-$$
-\begin{align*}
-\min_{W,b,\xi} \quad & \frac{1}{2} W^T W + C \sum_{i=1}^N \xi_i \\
-\text{s.t.} \quad & 1 - Y^{(i)} (W^T X^{(i)} + b) \leq \xi_i, \quad i = 1, 2, \dots, N \\
-& \xi_i \geq 0, \quad i = 1, 2, \dots, N
-\end{align*}
-$$
+    $$
+    \begin{align*}
+    \min_{W,b,\xi} \quad & \frac{1}{2} W^T W + C \sum_{i=1}^N \xi_i \\
+    \text{s.t.} \quad & 1 - Y^{(i)} (W^T X^{(i)} + b) \leq \xi_i, \quad i = 1, 2, \dots, N \\
+    & \xi_i \geq 0, \quad i = 1, 2, \dots, N
+    \end{align*}
+    $$
 
-然后转换成如下形式：
+    然后转换成如下形式：
 
-$$
-\begin{align*}
-\min_{W,b,\xi} \quad & \frac{1}{2} W^T W + C \cdot \sum_{i=1}^N \xi_i \\
-\text{s.t.} \quad & 
-\begin{aligned}
-\xi_i &\geq \max\left\{0, 1 - Y^{(i)}(W^T \cdot X^{(i)} + b)\right\}, & i = 1, 2, \dots, N \\
-&= \left[1 - Y^{(i)}(W^T \cdot X^{(i)} + b)\right]_+, & i = 1, 2, \dots, N
-\end{aligned}
-\end{align*}
-$$
+    $$
+    \begin{align*}
+    \min_{W,b,\xi} \quad & \frac{1}{2} W^T W + C \cdot \sum_{i=1}^N \xi_i \\
+    \text{s.t.} \quad & 
+    \begin{aligned}
+    \xi_i &\geq \max\left\{0, 1 - Y^{(i)}(W^T \cdot X^{(i)} + b)\right\}, & i = 1, 2, \dots, N \\
+    &= \left[1 - Y^{(i)}(W^T \cdot X^{(i)} + b)\right]_+, & i = 1, 2, \dots, N
+    \end{aligned}
+    \end{align*}
+    $$
 
-最后将问题转化为拉格朗日函数可得：
+    最后将问题转化为拉格朗日函数可得：
 
-$$
-\min \frac{1}{2} W^T W + C \sum_{i=1}^{N} \left[ 1 - Y^{(i)} (W^T X^{(i)} + b) \right]_+
-$$
+    $$
+    \min \frac{1}{2} W^T W + C \sum_{i=1}^{N} \left[ 1 - Y^{(i)} (W^T X^{(i)} + b) \right]_+
+    $$
 
-$$
-\Downarrow
-$$
+    $$
+    \Downarrow
+    $$
 
-$$
-\min \underbrace{\sum_{i=1}^{N} \left[ 1 - Y^{(i)} (W^T X^{(i)} + b) \right]_+}_{\textcolor{green}{\text{经验损失项}}} 
-+ 
-\underbrace{\lambda \frac{1}{2} W^T W}_{\textcolor{green}{\text{正则化项}}}
-$$
+    $$
+    \min \underbrace{\sum_{i=1}^{N} \left[ 1 - Y^{(i)} (W^T X^{(i)} + b) \right]_+}_{\textcolor{green}{\text{经验损失项}}} 
+    + 
+    \underbrace{\lambda \frac{1}{2} W^T W}_{\textcolor{green}{\text{正则化项}}}
+    $$
 
-上述形式中 “经验损失项” 就是所谓的 “合叶损失函数” ，“正则化项” 就是 “L2 正则化” 。
+    上述形式中 “经验损失项” 就是所谓的 “合叶损失函数” ，“正则化项” 就是 “L2 正则化” 。
 
 # 参考文献
 

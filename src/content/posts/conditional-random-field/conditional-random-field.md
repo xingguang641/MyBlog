@@ -105,109 +105,109 @@ $$
 
 1. 由 $P(Y|X)$ 的表达式可知，要想计算出条件概率 $P(Y|X)$ 则需要计算出给定状态序列 $Y$ 的非规范化概率 $exp(w^{\rm T}F(Y, X))$ 和规范化因子 $Z(X)$ ，由于在已知观测序列 $X$ 和模型参数 $w_k(k = 1, 2, \ldots, K)$ 的条件下，只要知道状态的取值范围，无论对应状态序列 $Y$ 是否已知，均能求出规范化因子 $Z(X)$ 。
 
-所以下面考虑对 $exp(w^{\rm T}F(Y, X))$ 和 $Z(X)$ 分别进行求解。
+    所以下面考虑对 $exp(w^{\rm T}F(Y, X))$ 和 $Z(X)$ 分别进行求解。
 
-- 首先考虑求解 $Z(X)$ ：
+    - 首先考虑求解 $Z(X)$ ：
 
-设状态的取值范围为 $Q = \{ q_1, q_2, \ldots, q_m \}$ ，将所有状态序列前后都各填充一个 $y_0 = start$ 和 $y_{n+1} = stop$ 。对观测序列 $X$ 的每一个位置 $i = 1, 2, \ldots, n+1$ 来说， $y_{i-1}$ 和 $y_i$ 都有 $m$ 种可能的取值，因此，对于每一个位置来说都可以定义一个 $m \times m$ 的 **转移势矩阵** ：
+        设状态的取值范围为 $Q = \{ q_1, q_2, \ldots, q_m \}$ ，将所有状态序列前后都各填充一个 $y_0 = start$ 和 $y_{n+1} = stop$ 。对观测序列 $X$ 的每一个位置 $i = 1, 2, \ldots, n+1$ 来说， $y_{i-1}$ 和 $y_i$ 都有 $m$ 种可能的取值，因此，对于每一个位置来说都可以定义一个 $m \times m$ 的 **转移势矩阵** ：
 
-$$
-\mathbf{M}_i(X) = \Big[ M_i(y_{i-1}, y_i | X) \Big] = \begin{bmatrix}
-M_1(q_1, q_1 | X) & M_1(q_1, q_2 | X) & \ldots & M_1(q_1, q_m | X) \\
-M_1(q_2, q_1 | X) & M_1(q_2, q_2 | X) & \ldots & M_1(q_2, q_m | X) \\
-\vdots & \vdots & \ddots & \vdots \\
-M_1(q_m, q_1 | X) & M_1(q_m, q_2 | X) & \ldots & M_1(q_m, q_m | X)
-\end{bmatrix}
-$$
+        $$
+        \mathbf{M}_i(X) = \Big[ M_i(y_{i-1}, y_i | X) \Big] = \begin{bmatrix}
+        M_1(q_1, q_1 | X) & M_1(q_1, q_2 | X) & \ldots & M_1(q_1, q_m | X) \\
+        M_1(q_2, q_1 | X) & M_1(q_2, q_2 | X) & \ldots & M_1(q_2, q_m | X) \\
+        \vdots & \vdots & \ddots & \vdots \\
+        M_1(q_m, q_1 | X) & M_1(q_m, q_2 | X) & \ldots & M_1(q_m, q_m | X)
+        \end{bmatrix}
+        $$
 
-$$
-\text{where } M_i(y_{i-1}, y_i | X) = \exp \left( \sum_{k=1}^{K} w_k f_k(y_{i-1}, y_i, X, i) \right)
-$$
+        $$
+        \text{where } M_i(y_{i-1}, y_i | X) = \exp \left( \sum_{k=1}^{K} w_k f_k(y_{i-1}, y_i, X, i) \right)
+        $$
 
-特别地，对于起始位置 $i = 1$ 和结束位置 $i = n + 1$ 的矩阵定义为（确保初始位置和结尾位置的状态是确定的）：
+        特别地，对于起始位置 $i = 1$ 和结束位置 $i = n + 1$ 的矩阵定义为（确保初始位置和结尾位置的状态是确定的）：
 
-$$
-\mathbf{M}_1(X) = \Big[ M_1(y_0, y_1 | X) \Big] = 
-\begin{bmatrix}
-M_1(start, q_1 | X) & M_1(start, q_2 | X) & \ldots & M_1(start, q_m | X) \\
-0 & 0 & \ldots & 0 \\
-\vdots & \vdots & \ddots & \vdots \\
-0 & 0 & \ldots & 0
-\end{bmatrix}
-$$
+        $$
+        \mathbf{M}_1(X) = \Big[ M_1(y_0, y_1 | X) \Big] = 
+        \begin{bmatrix}
+        M_1(start, q_1 | X) & M_1(start, q_2 | X) & \ldots & M_1(start, q_m | X) \\
+        0 & 0 & \ldots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \ldots & 0
+        \end{bmatrix}
+        $$
 
-$$
-\mathbf{M}_{n+1}(X) = \Big[ M_{n+1}(y_n, y_{n+1} | X) \Big] = 
-\begin{bmatrix}
-M_{n+1}(q_1, stop | X) = 1 & 0 & \ldots & 0 \\
-M_{n+1}(q_2, stop | X) = 1 & 0 & \ldots & 0 \\
-\vdots & \vdots & \ddots & \vdots \\
-M_{n+1}(q_m, stop | X) = 1 & 0 & \ldots & 0
-\end{bmatrix}
-$$
+        $$
+        \mathbf{M}_{n+1}(X) = \Big[ M_{n+1}(y_n, y_{n+1} | X) \Big] = 
+        \begin{bmatrix}
+        M_{n+1}(q_1, stop | X) = 1 & 0 & \ldots & 0 \\
+        M_{n+1}(q_2, stop | X) = 1 & 0 & \ldots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        M_{n+1}(q_m, stop | X) = 1 & 0 & \ldots & 0
+        \end{bmatrix}
+        $$
 
-此时 $Z(X)$ 为 $\mathbf{M}_i(X)$ 这 $n+1$ 个矩阵的乘积的第 1 行第 1 列元素：
+        此时 $Z(X)$ 为 $\mathbf{M}_i(X)$ 这 $n+1$ 个矩阵的乘积的第 1 行第 1 列元素：
 
-$$
-Z(X) = \left[ \prod_{i=1}^{n+1} \mathbf{M}_i(X) \right]_{(1,1)}
-$$
+        $$
+        Z(X) = \left[ \prod_{i=1}^{n+1} \mathbf{M}_i(X) \right]_{(1,1)}
+        $$
 
-根据矩阵相乘的性质，所有 $\mathbf{M}_i(X)$ 相乘的最终结果就是初始位置的状态到结尾位置的状态的所有路径的权重之积再求和。因此 $Z(X)$ 的表达式为 $n+1$ 个矩阵的乘积的第 1 行第 1 列元素。
+        根据矩阵相乘的性质，所有 $\mathbf{M}_i(X)$ 相乘的最终结果就是初始位置的状态到结尾位置的状态的所有路径的权重之积再求和。因此 $Z(X)$ 的表达式为 $n+1$ 个矩阵的乘积的第 1 行第 1 列元素。
 
-- 然后考虑 $exp(w^{\rm T}F(Y, X))$ ：
+    - 然后考虑 $exp(w^{\rm T}F(Y, X))$ ：
 
-在对应状态序列 $Y$ 也已知的条件下，则可以通过 $M_i(X)$ 这 $n+1$ 个矩阵的适当元素的乘积来表示：
+        在对应状态序列 $Y$ 也已知的条件下，则可以通过 $M_i(X)$ 这 $n+1$ 个矩阵的适当元素的乘积来表示：
 
-$$
-\begin{align*}
-\exp(w^{\rm T} F(Y, X)) &= \exp \left( \sum_{k=1}^K w_k \sum_{i=1}^{n+1} f_k(y_{i-1}, y_i, X, i) \right) \\
-&= \exp \left( \sum_{i=1}^{n+1} \sum_{k=1}^K w_k f_k(y_{i-1}, y_i, X, i) \right) \\
-&= \prod_{i=1}^{n+1} \exp \left( \sum_{k=1}^K w_k f_k(y_{i-1}, y_i, X, i) \right) \\
-&= \prod_{i=1}^{n+1} M_i(y_{i-1}, y_i | X)
-\end{align*}
-$$
+        $$
+        \begin{align*}
+        \exp(w^{\rm T} F(Y, X)) &= \exp \left( \sum_{k=1}^K w_k \sum_{i=1}^{n+1} f_k(y_{i-1}, y_i, X, i) \right) \\
+        &= \exp \left( \sum_{i=1}^{n+1} \sum_{k=1}^K w_k f_k(y_{i-1}, y_i, X, i) \right) \\
+        &= \prod_{i=1}^{n+1} \exp \left( \sum_{k=1}^K w_k f_k(y_{i-1}, y_i, X, i) \right) \\
+        &= \prod_{i=1}^{n+1} M_i(y_{i-1}, y_i | X)
+        \end{align*}
+        $$
 
-首先我们要知道的是，非规范化概率在概率图中表示的是一个具体的路径。所以 $exp(w^{\rm T}F(Y, X))$ 的表达式自然是上面这个公式。
+        首先我们要知道的是，非规范化概率在概率图中表示的是一个具体的路径。所以 $exp(w^{\rm T}F(Y, X))$ 的表达式自然是上面这个公式。
 
 2. 首先我们来定义一下前/后向向量（与 HMM 的前/后向概率相似，这里给出的是向量形式）
 
-对每个位置 $i = 1, 2, \ldots, n+1$ 定义前向向量 $\boldsymbol{\alpha}_i(X) \in \mathbb{R}^{m \times 1}$ ：
+    对每个位置 $i = 1, 2, \ldots, n+1$ 定义前向向量 $\boldsymbol{\alpha}_i(X) \in \mathbb{R}^{m \times 1}$ ：
 
-$$
-\boldsymbol{\alpha}_0(X) = \begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix} \quad \boldsymbol{\alpha}_i(X) = \begin{bmatrix} \alpha_i(y_i = q_1 | X) \\ \alpha_i(y_i = q_2 | X) \\ \vdots \\ \alpha_i(y_i = q_m | X) \end{bmatrix}
-$$
+    $$
+    \boldsymbol{\alpha}_0(X) = \begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix} \quad \boldsymbol{\alpha}_i(X) = \begin{bmatrix} \alpha_i(y_i = q_1 | X) \\ \alpha_i(y_i = q_2 | X) \\ \vdots \\ \alpha_i(y_i = q_m | X) \end{bmatrix}
+    $$
 
-其中 $\alpha_i(y_i = q_j|X)(j = 1, 2, \ldots, m)$ 表示在位置 $i$ 的状态是 $q_j$ 并且从 1 到 $i$ 的状态序列的非规范化概率。根据前向向量的定义易得递推公式：
+    其中 $\alpha_i(y_i = q_j|X)(j = 1, 2, \ldots, m)$ 表示在位置 $i$ 的状态是 $q_j$ 并且从 1 到 $i$ 的状态序列的非规范化概率。根据前向向量的定义易得递推公式：
 
-$$
-\boldsymbol{\alpha}_i(X)^{\rm T} = \boldsymbol{\alpha}_{i-1}(X)^{\rm T} \Big[ M_i(y_{i-1}, y_i | X) \Big] = \boldsymbol{\alpha}_{i-1}(X)^{\rm T} \mathbf{M}_i(X)
-$$
+    $$
+    \boldsymbol{\alpha}_i(X)^{\rm T} = \boldsymbol{\alpha}_{i-1}(X)^{\rm T} \Big[ M_i(y_{i-1}, y_i | X) \Big] = \boldsymbol{\alpha}_{i-1}(X)^{\rm T} \mathbf{M}_i(X)
+    $$
 
-同理，对每个位置 $i = 1, 2, \ldots, n+1$ 定义后向向量 $\boldsymbol{\beta}_i(x) \in \mathbb{R}^{m \times 1}$
+    同理，对每个位置 $i = 1, 2, \ldots, n+1$ 定义后向向量 $\boldsymbol{\beta}_i(x) \in \mathbb{R}^{m \times 1}$
 
-$$
-\boldsymbol{\beta}_i(X) = \begin{bmatrix} \beta_i(y_i = q_1 | X) \\ \beta_i(y_i = q_2 | X) \\ \vdots \\ \beta_i(y_i = q_m | X) \end{bmatrix}, \quad \boldsymbol{\beta}_{n+1}(X) = \begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix}
-$$
+    $$
+    \boldsymbol{\beta}_i(X) = \begin{bmatrix} \beta_i(y_i = q_1 | X) \\ \beta_i(y_i = q_2 | X) \\ \vdots \\ \beta_i(y_i = q_m | X) \end{bmatrix}, \quad \boldsymbol{\beta}_{n+1}(X) = \begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix}
+    $$
 
-其中 $\beta_i(y_i = q_j|X)(j = 1, 2, \ldots, m)$ 表示在位置 $i$ 的状态是 $q_j$ 并且从 $i+1$ 到最后的状态序列的非规范化概率。根据后向向量的定义易得递推公式：
+    其中 $\beta_i(y_i = q_j|X)(j = 1, 2, \ldots, m)$ 表示在位置 $i$ 的状态是 $q_j$ 并且从 $i+1$ 到最后的状态序列的非规范化概率。根据后向向量的定义易得递推公式：
 
-$$
-\boldsymbol{\beta}_i(X) = \Big[ M_{i+1}(y_i, y_{i+1} | X) \Big] \boldsymbol{\beta}_{i+1}(X) = \mathbf{M}_i(X) \boldsymbol{\beta}_{i+1}(X)
-$$
+    $$
+    \boldsymbol{\beta}_i(X) = \Big[ M_{i+1}(y_i, y_{i+1} | X) \Big] \boldsymbol{\beta}_{i+1}(X) = \mathbf{M}_i(X) \boldsymbol{\beta}_{i+1}(X)
+    $$
 
-定义完前向向量和后向向量，接下来便可以很容易地计算出在位置 $i$ 的状态是 $q_j$ 的条件概率和在位置 $i-1$ 是状态 $q_j$ 且在位置 $i$ 是状态 $q_k$ 的条件概率：
+    定义完前向向量和后向向量，接下来便可以很容易地计算出在位置 $i$ 的状态是 $q_j$ 的条件概率和在位置 $i-1$ 是状态 $q_j$ 且在位置 $i$ 是状态 $q_k$ 的条件概率：
 
-$$
-P(y_i | X) = P(y_i = q_j | X) = \frac{\alpha_i(y_i = q_j | X) \beta_i(y_i = q_j | X)}{Z(X)}
-$$
+    $$
+    P(y_i | X) = P(y_i = q_j | X) = \frac{\alpha_i(y_i = q_j | X) \beta_i(y_i = q_j | X)}{Z(X)}
+    $$
 
-$$
-P(y_{i-1}, y_i | X) = P(y_{i-1} = q_j, y_i = q_k | X) = \frac{\alpha_{i-1}(y_{i-1} = q_j | X) M_i(q_j, q_k | X) \beta_i(y_i = q_k | X)}{Z(X)}
-$$
+    $$
+    P(y_{i-1}, y_i | X) = P(y_{i-1} = q_j, y_i = q_k | X) = \frac{\alpha_{i-1}(y_{i-1} = q_j | X) M_i(q_j, q_k | X) \beta_i(y_i = q_k | X)}{Z(X)}
+    $$
 
-$$
-\text{where } Z(X) = \boldsymbol{\alpha}_n(X)^{\rm T} \mathbf{I} = \boldsymbol{\alpha}_{n+1}(X)^{\rm T} \mathbf{I} = \mathbf{I}^{\rm T} \boldsymbol{\beta}_0(X) \quad \mathbf{I} = (1, \ldots, 1) \in \mathbb{R}^{m \times 1}
-$$
+    $$
+    \text{where } Z(X) = \boldsymbol{\alpha}_n(X)^{\rm T} \mathbf{I} = \boldsymbol{\alpha}_{n+1}(X)^{\rm T} \mathbf{I} = \mathbf{I}^{\rm T} \boldsymbol{\beta}_0(X) \quad \mathbf{I} = (1, \ldots, 1) \in \mathbb{R}^{m \times 1}
+    $$
 
 ### 计算期望值
 
