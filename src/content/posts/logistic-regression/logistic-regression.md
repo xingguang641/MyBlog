@@ -187,3 +187,5 @@ Logistic 回归不仅可以用于线性可分的数据，还能够通过一定�
 # 参考文献
 
 1. [Logistic回归（逻辑回归）](https://blog.csdn.net/weixin_50744311/article/details/131523136)
+
+2. [【ScikitLearn】LogisticRegression](https://scikit-learn.cn/stable/modules/generated/sklearn.linear_model.LogisticRegression.html)

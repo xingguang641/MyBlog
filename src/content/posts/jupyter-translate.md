@@ -1,5 +1,5 @@
 ---
-title: Jupyter Translate 项目教程
+title: 【开源项目部署教程】Jupyter Translate 项目教程
 published: 2025-10-21
 description: Jupyter Translate 项目的详细部署教程
 tags: [Translate, Course, Github]

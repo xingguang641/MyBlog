@@ -1,5 +1,5 @@
 ---
-title: Fuwari 简易指南
+title: 【博客指南】Fuwari 简易指南
 published: 2024-04-01
 description: 如何使用这个博客模板
 image: "./cover.jpeg"

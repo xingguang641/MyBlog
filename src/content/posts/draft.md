@@ -1,5 +1,5 @@
 ---
-title: 草稿示例
+title: 【博客指南】草稿示例
 published: 2022-07-01
 tags: [Markdown, Blogging, Demo]
 category: Guides

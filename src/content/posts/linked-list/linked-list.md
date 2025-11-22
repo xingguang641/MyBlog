@@ -224,7 +224,7 @@ void Delete_position(Linklist *head, int k) { //k表示要删除第k个节点
 
 下面给出单向链表的完整代码实现，其中包含了前面未提到的一些常用基础操作，便于更全面地理解单向链表的结构与实现方式。
 
-```cpp showLineNumbers
+```cpp frame="code" title="main.cpp"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -604,7 +604,7 @@ Duplist* Delete_DuplexLinklist(Duplist *head, int pos) {
 
 下面给出双向链表的完整代码实现，其中包含了前面未提到的一些常用基础操作，便于更全面地理解单向链表的结构与实现方式。
 
-```cpp showLineNumbers
+```cpp frame="code" title="main.cpp"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

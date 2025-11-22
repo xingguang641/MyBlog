@@ -305,26 +305,6 @@ int main(){
 }
 ```
 
-# 栈相关教程
-
-## 栈相关视频
-
-> 栈的实现与可视化
-
-<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=1251847519&bvid=BV1WJ4m187cp&cid=1473438590&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
-
-## 栈相关博客
-
-1. [【OI WiKi】栈相关知识讲解](https://oi-wiki.org/ds/stack/)
-
-2. [【数据结构】栈 (C语言)](https://www.cnblogs.com/MarisaMagic/p/17062088.html)
-
-3. [为什么函数式编程语言都离不开栈？](https://blog.csdn.net/qq_65596720/article/details/130743499)
-
-4. [【数据结构】从零理解栈的数据结构](https://blog.csdn.net/qq_37945670/article/details/143643382)
-
-5. [【数据结构】栈（Stack）超详细教学](https://blog.csdn.net/2401_87820834/article/details/145663154)
-
 # 队列的基本结构
 
 队列（Queue）是一种特殊的线性表结构，数据元素的插入操作只能在表的一端进行（称为 **队尾** ，rear），而删除操作只能在另一端进行（称为 **队首** ，front）。由于这种 “先进入队列的元素先被移出” 的特性，队列通常被称为 **先进先出** （First In, First Out，简称 FIFO）的线性表。
@@ -649,6 +629,26 @@ int main(){
     return 0;
 }
 ```
+
+# 栈相关教程
+
+## 栈相关视频
+
+> 栈的实现与可视化
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=1251847519&bvid=BV1WJ4m187cp&cid=1473438590&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+## 栈相关博客
+
+1. [【OI WiKi】栈相关知识讲解](https://oi-wiki.org/ds/stack/)
+
+2. [【数据结构】栈 (C语言)](https://www.cnblogs.com/MarisaMagic/p/17062088.html)
+
+3. [为什么函数式编程语言都离不开栈？](https://blog.csdn.net/qq_65596720/article/details/130743499)
+
+4. [【数据结构】从零理解栈的数据结构](https://blog.csdn.net/qq_37945670/article/details/143643382)
+
+5. [【数据结构】栈（Stack）超详细教学](https://blog.csdn.net/2401_87820834/article/details/145663154)
 
 # 队列相关教程
 

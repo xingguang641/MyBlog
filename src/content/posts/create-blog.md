@@ -1,5 +1,5 @@
 ---
-title: 如何创建一个自己的文章
+title: 【博客指南】如何创建一个自己的文章
 published: 2025-10-22
 description: 如何创建一个 Fuwari 模板的博客
 tags: [Fuwari, Blogging]
