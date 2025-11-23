@@ -1,9 +1,9 @@
 ---
-title: 【算法经典】MEX 问题
+title: 【ACM 算法随笔】MEX 问题
 published: 2025-11-07
-description: 总结经典算法类型题
-tags: [Algorithm, Course]
-category: Algorithm
+description: 记录一些 ACM 常用技巧
+tags: [Algorithm, Trick, Note]
+category: ACM Note
 draft: true
 ---
 

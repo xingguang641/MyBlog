@@ -21,6 +21,8 @@ draft: false
 
 现在，我们就来详细讲解一下这两类方法。
 
+---
+
 # 主成分分析
 
 PCA 最早由 Karl Pearson 在 1901 年提出，起源于一个非常直观的问题：高维数据中常有大量相关和冗余特征，如果能用更少的、不相关的新特征来概括原始结构，那么数据将更容易理解、可视化与处理。PCA 的核心思路来自这样一个几何直觉：把数据投影到某个方向上，如果投影后的分布越 “拉得开” ，说明这个方向包含越多关于数据真实结构的信息；相反，分布很窄说明主要是噪声。因此我们想找到所有投影方向中 “信息量最大” 的那些方向，并以它们作为新的坐标轴来表示数据。
@@ -179,7 +181,7 @@ $$
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=112996076490296&bvid=BV1ExWxesEVf&cid=500001656999667&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
-&nbsp;
+---
 
 # 统一流形逼近与投影
 
@@ -251,7 +253,7 @@ $$
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=113389921703882&bvid=BV1dpStYvEh8&cid=26517833018&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
-&nbsp;
+---
 
 # 深层问题思考
 
@@ -280,6 +282,8 @@ $$
     但对于流形结构、弯曲结构等 **非线性数据** 来说，最大方差方向可能并不能反映真正有意义的几何结构。数据看似分散，却可能只是沿着某条弯曲的低维空间分布，这时 PCA 的线性投影就无法有效保留其内部结构信息。
 
     来看一个最典型的例子：三维空间中的螺旋结构。如果数据点沿着一条三维螺旋线分布，相似性是沿着曲线逐渐变化的，局部邻域也具有连续且弯曲的形式。然而 PCA 在寻找最大方差方向时，只会选择让整体伸展程度最大的那条直线作为投影轴。这样一来，低维投影会直接把螺旋压扁成一条直线，原本邻近的点可能被拉开，不相邻的点却挤在一起，曲线结构消失殆尽。
+
+---
 
 # 参考文献
 

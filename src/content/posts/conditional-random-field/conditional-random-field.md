@@ -7,7 +7,7 @@ category: ML Model
 draft: false
 ---
 
-> 写在前面：本篇延续上一篇的 MEMM 进行拓展，CRF 本质上就是为了解决 MEMM 的痛点而产生的。还有要补充的是：虽然 CRF 来源于 MRF（CRF 本质上是条件化后的 MRF），但理解 CRF 并不需要完全了解 MRF 是什么。因此本篇博客不会介绍 MRF 的相关知识，具体会在后续的算法篇进行介绍。
+> 写在前面：本篇延续上一篇的 MEMM 进行拓展，CRF 本质上就是为了解决 MEMM 的痛点而产生的。此外，虽然 CRF 来源于 MRF，但理解 CRF 并不需要完全了解 MRF 是什么。因此本篇博客不会介绍 MRF 的相关知识，具体会在后续的概率图算法章节进行介绍。
 
 # 条件随机场基本原理
 
@@ -87,6 +87,8 @@ $$
 \text{where } Z(X) = \sum_Y \exp(w^{\rm T} F(Y, X))
 $$
 
+---
+
 # 条件随机场实现难点
 
 与前面两个模型一样，要想构建出 CRF，就必须解决以下三个问题：
@@ -105,9 +107,9 @@ $$
 
 1. 由 $P(Y|X)$ 的表达式可知，要想计算出条件概率 $P(Y|X)$ 则需要计算出给定状态序列 $Y$ 的非规范化概率 $exp(w^{\rm T}F(Y, X))$ 和规范化因子 $Z(X)$ ，由于在已知观测序列 $X$ 和模型参数 $w_k(k = 1, 2, \ldots, K)$ 的条件下，只要知道状态的取值范围，无论对应状态序列 $Y$ 是否已知，均能求出规范化因子 $Z(X)$ 。
 
-    所以下面考虑对 $exp(w^{\rm T}F(Y, X))$ 和 $Z(X)$ 分别进行求解。
+    所以下面考虑对 $Z(X)$ 和 $exp(w^{\rm T}F(Y, X))$ 分别进行求解。
 
-    - 首先考虑求解 $Z(X)$ ：
+    - 首先考虑求解 $Z(X)$
 
         设状态的取值范围为 $Q = \{ q_1, q_2, \ldots, q_m \}$ ，将所有状态序列前后都各填充一个 $y_0 = start$ 和 $y_{n+1} = stop$ 。对观测序列 $X$ 的每一个位置 $i = 1, 2, \ldots, n+1$ 来说， $y_{i-1}$ 和 $y_i$ 都有 $m$ 种可能的取值，因此，对于每一个位置来说都可以定义一个 $m \times m$ 的 **转移势矩阵** ：
 
@@ -127,7 +129,7 @@ $$
         特别地，对于起始位置 $i = 1$ 和结束位置 $i = n + 1$ 的矩阵定义为（确保初始位置和结尾位置的状态是确定的）：
 
         $$
-        \mathbf{M}_1(X) = \Big[ M_1(y_0, y_1 | X) \Big] = 
+        \mathbf{M}_1(X) = 
         \begin{bmatrix}
         M_1(start, q_1 | X) & M_1(start, q_2 | X) & \ldots & M_1(start, q_m | X) \\
         0 & 0 & \ldots & 0 \\
@@ -137,7 +139,7 @@ $$
         $$
 
         $$
-        \mathbf{M}_{n+1}(X) = \Big[ M_{n+1}(y_n, y_{n+1} | X) \Big] = 
+        \mathbf{M}_{n+1}(X) = 
         \begin{bmatrix}
         M_{n+1}(q_1, stop | X) = 1 & 0 & \ldots & 0 \\
         M_{n+1}(q_2, stop | X) = 1 & 0 & \ldots & 0 \\
@@ -154,7 +156,7 @@ $$
 
         根据矩阵相乘的性质，所有 $\mathbf{M}_i(X)$ 相乘的最终结果就是初始位置的状态到结尾位置的状态的所有路径的权重之积再求和。因此 $Z(X)$ 的表达式为 $n+1$ 个矩阵的乘积的第 1 行第 1 列元素。
 
-    - 然后考虑 $exp(w^{\rm T}F(Y, X))$ ：
+    - 然后考虑 $exp(w^{\rm T}F(Y, X))$
 
         在对应状态序列 $Y$ 也已知的条件下，则可以通过 $M_i(X)$ 这 $n+1$ 个矩阵的适当元素的乘积来表示：
 
@@ -186,7 +188,7 @@ $$
     同理，对每个位置 $i = 1, 2, \ldots, n+1$ 定义后向向量 $\boldsymbol{\beta}_i(x) \in \mathbb{R}^{m \times 1}$
 
     $$
-    \boldsymbol{\beta}_i(X) = \begin{bmatrix} \beta_i(y_i = q_1 | X) \\ \beta_i(y_i = q_2 | X) \\ \vdots \\ \beta_i(y_i = q_m | X) \end{bmatrix}, \quad \boldsymbol{\beta}_{n+1}(X) = \begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix}
+    \boldsymbol{\beta}_i(X) = \begin{bmatrix} \beta_i(y_i = q_1 | X) \\ \beta_i(y_i = q_2 | X) \\ \vdots \\ \beta_i(y_i = q_m | X) \end{bmatrix} \quad \boldsymbol{\beta}_{n+1}(X) = \begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix}
     $$
 
     其中 $\beta_i(y_i = q_j|X)(j = 1, 2, \ldots, m)$ 表示在位置 $i$ 的状态是 $q_j$ 并且从 $i+1$ 到最后的状态序列的非规范化概率。根据后向向量的定义易得递推公式：
@@ -211,7 +213,7 @@ $$
 
 ### 计算期望值
 
-利用前面定义的前向向量和后向向量，可以计算特征函数关于联合分布 $P(X, Y)$ 和条件分布 $P(Y|X)$ 的数学期望。
+利用前面定义的前向向量和后向向量，我们可以轻松地计算出特征函数关于联合分布 $P(X, Y)$ 和条件分布 $P(Y|X)$ 的数学期望。
 
 - 特征函数 $f_k(Y, X) = \sum_{i=1}^{n}f_k(y_{i-1}, y_i, X, i)$ 关于条件分布 $P(Y|X)$ 的数学期望是：
 
@@ -233,9 +235,8 @@ $$
 
 $$
 \begin{align*}
-&\mathbb{E}_{P(X,Y)} \Big[ f_k(Y, X) \Big] \\ 
-= &\sum_{X,Y} P(X,Y) f_k(Y, X) = \sum_{X,Y} \bar{P}(X) P(Y|X) f_k(Y, X) \\
-= &\sum_X \bar{P}(X) \sum_Y P(Y|X) f_k(Y, X) = \sum_X \bar{P}(X) \mathbb{E}_{P(Y|X)} \Big[ f_k(Y, X) \Big]
+\mathbb{E}_{P(X,Y)} \Big[ f_k(Y, X) \Big] &= \sum_{X,Y} P(X,Y) f_k(Y, X) = \sum_{X,Y} \bar{P}(X) P(Y|X) f_k(Y, X) \\
+&= \sum_X \bar{P}(X) \sum_Y P(Y|X) f_k(Y, X) = \sum_X \bar{P}(X) \mathbb{E}_{P(Y|X)} \Big[ f_k(Y, X) \Big]
 \end{align*}
 $$
 
@@ -302,6 +303,8 @@ y_n^* = \arg\max_{1 \leq j \leq m} \delta_n(j)
 $$
 
 接着从最优路径的终点回溯即可求得最优路径。
+
+---
 
 # 条件随机场代码讲解
 
@@ -480,6 +483,8 @@ def viterbi_decode(self, sentence):
         best_path.insert(0, best_state)
     return best_path
 ```
+
+---
 
 # 参考文献
 

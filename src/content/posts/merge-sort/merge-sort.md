@@ -2,7 +2,7 @@
 title: 【ACM 算法随笔】归并排序与归并分治
 published: 2025-11-20
 description: 记录一些 ACM 常用技巧
-tags: [Algorithm, Trick, Note]
+tags: [Algorithm, Trick, Note, ACM]
 category: ACM Note
 draft: false
 ---
@@ -37,7 +37,7 @@ draft: false
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=531799474&bvid=BV1wu411p7r7&cid=1222566835&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
-&nbsp;
+---
 
 # 归并排序代码讲解
 
@@ -154,6 +154,8 @@ $$
 
 通过理解递归的拆分逻辑和合并机制，我们就能清楚地看到归并排序的整体流程：每次递归都在缩小问题规模，而每次合并则在逐步恢复全局顺序。正是这种 “分而治之” 的思想，使得归并排序既稳定又高效，并且能够处理任意长度的数组而无需依赖额外的复杂操作。
 
+---
+
 # 双有序数组题目收集
 
 既然归并排序在合并阶段的核心子问题是 **两个有序数组的合并** ，我们不妨思考一个更一般的情况：如果能够在合理时间复杂度内解决任意两个有序数组的问题，那么在处理单个无序数组时，我们同样可以借助归并排序的思路，在 $O(nlogn)$ 时间内完成该问题的求解。
@@ -162,13 +164,158 @@ $$
 
 接下来，就让我们看看不同的双有序数组题目，一起探讨它们是否能够被这种思路自然扩展，以及如何在归并分治框架下进行处理。
 
+## 跨数组元素计数
 
+[题目链接](https://www.geeksforgeeks.org/dsa/element-1st-array-count-elements-less-equal-2nd-array/)
+
+### Problem Statement
+
+给定两个未排序的数组 $A$ 和 $B$ ，两个数组都可能包含重复元素。对于 $A$ 数组的每个元素，求出 $B$ 数组中小于或等于该元素的元素数量。
+
+### Constraints
+
+- $1 ≤ n, m ≤ 2 × 10^5$
+- $-10^9 ≤ A[i], B[i] ≤ 10^9$
+- 所有输入都是整数
+
+### Input
+
+输入包含三行：
+
+- 第一行包含连个整数 $n$ 和 $m$ ，分别表示数组 $A$ 和 $B$ 的长度
+- 第二行包含 $n$ 个整数，表示数组 $A$ 中的元素
+- 第三行包含 $m$ 个整数，表示数组 $B$ 中的元素
+
+> $n \quad m$
+> 
+> $A_1 \quad A_2 \quad \ldots \quad A_n$
+> 
+> $B_1 \quad B_2 \quad \ldots \quad B_m$
+
+### Output
+
+输出长度为 $n$ 的数组作为答案。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+6 6
+1 2 3 4 7 9
+0 1 2 1 1 4
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+4 5 5 6 6 6
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+5 7
+4 8 7 5 1
+4 48 3 0 1 1 5
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+5 6 6 6 3
+```
+
+---
+
+# 归并分治题目收集
+
+从上面的分析我们可以得出这样一个重要结论：许多简单的双有序数组问题都可以扩展成单个无序数组的题目，并能够在归并排序的分治框架中高效解决。反过来，如果我们能够证明某个问题在双有序数组的前提下可以在有限时间内完成求解，那么就几乎可以断定这个问题可以用归并分治解决。
+
+因此，接下来我们将围绕这一思路，对可以借助归并分治优化求解的题目进行系统整理与归纳。通过分析这些题目在双有序数组场景下的解决方式以及它们在归并过程中的融合方法，我们不仅能够建立起一套清晰的题型结构，也能更深入地理解归并分治的真正力量 ———— 将问题拆解到有序局部，再在合并中完成复杂逻辑，实现全局复杂度上的突破。
+
+> 下面部分题目来源于下面这个视频
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=786750060&bvid=BV1L14y1B7ef&cid=1223633841&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+## 计算数组的小和
+
+[题目链接](https://www.nowcoder.com/practice/edfe05a1d45c4ea89101d936cac32469)
+
+### Problem Statement
+
+数组小和的定义：$\displaystyle \sum_{i=1}^{n}f_i$ ，其中 $f_i$ 的定义是第 $i$ 个数左侧小于等于 $s_i$ 的个数。
+
+例如，数组 $s = [1, 3, 5, 2, 4, 6]$
+
+- 在 $s[0]$ 的左边小于或等于 $s[0]$ 的数的和为 $0$
+
+- 在 $s[1]$ 的左边小于或等于 $s[1]$ 的数的和为 $1$
+
+- 在 $s[2]$ 的左边小于或等于 $s[2]$ 的数的和为 $1 + 3 = 4$
+
+- 在 $s[3]$ 的左边小于或等于 $s[3]$ 的数的和为 $1$
+
+- 在 $s[4]$ 的左边小于或等于 $s[4]$ 的数的和为 $1 + 3 + 2 = 6$
+
+- 在 $s[5]$ 的左边小于或等于 $s[5]$ 的数的和为 $1 + 3 + 5 + 2 + 4 = 15$
+
+所以 $s$ 的小和为 $0 + 1 + 4 + 1 + 6 + 15 = 27$
+
+给定一个数组 $s$  ，实现函数返回 $s$ 的小和。
+
+### Constraints
+
+- $0 < n \leq 10^5$
+- $-100 \leq s[i] \leq 100$
+- 所有输入都是整数
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个整数 $N$ ，表示数组的长度
+- 第二行包含 $N$ 个整数，表示数组中的各个元素
+
+> $N$
+> 
+> $s_1 \quad s_2 \quad \ldots \quad s_N$
+
+### Output
+
+输出一个整数表示答案。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+6
+1 3 5 2 4 6
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+27
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+1
+1
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+0
+```
+
+---
 
 # 深层问题思考
 
 1. 排序算法理论上能做到比 $O(nlogn)$ 还要快吗？
 
-    ## 比较排序的下界
+    ### 比较排序的下界
 
     对于基于 **比较的排序** （如快速排序、归并排序、堆排序等），有一个著名结论：
 
@@ -177,10 +324,10 @@ $$
     原因是对 $n$ 个元素的排列有 $n!$ 种可能，每一次比较最多只能把可能性缩小一半（类似二分决策树）。决策树的高度就是比较次数的下界，而高度满足：
 
     $$
-    h \geq \log_2(n!) = O(nlogn).
+    h \geq \log_2(n!) = O(nlogn)
     $$
 
-    ## 非比较排序
+    ### 非比较排序
 
     如果不依赖元素之间的比较，而是利用元素的其他特性（例如整数范围有限），就有可能突破 $O(nlogn)$ 的下界：
 
@@ -200,6 +347,8 @@ $$
         条件：元素在数值范围内均匀分布时效果最佳
 
     所以，如果元素类型允许非比较操作，排序速度可以达到线性时间 $O(n)$ 级别，理论上比 $O(nlogn)$ 更快。
+
+---
 
 # 参考文献
 

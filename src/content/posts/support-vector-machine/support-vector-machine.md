@@ -202,6 +202,8 @@ $$
 
 ![支持向量机图像](src\content\posts\support-vector-machine\支持向量机11.jpg)
 
+---
+
 # 拉格朗日对偶问题
 
 接下来的内容就是本篇博客的重点内容，也是支持向量机的核心难点内容。让我们一起来看一下什么是拉格朗日对偶问题。
@@ -375,6 +377,8 @@ $$
 
 KKT 条件的作用就是能让我们快速判断一个问题是否是强对偶问题：在绝大多数条件下（少数情况几乎都是人为构造，实际应用相当罕见），只要满足 KKT 条件的问题就是强队偶问题。
 
+---
+
 # 代码实现
 
 根据拉格朗日对偶问题的原理，我们来推导一下支持向量机问题的对偶问题。
@@ -452,7 +456,7 @@ $$
 
     <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=682759064&bvid=BV1AS4y1K7Jf&cid=565289579&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
-&nbsp;
+---
 
 # 深层问题思考
 
@@ -502,6 +506,8 @@ $$
     $$
 
     上述形式中 “经验损失项” 就是所谓的 “合叶损失函数” ，“正则化项” 就是 “L2 正则化” 。
+
+--
 
 # 参考文献
 
