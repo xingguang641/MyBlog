@@ -232,7 +232,7 @@ $$
 
 因此，接下来我们将围绕这一思路，对可以借助归并分治优化求解的题目进行系统整理与归纳。通过分析这些题目在双有序数组场景下的解决方式以及它们在归并过程中的融合方法，我们不仅能够建立起一套清晰的题型结构，也能更深入地理解归并分治的真正力量 ———— 将问题拆解到有序局部，再在合并中完成复杂逻辑，实现全局复杂度上的突破。
 
-> 下面部分题目来源于下面这个视频
+> 下面部分题目来源于这个视频
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=786750060&bvid=BV1L14y1B7ef&cid=1223633841&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 

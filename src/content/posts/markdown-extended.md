@@ -2,7 +2,7 @@
 title: 【博客指南】Markdown 扩展功能
 published: 2024-04-10
 updated: 2024-11-29
-description: 在 Fuwari 中了解更多关于 Markdown 功能的信息。
+description: 在 Fuwari 中了解更多关于 Markdown 功能的信息
 tags: [Demo, Example, Markdown, Fuwari]
 category: Guides
 draft: false 

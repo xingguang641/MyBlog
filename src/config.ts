@@ -31,13 +31,18 @@ export const siteConfig: SiteConfig = {
 	},
 	favicon: [
 		{
-			src: "/favicon/favicon.png"
+			src: "/favicon/favicon.png",
 		},
 	],
 };
 
 export const navBarConfig: NavBarConfig = {
-	links: [LinkPreset.Home, LinkPreset.Archive, LinkPreset.About],
+	links: [
+		LinkPreset.Home,
+		LinkPreset.Archive,
+		LinkPreset.About,
+		{ name: "成就", url: "/achievements/" },
+	],
 };
 
 export const profileConfig: ProfileConfig = {
