@@ -1,7 +1,7 @@
 ---
 title: 【博客指南】如何创建一个独立页面
 published: 2024-04-10
-updated: 2024-11-29
+updated: 2025-11-24
 description: 教你如何使用 Fuwari 模板创建独立页面
 tags: [Fuwari, Static Pages]
 category: Guides
