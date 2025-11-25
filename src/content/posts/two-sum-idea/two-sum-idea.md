@@ -15,9 +15,7 @@ draft: false
 
 # 两数之和题目讲解
 
-两数之和是 LeetCode 上编号为 1 的开山题目，堪称算法题中的 `Hello World!` 。看似简单，却绝非只能停留在新手练习层面。
-
-之所以值得专门写一篇文章来讲解，是因为 “两数之和” 背后的思想具有极强的泛用性，它贯穿于大量经典算法题之中，衍生出多种技巧与思路。你也许已经独立完成过这些题目，却未曾意识到它们之间存在着紧密的联系。
+两数之和是 LeetCode 上编号为 1 的开山题目，堪称算法题中的 `Hello World!` 。看似简单，却绝非只能停留在新手练习层面。之所以值得专门写一篇文章来讲解，是因为 “两数之和” 背后的思想具有极强的泛用性，它贯穿于大量经典算法题之中，衍生出多种技巧与思路。你也许已经独立完成过这些题目，却未曾意识到它们之间存在着紧密的联系。
 
 接下来，我将以 “两数之和” 为主线，带你串联起各类相关题型。相信这趟旅程会让你对熟悉的题目有全新的理解，也能收获更体系化的解题思维。
 
@@ -116,14 +114,14 @@ $$
 
 这意味着：当我们遍历数组时，如果能够实时记录已经出现过的数字 $target - nums[j]$ 的出现次数，那么对于当前数字 $nums[i]$ ，只需要查询它所对应的配对值 $nums[i]$ 之前出现了多少次，就能直接得出以 $i$ 为右端点所贡献的有效数对数量。
 
-换句话说：对于每个数，我们可以查找 $nums[i]$ ，统计 $target - nums[i]$ ；同理，我们可以查找 $target - nums[i]$ ，统计 $nums[i]$ 。
+换句话说：对于每个数，我们可以查找 $nums[i]$ ，统计 $target - nums[i]$ 。同理，我们可以查找 $target - nums[i]$ ，统计 $nums[i]$ 。
 
 下面给出完整代码：
 
 ```cpp frame="code" title="main.cpp"
 # include <bits/stdc++.h>
 using namespace std;
-const int MAXN = 1e5;
+const int MAXN = 1e5 + 100;
 int n, target;
 int a[MAXN];
 
@@ -182,29 +180,158 @@ $$
 
 ### Problem Statement
 
-
+给定一个无序数组 $arr$ , 其中元素是在一定范围内的任意整数。给定一个整数 $k$ ，求 $arr$ 所有子数组中累加和为 $k$ 的最长子数组长度。
 
 ### Constraints
 
-
+- $1 \leq N \leq 10^5$
+- $-10^9 \leq k \leq 10^9$
+- $-100 \leq arr_i \leq 100$
 
 ### Input
 
+输入包含两行：
 
+- 第一行包含两个整数 $N$ 和 $k$ 。其中， $N$ 表示数组的长度， $k$ 的含义已在题目描述中给出
+- 第二行包含 $N$ 个整数，表示数组中的元素
+
+> $N \quad k$
+>
+> $arr_1 \quad arr_2 \quad \ldots \quad arr_N$
 
 ### Output
 
-
+输出一个整数表示答案。
 
 ### Sample Input 1
 
 ```txt showLineNumbers=false
-
+5 0
+1 -2 1 1 1
 ```
 
 ### Sample Output 1
 
 ```txt showLineNumbers=false
-
+3
 ```
+
+## 题目解析
+
+模仿 “两数之和” 的思路，我们先把子数组的区间和写成前缀和的形式：
+
+$$
+pre[right] - pre[left] = k
+$$
+
+同样的，将 $left$ 移动至另一侧后可以得到：
+
+$$
+pre[right] = k + pre[left]
+$$
+
+很明显，我们可以在遍历到 $pre[i]$ 时，去查找是否存在某个更早的前缀和等于 $pre[i] + k$ 。这里有一个需要特别注意的点：我们只能 **查找较大的一侧，计算较小的一侧** 。由于子数组要求 $right \geq left$ ，因此我们无法查找 $pre[i]$ ，统计 $pre[i] + k$ 。而两数之和可以随意查找、随意统计的原因是加法具有一定的对称性，而前缀和差分是减法，不能随意更改位置。
+
+如果我们将 $right$ 移动至另一侧可得：
+
+$$
+pre[left] = pre[right] - k
+$$
+
+因此我们还可以查找 $pre[i] - k$ ，统计 $pre[i]$ 。同理，我们不能查找 $pre[i]$ ，统计 $pre[i] - k$ 。
+
+此外，因为我们要求的是 **最长子数组** ，所以哈希表中应该记录某个前缀和 **第一次出现的位置** （越早越能拉长区间），而不是记录所有位置。
+
+基于上述思路，最终代码如下：
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+const int MAXN = 1e5 + 100;
+int N, k;
+int arr[MAXN];
+
+int main() {
+    cin >> N >> k;
+    for (int i = 0; i < N; i++) {
+        cin >> arr[i];
+    }
+
+    unordered_map<long long, int> pos;  
+    pos[0] = -1; int pre = 0, ans = 0;
+    for (int i = 0; i < N; i++) {
+        pre += arr[i];
+
+        if (pos.count(pre + k)) {
+            ans = max(ans, i - pos[pre + k]);
+        }
+
+        if (!pos.count(pre)) {
+            pos[pre] = i;
+        }
+    }
+
+    cout << ans << endl;
+    return 0;
+}
+```
+
+## 和为 K 的子数组
+
+[题目链接](https://leetcode.cn/problems/subarray-sum-equals-k/description/)
+
+### Problem Statement
+
+给你一个整数数组 $nums$ 和一个整数 $k$ ，请你统计并返回该数组中和为 $k$ 的子数组的个数。
+
+子数组是数组中元素的连续非空序列。
+
+### Constraints
+
+- $1 \leq nums.length \leq 2 * 10^4$
+- $-1000 \leq nums[i] \leq 1000$
+- $-10^7 \leq k \eq 10^7$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含两个整数 $N$ 和 $k$ 。其中， $N$ 表示数组的长度， $k$ 的含义已在题目描述中给出
+- 第二行包含 $N$ 个整数，表示数组中的元素
+
+> $N \quad k$
+>
+> $nums_1 \quad nums_2 \quad \ldots \quad nums_N$
+
+### Output
+
+输出一个整数表示答案。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+3 2
+1 1 1
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+2
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+3 3
+1 2 3
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+2
+```
+
+## 题目解析
 

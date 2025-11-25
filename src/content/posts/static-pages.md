@@ -1,7 +1,6 @@
 ---
 title: 【博客指南】如何创建一个独立页面
-published: 2024-04-10
-updated: 2025-11-24
+published: 2025-11-24
 description: 教你如何使用 Fuwari 模板创建独立页面
 tags: [Fuwari, Static Pages]
 category: Guides
@@ -42,7 +41,7 @@ const { Content } = await render(achievementsPost);
 </MainGridLayout>
 ```
 
-最后我们只需要在 `src/config.ts` 文件的常量 `navBarConfig` 中填入相应的键值对即可，下面依旧给出 “成就” 的示例。
+最后我们只需要在 `src/config.ts` 文件的常量 `navBarConfig` 中填入相应的键值对即可，下面依旧给出创建 “成就” 的示例。
 
 ```ts frame="code" title="config.ts"
 export const navBarConfig: NavBarConfig = {
