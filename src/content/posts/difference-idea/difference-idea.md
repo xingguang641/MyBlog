@@ -1,6 +1,6 @@
 ---
 title: 【ACM 算法随笔】差分思想
-published: 2025-11-23
+published: 2025-11-25
 description: 记录一些 ACM 常用技巧
 tags: [Algorithm, Trick, Note, ACM]
 category: ACM Note
@@ -120,6 +120,8 @@ int main() {
 
 }
 ```
+
+---
 
 # 参考文献
 

@@ -160,7 +160,7 @@ $$
 P(y_* = 1 | x_*, X, y) \approx \int \sigma(a) \, \mathcal{N}(a | m_a, s_a^2) \, da
 $$
 
-这个一维积分可以通过数值方法计算，或者使用 **常用的解析近似** （MacKay 公式）：
+这个一维积分往往没有解析解，因此我们可以通过数值方法计算，或者使用 **常用的解析近似** （MacKay 公式）求解：
 
 $$
 P(y_* = 1 | x_*, X, y) \approx \sigma\left(\frac{m_a}{\sqrt{1 + \pi s_a^2 / 8}}\right)
@@ -384,7 +384,7 @@ $$
 \log P(y | f_{\text{MAP}}, X) = \sum_i \Big[ y_i \log \sigma(f_{\text{MAP},i}) + (1 - y_i) \log \big(1 - \sigma(f_{\text{MAP},i})\big) \Big]
 $$
 
-第二项是先验项，我们依旧假设先验服从高斯分布 $f \sim \mathcal{N}(0, K_{\theta})$ ，取对数后可得：
+第二项是先验项，我们依旧假设先验服从高斯分布 $f \sim \mathcal{N}(0, K_{\theta})$ （本质就是一个高斯过程），取对数后可得：
 
 $$
 \log P(f_{\text{MAP}} \mid X, \theta) = -\frac{1}{2} f_{\text{MAP}}^{\rm T} K_\theta^{-1} f_{\text{MAP}} - \frac{1}{2} \log |K_\theta| - \frac{n}{2} \log 2\pi
