@@ -1,59 +1,95 @@
 ---
 title: 【开源项目部署教程】Jupyter Translate 项目教程
 published: 2025-10-21
-description: Jupyter Translate 项目的详细部署教程
-tags: [Translate, Course, Github]
+description: 基于 LLM 和阿里云机器翻译的 Jupyter Notebook 翻译工具部署指南
+tags: [Translate, Python, Github, Tutorial]
 category: Github
 draft: false 
 ---
 
 # Jupyter Translate 项目
 
-## 下载项目
+Jupyter Translate 是一个能够将 Jupyter Notebook (`.ipynb`) 文件进行自动翻译的工具，支持多种翻译引擎。本文将介绍如何配置并使用该工具。
 
-首先进入这个项目的Github网址
+## 获取项目代码
+
+首先访问项目的 GitHub 仓库：
 
 ::github{repo="jexonn/jupyter-translate"}
 
-照着 readme 安装依赖（挂梯子可能会导致依赖无法正常安装）
+使用 Git 命令克隆项目到本地：
 
-但其实依赖并没有很多，可以依次手动安装 `requirements.txt` 中的内容
-
-## 注册API
-
-大模型随便找一个即可，我这里用的是 DeepSeek
-
-```txt showLineNumbers
-api_key = sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-base_url = https://api.deepseek.com/v1/
-model_name = deepseek-chat
+```bash showLineNumbers
+git clone https://github.com/jexonn/jupyter-translate.git
+cd jupyter-translate
 ```
 
-也可以用其他 OpenAI 接口兼容的模型
+### 安装依赖
 
-然后来注册一下 Aliyun Machine Translation Service 的密钥
+项目依赖列表在 `requirements.txt` 中。
 
-首先进入阿里云进行注册：
-https://www.aliyun.com/
+:::tip
+**网络提示**：
+如果在安装过程中遇到网络超时问题，建议使用国内镜像源（如清华源）进行安装，而不是依赖梯子，这样通常更稳定。
+:::
 
-然后开通“机器翻译”服务：
-https://mt.console.aliyun.com/
-
-最后创建 AccessKey：
-https://ram.console.aliyun.com/manage/ak
-
-
-```txt showLineNumbers
-access_key_id = LTAIxxxxxxxxxxxxxxxx
-access_key_secret = xxxxxxxxxxxxxxxxxxxxxxxx
+```bash showLineNumbers
+pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
-## 翻译指令
+如果自动安装失败，你可以打开 `requirements.txt` 查看具体内容，依次手动安装缺失的库。
 
-翻译指令如下
+## 配置翻译服务
 
-```cmd showLineNumbers
+该项目支持多种翻译后端。为了获得最佳的翻译质量和速度，我们通常结合使用 **大语言模型 (LLM)** 和 **阿里云机器翻译**。
+
+你需要修改项目中的配置文件（通常在 `main.py` 或独立的 `config.py` 中，具体视版本而定），填入以下信息。
+
+### 配置 LLM (以 DeepSeek 为例)
+
+你可以使用任意兼容 OpenAI 接口的大模型。这里以性价比极高的 DeepSeek 为例：
+
+```python showLineNumbers
+# 填入你的 LLM API 信息
+api_key = "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+base_url = "https://api.deepseek.com/v1/"
+model_name = "deepseek-chat"
+```
+
+### 配置阿里云机器翻译 (Aliyun MT)
+
+为了处理某些特定的翻译任务，你需要配置阿里云的 AccessKey。
+
+1.  **注册账号**：前往 [阿里云官网](https://www.aliyun.com/) 注册并登录。
+2.  **开通服务**：访问 [机器翻译控制台](https://mt.console.aliyun.com/) 开通服务（通常有免费额度）。
+3.  **获取密钥**：访问 [RAM 访问控制](https://ram.console.aliyun.com/manage/ak) 创建 AccessKey。
+
+获取后，填入配置：
+
+```python showLineNumbers
+# 填入阿里云 AccessKey
+access_key_id = "LTAIxxxxxxxxxxxxxxxx"
+access_key_secret = "xxxxxxxxxxxxxxxxxxxxxxxx"
+```
+
+## 开始翻译
+
+配置完成后，即可使用命令行工具进行翻译。
+
+### 基础用法
+
+使用 `-e ai` 参数指定使用 AI 引擎进行翻译：
+
+```bash showLineNumbers
+# python main.py -e [引擎类型] [目标文件路径]
 python main.py -e ai "jupyter file/rag_from_scratch_1_to_4.ipynb"
 ```
 
-然后会出现如下的文件 `rag_from_scratch_1_to_4_zh.ipynb`
+### 翻译结果
+
+程序运行完成后，会在原文件同级目录下生成一个新的文件，文件名通常以 `_zh` 结尾：
+
+*   **原文件**：`rag_from_scratch_1_to_4.ipynb`
+*   **翻译后**：`rag_from_scratch_1_to_4_zh.ipynb`
+
+你可以直接使用 Jupyter Lab 或 VS Code 打开该文件查看双语或翻译后的内容。

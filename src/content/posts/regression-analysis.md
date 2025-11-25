@@ -1,168 +1,133 @@
 ---
-title: 【机器学习笔记】回归分析（Google ML）
+title: 【机器学习笔记】回归分析 (Google ML)
 published: 2025-10-23
-description: Google ML 回归分析学习笔记
-tags: [Machine Learning, Course, Note]
+description: 基于 Google ML 课程的回归分析学习笔记
+tags: [Machine Learning, Google ML, Regression, Note]
 category: ML Note
 draft: false 
 ---
 
-# 线性回归
+# 线性回归 (Linear Regression)
 
-## 损失类型
+## 1. 损失度量指标
 
-| MAE：平均绝对误差 | MSE：均方误差 | RMSE：均方根误差 |
-|:-----------------:|:-------------:|:----------------:|
+在回归任务中，我们通常使用以下几种指标来衡量模型的预测误差：
 
-## 选择损失
+| 指标 | 全称 | 特点 |
+| :--- | :--- | :--- |
+| **MAE** | 平均绝对误差 (Mean Absolute Error) | 对离群值不敏感，反映预测值的平均偏移量。 |
+| **MSE** | 均方误差 (Mean Squared Error) | 对离群值敏感（误差被平方放大），便于梯度计算。 |
+| **RMSE** | 均方根误差 (Root Mean Squared Error) | 量纲与原目标变量一致，便于直观解释。 |
 
-在选择损失函数时，应重点考虑模型对离群值的处理方式。例如，**MSE** 会促使模型更加贴合离群点，而 **MAE** 对离群值的影响相对较小。这是因为：与 **L1** 损失相比，**L2** 损失会对较大的误差施加更高的惩罚。
+## 2. 如何选择损失函数？
+
+损失函数的选择直接决定了模型如何处理**离群值 (Outliers)**。
+
+*   **L2 损失 (MSE)**：由于误差被平方，大的误差会产生巨大的损失值。为了最小化总损失，模型会被“强力拉向”离群点。
+*   **L1 损失 (MAE)**：误差呈线性增长，模型对离群点的容忍度更高，拟合结果更具鲁棒性。
 
 :::important
-**选择 MSE**：
+**💡 决策指南**
 
-- 当您希望对较大的预测误差施加更强的惩罚时，**MSE** 是更合适的选择。  
-- 当离群值在任务中具有实际意义，并能反映数据的真实分布特征时，采用 **MSE** 可能更为合理。  
+*   **选择 MSE 的场景**：
+    *   **主要考量**：你需要对大的预测误差施加严厉惩罚。
+    *   **数据特征**：离群值代表了重要的数据分布信息（而非噪声），模型必须尽可能拟合它们。
+    *   **数学优势**：MSE 是处处可导的凸函数，优化过程通常比 MAE 更平滑、收敛更稳健。
 
-**注意**：由于 **MSE** 的二次形式具备良好的数学性质，优化过程通常更加平滑且易于收敛。此外，均方根误差（**RMSE**）常用于将误差恢复为与目标变量相同的量纲，从而便于结果解释和比较。
-
-**选择 MAE**：
-
-- 当数据集中存在不希望对模型造成过大影响的离群值时，**MAE** 通常更稳健。  
-- 当您希望损失函数能够更直观地反映模型预测的平均偏差时，**MAE** 是更具可解释性的选择。    
-
-在实际应用中，损失函数或评估指标的选择应结合具体的业务目标、数据特性及模型的鲁棒性要求进行综合考虑。
+*   **选择 MAE 的场景**：
+    *   **主要考量**：你希望模型具有鲁棒性，不受少量极端值的干扰。
+    *   **数据特征**：数据集中包含噪声或异常值，且你不希望这些异常点主导模型的训练方向。
 :::
 
-## 梯度下降
+## 3. 梯度下降 (Gradient Descent)
+
+_可视化演示：梯度下降如何寻找最优解_
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=114052319679117&bvid=BV1CVAUeuECE&cid=28536998241&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
-## 损失曲线
+## 4. 损失曲线与收敛
 
-线性模型的损失函数始终呈现为 **凸函数** 。基于这一特性，当线性回归模型完成收敛时，我们可以确定模型已找到能够最小化损失的最优权重与偏置。  
+线性回归模型的损失函数（通常是 MSE）是一个**凸函数 (Convex Function)**。这意味着：
+1.  损失曲线形状如碗状。
+2.  **仅存在一个全局最小值**，不存在局部极小值陷阱。
+3.  只要学习率设置合理，梯度下降法理论上一定能收敛到全局最优解（权重与偏置）。
 
-也就是说，线性模型的损失函数 **仅存在一个全局最小值** ，而不会出现局部极小点。
+## 5. 超参数 (Hyperparameters)
 
-## 超参数
+超参数是训练前人为设定的“旋钮”，它们不通过数据训练得到，但决定了模型的结构和训练过程。
 
-**超参数** 是由人为设定、在模型训练过程中不会通过反向传播自动更新的参数。它们通常决定了模型的结构、学习速度以及正则化强度，对模型性能有重要影响。
+### 训练动态类
+*   **学习率 (Learning Rate)**：梯度下降的步长。
+    *   *过大*：可能导致震荡或发散。
+    *   *过小*：收敛速度极慢。
+*   **批大小 (Batch Size)**：单次参数更新所使用的样本数量。
+    *   *大 Batch*：梯度估计更准，训练更稳，但显存要求高。
+    *   *小 Batch*：引入随机性，有助于跳出局部最优（在非凸优化中），但训练波动大。
+*   **迭代轮次 (Epochs)**：模型遍历完整训练集的次数。
+*   **优化器 (Optimizer)**：参数更新的策略算法（如 SGD, Adam, RMSProp）。
 
-### 学习率（Learning Rate）
-控制参数更新的步长。  
-学习率过大可能导致训练震荡甚至发散，过小则会导致收敛速度过慢。  
-常见做法包括使用动态学习率衰减或自适应优化算法（如 Adam、RMSProp）。
-
-### 批大小（Batch Size）
-每次用于更新模型参数的样本数量。  
-较大的 **batch** 有助于平滑梯度估计，降低离群值的影响，使训练过程更稳定；  
-但过大的 **batch** 可能降低模型的泛化能力，并增加显存开销。
-
-### 迭代轮次（Epochs）
-指模型遍历整个训练集的次数。  
-迭代次数过少可能导致欠拟合，而过多则容易造成过拟合。  
-通常结合验证集性能来判断是否提前停止训练（Early Stopping）。
-
-### 正则化系数（Regularization Strength）
-用于约束模型复杂度的参数，如 **L1/L2 正则化** 中的惩罚项权重。  
-较大的正则化系数可以减少过拟合，但可能导致欠拟合。
-
-### 隐藏层与神经元数量（Hidden Layers & Units）
-决定神经网络的结构复杂度。  
-更多的层数与神经元通常能增强模型的表达能力，但也会增加训练难度和过拟合风险。
-
-### 激活函数（Activation Function）
-决定神经网络中非线性映射的方式。  
-常见选择包括 **ReLU**、**Leaky ReLU**、**Sigmoid**、**Tanh** 等。  
-不同激活函数会影响梯度传播与收敛性能。
-
-### Dropout 比例（Dropout Rate）
-在训练过程中随机丢弃部分神经元以防止过拟合。  
-常见取值范围为 0.2～0.5。
-
-### 优化器（Optimizer）
-用于更新模型参数的算法，如 **SGD**、**Adam**、**RMSProp** 等。  
-不同优化器在收敛速度与稳定性方面存在差异。
-
-这些超参数往往需要通过 **经验调节** 或 **超参数搜索** （如 Grid Search、Random Search、Bayesian Optimization）来确定，以获得最佳模型性能。
+### 模型结构与正则化类
+*   **正则化系数 (Regularization Strength)**：控制正则项（L1/L2）的权重，用于平衡偏差与方差。
+*   **隐藏层与神经元 (Hidden Layers & Units)**：(针对神经网络) 决定模型的容量和非线性表达能力。
+*   **激活函数 (Activation Function)**：(针对神经网络) 引入非线性因素（如 ReLU, Sigmoid）。
+*   **Dropout 率**：随机失活神经元的比例，用于防止过拟合。
 
 ---
 
-# 逻辑回归
+# 逻辑回归 (Logistic Regression)
 
-## S 型函数
+## 1. Sigmoid 函数与对数几率
 
-**标准逻辑函数（Standard Logistic Function）** 通常被称为 **S 型函数**，其名称来源于其曲线呈现的 “S” 形。  
-该函数定义为：
+逻辑回归的核心是将线性输出映射到 $(0, 1)$ 区间，以表示概率。
 
+**S 型函数 (Sigmoid Function)**
 $$
-\sigma(x) = \frac{1}{1 + e^{-x}}
+\sigma(z) = \frac{1}{1 + e^{-z}}
 $$
+它将任意实数 $z$ 压缩到 $(0, 1)$ 之间。
 
-它将输入值映射到 (0, 1) 区间，常用于二分类模型（如逻辑回归）中的概率表示。
-
-**对数几率函数（Logit Function）** 是 S 型函数的 **反函数** ，定义为：
-
+**对数几率 (Logit Function)**
+它是 Sigmoid 的反函数，定义为概率 $p$ 的对数几率：
 $$
 \text{logit}(p) = \ln\left(\frac{p}{1 - p}\right)
 $$
+两者互为逆运算：$\text{logit}(\sigma(x)) = x$。这解释了逻辑回归也被称为“对数几率回归”的原因。
 
-也可以化简为：
+## 2. 损失函数与正则化
 
-$$
-\text{logit}(\sigma(x)) = x, \quad \sigma(\text{logit}(p)) = p
-$$
+:::tip
+**逻辑回归 vs 线性回归**
 
-也就是说，**Sigmoid 函数**与其反函数 **Logit 函数** 互为逆映射：前者将实数映射到概率空间，后者将概率值映射回实数空间。
+虽然逻辑回归在形式上看似只是线性回归加了一个 Sigmoid 壳，但它们的训练核心有两点本质不同：
 
-## 损失与正则化
+1.  **损失函数**：
+    *   **线性回归**使用**平方损失 (Squared Loss)**。
+    *   **逻辑回归**使用**对数损失 (Log Loss / Cross Entropy)**。
+    *   *原因*：如果在逻辑回归中使用平方损失，损失函数将变为非凸函数，难以优化；而对数损失不仅是凸函数，还基于最大似然估计推导而来，物理意义明确。
 
-:::important
-**逻辑回归（Logistic Regression）** 的训练过程在形式上与 **线性回归（Linear Regression）** 相似，但存在以下两个关键区别：
-
-- 逻辑回归模型采用 **对数损失函数（Log Loss）** 作为优化目标，而线性回归使用的是 **平方损失函数（Squared Loss）**。对数损失函数能够更好地度量预测概率与真实分类之间的差异，并保证输出结果位于 (0, 1) 区间内。
-
-- 在逻辑回归中，应用 **正则化（Regularization）** 对防止模型发生 **过拟合（Overfitting）** 至关重要。常见的正则化形式包括 **L1（Lasso）** 和 **L2（Ridge）**，它们分别有助于特征选择与模型稳定性。
-
-因此，逻辑回归在本质上是通过线性模型学习一个概率分布函数，并结合对数损失与正则化项实现稳健的分类效果。
+2.  **正则化的必要性**：
+    *   逻辑回归极易在处理高维特征或线性可分数据时发生**过拟合**（权重趋向无穷大以使概率逼近 1 或 0）。
+    *   因此，引入 **L2 (Ridge)** 或 **L1 (Lasso)** 正则化在逻辑回归中几乎是标准的做法。
 :::
 
 ---
 
-# 相关视频
+# 📚 学习资源汇总
 
-## 回归分析系列
+## 视频教程：回归分析系列
 
-<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=113794554528405&bvid=BV1shriYXEEv&cid=27769966273&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+> 以下视频涵盖了从线性回归基础到进阶实战的完整流程。
 
-&nbsp;
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px;">
+  <!-- 建议：如果不希望页面太长，可以使用这种 Grid 布局，或者只保留 1-2 个核心视频，其他的放链接 -->
+  <iframe width="100%" height="200" src="//player.bilibili.com/player.html?isOutside=true&aid=113794554528405&bvid=BV1shriYXEEv&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+  <iframe width="100%" height="200" src="//player.bilibili.com/player.html?isOutside=true&aid=113794571308923&bvid=BV1s8riYWEVK&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+  <iframe width="100%" height="200" src="//player.bilibili.com/player.html?isOutside=true&aid=113794588084047&bvid=BV1periYDE65&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+  <iframe width="100%" height="200" src="//player.bilibili.com/player.html?isOutside=true&aid=113913471435418&bvid=BV18KF3eBEwD&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+</div>
 
-<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=113794571308923&bvid=BV1s8riYWEVK&cid=27770028835&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+## 实战项目与代码
 
-&nbsp;
-
-<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=113794588084047&bvid=BV1periYDE65&cid=27770029664&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
-
-&nbsp;
-
-<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=113913471435418&bvid=BV18KF3eBEwD&cid=28145156241&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
-
-&nbsp;
-
-<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=114604038425646&bvid=BV1MK7MzAEGN&cid=30255746027&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
-
-&nbsp;
-
-<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=114649773114756&bvid=BV1CJTdzaEMa&cid=30395729484&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
-
-&nbsp;
-
-<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=114688394268381&bvid=BV1XFM8zVECm&cid=30517757868&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
-
-## 回归分析项目
-
-**线性回归**：[机器学习之线性回归算法Linear Regression](https://blog.csdn.net/qq_41750911/article/details/124883520)
-
-**逻辑回归**：[Logistic回归（逻辑回归）及python代码实现](https://blog.csdn.net/weixin_50744311/article/details/131523136)
-
-**分类算法**：[构建自己的图像分类数据集【两天搞定AI毕设】](https://www.bilibili.com/video/BV1Jd4y1T7rw/)
+*   **线性回归实战**：[CSDN - 机器学习之线性回归算法 (Linear Regression)](https://blog.csdn.net/qq_41750911/article/details/124883520)
+*   **逻辑回归实战**：[CSDN - Logistic回归及Python代码实现](https://blog.csdn.net/weixin_50744311/article/details/131523136)
+*   **综合实战**：[Bilibili - 两天搞定AI毕设：构建自己的图像分类数据集](https://www.bilibili.com/video/BV1Jd4y1T7rw/)

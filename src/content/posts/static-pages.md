@@ -1,27 +1,36 @@
 ---
 title: 【博客指南】如何创建一个独立页面
 published: 2025-11-24
-description: 教你如何使用 Fuwari 模板创建独立页面
-tags: [Fuwari, Static Pages]
+description: 基于 Fuwari 模板创建自定义独立页面（如成就、友链等）的完整教程
+tags: [Fuwari, Static Pages, Tutorial]
 category: Guides
 draft: false 
 ---
 
-## 创建独立页面
+> 本文将介绍如何在 Fuwari 模板中添加一个自定义的独立页面（例如 “成就” 、 “友情链接” 等）。整个过程只需三个步骤：编写内容、创建页面组件、更新导航配置。
 
-创建独立页面只需要修改三个地方就可以了。
+## 编写页面内容
 
-首先我们需要在 `src/content/spec` 中创建一个 mardown 文件，这个文件不需要任何的初始格式，直接输入你想要的内容即可。
+首先，我们需要定义页面的核心文本内容。
 
-然后我们需要在 `src/pages` 中创建一个 astro 文件，最好跟上面的 mardown 文件的名字相同，然后仿造 `about.astro` 文件的格式写入内容就可以了，下面给出我创建的 “成就” 页面文件做示范。
+请在 `src/content/spec` 目录下创建一个 Markdown 文件（例如 `achievements.md`）。这个文件不需要包含复杂的 Frontmatter（元数据），直接编写你想要展示的 Markdown 内容即可。
 
-```astro frame="code" title="achievements.astro"
+## 创建页面组件
+
+接下来，我们需要创建一个 Astro 页面文件来渲染上述内容。
+
+在 `src/pages` 目录下新建一个 `.astro` 文件，建议文件名与步骤 1 中的 Markdown 文件名保持一致（例如 `achievements.astro`）。
+
+你可以直接复制 `about.astro` 的代码并稍作修改，或者使用下面的模板代码。该代码会自动获取 `src/content/spec` 中的内容并渲染到主布局中。
+
+```astro frame="code" title="src/pages/achievements.astro"
 ---
-
 import { getEntry, render } from "astro:content";
 import Markdown from "@components/misc/Markdown.astro";
 import MainGridLayout from "../layouts/MainGridLayout.astro";
 
+// 获取步骤 1 中创建的 'achievements' 内容
+// 如果你的文件名是 other.md，请将下方的 "achievements" 改为 "other"
 const achievementsPost = await getEntry("spec", "achievements");
 
 if (!achievementsPost) {
@@ -30,7 +39,8 @@ if (!achievementsPost) {
 
 const { Content } = await render(achievementsPost);
 ---
-<MainGridLayout title="成就" description="成就">
+<!-- title 和 description 将显示在浏览器标签页和 SEO 信息中 -->
+<MainGridLayout title="成就" description="我的个人成就清单">
     <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">
         <div class="card-base z-10 px-9 py-6 relative w-full ">
             <Markdown class="mt-2">
@@ -41,18 +51,24 @@ const { Content } = await render(achievementsPost);
 </MainGridLayout>
 ```
 
-最后我们只需要在 `src/config.ts` 文件的常量 `navBarConfig` 中填入相应的键值对即可，下面依旧给出创建 “成就” 的示例。
+## 配置导航栏入口
 
-```ts frame="code" title="config.ts"
+页面创建完成后，最后一步是将其添加到博客顶部的导航栏中，以便访客访问。
+
+打开 `src/config.ts` 文件，找到常量 `navBarConfig`，并在 `links` 数组中添加对应的键值对。
+
+```ts frame="code" title="src/config.ts"
 export const navBarConfig: NavBarConfig = {
-	links: [
-		LinkPreset.Home,
-		LinkPreset.Archive,
-		LinkPreset.About,
-		{ name: "成就", url: "/achievements/" },
-        // 在这里填入相应的键值对
-	],
+    links: [
+        LinkPreset.Home,
+        LinkPreset.Archive,
+        LinkPreset.About,
+        // 添加新的页面入口
+        // name: 导航栏显示的文字
+        // url: 对应的路由地址（即 src/pages/ 下的文件名）
+        { name: "成就", url: "/achievements/" },
+    ],
 };
 ```
 
-这样我们就能在博客上方的页面栏添加一个新的独立页面了。
+保存所有文件后，你就能在博客的顶部导航栏看到新添加的独立页面了。

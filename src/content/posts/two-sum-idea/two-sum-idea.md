@@ -121,7 +121,7 @@ $$
 ```cpp frame="code" title="main.cpp"
 # include <bits/stdc++.h>
 using namespace std;
-const int MAXN = 1e5 + 100;
+const int MAXN = 1e4 + 100;
 int n, target;
 int a[MAXN];
 
@@ -218,29 +218,39 @@ $$
 
 ## 题目解析
 
-模仿 “两数之和” 的思路，我们先把子数组的区间和写成前缀和的形式：
+借鉴 “两数之和” 的思路，我们将子数组和问题转化为前缀和的差值问题。设 $pre[i]$ 为前 $i$ 个元素的累加和，则子数组区间和为 $k$ 可以表示为：
 
 $$
-pre[right] - pre[left] = k
+pre[right] - pre[left] = k \quad (left \leq right)
 $$
 
-同样的，将 $left$ 移动至另一侧后可以得到：
+由于减法不具备加法的 **交换律** （Symmetry），我们不能像 “两数之和” 那样随意交换 “存储对象” 和 “查询对象” ，必须根据移项后的公式严格确定逻辑。这里存在两种等价的变形思路：
+
+### 思路一：查 “历史值” ，存 “当前值”
+
+将 $pre[right]$ 移项可得：
 
 $$
-pre[right] = k + pre[left]
+pre[right] - k = pre[left]
 $$
 
-很明显，我们可以在遍历到 $pre[i]$ 时，去查找是否存在某个更早的前缀和等于 $pre[i] + k$ 。这里有一个需要特别注意的点：我们只能 **查找较大的一侧，计算较小的一侧** 。由于子数组要求 $right \geq left$ ，因此我们无法查找 $pre[i]$ ，统计 $pre[i] + k$ 。而两数之和可以随意查找、随意统计的原因是加法具有一定的对称性，而前缀和差分是减法，不能随意更改位置。
+这意味着：当我们遍历到 $right$ 时，应该在哈希表中 **查询** 是否存在 $pre[right] − k$ ，并 **存储** 当前的真实前缀和 $pre[right]$ 。
 
-如果我们将 $right$ 移动至另一侧可得：
+- **初始化**：因为我们存储的是 **真实** 的前缀和，初始状态下前缀和为 0，因此需要初始化 `pos[0] = -1`
+
+### 思路二：查 “当前值” ，存 “期望值”
+
+将 $pre[left]$ 移项可得：
 
 $$
-pre[left] = pre[right] - k
+pre[right] = pre[left] + k
 $$
 
-因此我们还可以查找 $pre[i] - k$ ，统计 $pre[i]$ 。同理，我们不能查找 $pre[i]$ ，统计 $pre[i] - k$ 。
+这意味着：当我们遍历到 $right$ 时，应该在哈希表中查询是否存在 $pre[right]$ （看过去是否有人 “期望” 凑成这个和），并存储未来的 “期望值” $pre[right] + k$ 。
 
-此外，因为我们要求的是 **最长子数组** ，所以哈希表中应该记录某个前缀和 **第一次出现的位置** （越早越能拉长区间），而不是记录所有位置。
+- **初始化**：因为我们存储的是期望值（即 $pre + k$ ），初始状态下前缀和为 0，它期望未来遇到 $k$ 来凑对，因此需要初始化 `pos[k] = -1`
+
+此外，由于题目要求 **最长子数组** ，哈希表中应只记录某个键值 **第一次出现的位置** 。这样在计算 $right−left$ 时，减去的 $left$ 越小，得到的区间长度就越大。
 
 基于上述思路，最终代码如下：
 
@@ -258,16 +268,16 @@ int main() {
     }
 
     unordered_map<long long, int> pos;  
-    pos[0] = -1; int pre = 0, ans = 0;
+    pos[k] = -1; int pre = 0, ans = 0;
     for (int i = 0; i < N; i++) {
         pre += arr[i];
 
-        if (pos.count(pre + k)) {
-            ans = max(ans, i - pos[pre + k]);
+        if (pos.count(pre)) {
+            ans = max(ans, i - pos[pre]);
         }
 
-        if (!pos.count(pre)) {
-            pos[pre] = i;
+        if (!pos.count(pre + k)) {
+            pos[pre + k] = i;
         }
     }
 
@@ -290,7 +300,7 @@ int main() {
 
 - $1 \leq nums.length \leq 2 * 10^4$
 - $-1000 \leq nums[i] \leq 1000$
-- $-10^7 \leq k \eq 10^7$
+- $-10^7 \leq k \leq 10^7$
 
 ### Input
 
@@ -335,3 +345,31 @@ int main() {
 
 ## 题目解析
 
+这个题就非常简单了，直接仿照两数之和原题写代码就可以了（仍然要注意初始化问题）。
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+const int MAXN = 2e4 + 100;
+int N, k;
+int nums[MAXN];
+
+int main() {
+    cin >> N >> k;
+    for (int i = 0; i < N; i++){
+        cin >> nums[i];
+    }
+
+    unordered_map<int, int> counts;
+    int ans = 0, pre = 0; counts[k] = 1;
+    for (int i = 0; i < N; i++){
+        pre += nums[i];
+        if (counts.count(pre)){
+            ans += counts[pre];
+        }
+        counts[pre + k]++;
+    }
+
+    cout << ans << endl;
+}
+```
