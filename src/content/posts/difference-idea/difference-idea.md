@@ -115,9 +115,33 @@ $$
 ```cpp frame="code" title="main.cpp"
 #include <bits/stdc++.h>
 using namespace std;
+const int MAXN = 2e4 + 100;
+int N, k;
+int nums[MAXN];
+
+int count(int k, int* a){
+    int left = -1, pre = 0, ans = 0;
+    unordered_map<int, int> counts;
+    for (int right = 0; right < N; right ++){
+        counts[a[right]] += 1;
+        while (left <= right && (int)counts.size() > k){
+            counts[a[++left]]--;
+            if (!counts[a[left]])
+                counts.erase(a[left]);
+        }
+        ans += right - left;
+    }
+
+    return ans;
+}
 
 int main() {
+    cin >> N >> k;
+    for (int i = 0; i < N; i++){
+        cin >> nums[i];
+    }
 
+    cout << count(k, nums) - count(k - 1, nums);
 }
 ```
 
