@@ -9,7 +9,7 @@ draft: false
 
 # Jupyter Translate 项目
 
-Jupyter Translate 是一个能够将 Jupyter Notebook (`.ipynb`) 文件进行自动翻译的工具，支持多种翻译引擎。本文将介绍如何配置并使用该工具。
+Jupyter Translate 是一个能够将 `.ipynb` 文件进行自动翻译的工具，支持多种翻译引擎。本文将介绍如何配置并使用该工具。
 
 ## 获取项目代码
 

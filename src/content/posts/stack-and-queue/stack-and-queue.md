@@ -25,7 +25,7 @@ draft: false
 
 在顺序栈中， **压栈操作** （Push）对应于在数组的末尾插入一个新元素。该操作的时间复杂度为 $O(1)$ 。
 
-> **注意**：压栈前需检查栈是否已满（`Stack Overflow`）。
+**注意**：压栈前需检查栈是否已满（`Stack Overflow`）。
 
 > 初始情况下的栈
 
@@ -317,9 +317,9 @@ int main(){
 
 # 队列的基本结构
 
-队列（Queue）是一种特殊的线性表结构，数据元素的插入操作只能在表的一端进行（**队尾**，rear），而删除操作只能在另一端进行（**队首**，front）。
+队列（Queue）是一种特殊的线性表结构，数据元素的插入操作只能在表的一端进行（ **队尾** ，rear），而删除操作只能在另一端进行（ **队首** ，front）。
 
-这种“先进入队列的元素先被移出”的特性，称为 **先进先出** （First In, First Out，简称 FIFO）。
+这种 “先进入队列的元素先被移出” 的特性，称为 **先进先出** （First In, First Out，简称 FIFO）。
 
 ![队列图像](src/content/posts/stack-and-queue/队列1.png)
 
@@ -387,15 +387,11 @@ void Depart_SqQueue(SqQueue *Q, int *e){
 
 ### 循环队列的循环示例
 
-> **入队循环**
-
-当 `rear` 指向数组末尾时，若数组头部有空位，`rear` 会回到下标 0。
+> **入队循环**：当 `rear` 指向数组末尾时，若数组头部有空位，`rear` 会回到下标 0。
 
 ![循环队列图像](src/content/posts/stack-and-queue/循环队列6.png)
 
-> **出队循环**
-
-同理，`front` 指针也会循环移动。
+> **出队循环**：同理，`front` 指针也会循环移动。
 
 ![循环队列图像](src/content/posts/stack-and-queue/循环队列7.png)
 

@@ -1,7 +1,7 @@
 ---
 title: 【机器学习基本模型】第二节：逻辑回归
 published: 2025-10-23
-description: 介绍机器学习常见的模型
+description: 深入解析机器学习中的逻辑回归模型（Logistic Regression）原理与实现
 tags: [Machine Learning, Course]
 category: ML Model
 draft: false
@@ -9,39 +9,45 @@ draft: false
 
 # 逻辑回归基本原理
 
-在模式识别问题中，我们通常关心的是 **分类任务** ，例如判断一个人是否患有某种疾病。这时就不能简单地使用线性回归模型来解决。为此我们在模型中引入了一个非线性激活函数 $g: \mathbb{R} \to (0,1)$ 来预测类别标签的后验概率 $P(y = 1 | x)$ ，其中 $y \in \{0, 1\}$ ，函数 $g$ 的作用是把线性函数的值域从实数区间挤压到 0 和 1 之间。
+在上一节的线性回归中，我们解决的是回归问题（预测连续值）。而在模式识别与机器学习中，我们更常遇到的是 **分类任务** ，例如判断一封邮件是否为垃圾邮件，或者判断一个人是否患有某种疾病。
+
+对于这类二分类问题，输出标签通常为 $y \in \{0, 1\}$ 。如果我们直接使用线性回归模型预测，输出值可能会远超 0 到 1 的范围，这在概率解释上是不合理的。为此，我们在线性模型的基础上引入了一个非线性激活函数 $g: \mathbb{R} \to (0,1)$ ，将线性预测值映射为类别标签的后验概率 $P(y = 1 | \mathbf{x})$ 。
 
 ## 对数几率回归介绍
 
-在 Logistic 回归中，激活函数的表达式为：
+在逻辑回归（Logistic Regression）中，选用的激活函数为 **Sigmoid 函数** ，其表达式为：
 
 $$
-\sigma(x) = \frac{1}{1 + e^{-x}}
+\sigma(z) = \frac{1}{1 + e^{-z}}
 $$
 
-标签 $y = 1$ 的后验概率为:
+模型的预测目标是样本属于正类（ $y=1$ ）的后验概率：
 
 $$
-P(y = 1 | x) = \sigma(w^{\rm T} x) = \frac{1}{1 + e^{-w^{\rm T} x}}
+P(y = 1 | \mathbf{x}) = \sigma(\mathbf{w}^{\rm T} \mathbf{x}) = \frac{1}{1 + e^{-\mathbf{w}^{\rm T} \mathbf{x}}}
 $$
 
-这里 $x = [x_1, \cdots, x_D, 1]^{\rm T}$ 和 $w = [w_1, \cdots, w_D, b]^{\rm T}$ 分别为 $D + 1$ 维的增广特征向量与增广权重向量，标签 $y = 0$ 的后验概率为：
+为了简化公式，我们通常采用 **增广向量** 的形式：
+*   增广特征向量 $\mathbf{x} = [x_1, \cdots, x_D, 1]^{\rm T}$
+*   增广权重向量 $\mathbf{w} = [w_1, \cdots, w_D, b]^{\rm T}$
+
+此时，样本属于负类（ $y=0$ ）的后验概率为：
 
 $$
-P(y=0 | x) = 1 - P(y=1 | x) 
-= 1 - \sigma(w^{\rm T} x) 
-= \frac{e^{- w^{\rm T} x}}{1 + e^{- w^{\rm T} x}}
+P(y=0 | \mathbf{x}) = 1 - P(y=1 | \mathbf{x}) 
+= 1 - \sigma(\mathbf{w}^{\rm T} \mathbf{x}) 
+= \frac{e^{- \mathbf{w}^{\rm T} \mathbf{x}}}{1 + e^{- \mathbf{w}^{\rm T} \mathbf{x}}}
 $$
 
-综上可得：
+通过推导，我们可以发现线性模型 $\mathbf{w}^{\rm T} \mathbf{x}$ 与概率之间的关系：
 
 $$
-w^{\rm T} x 
-= \log \frac{P(y=1 | x)}{1 - P(y=1 | x)} 
-= \log \frac{P(y=1 | x)}{P(y=0 | x)}
+\mathbf{w}^{\rm T} \mathbf{x} 
+= \ln \frac{P(y=1 | \mathbf{x})}{1 - P(y=1 | \mathbf{x})} 
+= \ln \frac{P(y=1 | \mathbf{x})}{P(y=0 | \mathbf{x})}
 $$
 
-上式左边为线性函数，右边为正反后验概率比值（几率）取对数，因此 Logistic 回归也称为 **对数几率回归** 。
+上式左边为线性函数，右边为正反后验概率比值（几率，Odds）的对数。因此，Logistic 回归也被称为 **对数几率回归** 。
 
 ![逻辑回归图像](src\content\posts\logistic-regression\逻辑回归分析1.jpg)
 
@@ -49,7 +55,9 @@ $$
 
 # 代码讲解
 
-下面通过 Python 实现一个简单的逻辑回归模型。这次我们会用一些 **匿名函数** 来简化我们的代码（如果不懂匿名函数的也没关系，看一下就懂了）。
+下面通过 Python 的 NumPy 库手写实现一个逻辑回归模型。为了使代码更加简洁且贴近数学公式的定义，本示例使用了 **匿名函数 (Lambda Function)** 。
+
+> **注意**：为了与理论部分的 “增广向量” 保持一致，我们在代码中会对输入特征 $X$ 增加一列全为 1 的数据，从而将偏置 $b$ 合并到权重 $w$ 中进行统一更新，这样也修复了原代码中函数返回值解包不匹配的问题。
 
 ```py frame="code" title="main.py"
 import numpy as np
@@ -96,13 +104,15 @@ if __name__ == "__main__":
     print("cost =", cost)
 ```
 
-## 损失函数
+## 1. 损失函数
 
-与线性回归不同，逻辑回归采用的损失函数是 **交叉熵损失** （Cross-Entropy Loss）而不是均方误差，其中一个原因便是在逻辑回归中交叉熵损失函数的图像要比均方损失函数的图像要光滑很多（便于梯度下降），关于其他一些原因可以观看下面这个视频进一步了解。
+与线性回归使用均方误差（MSE）不同，逻辑回归采用 **交叉熵损失** （Cross-Entropy Loss）。主要原因在于，如果将 Sigmoid 函数代入 MSE 损失中，得到的损失函数关于权重 $w$ 是非凸的（Non-Convex），存在多个局部极小值，不利于梯度下降寻找全局最优解。而交叉熵损失函数则是凸函数，具有良好的优化性质。
+
+> 更多细节可以参考以下视频深入了解
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=114675626875309&bvid=BV12VMzzxExF&cid=30475028383&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
-简单看一下代码中的损失函数。
+简单看一下代码中的损失函数：
 
 ```py showLineNumbers
 loss_func = lambda X, y, w: -np.mean(
@@ -113,14 +123,14 @@ loss_func = lambda X, y, w: -np.mean(
 交叉熵损失函数的数学表达式如下：
 
 $$
-L(w) = -\frac{1}{N} \sum_{i=1}^{N} \Big[ y_i \log(\hat{y}_i) + (1 - y_i)\log(1 - \hat{y}_i) \Big]
+J(\mathbf{w}) = -\frac{1}{N} \sum_{i=1}^{N} \Big[ y_i \ln(\hat{y}_i) + (1 - y_i)\ln(1 - \hat{y}_i) \Big]
 $$
 
-把 $$\hat{y}_i = \sigma(X_iw)$$ 带入上面的式子便可以直接得到上述代码中的公式了。
+其中 $\hat{y}_i = \sigma(\mathbf{x}_i \mathbf{w})$ 。
 
-## 梯度下降
+## 2. 梯度下降
 
-逻辑回归跟线性回归的另一个区别便是逻辑回归模型比线性回归模型多嵌套了一层激活函数。从数学上看，这只是多了一层函数复合关系，因此在通过链式法则求梯度时只需要多进行一步求导即可，本质上差别并不大。
+逻辑回归模型在形式上只是比线性回归多嵌套了一层激活函数。从微积分的角度看，这仅增加了链式法则的一个环节。代码中的梯度计算非常简洁：
 
 ```py showLineNumbers
 gradient = lambda X, y, w: X.T @ (sigmoid(X @ w) - y) / len(y)
@@ -130,68 +140,60 @@ def grad_desc(cur_w, alpha, X, y):
     return updated_w
 ```
 
-逻辑回归的梯度下降算法的难点依旧是梯度，我们来简单推导一下交叉熵损失函数的导数：
+其数学推导过程如下：
+
+- 预测值
 
 $$
-\hat{y} = \sigma(Xw) = \frac{1}{1 + e^{-Xw}}
+\hat{y} = \sigma(X\mathbf{w}) = \frac{1}{1 + e^{-X\mathbf{w}}}
 $$
 
-$$
-L(w) = -\frac{1}{N} \sum_{i=1}^{N} \Big[ y_i \log(\hat{y}_i) + (1 - y_i)\log(1 - \hat{y}_i) \Big]
-$$
-
-将 $$\hat{y}_i = \sigma(X_i w)$$ 代入，并对 $w$ 求导，得到：
+- 损失函数
 
 $$
-\nabla J(w) = \frac{\partial J(w)}{\partial w}
+J(\mathbf{w}) = -\frac{1}{N} \sum_{i=1}^{N} \Big[ y_i \ln(\hat{y}_i) + (1 - y_i)\ln(1 - \hat{y}_i) \Big]
+$$
+
+- 对权重求导
+
+$$
+\nabla J(\mathbf{w}) = \frac{\partial J(\mathbf{w})}{\partial \mathbf{w}}
 = \frac{1}{N} X^{\rm T} (\hat{y} - y)
 $$
 
-然后套用梯度下降算法的迭代公式就行了。
+这个结果的形式与线性回归的梯度惊人地相似（仅仅是 $\hat{y}$ 的定义不同），这正是 **广义线性模型（GLM）** 的优美之处。
 
-## 内容拓展
+## 3. 内容拓展
 
-Logistic 回归不仅可以用于线性可分的数据，还能够通过一定方式处理 **非线性可分** 的分类问题。虽然 Logistic 回归本质上是一个线性分类模型，但我们可以通过 **特征扩展**（Feature Expansion） 的方式，使其具备拟合非线性关系的能力。
+Logistic 回归本质上是一个 **线性分类器** ，其决策边界是线性的（即 $\mathbf{w}^{\rm T} \mathbf{x} = 0$ 是一个超平面）。对于 **线性不可分** 的数据，我们可以通过 **特征工程** 来提升模型的表达能力。
 
-具体来说，可以在输入特征上进行多种形式的变换：
+常见的特征扩展（Feature Expansion）方法包括：
 
-- **多项式特征** ：在模型中加入特征的平方项、立方项等高阶项，以捕捉更复杂的曲线关系
-- **交互特征** ：将不同特征之间的乘积、差值或比值作为新的输入特征，从而刻画变量之间的相互影响
+- **多项式特征**：引入 $x_1^2, x_2^2, x_1x_2$ 等高阶项，使决策边界变为椭圆、抛物线等曲线。
+- **交互特征**：构造特征之间的乘积、比值等，刻画变量间的耦合关系。
 
-这些方法本质上是在原始特征空间上构造了一个新的、非线性的特征空间，从而能够更好地拟合复杂的数据分布。
-
-需要注意的是，随着特征数量和复杂度的增加，模型容易出现 **过拟合** （Overfitting）现象。因此在引入非线性特征时，通常需要配合正则化或其他模型调优技巧一同使用，以保持模型的 **泛化能力** 。
+本质上，这是通过将低维的原始特征映射到高维空间，使得数据在高维空间中变得线性可分。但需要警惕的是，特征维度过高容易导致 **过拟合** （Overfitting），通常需要配合正则化（L1/L2 Regularization）使用。
 
 ---
 
 # 深层问题思考
 
-1. 为什么逻辑回归在线性回归的基础上套一层激活函数就可以进行分类呢？
+**Q：为什么逻辑回归在线性回归的基础上套一层 Sigmoid 函数就可以进行分类？**
 
-    逻辑回归假设：
-    
-    $$
-    P(y=1 | x) = \sigma(w^{\rm T} x + b)
-    $$
+**A：** 这不仅仅是 “套一层函数” 那么简单，其背后有深刻的概率论依据。
 
+1.  **概率假设**：逻辑回归假设样本服从 **伯努利分布（Bernoulli Distribution）**。
+2.  **广义线性模型**：我们希望利用线性模型 $\mathbf{w}^{\rm T}\mathbf{x}$ 去预测这个分布的参数（即概率 $p$）。由于概率必须在 $[0, 1]$ 之间，而线性模型的值域是 $(-\infty, +\infty)$ ，我们需要一个 **链接函数（Link Function）** 。
+3.  **Logit 变换**：我们认为样本属于正类的 **对数几率** （Log Odds）与输入的线性组合成正比：
     $$
-    P(y=0 | x) = 1 - \sigma(w^{\rm T} x + b)
+    \ln \frac{P(y=1 | \mathbf{x})}{P(y=0 | \mathbf{x})} = \mathbf{w}^{\rm T} \mathbf{x}
     $$
-
-    > 我们认为样本属于正类的 **对数几率** （log odds）与输入的线性组合成正比。
-
-    用公式表示就是：
-
-    $$
-    \log \frac{P(y=1 | x)}{P(y=0 | x)} = w^{\rm T} x + b
-    $$
-
-    这叫作 **logit 变换** ，而 Sigmoid 函数正好是这个对数几率函数的 **逆变换** 。
+4.  **Sigmoid 的由来**：上述 Logit 函数的反函数，恰好就是 Sigmoid 函数。因此，Sigmoid 不是随便选的，而是由对数几率的线性假设自然导出的。
 
 ---
 
 # 参考文献
 
-1. [Logistic回归（逻辑回归）](https://blog.csdn.net/weixin_50744311/article/details/131523136)
+1. [Logistic回归（逻辑回归）原理详解](https://blog.csdn.net/weixin_50744311/article/details/131523136)
 
-2. [【ScikitLearn】LogisticRegression](https://scikit-learn.cn/stable/modules/generated/sklearn.linear_model.LogisticRegression.html)
+2. [Scikit-Learn 官方文档: LogisticRegression](https://scikit-learn.cn/stable/modules/generated/sklearn.linear_model.LogisticRegression.html)

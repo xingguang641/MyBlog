@@ -123,7 +123,7 @@ volumes:
 
 ## 启动服务
 
-确保你的服务器已安装 Docker 和 Docker Compose。如果尚未安装，可以参考 [官方文档](https://docs.docker.com/compose/install/) 或 [New API 官方指南](https://www.newapi.ai/installation/docker-compose-installation/) 进行安装。
+确保你的服务器已安装 Docker 和 Docker Compose。如果尚未安装，可以参考 [官方文档](https://docs.docker.com/compose/install/) 进行安装。
 
 在 `docker-compose.yml` 所在目录下，执行以下命令启动服务：
 

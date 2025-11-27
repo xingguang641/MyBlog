@@ -82,6 +82,7 @@ draft: false
   <iframe width="100%" height="200" src="//player.bilibili.com/player.html?isOutside=true&aid=976027811&bvid=BV1t44y1x7Hw&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
   <iframe width="100%" height="200" src="//player.bilibili.com/player.html?isOutside=true&aid=115254222656103&bvid=BV1DtJyz6EJv&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
   <iframe width="100%" height="200" src="//player.bilibili.com/player.html?isOutside=true&aid=114478410699738&bvid=BV1VrVSz1Eme&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+  <iframe width="100%" height="200" src="//player.bilibili.com/player.html?isOutside=true&aid=114561508187738&bvid=BV15kj4z4Eju&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 </div>
 
 ### Kaggle 经典项目实战系列

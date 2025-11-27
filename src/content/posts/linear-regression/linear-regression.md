@@ -9,33 +9,43 @@ draft: false
 
 # 线性回归基本原理
 
-**线性回归** （Linear Regression）是一种结构简单、应用广泛且易于理解的经典机器学习算法，非常适合作为算法学习的入门模型。
+**线性回归**（Linear Regression）是机器学习中最基础、最经典的算法之一。尽管其结构简单，但它揭示了从数据中学习规律的核心思想，是学习更复杂算法（如神经网络）的基石。
 
-其核心思想是：通过拟合一条线性函数，刻画输入变量与输出变量之间的关系。换句话说，线性回归试图找到一条最能代表数据趋势的直线，使得所有样本点到这条直线的距离总体上最小。
+其核心思想非常直观： **通过拟合一个线性函数，来刻画输入变量与输出变量之间的定量关系** 。
 
-## 多元线性回归介绍
+通俗地说，线性回归试图在数据点中找到一条 “最佳拟合直线” （或超平面），使得所有样本点到这条直线的 “综合距离” 最小，从而能够根据新的输入预测出合理的输出。
 
-在 **简单线性回归** 中，我们通常用一条直线去刻画输入变量与输出变量之间的线性关系。当输入变量扩展到多个维度时，这种思想自然推广至 **多元线性回归** （Multiple Linear Regression）。
+## 从简单到多元
 
-多元线性回归的目标是找到一个能够描述输入向量 $x = [x_1, x_2, \ldots, x_n]^{\rm T}$ 与输出变量 $y$ 之间线性关系的函数：
+在最简单的情况下，我们只有一个输入特征 $x$ 。例如，根据 “房屋面积” 预测 “房价” 。此时，模型就是二维平面上的一条直线：
+
+$$
+y = wx + b
+$$
+
+当输入变量扩展到多个维度时（例如，根据 “面积” 、 “房龄” 、 “距离地铁距离” 共同预测 “房价” ），这种思想就推广为 **多元线性回归** （Multiple Linear Regression）。
+
+此时，模型的目标是找到一个函数，描述输入向量 $x = [x_1, x_2, \ldots, x_n]^{\rm T}$ 与输出变量 $y$ 之间的关系：
 
 $$
 y = w^{\rm T} x + b
 $$
 
-其中 $w = [w_1, w_2, \ldots, w_n]^{\rm T}$ 表示各特征对应的权重，$b$ 为偏置项。
+其中 $w = [w_1, w_2, \ldots, w_n]^{\rm T}$ 是权重向量（Weight），表示每个特征的重要性。 $b$ 是偏置项（Bias），表示截距。
 
-从几何角度来看，这个模型对应于一个 $n$ 维空间中的超平面（hyperplane）。数据样本点通常分布在超平面的两侧，而训练的过程，就是要调整 $w$ 和 $b$ ，使这个超平面尽可能地贴近所有数据点，从而最小化整体预测误差。
+从几何角度看，这个模型对应于 $n$ 维空间中的一个 **超平面** （Hyperplane）。训练模型的过程，本质上就是不断调整 $w$ 和 $b$ ，使这个超平面尽可能贴近所有训练数据点，从而最小化预测误差。
 
 ![线性回归图像](src/content/posts/linear-regression/线性回归分析1.jpg)
 
 ---
 
-# 代码讲解
+# 线性回归代码讲解
 
-建议先浏览完整代码，对整体流程有大致印象；若有不理解的部分，可结合后续讲解逐步对照理解。
+为了便于理解和可视化，下面的代码演示了 **简单线性回归** （单特征）的实现过程。
 
-```py frame="code" title="main.py"
+> 先浏览完整代码，建立整体印象。若有不理解的细节，再结合后文的 “原理讲解” 部分对照阅读。
+
+```py frame="code" title="linear_regression.py"
 import numpy as np
 data = np.array([
     [32, 31], [53, 68], [61, 62], [47, 71], [59, 87],
@@ -97,9 +107,9 @@ if __name__ == "__main__":
     print("cost =", cost)
 ```
 
-## 损失函数
+## 1. 损失函数
 
-线性回归采用最常见的 **均方误差损失函数**（Mean Squared Error）。
+如何衡量模型预测得准不准？我们需要一个评估指标。线性回归最常用的是 **均方误差** （Mean Squared Error，简称 MSE）。
 
 ```py showLineNumbers
 def loss_func(w, b, data):
@@ -110,30 +120,30 @@ def loss_func(w, b, data):
     return total_cost / len(data)
 ```
 
-其数学形式如下：
+代码中的 `loss_func` 对应如下数学公式：
 
 $$
 L(w, b) = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
 $$
 
 其中：
+- $y_i$ ：第 $i$ 个样本的真实标签。
+- $\hat{y}_i = w x_i + b$ ：模型对第 $i$ 个样本的预测值。
+- $(y_i - \hat{y}_i)^2$ ：预测误差的平方。平方不仅消除了正负号的影响，还让较大的误差受到更大的 “惩罚” 。
 
-- $L$ ：表示均方损失
-- $n$ ：样本数量
-- $y_i$ ：第 $i$ 个样本的真实值（真实标签）
-- $\hat{y}_i$ ：第 $i$ 个样本的预测值
+## 2. 梯度下降
 
-根据线性回归公式 $\hat{y}_i = \hat{w} x_i + \hat{b}$ ，替换掉公式中的 $\hat{y}_i$ 即可得到代码中的公式。
+有了损失函数 $L(w, b)$ ，我们的目标就是找到一组 $(w, b)$ ，使得 $L$ 最小。
 
-## 梯度下降
+**梯度下降** 是一种通用的迭代优化算法，好比下山：我们站在山上（当前的参数位置），环顾四周，找到最陡峭的下坡方向（梯度的反方向），迈出一步（更新参数）。不断重复，直到到达山谷（极小值点）。
 
-由于这是我们第一次接触 **梯度下降** （Gradient Descent），这里先给出它的基本形式。梯度下降是一种常用的参数优化方法，其核心思想是：沿着目标函数梯度的反方向不断调整参数，使损失函数逐步减小，直到收敛到最优值。
-
-其参数更新的基本公式如下：
+参数更新公式为：
 
 $$
-w \leftarrow w - \alpha \frac{\partial L}{\partial w} \quad b \leftarrow b - \alpha \frac{\partial L}{\partial b}
+w \leftarrow w - \alpha \frac{\partial L}{\partial w} \quad\quad b \leftarrow b - \alpha \frac{\partial L}{\partial b}
 $$
+
+其中 $\alpha$ 是 **学习率** （Learning Rate），控制每一步跨多大。
 
 ```py showLineNumbers
 def grad_desc(cur_w, cur_b, alpha, data):
@@ -153,83 +163,69 @@ def grad_desc(cur_w, cur_b, alpha, data):
     return updated_w, updated_b
 ```
 
-梯度下降的关键就是求出偏导数，我们从损失函数出发：
+### 梯度推导
 
-$$
-L(w,b) = \frac{1}{n}\sum_{i=1}^n (y_i - \hat{y}_i)^2
-= \frac{1}{n}\sum_{i=1}^n \bigl(y_i - (w x_i + b)\bigr)^2
-$$
+为了代码实现，我们需要算出损失函数对 $w$ 和 $b$ 的偏导数。
 
-令误差项 $e_i = y_i - (w x_i + b)$ ，那么：
+令误差项 $e_i = \hat{y}_i - y_i = (w x_i + b) - y_i$ ，损失函数可以写为 $L = \frac{1}{n}\sum e_i^2$ 。根据链式法则：
 
-$$
-L(w, b) = \frac{1}{n}\sum_{i=1}^n e_i^2
-$$
+1.  **对 $w$ 求偏导**：
 
-我们先对 $w$ 求偏导：
+    $$
+    \frac{\partial L}{\partial w} = \frac{1}{n} \sum_{i=1}^{n} 2e_i \cdot \frac{\partial e_i}{\partial w} = \frac{2}{n} \sum_{i=1}^{n} \underbrace{((w x_i + b) - y_i)}_{\text{误差}} \cdot x_i
+    $$
 
-$$
-\frac{\partial L}{\partial w} = \frac{1}{n} \sum_{i=1}^{n} 2e_i \frac{\partial e_i}{\partial w} = -\frac{2}{n} \sum_{i=1}^{n} (y_i - (wx_i + b)) x_i
-$$
+2.  **对 $b$ 求偏导**：
 
-同理，我们再对 $b$ 求偏导：
+    $$
+    \frac{\partial L}{\partial b} = \frac{1}{n} \sum_{i=1}^{n} 2e_i \cdot \frac{\partial e_i}{\partial b} = \frac{2}{n} \sum_{i=1}^{n} ((w x_i + b) - y_i)
+    $$
 
-$$
-\frac{\partial L}{\partial b} = -\frac{2}{n} \sum_{i=1}^{n} (y_i - (wx_i + b))
-$$
+这也正是代码函数 `grad_desc` 中 `grad_w` 和 `grad_b` 计算逻辑的数学来源。
 
-这两个结果正好对应代码中计算的梯度更新公式。
+## 3. 内容拓展
 
-## 内容拓展
+在上面的代码中，我们使用了 “迭代法” （梯度下降）来求解参数。但对于线性回归这种简单的凸问题，其实存在 **解析解** （Analytical Solution），即可以通过一个公式直接算出来，这种方法通常被称为 **最小二乘估计** （Least Squares Estimation）。
 
-在线性回归的基础上，我们可以从最小二乘估计的视角，更深入地理解模型与观测噪声的关系。简单来说，最小二乘估计可以看作是线性回归在 **假设噪声服从高斯分布** 条件下的形式：
+### 统计学视角
 
-> 最小二乘估计 = 线性回归 + 高斯噪声
+最小二乘法可以理解为： **在假设观测噪声服从高斯分布（正态分布）的前提下，对线性模型的极大似然估计** 。
 
-最小二乘估计的思想非常直观：当我们用一个模型去拟合数据时，希望模型的预测尽可能 **接近观测值** ，因此我们选择让 **误差的平方和最小** 。
-
-假设我们有 $n$ 组观测数据：
-
-$$
-(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)
-$$
-
-并假设真实关系可以用一个线性模型近似：
+假设真实数据生成过程为：
 
 $$
 y_i = \beta_0 + \beta_1 x_i + \varepsilon_i
 $$
 
-其中 $\varepsilon_i$ 表示观测噪声。定义残差（residual）为：
+其中 $\varepsilon_i$ 是随机噪声。为了让模型拟合最好，我们要最小化残差平方和（SSE）：
 
 $$
-e_i = y_i - (\beta_0 + \beta_1 x_i)
+J(\beta_0, \beta_1) = \sum_{i=1}^{n} (y_i - (\beta_0 + \beta_1 x_i))^2
 $$
 
-显然残差就是每个样本的噪声。因此最小化残差平方和也就是在最小化噪声平方和，从而使模型在整体上拟合得最好。最小二乘法的目标函数可以表示为残差平方和（Sum of Squared Errors，简称 SSE）：
+### 直接求解
+
+这是一个求极值问题。通过对 $\beta_0, \beta_1$ 分别求偏导并令其为 0，我们可以解出最优参数的闭式解：
 
 $$
-J(\beta_0, \beta_1) = \sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n} [y_i - (\beta_0 + \beta_1 x_i)]^2
+\hat{\beta}_1 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n} (x_i - \bar{x})^2}
 $$
 
-为了找到最优的参数 $\beta_0$ 和 $\beta_1$ ，我们需要 **最小化目标函数** $J(\beta_0, \beta_1)$ 。这是一个典型的凸优化问题，对每个参数求偏导并令其为零，就可以得到闭式解：
-
 $$
-\frac{\partial J}{\partial \beta_0} = 0 \quad \frac{\partial J}{\partial \beta_1} = 0
+\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}
 $$
 
-解这个方程组，就得到了最小二乘估计的解析公式：
+（注：这里的 $\beta_1$ 对应前文的 $w$ ， $\beta_0$ 对应前文的 $b$ ）
 
-$$
-\hat{\beta}_1 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n} (x_i - \bar{x})^2} \quad \hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}
-$$
+### 既然有公式，为什么还要学梯度下降？
 
-其中 $\bar{x}$ 和 $\bar{y}$ 分别是自变量和因变量的样本均值。
+1.  **计算复杂度**：解析解需要计算矩阵的逆（在多元回归中），当特征维度很高时，计算量极其巨大。而梯度下降通过迭代逼近，在海量数据下更高效。
+2.  **通用性**：绝大多数复杂的机器学习模型（如深度学习）没有解析解，必须依靠梯度下降法进行优化。因此，在线性回归中学习梯度下降，是为了给未来打基础。
 
 ---
 
 # 参考文献
 
-1. [机器学习之线性回归算法Linear Regression](https://blog.csdn.net/qq_41750911/article/details/124883520)
+1. [机器学习之线性回归算法 Linear Regression](https://blog.csdn.net/qq_41750911/article/details/124883520)
 
 2. [【方法与实践】最小二乘估计讲解](https://otexts.com/fppcn/least-squares.html)
