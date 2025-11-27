@@ -133,8 +133,7 @@ int a[MAXN];
 int main(){
     cin >> n >> target;
     for (int i = 0; i < n; i++){
-        int num; cin >> num;
-        a[i] = num;
+        cin >> a[i];
     }
 
     int ans = 0;  
@@ -287,7 +286,6 @@ int main() {
     }
 
     cout << ans << endl;
-    return 0;
 }
 ```
 
@@ -376,5 +374,305 @@ int main() {
     }
 
     cout << ans << endl;
+}
+```
+
+## 正负一样多的最长子数组
+
+[题目链接](https://www.nowcoder.com/practice/545544c060804eceaed0bb84fcd992fb)
+
+### Problem Statement
+
+给定一个无序数组 $arr$ ，求 $arr$ 所有子数组中正数与负数个数相等的最长子数组的长度。
+
+### Constraints
+
+- $1 \leq arr.length \leq 10^5$
+- $-100 \leq arr_i \leq 100$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含两个整数 $N$ ，表示数组的长度
+- 第二行包含 $N$ 个整数，表示数组中的元素
+
+> $N$
+>
+> $nums_1 \quad nums_2 \quad \ldots \quad nums_N$
+
+### Output
+
+输出一个整数表示答案。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+5
+1 -2 1 1 1
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+2
+```
+
+## 题目解析
+
+首先观察题目，出现了关键字 “一样多” ，对于这种类型题，我们往往会将数据 “二值化” ，然后让数组累加和为 0 来表示 “一样多” 。请注意这个技巧，我们在后续的题目会经常用到。
+
+因此，我们只需要将整数看成 1，将负数看成 -1，然后寻找最长的累加和为 0 的子数组即可（注意原数组是有 0 的，我们直接不用管，但是千万不要将等于号加入转换代码中，否则会导致错误）。
+
+我们直接套用上面 “累加和为定值的最长子数组” 的代码：
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+const int MAXN = 1e5 + 100;
+int N; int arr[MAXN];
+
+int main() {
+    cin >> N;
+    for (int i = 0; i < N; i++) {
+        int num; cin >> num;
+        if (num < 0) arr[i] = -1;
+        if (num > 0) arr[i] = 1;
+    }
+
+    unordered_map<long long, int> pos;
+    pos[0] = -1; int pre = 0, ans = 0;
+    for (int i = 0; i < N; i++) {
+        pre += arr[i];
+
+        if (pos.count(pre)) {
+            ans = max(ans, i - pos[pre]);
+        }
+
+        if (!pos.count(pre)) {
+            pos[pre] = i;
+        }
+    }
+
+    cout << ans << endl;
+}
+```
+
+## 表现良好的最长时间段
+
+[题目链接](https://leetcode.cn/problems/longest-well-performing-interval/)
+
+### Problem Statement
+
+给你一份工作时间表 $hours$ ，上面记录着某一位员工每天的工作小时数。
+
+我们认为当员工一天中的工作小时数大于 8 小时的时候，那么这一天就是「劳累的一天」。
+
+所谓「表现良好的时间段」，意味在这段时间内，「劳累的天数」是严格 大于「不劳累的天数」。
+
+请你返回「表现良好时间段」的最大长度。
+
+### Constraints
+
+- $1 \leq hours.length \leq 10^4$
+- $0 \leq hours[i] \leq 16$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含两个整数 $N$ ，表示数组的长度
+- 第二行包含 $N$ 个整数，表示数组中的元素
+
+> $N$
+>
+> $hours_1 \quad hours_2 \quad \ldots \quad hours_N$
+
+### Output
+
+输出一个整数表示答案。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+7
+9 9 6 0 6 6 9
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+3
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+3
+6 6 6
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+0
+```
+
+## 题目解析
+
+同样的，我们将大于 8 的数值映射为 1，小于等于 8 的数值映射为 -1。此时，问题转化为寻找 **元素和大于 0 的最长子数组** 。
+
+引入前缀和数组 $pre$ ，子数组和大于 0 等价于 $pre[right] - pre[left] > 0$ ，即满足 $pre[left] < pre[right]$ 。
+
+**形式化描述**：
+
+在前缀和数组中，寻找一对索引 $(left, right)$ ，在满足 $left < right$ 且 $pre[left] < pre[right]$ 的前提下，使得 $right - left$ 的值最大。
+
+这实际上是一个经典的单调栈问题（即 “最大宽度坡” 问题）：我们要为每一个 $right$ 找到其左侧 **距离最远** 且 **数值更小** 的下标 $left$ 并计算差值，然后在这些差值中寻找最大值即可。
+
+但这道题其实还有其他的信息可以使用：由于数组内的数字的绝对值都是 1，因此数组前缀和的变化都是 1，满足 “单调连续性” 。
+
+利用这一性质我们可以进一步简化算法：
+
+- 如果 $pre[i] > 0$ ：
+
+    说明从数组起始位置到当前位置的整体和大于 0，此时最长长度即为 $i + 1$ 。
+
+- 如果 $pre[i] \geq 0$ ：
+
+    我们需要寻找左侧某个 $pre[left]$ 满足 $pre[left] < pre[i]$ 。
+
+    根据前缀和的连续性，前缀和从 0 下降到 $pre[i]$ （例如 -5），必然要在更早的位置先经过 $pre[i] + 1$ （例如 -4）。也就是说， $pre[i] − 1$ 的首次出现位置，一定早于 $pre[i] − 2$ 、 $pre[i] − 3$ 等更小数值的首次出现位置。
+
+    因此，为了让 $right − left$ 最大，我们不需要寻找所有小于 $pre[i]$ 的数，只需要寻找 $pre[i] − 1$ 第一次出现的位置即可。
+
+下面就给出这个题目的完整代码：
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+
+}
+```
+
+## 题目拓展
+
+如果我们将 “寻找最长子数组” 这个条件改成 “统计目标数组个数” 又该怎么做呢？同样的，我们先不考虑这道题的特殊性，我们可以将问题转化为：
+
+在前缀和数组中，有多少对 $(left, right)$ 满足 $left < right$ 且 $pre[left] < pre[right]$ （一个数对对应一个子数组，因此统计数对个数就是在统计子数组个数）。
+
+这不就是 “逆序对” 的共轭题目 “顺序对” 吗？！因此我们可以直接使用归并分治解决这个问题。
+
+> 关于归并分治的知识可以看我这篇博客
+
+[【ACM 算法随笔】归并排序与归并分治](https://xingguang641.com/posts/merge-sort/merge-sort/)
+
+现在我们将 “单调连续” 这个条件用上：对于这个问题，我们只需要在遍历到某个下标时能够马上知道小于 $pre[i]$ 的前缀个数即可，因此我们可以动态维护小于当前 $pre[i]$ 的前缀个数。又因为 $pre$ 的变化是连续的，因此我们可以使用 “增量法” 来解决：
+
+- 当 $pre + 1$ 时，由于我们已经求解出所有小于 $pre - 1$ 的前缀个数，因此我们只需要算上前缀和等于 $pre$ 的前缀个数即可
+- 当 $pre - 1$ 时，由于我们已经求解出所有小于 $pre - 1$ 的前缀个数，因此我们只需要舍弃前缀和等于 $pre - 1$ 的前缀个数即可
+
+由于前缀的变化每次都只有 1 这个量级，因此我们动态维护 “小于当前 $pre[i]$ 的前缀个数” 会非常的轻松，只需要统计每种前缀值出现的次数就能够 $O(1)$ 更新它。
+
+## 使数组和能被 P 整除
+
+[题目链接](https://leetcode.cn/problems/make-sum-divisible-by-p/description/)
+
+### Problem Statement
+
+给你一个正整数数组 $nums$ ，请你移除 **最短** 子数组（可以为 **空** ），使得剩余元素的 **和** 能被 $p$ 整除。 **不允许** 将整个数组都移除。
+
+请你返回你需要移除的最短子数组的长度，如果无法满足题目要求，返回 -1。
+
+**子数组** 定义为原数组中连续的一组元素。
+
+### Constraints
+
+- $1 \leq nums.length \leq 10^5$
+- $0 \leq nums[i] \leq 10^9$
+- $1 \leq p \leq 10^9$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含两个整数 $N$ 和 $p$ 。其中， $N$ 表示数组的长度， $p$ 的含义已在题目描述中给出
+- 第二行包含 $N$ 个整数，表示数组中的元素
+
+> $N$
+>
+> $nums_1 \quad nums_2 \quad \ldots \quad nums_N$
+
+### Output
+
+输出一个整数表示答案。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+4 6
+3 1 4 2
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+1
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+4 9
+6 3 5 2
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+2
+```
+
+### Sample Input 3
+
+```txt showLineNumbers=false
+3 3
+1 2 3
+```
+
+### Sample Output 
+
+```txt showLineNumbers=false
+0
+```
+
+## 题目解析
+
+首先这道题有一个很明显的点：如果整个数组的和模 $p$ 余 0，那我们不需要移除任何数。如果整个数组的和模 $p$ 余 $r$ ，那我们就要找到累加和（取模后）为 $r$ 的最短子数组。
+
+因此我们可以得到下面这个条件：
+
+$$
+pre[right] - pre[left] \equiv r \pmod{p}
+$$
+
+根据两数之和的思想，我们将 $left$ 移至右侧可得：
+
+$$
+pre[right] \equiv r + pre[left] \pmod{p}
+$$
+
+因此我们要查询 $pre[i] \% p$ 的同时，统计 $(r + pre[i]) \% p$ 出现的最早位置。
+
+根据两数之和的思路，我们可以轻易地想到这个题的标准写法，看似稀奇古怪的取模操作其实背后的数学思想非常简单，下面就给出这道题的完整代码供大家学习：
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+
 }
 ```
