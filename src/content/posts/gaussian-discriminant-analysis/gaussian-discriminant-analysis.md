@@ -13,43 +13,43 @@ draft: false
 
 ![高斯判别分析图像](src\content\posts\gaussian-discriminant-analysis\高斯判别模型1.jpg)
 
-## 先验假设
+## 先验假设 (Prior Assumptions)
 
 与逻辑回归不同，高斯判别分析需要两个先验假设，分别为：
 
 - 类别标签 $y$ 服从伯努利分布
 
-$$
-P(y) =
-\begin{cases}
-\phi^{y}(1 - \phi)^{1 - y} & y = 0, 1 \\\\
-0 & y \ne 0, 1
-\end{cases}
-$$
+    $$
+    P(y) =
+    \begin{cases}
+    \phi^{y}(1 - \phi)^{1 - y} & y = 0, 1 \\\\
+    0 & y \ne 0, 1
+    \end{cases}
+    $$
 
 - 正负样本均符合正态分布
 
-$$
-P(x \mid y = 0)
-= \frac{1}{(2\pi)^{\frac{n}{2}} |\Sigma|^{\frac{1}{2}}}
-\exp\!\left(
-    -\frac{1}{2} (x - \mu_0)^{\rm T} \Sigma^{-1} (x - \mu_0)
-\right)
-$$
+    $$
+    P(x \mid y = 0)
+    = \frac{1}{(2\pi)^{\frac{n}{2}} |\Sigma|^{\frac{1}{2}}}
+    \exp\!\left(
+        -\frac{1}{2} (x - \mu_0)^{\rm T} \Sigma^{-1} (x - \mu_0)
+    \right)
+    $$
 
-$$
-P(x \mid y = 1)
-= \frac{1}{(2\pi)^{\frac{n}{2}} |\Sigma|^{\frac{1}{2}}}
-\exp\!\left(
-    -\frac{1}{2} (x - \mu_1)^{\rm T} \Sigma^{-1} (x - \mu_1)
-\right)
-$$
+    $$
+    P(x \mid y = 1)
+    = \frac{1}{(2\pi)^{\frac{n}{2}} |\Sigma|^{\frac{1}{2}}}
+    \exp\!\left(
+        -\frac{1}{2} (x - \mu_1)^{\rm T} \Sigma^{-1} (x - \mu_1)
+    \right)
+    $$
 
 正因为在模型中我们需要预先假设样本服从正态分布，这也是 “高斯判别分析” 名字的由来。
 
 有了以上的假设之后，我们就能进行下一步的推导。
 
-## 似然函数
+## 似然函数 (Likelihood Function)
 
 在前面的先验假设中，我们需要用到 $\phi$ 、$\Sigma$ 、$\mu_0$ 和 $\mu_1$ 等参数，所以我们先要给出这些参数的参数估计。
 
@@ -64,6 +64,8 @@ $$
 $$
 L(\phi, \Sigma, \mu_0, \mu_1) = \sum_{i=1}^m \left[ \log P(x^{(i)} \mid y^{(i)}) + \log P(y^{(i)}) \right]
 $$
+
+### 分解条件概率
 
 为了便于处理不同类别的数据，我们将条件概率项 $\log P(x^{(i)} \mid y^{(i)})$ 根据 $y^{(i)}$ 的值进行分解。由于 $y^{(i)}$ 是二值的，我们可以使用 $y^{(i)}$ 作为指示函数：
 
@@ -81,6 +83,8 @@ $$
 $$
 L(\phi, \Sigma, \mu_0, \mu_1) = \sum_{i=1}^m \left[ y^{(i)} \log P(x^{(i)} \mid y=1) + (1-y^{(i)}) \log P(x^{(i)} \mid y=0) \right] + \sum_{i=1}^m \log P(y^{(i)})
 $$
+
+---
 
 # 代码讲解
 
@@ -151,7 +155,7 @@ if __name__ == "__main__":
 
 ## 1. 先验参数求解
 
-接[上面](#似然函数)所说，我们要想满足先验，首先就要求解出四个关键参数。根据极大似然估计的原理，我们要想使得模型最优，就要让似然函数取到最大值，这等价于让对数似然函数取到最大值。因此我们可以对四个关键参数求偏导来得到四个参数的具体值。
+接[上面](#似然函数-likelihood-function)所说，我们要想满足先验，首先就要求解出四个关键参数。根据极大似然估计的原理，我们要想使得模型最优，就要让似然函数取到最大值，这等价于让对数似然函数取到最大值。因此我们可以对四个关键参数求偏导来得到四个参数的具体值。
 
 ```py showLineNumbers
 def fit(self, X, y):
@@ -170,64 +174,80 @@ def fit(self, X, y):
     self.sigma = (diff0.T @ diff0 + diff1.T @ diff1) / m
 ```
 
-首先对 $\phi$ 求偏导，其中前两项和对 $\phi$ 的偏导均为 0，所以只需计算第三项的结果：
+根据最大似然估计（MLE）的原理，我们对每个参数求偏导，并令其等于零即可解出参数的估计值。
 
-$$
-\begin{aligned}
-\frac{\partial L(\phi, \Sigma, \mu_0, \mu_1)}{\partial \phi} 
-&= \frac{\partial \sum_{i=1}^m \log P(y^{(i)})}{\partial \phi} \\
-&= \frac{\partial \sum_{i=1}^m \log \phi^{y^{(i)}}(1 - \phi)^{1 - y^{(i)}}}{\partial \phi} \\
-&= \frac{\partial \sum_{i=1}^m y^{(i)} \log \phi + (1 - y^{(i)}) \log (1 - \phi)}{\partial \phi} \\
-&= \sum_{i=1}^m y^{(i)} \frac{1}{\phi} - (1 - y^{(i)}) \frac{1}{1 - \phi}
-\end{aligned}
-$$
+- 参数 $\phi$ 的估计
 
-令导数等于零，解得：
+    参数 $\phi = P(y=1)$ 是类别标签 $y$ 的伯努利分布的参数。由于 $\phi$ 只存在于 $\sum_{i=1}^m \log P(y^{(i)})$ 一项中，我们可以单独对这一项求导：
 
-$$
-\phi = \frac{1}{m} \sum_{i=1}^m \frac{y^{(i)}}{y^{(i)} + (1 - y^{(i)})} = \frac{1}{m} \sum_{i=1}^m y^{(i)}
-$$
+    $$
+    \begin{aligned}
+    \frac{\partial L(\phi, \Sigma, \mu_0, \mu_1)}{\partial \phi} 
+    &= \frac{\partial \sum_{i=1}^m \log P(y^{(i)})}{\partial \phi} \\
+    &= \frac{\partial \sum_{i=1}^m \log \phi^{y^{(i)}}(1 - \phi)^{1 - y^{(i)}}}{\partial \phi} \\
+    &= \frac{\partial \sum_{i=1}^m y^{(i)} \log \phi + (1 - y^{(i)}) \log (1 - \phi)}{\partial \phi} \\
+    &= \sum_{i=1}^m y^{(i)} \frac{1}{\phi} - (1 - y^{(i)}) \frac{1}{1 - \phi}
+    \end{aligned}
+    $$
 
-求解 $\Sigma$ 则更要复杂一些：
+    令导数等于零，解得：
 
-$$
-\begin{aligned}
-\frac{\partial L(\phi, \Sigma, \mu_0, \mu_1)}{\partial \Sigma} 
-&= \frac{\partial \sum_{i=1}^m y^{(i)} \log P(x^{(i)} | y^{(i)} = 1) + \sum_{i=1}^m (1 - y^{(i)}) \log P(x^{(i)} | y^{(i)} = 0)}{\partial \Sigma} \\
-&= \frac{\partial \sum_{i=1}^m \log \frac{1}{(2\pi)^{\frac{n}{2}} |\Sigma|^{\frac{1}{2}}} - \frac{1}{2} \sum_{i=1}^m (x^{(i)} - \mu_{y^{(i)}})^{\rm T} \Sigma^{-1}(x^{(i)} - \mu_{y^{(i)}})}{\partial \Sigma} \\
-&= \frac{\partial - \frac{m}{2} (n \log 2\pi + \log |\Sigma|) - \frac{1}{2} \sum_{i=1}^m (x^{(i)} - \mu_{y^{(i)}})^{\rm T} \Sigma^{-1}(x^{(i)} - \mu_{y^{(i)}})}{\partial \Sigma} \\
-&= - \frac{m}{2} \Sigma^{-1} - \frac{1}{2} \sum_{i=1}^m (x^{(i)} - \mu_{y^{(i)}})(x^{(i)} - \mu_{y^{(i)}})^{\rm T} (\Sigma^{-1})^2
-\end{aligned}
-$$
+    $$
+    \phi = \frac{1}{m} \sum_{i=1}^m \frac{y^{(i)}}{y^{(i)} + (1 - y^{(i)})} = \frac{1}{m} \sum_{i=1}^m y^{(i)}
+    $$
 
-令等式为零并右乘 $\Sigma^2$ 解得：
+    这正是 **正样本在总样本中的比例** ，符合我们对先验概率 $\phi$ 的直观理解。
 
-$$
-\Sigma = \frac{1}{m} \sum_{i=1}^m (x^{(i)} - \mu_{y^{(i)}})(x^{(i)} - \mu_{y^{(i)}})^{\rm T}
-$$
+- 均值向量 $\mu_k$ 的估计
 
-其中 $\Sigma$ 的表达式中会使用到 $\mu_0$ 、$\mu_1$ 的值，所以接下来需要求 $\mu_1$ 的似然估计：
+    $\mu_0$ 和 $\mu_1$ 分别是 $y=0$ 和 $y=1$ 时的条件均值向量。我们以 $\mu_1$ 为例，它只出现在条件概率 $P(x | y=1)$ 的项中。
 
-$$
-\begin{aligned}
-\frac{\partial L(\phi, \Sigma, \mu_0, \mu_1)}{\partial \mu_1} 
-&= \frac{\partial \sum_{i=1}^m y^{(i)} \log P(x^{(i)} | y^{(i)} = 1)}{\partial \mu_1} \\
-&= \frac{\partial \sum_{i=1}^m y^{(i)} \log \frac{1}{(2\pi)^{\frac{n}{2}} |\Sigma|^{\frac{1}{2}}} \exp(-\frac{1}{2}(x - \mu_1)^{\rm T} \Sigma^{-1}(x - \mu_1))}{\partial \mu_1} \\
-&= \sum_{i=1}^m y^{(i)} \Sigma^{-1}(x^{(i)} - \mu_1)
-\end{aligned}
-$$
+    $$
+    \begin{aligned}
+    \frac{\partial L(\phi, \Sigma, \mu_0, \mu_1)}{\partial \mu_1} 
+    &= \frac{\partial \sum_{i=1}^m y^{(i)} \log P(x^{(i)} | y^{(i)} = 1)}{\partial \mu_1} \\
+    &= \frac{\partial \sum_{i=1}^m y^{(i)} \log \frac{1}{(2\pi)^{\frac{n}{2}} |\Sigma|^{\frac{1}{2}}} \exp(-\frac{1}{2}(x - \mu_1)^{\rm T} \Sigma^{-1}(x - \mu_1))}{\partial \mu_1} \\
+    &= \sum_{i=1}^m y^{(i)} \Sigma^{-1}(x^{(i)} - \mu_1)
+    \end{aligned}
+    $$
 
-令导数为零解得：
+    令导数为零解得：
 
-$$
-\mu_1 = \frac{\sum_{i=1}^m y^{(i)} x^{(i)}}{\sum_{i=1}^m y^{(i)}}
-$$
+    $$
+    \mu_1 = \frac{\sum_{i=1}^m y^{(i)} x^{(i)}}{\sum_{i=1}^m y^{(i)}}
+    $$
 
-同理可得：
+    同理可得：
 
-$$
-\mu_0 = \frac{\sum_{i=1}^m (1 - y^{(i)}) x^{(i)}}{\sum_{i=1}^m (1 - y^{(i)})}
-$$
+    $$
+    \mu_0 = \frac{\sum_{i=1}^m (1 - y^{(i)}) x^{(i)}}{\sum_{i=1}^m (1 - y^{(i)})}
+    $$
+
+    这两个结果分别表示 **正样本和负样本的样本均值** 。
+
+- 协方差矩阵 $\Sigma$ 的估计
+
+    相对于上面三个参数，求解 $\Sigma$ 则更要复杂一些：
+
+    $$
+    \begin{aligned}
+    \frac{\partial L(\phi, \Sigma, \mu_0, \mu_1)}{\partial \Sigma} 
+    &= \frac{\partial \sum_{i=1}^m y^{(i)} \log P(x^{(i)} | y^{(i)} = 1) + \sum_{i=1}^m (1 - y^{(i)}) \log P(x^{(i)} | y^{(i)} = 0)}{\partial \Sigma} \\
+    &= \frac{\partial \sum_{i=1}^m \log \frac{1}{(2\pi)^{\frac{n}{2}} |\Sigma|^{\frac{1}{2}}} - \frac{1}{2} \sum_{i=1}^m (x^{(i)} - \mu_{y^{(i)}})^{\rm T} \Sigma^{-1}(x^{(i)} - \mu_{y^{(i)}})}{\partial \Sigma} \\
+    &= \frac{\partial - \frac{m}{2} (n \log 2\pi + \log |\Sigma|) - \frac{1}{2} \sum_{i=1}^m (x^{(i)} - \mu_{y^{(i)}})^{\rm T} \Sigma^{-1}(x^{(i)} - \mu_{y^{(i)}})}{\partial \Sigma} \\
+    &= - \frac{m}{2} \Sigma^{-1} - \frac{1}{2} \sum_{i=1}^m (x^{(i)} - \mu_{y^{(i)}})(x^{(i)} - \mu_{y^{(i)}})^{\rm T} (\Sigma^{-1})^2
+    \end{aligned}
+    $$
+
+    令等式为零并右乘 $\Sigma^2$ 解得：
+
+    $$
+    \Sigma = \frac{1}{m} \sum_{i=1}^m (x^{(i)} - \mu_{y^{(i)}})(x^{(i)} - \mu_{y^{(i)}})^{\rm T}
+    $$
+
+    其中 $\mu_{y^{(i)}}$ 表示 $x^{(i)}$ 所属类别的均值（即 $\mu_0$ 或 $\mu_1$ ）。
+    
+    这个结果正是 **基于类别均值的总体协方差矩阵的无偏估计** 。
 
 由此我们就得到了所有参数的似然估计结果。
 
@@ -254,25 +274,27 @@ def predict_proba(self, X):
 GDA 的核心是计算后验概率，它可以通过贝叶斯定理得到：
 
 $$
-P(y=1 \mid x) = \frac{P(x \mid y=1)P(y=1)}{P(x \mid y=0)P(y=0) + P(x \mid y=1)P(y=1)}
+P(y=1 | x) = \frac{P(x | y=1)P(y=1)}{P(x | y=0)P(y=0) + P(x | y=1)P(y=1)}
 $$
 
 为了方便分类，我们用对数几率作为判别函数来求解：
 
 $$
-\delta(x) = \log \frac{P(y = 1 \mid x)}{P(y = 0 \mid x)} = \log \frac{P(x \mid y = 1)P(y = 1)}{P(x \mid y = 0)P(y = 0)} = \log \frac{P(y=1)}{P(y=0)} + \log \frac{P(x \mid y=1)}{P(x \mid y=0)}
+\delta(x) = \log \frac{P(y = 1 | x)}{P(y = 0 | x)} = \log \frac{P(x | y = 1)P(y = 1)}{P(x | y = 0)P(y = 0)} = \log \frac{P(y=1)}{P(y=0)} + \log \frac{P(x | y=1)}{P(x | y=0)}
 $$
 
-仔细观察[上面](#先验假设)的先验条件，其实我们假设了正例跟负例的协方差矩阵相同，因此条件概率密度公式可以写成：
+### 线性模型推导
+
+仔细观察[上面](#先验假设-prior-assumptions)的先验条件，其实我们假设了正例跟负例的协方差矩阵相同，因此条件概率密度公式可以写成：
 
 $$
-P(x \mid y = k) = \frac{1}{(2\pi)^{\frac{n}{2}}|\Sigma|^{\frac{1}{2}}} \exp\left(-\frac{1}{2}(x-\mu_k)^{\rm T}\Sigma^{-1}(x-\mu_k)\right)
+P(x | y = k) = \frac{1}{(2\pi)^{\frac{n}{2}}|\Sigma|^{\frac{1}{2}}} \exp\left(-\frac{1}{2}(x-\mu_k)^{\rm T}\Sigma^{-1}(x-\mu_k)\right)
 $$
 
 代入 $\delta(x)$ 的尾项可得：
 
 $$
-\log\frac{P(x \mid y=1)}{P(x \mid y=0)} = - \frac{1}{2}(x - \mu_1)^{\rm T}\Sigma^{-1}(x - \mu_1) + \frac{1}{2}(x - \mu_0)^{\rm T}\Sigma^{-1}(x - \mu_0)
+\log\frac{P(x | y=1)}{P(x | y=0)} = - \frac{1}{2}(x - \mu_1)^{\rm T}\Sigma^{-1}(x - \mu_1) + \frac{1}{2}(x - \mu_0)^{\rm T}\Sigma^{-1}(x - \mu_0)
 $$
 
 最后展开平方项并化简可得：
@@ -290,6 +312,8 @@ $$
 $$
 b = \log \frac{\phi}{1 - \phi} - \frac{1}{2}(\mu_1^{\rm T}\Sigma^{-1}\mu_1 - \mu_0^{\rm T}\Sigma^{-1}\mu_0)
 $$
+
+根据这两个公式我们可以轻松求解高斯判别模型参数。
 
 ---
 
