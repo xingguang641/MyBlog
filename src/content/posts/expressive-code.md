@@ -53,7 +53,7 @@ Text formatting: [1mBold[0m [2mDimmed[0m [3mItalic[0m [4mUnderline[0m
 console.log('Title attribute example')
 ```
 
----
+&nbsp;
 
 ```html
 <!-- src/content/index.html -->
@@ -67,7 +67,7 @@ console.log('Title attribute example')
 echo "This terminal frame has no title"
 ```
 
----
+&nbsp;
 
 ```powershell title="PowerShell 终端示例"
 Write-Output "This one has a title!"
@@ -80,7 +80,7 @@ Write-Output "This one has a title!"
 echo "Look ma, no frame! (无边框模式)"
 ```
 
----
+&nbsp;
 
 ```ps frame="code" title="PowerShell Profile.ps1"
 # 强制使用代码编辑器样式，而非默认的终端样式
@@ -169,7 +169,7 @@ function demo() {
 这是一个普通行
 ```
 
----
+&nbsp;
 
 ```diff
 --- a/README.md
@@ -241,7 +241,7 @@ function getLongString() {
 }
 ```
 
----
+&nbsp;
 
 ```js wrap=false
 // 关闭自动换行 (wrap=false)
@@ -260,7 +260,7 @@ function getLongString() {
 }
 ```
 
----
+&nbsp;
 
 ```js wrap preserveIndent=false
 // 关闭缩进保留 (文字将顶格换行)
@@ -316,7 +316,7 @@ console.log('Greetings from line 2!')
 console.log('I am on line 3')
 ```
 
----
+&nbsp;
 
 ```js showLineNumbers=false
 // 显式禁用行号

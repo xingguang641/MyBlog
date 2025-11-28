@@ -41,11 +41,9 @@ pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 ## 配置翻译服务
 
-该项目支持多种翻译后端。为了获得最佳的翻译质量和速度，我们通常结合使用 **大语言模型 (LLM)** 和 **阿里云机器翻译**。
+该项目支持多种翻译后端。为了获得最佳的翻译质量和速度，我们通常结合使用 **大语言模型（LLM）** 和 **阿里云机器翻译**。你需要修改项目中的配置文件（通常在 `main.py` 或独立的 `config.py` 中，具体视版本而定），填入以下信息。
 
-你需要修改项目中的配置文件（通常在 `main.py` 或独立的 `config.py` 中，具体视版本而定），填入以下信息。
-
-### 配置 LLM (以 DeepSeek 为例)
+### 配置 LLM（以 DeepSeek 为例）
 
 你可以使用任意兼容 OpenAI 接口的大模型。这里以性价比极高的 DeepSeek 为例：
 
@@ -56,7 +54,7 @@ base_url = "https://api.deepseek.com/v1/"
 model_name = "deepseek-chat"
 ```
 
-### 配置阿里云机器翻译 (Aliyun MT)
+### 配置阿里云机器翻译（Aliyun MT）
 
 为了处理某些特定的翻译任务，你需要配置阿里云的 AccessKey。
 
