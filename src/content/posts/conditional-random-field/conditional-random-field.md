@@ -15,13 +15,13 @@ draft: false
 
 设 $X$ 与 $Y$ 是随机变量， $P(Y|X)$ 是在给定 $X$ 的条件下 $Y$ 的条件概率分布。若随机变量 $Y$ 构成一个由无向图 $G = (V, E)$ 表示的马尔可夫随机场，即 $P(Y_v \mid X, Y_w, w \neq v) = P(Y_v \mid X, Y_w, w \sim v)$ 对任意结点 $v$ 成立，则称条件概率分布 $P(Y|X)$ 为条件随机场。
 
-式中 $w \sim v$ 表示在图 $G = (V, E)$ 中与结点 $v$ 有边连接的所有结点 $w$ ， $w \neq v$ 表示结点 $v$ 以外的所有结点， $Y_v$ 、 $Y_w$ 为结点 $v$ 、 $w$ 对应的随机变量。
+式中 $w \sim v$ 表示在图 $G = (V, E)$ 中与结点 $v$ 有边连接的所有结点 $w$ ，$w \neq v$ 表示结点 $v$ 以外的所有结点， $Y_v$ 、$Y_w$ 为结点 $v$ 、 $w$ 对应的随机变量。
 
 在条件随机场的一般定义中并没有要求 $X$ 和 $Y$ 具有相同的图结构，但是实际运用中一般假设 $X$ 和 $Y$ 具有相同的图结构，并且线性链条件随机场也同样作此假设。线性链条件随机场的定义如下：
 
 ![条件随机场图像](src\content\posts\conditional-random-field\条件随机场1.png)
 
-## 基本形式定义
+## 基本形式定义（Basic Form）
 
 设 $X = (x_1, x_2, \ldots, x_n)$ 和 $Y = (y_1, y_2, \ldots, y_n)$ 均为线性链表示的随机变量序列，若在给定随机量序列 $X$ 的条件下，随机变量序列 $Y$ 的条件概率分布 $P(Y|X)$ 构成条件随机场，即满足马尔可夫性（在 $i = 1$ 和 $n$ 时只考虑单边）：
 
@@ -29,7 +29,7 @@ $$
 P(y_i \mid X, y_1, \cdots, y_{i-1}, y_{i+1}, \cdots, y_n) = P(y_i \mid X, y_{i-1}, y_{i+1}) \quad i = 1, 2, \ldots, n
 $$
 
-则称 $P(Y|X)$ 为线性链条件随机场。线性链条件随机场通常用来对序列标注问题进行建模，在序列标注问题中， $X$ 可以看作 **观测序列** ， $Y$ 可以看做对应的 **状态序列** 。
+则称 $P(Y|X)$ 为线性链条件随机场。线性链条件随机场通常用来对序列标注问题进行建模，在序列标注问题中， $X$ 可以看作 **观测序列** ，$Y$ 可以看做对应的 **状态序列** 。
 
 根据线性链条件随机场的定义可知，此时由 $Y$ 构成的马尔可夫随机场的最大团为相邻两个结点的集合，那么由 Hammersley-Clifford 定理可知，线性链条件随机场 $P(Y|X)$ 的表达式可以写为如下形式：
 
@@ -41,11 +41,11 @@ $$
 Z(X) = \sum_Y \exp \left( \sum_{i,k} \lambda_k t_k(y_{i-1}, y_i, X, i) + \sum_{i,l} \mu_l s_l(y_i, X, i) \right)
 $$
 
-其中 $Z(X)$ 是 **规范化因子** ，求和是在所有可能的输出序列上进行的。 $t_k$ 是定义在边上的特征函数，称为 **转移特征** ，依赖于当前和前一个位置； $s_l$ 是定义在结点上的特征函数，称为 **状态特征** ，依赖于当前位置。 $t_k$ 和 $s_l$ 都依赖于位置，是 **局部特征函数** 。线性链条件随机场完全由特征函数 $t_k$ 、 $s_l$ 和对应的权值 $\lambda_k$ 、 $\mu_i$ 确定（通常特征函数是事先人为设定好的超参数，而权值则是通过学习得到）。
+其中 $Z(X)$ 是 **规范化因子** ，求和是在所有可能的输出序列上进行的。 $t_k$ 是定义在边上的特征函数，称为 **转移特征** ，依赖于当前和前一个位置； $s_l$ 是定义在结点上的特征函数，称为 **状态特征** ，依赖于当前位置。 $t_k$ 和 $s_l$ 都依赖于位置，是 **局部特征函数** 。线性链条件随机场完全由特征函数 $t_k$ 、$s_l$ 和对应的权值 $\lambda_k$ 、$\mu_i$ 确定（通常特征函数是事先人为设定好的超参数，而权值则是通过学习得到）。
 
 观察上式易知：线性链条件随机场为判别式模型，同时也实现了用特征对观测序列参数化，而且状态转移概率采用的是全局归一化来计算。所以线性链条件随机场拥有 MEMM 的所有优点，而且还不存在标注偏置问题。
 
-## 向量形式定义
+## 向量形式定义（Vector Form）
 
 根据特征函数的性质可知，状态特征函数 $s_l$ 可以看做是只提取当前位置特征的转移特征函数，即 $s_l(y_i, X, i) = s_l(y_{i - 1}, X, i)$ 。因此 $P(X|Y)$ 表达式中的转移特征和状态特征及其权值可以用统一的符号表示。不妨设有 $K_1$ 个转移特征， $K_2$ 个状态特征，则 $K = K_1 + K_2$ 。若序列长度为 $n$ ，则 $P(Y|X)$ 可以简写为：
 
@@ -101,115 +101,117 @@ $$
 
 下面就详细讲解一下这三个问题的解决方案。
 
-## 计算问题
+## 计算问题（Computational Problem）
 
 ### 计算条件概率
 
-1. 由 $P(Y|X)$ 的表达式可知，要想计算出条件概率 $P(Y|X)$ 则需要计算出给定状态序列 $Y$ 的非规范化概率 $exp(w^{\rm T}F(Y, X))$ 和规范化因子 $Z(X)$ ，由于在已知观测序列 $X$ 和模型参数 $w_k(k = 1, 2, \ldots, K)$ 的条件下，只要知道状态的取值范围，无论对应状态序列 $Y$ 是否已知，均能求出规范化因子 $Z(X)$ 。
+由 $P(Y|X)$ 的表达式可知，要想计算出条件概率 $P(Y|X)$ 则需要计算出给定状态序列 $Y$ 的非规范化概率 $exp(w^{\rm T}F(Y, X))$ 和规范化因子 $Z(X)$ 。由于在已知观测序列 $X$ 和模型参数 $w_k(k = 1, 2, \ldots, K)$ 的条件下，只要知道状态的取值范围，无论对应状态序列 $Y$ 是否已知，均能求出规范化因子 $Z(X)$ 。
 
-    所以下面考虑对 $Z(X)$ 和 $exp(w^{\rm T}F(Y, X))$ 分别进行求解。
+所以下面考虑对 $Z(X)$ 和 $exp(w^{\rm T}F(Y, X))$ 分别进行求解。
 
-    - 首先考虑求解 $Z(X)$
+- 首先考虑求解 $Z(X)$
 
-        设状态的取值范围为 $Q = \{ q_1, q_2, \ldots, q_m \}$ ，将所有状态序列前后都各填充一个 $y_0 = start$ 和 $y_{n+1} = stop$ 。对观测序列 $X$ 的每一个位置 $i = 1, 2, \ldots, n+1$ 来说， $y_{i-1}$ 和 $y_i$ 都有 $m$ 种可能的取值，因此，对于每一个位置来说都可以定义一个 $m \times m$ 的 **转移势矩阵** ：
-
-        $$
-        \mathbf{M}_i(X) = \Big[ M_i(y_{i-1}, y_i | X) \Big] = \begin{bmatrix}
-        M_1(q_1, q_1 | X) & M_1(q_1, q_2 | X) & \ldots & M_1(q_1, q_m | X) \\
-        M_1(q_2, q_1 | X) & M_1(q_2, q_2 | X) & \ldots & M_1(q_2, q_m | X) \\
-        \vdots & \vdots & \ddots & \vdots \\
-        M_1(q_m, q_1 | X) & M_1(q_m, q_2 | X) & \ldots & M_1(q_m, q_m | X)
-        \end{bmatrix}
-        $$
-
-        $$
-        \text{where } M_i(y_{i-1}, y_i | X) = \exp \left( \sum_{k=1}^{K} w_k f_k(y_{i-1}, y_i, X, i) \right)
-        $$
-
-        特别地，对于起始位置 $i = 1$ 和结束位置 $i = n + 1$ 的矩阵定义为（确保初始位置和结尾位置的状态是确定的）：
-
-        $$
-        \mathbf{M}_1(X) = 
-        \begin{bmatrix}
-        M_1(start, q_1 | X) & M_1(start, q_2 | X) & \ldots & M_1(start, q_m | X) \\
-        0 & 0 & \ldots & 0 \\
-        \vdots & \vdots & \ddots & \vdots \\
-        0 & 0 & \ldots & 0
-        \end{bmatrix}
-        $$
-
-        $$
-        \mathbf{M}_{n+1}(X) = 
-        \begin{bmatrix}
-        M_{n+1}(q_1, stop | X) = 1 & 0 & \ldots & 0 \\
-        M_{n+1}(q_2, stop | X) = 1 & 0 & \ldots & 0 \\
-        \vdots & \vdots & \ddots & \vdots \\
-        M_{n+1}(q_m, stop | X) = 1 & 0 & \ldots & 0
-        \end{bmatrix}
-        $$
-
-        此时 $Z(X)$ 为 $\mathbf{M}_i(X)$ 这 $n+1$ 个矩阵的乘积的第 1 行第 1 列元素：
-
-        $$
-        Z(X) = \left[ \prod_{i=1}^{n+1} \mathbf{M}_i(X) \right]_{(1,1)}
-        $$
-
-        根据矩阵相乘的性质，所有 $\mathbf{M}_i(X)$ 相乘的最终结果就是初始位置的状态到结尾位置的状态的所有路径的权重之积再求和。因此 $Z(X)$ 的表达式为 $n+1$ 个矩阵的乘积的第 1 行第 1 列元素。
-
-    - 然后考虑 $exp(w^{\rm T}F(Y, X))$
-
-        在对应状态序列 $Y$ 也已知的条件下，则可以通过 $M_i(X)$ 这 $n+1$ 个矩阵的适当元素的乘积来表示：
-
-        $$
-        \begin{align*}
-        \exp(w^{\rm T} F(Y, X)) &= \exp \left( \sum_{k=1}^K w_k \sum_{i=1}^{n+1} f_k(y_{i-1}, y_i, X, i) \right) \\
-        &= \exp \left( \sum_{i=1}^{n+1} \sum_{k=1}^K w_k f_k(y_{i-1}, y_i, X, i) \right) \\
-        &= \prod_{i=1}^{n+1} \exp \left( \sum_{k=1}^K w_k f_k(y_{i-1}, y_i, X, i) \right) \\
-        &= \prod_{i=1}^{n+1} M_i(y_{i-1}, y_i | X)
-        \end{align*}
-        $$
-
-        首先我们要知道的是，非规范化概率在概率图中表示的是一个具体的路径。所以 $exp(w^{\rm T}F(Y, X))$ 的表达式自然是上面这个公式。
-
-2. 首先我们来定义一下前/后向向量（与 HMM 的前/后向概率相似，这里给出的是向量形式）
-
-    对每个位置 $i = 1, 2, \ldots, n+1$ 定义前向向量 $\boldsymbol{\alpha}_i(X) \in \mathbb{R}^{m \times 1}$ ：
+    设状态的取值范围为 $Q = \{ q_1, q_2, \ldots, q_m \}$ ，将所有状态序列前后都各填充一个 $y_0 = start$ 和 $y_{n+1} = stop$ 。对观测序列 $X$ 的每一个位置 $i = 1, 2, \ldots, n+1$ 来说， $y_{i-1}$ 和 $y_i$ 都有 $m$ 种可能的取值，因此，对于每一个位置来说都可以定义一个 $m \times m$ 的 **转移势矩阵** ：
 
     $$
-    \boldsymbol{\alpha}_0(X) = \begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix} \quad \boldsymbol{\alpha}_i(X) = \begin{bmatrix} \alpha_i(y_i = q_1 | X) \\ \alpha_i(y_i = q_2 | X) \\ \vdots \\ \alpha_i(y_i = q_m | X) \end{bmatrix}
-    $$
-
-    其中 $\alpha_i(y_i = q_j|X)(j = 1, 2, \ldots, m)$ 表示在位置 $i$ 的状态是 $q_j$ 并且从 1 到 $i$ 的状态序列的非规范化概率。根据前向向量的定义易得递推公式：
-
-    $$
-    \boldsymbol{\alpha}_i(X)^{\rm T} = \boldsymbol{\alpha}_{i-1}(X)^{\rm T} \Big[ M_i(y_{i-1}, y_i | X) \Big] = \boldsymbol{\alpha}_{i-1}(X)^{\rm T} \mathbf{M}_i(X)
-    $$
-
-    同理，对每个位置 $i = 1, 2, \ldots, n+1$ 定义后向向量 $\boldsymbol{\beta}_i(x) \in \mathbb{R}^{m \times 1}$
-
-    $$
-    \boldsymbol{\beta}_i(X) = \begin{bmatrix} \beta_i(y_i = q_1 | X) \\ \beta_i(y_i = q_2 | X) \\ \vdots \\ \beta_i(y_i = q_m | X) \end{bmatrix} \quad \boldsymbol{\beta}_{n+1}(X) = \begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix}
-    $$
-
-    其中 $\beta_i(y_i = q_j|X)(j = 1, 2, \ldots, m)$ 表示在位置 $i$ 的状态是 $q_j$ 并且从 $i+1$ 到最后的状态序列的非规范化概率。根据后向向量的定义易得递推公式：
-
-    $$
-    \boldsymbol{\beta}_i(X) = \Big[ M_{i+1}(y_i, y_{i+1} | X) \Big] \boldsymbol{\beta}_{i+1}(X) = \mathbf{M}_i(X) \boldsymbol{\beta}_{i+1}(X)
-    $$
-
-    定义完前向向量和后向向量，接下来便可以很容易地计算出在位置 $i$ 的状态是 $q_j$ 的条件概率和在位置 $i-1$ 是状态 $q_j$ 且在位置 $i$ 是状态 $q_k$ 的条件概率：
-
-    $$
-    P(y_i | X) = P(y_i = q_j | X) = \frac{\alpha_i(y_i = q_j | X) \beta_i(y_i = q_j | X)}{Z(X)}
+    \mathbf{M}_i(X) = \Big[ M_i(y_{i-1}, y_i | X) \Big] = \begin{bmatrix}
+    M_1(q_1, q_1 | X) & M_1(q_1, q_2 | X) & \ldots & M_1(q_1, q_m | X) \\
+    M_1(q_2, q_1 | X) & M_1(q_2, q_2 | X) & \ldots & M_1(q_2, q_m | X) \\
+    \vdots & \vdots & \ddots & \vdots \\
+    M_1(q_m, q_1 | X) & M_1(q_m, q_2 | X) & \ldots & M_1(q_m, q_m | X)
+    \end{bmatrix}
     $$
 
     $$
-    P(y_{i-1}, y_i | X) = P(y_{i-1} = q_j, y_i = q_k | X) = \frac{\alpha_{i-1}(y_{i-1} = q_j | X) M_i(q_j, q_k | X) \beta_i(y_i = q_k | X)}{Z(X)}
+    \text{where } M_i(y_{i-1}, y_i | X) = \exp \left( \sum_{k=1}^{K} w_k f_k(y_{i-1}, y_i, X, i) \right)
+    $$
+
+    特别地，对于起始位置 $i = 1$ 和结束位置 $i = n + 1$ 的矩阵定义为（确保初始位置和结尾位置的状态是确定的）：
+
+    $$
+    \mathbf{M}_1(X) = 
+    \begin{bmatrix}
+    M_1(start, q_1 | X) & M_1(start, q_2 | X) & \ldots & M_1(start, q_m | X) \\
+    0 & 0 & \ldots & 0 \\
+    \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & \ldots & 0
+    \end{bmatrix}
     $$
 
     $$
-    \text{where } Z(X) = \boldsymbol{\alpha}_n(X)^{\rm T} \mathbf{I} = \boldsymbol{\alpha}_{n+1}(X)^{\rm T} \mathbf{I} = \mathbf{I}^{\rm T} \boldsymbol{\beta}_0(X) \quad \mathbf{I} = (1, \ldots, 1) \in \mathbb{R}^{m \times 1}
+    \mathbf{M}_{n+1}(X) = 
+    \begin{bmatrix}
+    M_{n+1}(q_1, stop | X) = 1 & 0 & \ldots & 0 \\
+    M_{n+1}(q_2, stop | X) = 1 & 0 & \ldots & 0 \\
+    \vdots & \vdots & \ddots & \vdots \\
+    M_{n+1}(q_m, stop | X) = 1 & 0 & \ldots & 0
+    \end{bmatrix}
     $$
+
+    此时 $Z(X)$ 为 $\mathbf{M}_i(X)$ 这 $n+1$ 个矩阵的乘积的第 1 行第 1 列元素：
+
+    $$
+    Z(X) = \left[ \prod_{i=1}^{n+1} \mathbf{M}_i(X) \right]_{(1,1)}
+    $$
+
+    根据矩阵相乘的性质，所有 $\mathbf{M}_i(X)$ 相乘的最终结果就是初始位置的状态到结尾位置的状态的所有路径的权重之积再求和。因此 $Z(X)$ 的表达式为 $n+1$ 个矩阵的乘积的第 1 行第 1 列元素。
+
+- 然后考虑 $exp(w^{\rm T}F(Y, X))$
+
+    在对应状态序列 $Y$ 也已知的条件下，则可以通过 $M_i(X)$ 这 $n+1$ 个矩阵的适当元素的乘积来表示：
+
+    $$
+    \begin{align*}
+    \exp(w^{\rm T} F(Y, X)) &= \exp \left( \sum_{k=1}^K w_k \sum_{i=1}^{n+1} f_k(y_{i-1}, y_i, X, i) \right) \\
+    &= \exp \left( \sum_{i=1}^{n+1} \sum_{k=1}^K w_k f_k(y_{i-1}, y_i, X, i) \right) \\
+    &= \prod_{i=1}^{n+1} \exp \left( \sum_{k=1}^K w_k f_k(y_{i-1}, y_i, X, i) \right) \\
+    &= \prod_{i=1}^{n+1} M_i(y_{i-1}, y_i | X)
+    \end{align*}
+    $$
+
+    首先我们要知道的是，非规范化概率在概率图中表示的是一个具体的路径。所以 $exp(w^{\rm T}F(Y, X))$ 的表达式自然是上面这个公式。
+
+### 定义前/后向向量
+
+我们接着来定义一下前/后向向量（与 HMM 的前/后向概率相似，这里给出的是向量形式）
+
+对每个位置 $i = 1, 2, \ldots, n+1$ 定义前向向量 $\boldsymbol{\alpha}_i(X) \in \mathbb{R}^{m \times 1}$ ：
+
+$$
+\boldsymbol{\alpha}_0(X) = \begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix} \quad \boldsymbol{\alpha}_i(X) = \begin{bmatrix} \alpha_i(y_i = q_1 | X) \\ \alpha_i(y_i = q_2 | X) \\ \vdots \\ \alpha_i(y_i = q_m | X) \end{bmatrix}
+$$
+
+其中 $\alpha_i(y_i = q_j|X)(j = 1, 2, \ldots, m)$ 表示在位置 $i$ 的状态是 $q_j$ 并且从 1 到 $i$ 的状态序列的非规范化概率。根据前向向量的定义易得递推公式：
+
+$$
+\boldsymbol{\alpha}_i(X)^{\rm T} = \boldsymbol{\alpha}_{i-1}(X)^{\rm T} \Big[ M_i(y_{i-1}, y_i | X) \Big] = \boldsymbol{\alpha}_{i-1}(X)^{\rm T} \mathbf{M}_i(X)
+$$
+
+同理，对每个位置 $i = 1, 2, \ldots, n+1$ 定义后向向量 $\boldsymbol{\beta}_i(x) \in \mathbb{R}^{m \times 1}$ ：
+
+$$
+\boldsymbol{\beta}_i(X) = \begin{bmatrix} \beta_i(y_i = q_1 | X) \\ \beta_i(y_i = q_2 | X) \\ \vdots \\ \beta_i(y_i = q_m | X) \end{bmatrix} \quad \boldsymbol{\beta}_{n+1}(X) = \begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix}
+$$
+
+其中 $\beta_i(y_i = q_j|X)(j = 1, 2, \ldots, m)$ 表示在位置 $i$ 的状态是 $q_j$ 并且从 $i+1$ 到最后的状态序列的非规范化概率。根据后向向量的定义易得递推公式：
+
+$$
+\boldsymbol{\beta}_i(X) = \Big[ M_{i+1}(y_i, y_{i+1} | X) \Big] \boldsymbol{\beta}_{i+1}(X) = \mathbf{M}_i(X) \boldsymbol{\beta}_{i+1}(X)
+$$
+
+定义完前向向量和后向向量，接下来便可以很容易地计算出在位置 $i$ 的状态是 $q_j$ 的条件概率和在位置 $i-1$ 是状态 $q_j$ 且在位置 $i$ 是状态 $q_k$ 的条件概率：
+
+$$
+P(y_i | X) = P(y_i = q_j | X) = \frac{\alpha_i(y_i = q_j | X) \beta_i(y_i = q_j | X)}{Z(X)}
+$$
+
+$$
+P(y_{i-1}, y_i | X) = P(y_{i-1} = q_j, y_i = q_k | X) = \frac{\alpha_{i-1}(y_{i-1} = q_j | X) M_i(q_j, q_k | X) \beta_i(y_i = q_k | X)}{Z(X)}
+$$
+
+$$
+\text{where } Z(X) = \boldsymbol{\alpha}_n(X)^{\rm T} \mathbf{I} = \boldsymbol{\alpha}_{n+1}(X)^{\rm T} \mathbf{I} = \mathbf{I}^{\rm T} \boldsymbol{\beta}_0(X) \quad \mathbf{I} = (1, \ldots, 1) \in \mathbb{R}^{m \times 1}
+$$
 
 ### 计算期望值
 
@@ -242,11 +244,11 @@ $$
 
 综上，对于在给定模型参数 $w_k(k = 1, 2, \ldots, K)$ 、观测序列 $X = (x_1, x_2, \ldots, x_n)$ 和状态序列 $Y = (y_1, y_2, \ldots, y_n)$ 的条件下，只需前向扫描计算和后向扫描计算一次 $\boldsymbol{\alpha}_i(X)$ 和 $\boldsymbol{\beta}_i(X)$ ，规范化因子 $Z(X)$ 和条件概率 $P(y_i|X)$ 、 $P(y_{i-1}, y_i|X)$ 以及一些数学期望都可以被计算出来。
 
-## 学习问题
+## 学习问题（Learning Problem）
 
 在给定观测序列 $X = (x_1, x_2, \ldots, x_n)$ 和对应状态序列 $Y = (y_1, y_2, \ldots, y_n)$ 的条件下，可以通过极大似然估计法来估计模型的参数。由于线性链条件随机场类似于最大熵模型，所以用于求解最大熵模型参数的 GIS、IIS、梯度下降、牛顿法和拟牛顿法均可用于线性链条件随机场。
 
-## 预测问题
+## 预测问题（Prediction Problem）
 
 线性链条件随机场的预测问题是在给定模型参数 $w_k(k = 1, 2, \ldots, K)$ 、观测序列 $X = (x_1, x_2, \ldots, x_n)$ 的条件下，求条件概率最大的状态序列 $Y^* = (y_1^*, y_2^*, \ldots, y_n^*)$ ，即对观测序列进行标注。线性链条件随机场解决预测问题所采用的算法和 HMM 和 MEMM 一样，采用的都是经典的 Viterbi 算法。具体如下：
 
@@ -418,7 +420,7 @@ if __name__ == "__main__":
     print(f'Predicted path (labels): {best_path}')
 ```
 
-## 学习问题
+## 1. 学习问题
 
 这个部分的代码可以观看[上面的讲解](#学习问题)对照学习。
 
@@ -448,7 +450,7 @@ def train(self, data, epochs=10, learning_rate=0.1):
         print(f'Epoch {epoch + 1} complete.')
 ```
 
-## 预测问题
+## 2. 预测问题
 
 这个部分的代码可以观看[上面的讲解](#预测问题)对照学习。
 

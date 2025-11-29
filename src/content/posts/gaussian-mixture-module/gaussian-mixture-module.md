@@ -9,13 +9,13 @@ draft: false
 
 # 高斯混合模型基本原理
 
-前面我们讲到了诸多的 **分类算法** （Classification Algorithm），虽然它们的数学原理差别很大，但它们其实都属于 **有监督学习** （Supervised Learning）这一个类别当中。也就是说：它们在训练过程中需要数据拥有自己对应的标签。
+前面我们讲到了诸多的 **分类算法（Classification Algorithm）**，虽然它们的数学原理差别很大，但它们其实都属于 **有监督学习（Supervised Learning）**这一个类别当中。也就是说：它们在训练过程中需要数据拥有自己对应的标签。
 
-而我们今天要讲的 **高斯混合模型** （Gaussian Mixture Model，简称 GMM），它是一个 **聚类算法** （Clustering Algorithm），而聚类算法不同于分类算法，它们属于 **无监督学习** （Unsupervised Learning）这一类别。也就是说：高斯混合模型不要求数据有自己的标签，高斯混合模型会自动地将数据分为不同的类别。
+而我们今天要讲的 **高斯混合模型**（Gaussian Mixture Model，简称 GMM），它是一个 **聚类算法（Clustering Algorithm）**，而聚类算法不同于分类算法，它们属于 **无监督学习（Unsupervised Learning）**这一类别。也就是说：高斯混合模型不要求数据有自己的标签，高斯混合模型会自动地将数据分为不同的类别。
 
 我们来思考一个简单的问题：如果给你一些数据，你想用什么模型去拟合这些数据的分布呢？可能很多人的第一想法就是用正态分布去拟合，毕竟正态分布是生活中最为常见的分布。其实这个想法是正确的，但仍有缺陷：虽然正态分布是最常见的分布，但现实世界太过于复杂，我们不能确保一个正态分布就能拟合出所有的数据集。对此，我们可以试着想一想：如果用多个正态分布去拟合，效果会不会更好？没错，这正是高斯混合模型的出发点。
 
-## 高斯加权混合
+## 高斯加权混合（Gaussian Weighted Mixture）
 
 为了解决高斯模型的单峰性的问题，我们引入多个高斯模型的加权平均来拟合多峰数据：
 
@@ -23,7 +23,7 @@ $$
 P(x) = \sum_{k=1}^K \alpha_k \mathcal{N}(\mu_k, \Sigma_k)
 $$
 
-由于我们只能观察到每个样本 $x$ 的信息，而无法了解每个样本究竟属于哪个高斯分布，因此我们可以引入一个隐变量 $z$ （ $z = k$ 表示样本属于第 $K$ 个高斯分布）来辅助我们的推导：
+由于我们只能观察到每个样本 $x$ 的信息，而无法了解每个样本究竟属于哪个高斯分布，因此我们可以引入一个隐变量 $z$（ $z = k$ 表示样本属于第 $K$ 个高斯分布）来辅助我们的推导：
 
 $$
 P(z = i) = p_i \quad \sum_{i=1}^{k} P(z = i) = 1
@@ -45,7 +45,7 @@ $$
 
 ![高斯混合模型图像](src\content\posts\gaussian-mixture-module\高斯混合模型1.jpg)
 
-## 梯度下降的局限
+## 梯度下降的局限（Limitations of Gradient Descent）
 
 写出高斯混合模型的对数似然函数：
 
@@ -67,7 +67,7 @@ $$
 
 ![高斯混合模型图像](src\content\posts\gaussian-mixture-module\EM算法1.jpg)
 
-## 证据下界
+## 证据下界（Evidence Lower Bound Optimization）
 
 我们可以先假设 $Z$ 服从的分布为 $Z \sim q(Z | \theta)$ ，于是有：
 
@@ -89,11 +89,11 @@ $$
 \end{align*}
 $$
 
-由于 KL 散度始终大于 0 ，因此 **ELBO** （Evidence Lower Bound Optimization，中文译名为 **证据下界** ）是 $L(\theta)$ 的一个下界（至于什么是 KL 散度可以参考下面这个视频）。
+由于 KL 散度始终大于 0 ，因此 **ELBO**（全称为 Evidence Lower Bound Optimization，中文译名为 **证据下界** ）是 $L(\theta)$ 的一个下界（至于什么是 KL 散度可以参考下面这个视频）。
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=114558102410096&bvid=BV1r6jHzpE1J&cid=30166354742&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
-## 流程介绍
+## 流程介绍（Detailed Procedure）
 
 EM 算法本质上是通过最大化 ELBO 来间接最大化对数似然函数。具体步骤分为 E-step 和 M-step。
 
@@ -137,7 +137,7 @@ $$
 \theta^{(t+1)} = \arg \max_{\theta} Q(\theta | \theta^{(t)}) = \arg \max_{\theta} \mathbb{E}_{Z \sim P(Z|X,\theta^{(t)})} \Big[ \log P(X, Z | \theta) \Big]
 $$
 
-## 理论推导
+## 理论推导（Theoretical Derivation）
 
 > 以下推导部分参考自该视频
 
@@ -145,7 +145,7 @@ $$
 
 ### E-step
 
-我们先用 **琴声不等式** （Jensen's inequality）放缩的方式求解出 ELBO：
+我们先用 **琴声不等式（Jensen's inequality）**放缩的方式求解出 ELBO：
 
 $$
 \begin{align*}
@@ -202,7 +202,7 @@ $$
 \end{align*}
 $$
 
-## 收敛性证明
+## 收敛性证明（Convergence Analysis）
 
 EM 算法的流程并不复杂，但是还有一个很重要的问题需要我们思考：EM 算法收敛吗？如果 EM 算法无法正常收敛，那么这个算法的过程无论多么精美都没用。就让我们再证明一下 EM 算法的收敛性吧。
 
@@ -216,7 +216,7 @@ $$
 L(\theta) = \sum_{X} \log P(X | \theta)
 $$
 
-由于概率值有界，而有界函数的有限次线性组合仍然有界， $L(\theta)$ 有界。
+由于概率值有界，而有界函数的有限次线性组合仍然有界，$L(\theta)$ 有界。
 
 > 然后我们来看看单调性
 
@@ -361,7 +361,7 @@ if __name__ == "__main__":
 
 ## E-step
 
-下面给出 E-step 的代码。
+下面给出 E-step 的代码：
 
 ```py showLineNumbers
 gamma = np.zeros((N, self.K))
@@ -381,7 +381,7 @@ $$
 
 ## M-step
 
-下面给出 M-step 的代码。
+下面给出 M-step 的代码：
 
 ```py showLineNumbers
 N_k = np.sum(gamma, axis=0)
@@ -392,20 +392,16 @@ for k in range(self.K):
     self.Sigma[k] = (gamma[:, k][:, np.newaxis] * diff).T @ diff / N_k[k]
 ```
 
-M-step 的目的则是最大化 **期望的完整数据对数似然** ：
+M-step 的目的则是最大化 **期望的完整数据对数似然**：
 
 $$
 Q(\theta \mid \theta^{(t)}) = \sum_{i=1}^N \sum_{k=1}^K \gamma_{ik} \, \log \big( p_k \, \mathcal{N}(x_i \mid \mu_k, \Sigma_k) \big)
 $$
 
-将似然函数对每个参数分别求偏导可得 **混合系数$p_k$** 、 **均值$\mu_k$** 和 **协方差$Sigma_k$** 的更新公式：
+将似然函数对每个参数分别求偏导可得 **混合系数$p_k$** 、**均值$\mu_k$** 和 **协方差$Sigma_k$** 的更新公式：
 
 $$
-p_k^{(t+1)} = \frac{1}{N} \sum_{i=1}^N \gamma_{ik}
-$$
-
-$$
-\mu_k^{(t+1)} = \frac{\sum_{i=1}^N \gamma_{ik} x_i}{\sum_{i=1}^N \gamma_{ik}}
+p_k^{(t+1)} = \frac{1}{N} \sum_{i=1}^N \gamma_{ik} \quad \mu_k^{(t+1)} = \frac{\sum_{i=1}^N \gamma_{ik} x_i}{\sum_{i=1}^N \gamma_{ik}}
 $$
 
 $$

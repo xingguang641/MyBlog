@@ -7,19 +7,19 @@ category: Guides
 draft: false 
 ---
 
-> 本文将介绍如何在 Fuwari 模板中添加一个自定义的独立页面（例如 “成就” 、 “友情链接” 等）。整个过程只需三个步骤：编写内容、创建页面组件、更新导航配置。
+> 写在前面：本文将介绍如何在 Fuwari 模板中添加一个自定义的独立页面（例如 “成就” 、“友情链接” 等）。整个过程只需三个步骤：编写内容、创建页面组件、更新导航配置。
 
 ## 编写页面内容
 
 首先，我们需要定义页面的核心文本内容。
 
-请在 `src/content/spec` 目录下创建一个 Markdown 文件（例如 `achievements.md`）。这个文件不需要包含复杂的 Frontmatter（元数据），直接编写你想要展示的 Markdown 内容即可。
+请在 `src/content/spec` 目录下创建一个 Markdown 文件（例如 `achievements.md` ）。这个文件不需要包含复杂的 Frontmatter（元数据），直接编写你想要展示的 Markdown 内容即可。
 
 ## 创建页面组件
 
 接下来，我们需要创建一个 Astro 页面文件来渲染上述内容。
 
-在 `src/pages` 目录下新建一个 `.astro` 文件，建议文件名与步骤 1 中的 Markdown 文件名保持一致（例如 `achievements.astro`）。
+在 `src/pages` 目录下新建一个 `.astro` 文件，建议文件名与步骤 1 中的 Markdown 文件名保持一致（例如 `achievements.astro` ）。
 
 你可以直接复制 `about.astro` 的代码并稍作修改，或者使用下面的模板代码。该代码会自动获取 `src/content/spec` 中的内容并渲染到主布局中。
 
@@ -55,7 +55,7 @@ const { Content } = await render(achievementsPost);
 
 页面创建完成后，最后一步是将其添加到博客顶部的导航栏中，以便访客访问。
 
-打开 `src/config.ts` 文件，找到常量 `navBarConfig`，并在 `links` 数组中添加对应的键值对。
+打开 `src/config.ts` 文件，找到常量 `navBarConfig` ，并在 `links` 数组中添加对应的键值对。
 
 ```ts frame="code" title="src/config.ts"
 export const navBarConfig: NavBarConfig = {

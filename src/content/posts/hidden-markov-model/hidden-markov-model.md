@@ -11,13 +11,13 @@ draft: false
 
 # 隐马尔可夫模型基本原理
 
-隐马尔可夫模型（Hidden Markov Model，简称 HMM）是一种用于时序数据分析的 **概率图模型** 。它刻画了一个由隐藏状态组成的马尔可夫链，这个链在时间上生成一个不可直接观测的 **状态序列** ，并且每个状态都会根据一定的概率分布产生一个可观测的输出，从而形成 **观测序列** 。换句话说：HMM 描述了隐藏的状态在时间上按马尔可夫过程演化，而每个时刻的观测值则由对应的隐藏状态随机生成。其形式定义如下：
+**隐马尔可夫模型**（Hidden Markov Model，简称 HMM）是一种用于时序数据分析的 **概率图模型** 。它刻画了一个由隐藏状态组成的马尔可夫链，这个链在时间上生成一个不可直接观测的 **状态序列** ，并且每个状态都会根据一定的概率分布产生一个可观测的输出，从而形成 **观测序列** 。换句话说：HMM 描述了隐藏的状态在时间上按马尔可夫过程演化，而每个时刻的观测值则由对应的隐藏状态随机生成。其形式定义如下：
 
 ![隐马尔可夫模型1](src\content\posts\hidden-markov-model\隐马尔可夫模型1.png)
 
-## 概念介绍
+## 概念介绍（Basic Concepts）
 
-$Q$ 是所有可能的 **状态集合** ， $V$ 是所有可能的 **观测集合** ：
+$Q$ 是所有可能的 **状态集合** ， $V$ 是所有可能的 **观测集合**：
 
 $$
 Q = \{ q_1, q_2, \ldots, q_N \} \quad V = \{ v_1, v_2, \ldots, v_M \}
@@ -25,13 +25,13 @@ $$
 
 其中 $N$ 是可能的状态数， $M$ 是可能的观测数。
 
-$I$ 是长度为 $T$ 的 **状态序列** ， $O$ 是对应的 **观测序列** ：
+$I$ 是长度为 $T$ 的 **状态序列** ， $O$ 是对应的 **观测序列**：
 
 $$
 I = \{ i_1, i_2, \ldots, i_T \} \quad O = \{ o_1, o_2, \ldots, o_T \}
 $$
 
-$A$ 是 **状态转移概率矩阵** ：
+$A$ 是 **状态转移概率矩阵**：
 
 $$
 A = [a_{ij}]_{N \times N}
@@ -43,7 +43,7 @@ $$
 
 $a_{ij}$ 表示在时刻 $t$ 处于状态 $q_i$ 的条件下在时刻 $t+1$ 转移到状态 $q_j$ 的概率。
 
-$B$ 是 **观测概率矩阵** ：
+$B$ 是 **观测概率矩阵**：
 
 $$
 B = [a_{jk}]_{N \times M}
@@ -55,7 +55,7 @@ $$
 
 $b_{jk}$ 表示在时刻 $t$ 处于状态 $q_j$ 的条件下生成观测 $v_k$ 的概率。
 
-$\pi$ 是 **初始状态概率向量** ：
+$\pi$ 是 **初始状态概率向量**：
 
 $$
 \pi = (\pi_1, \pi_2, \ldots, \pi_N)
@@ -73,15 +73,15 @@ $$
 \lambda = (A, B, \pi)
 $$
 
-从定义可知，隐马尔可夫模型作了两个 **基本假设** ：
+从定义可知，隐马尔可夫模型作了两个 **基本假设**：
 
-- 齐次马尔可夫性假设，即假设隐藏的马尔可夫链在任意时刻 $t$ 的状态只依赖于其前一时刻的状态，与其他时刻的状态及观测无关，也与时刻 $t$ 无关：
+- 齐次马尔可夫性假设，即假设隐藏的马尔可夫链在任意时刻 $t$ 的状态只依赖于其前一时刻的状态，与其他时刻的状态及观测无关，也与时刻 $t$ 无关
 
 $$
 P(i_t|i_{t-1}, o_{t-1}, \ldots, i_1, o_1) = P(i_t|i_{t-1})
 $$
 
-- 观测独立性假设，即假设任意时刻的观测只依赖于该时刻的马尔可夫链的状态，与其他观测及状态无关：
+- 观测独立性假设，即假设任意时刻的观测只依赖于该时刻的马尔可夫链的状态，与其他观测及状态无关
 
 $$
 P(o_t|i_T, o_T, \ldots, i_t, i_{t-1}, o_{t-1} \ldots, i_1, o_1) = P(o_t|i_t)
@@ -103,9 +103,11 @@ $$
 
 下面就详细讲解一下这三个问题的解决方案。
 
-## 计算问题
+## 计算问题（Computational Problem）
 
-> 对于前/后向算法来说，只看下面的讲解理解起来可能会较为困难，请自行结合概率图状态转移的思路进行理解（最好画图），也可以辅助其他博客进行学习。值得注意的是，前/后向算法本质是一个动态规划算法，因此了解动态规划对理解前/后向算法有帮助。
+对于前/后向算法来说，只看下面的讲解理解起来可能会较为困难，请自行结合概率图状态转移的思路进行理解（最好画图）。值得注意的是，前/后向算法本质是一个动态规划算法，因此了解动态规划对理解前/后向算法有帮助。
+
+> 下面的博客也有前/后向算法的详细介绍
 
 [隐马尔可夫模型（HMM）三大基础问题之——评估问题](https://blog.csdn.net/qq_44648285/article/details/146015265)
 
@@ -267,9 +269,11 @@ $$
     \xi_t(i, j) = \frac{\alpha_t(i) a_{ij} b_{jo_{t+1}} \beta_{t+1}(j)}{\sum_{i=1}^{N} \sum_{j=1}^{N} \alpha_t(i) a_{ij} b_{jo_{t+1}} \beta_{t+1}(j)}
     $$
 
-## 学习问题
+## 学习问题（Learning Problem）
 
-> 学习 Baum-Welch 算法需要用到 EM 算法的知识，如果不知道什么是 EM 算法可以到本系列的上一篇博客进行学习（直接看 EM 算法的部分即可）。而且 Baum-Welch 算法本身也非常复杂，可以结合其他的博客辅助理解。
+学习 Baum-Welch 算法需要用到 EM 算法的知识，如果不知道什么是 EM 算法可以到本系列的上一篇博客进行学习（直接看 EM 算法的部分即可）。
+
+> Baum-Welch 算法本身也非常复杂，可以结合其他的博客辅助理解。
 
 [隐马尔可夫模型之Baum-Welch算法详解](https://blog.csdn.net/u014688145/article/details/53046765)
 
@@ -356,12 +360,12 @@ $$
 
     由于接下来仅极大化 $\lambda$ ，所以 $P(O|\bar{\lambda})$ 可以看做常数项进行略去，所以 $Q$ 函数可以进一步化简：
 
-    $$
-    \begin{aligned}
-    Q(\lambda, \bar{\lambda}) &= \sum_{I} P(O, I| \bar{\lambda}) \log P(O, I|\lambda) = \sum_{I} P(O, I| \bar{\lambda}) \left( \log \pi_{i_1} + \sum_{t=1}^{T-1} \log a_{i_t i_{t+1}} + \sum_{t=1}^{T} \log b_{i_t o_t} \right) \\
-    &= \sum_{I} P(O, I| \bar{\lambda}) \log \pi_{i_1} + \sum_{I} P(O, I| \bar{\lambda}) \left( \sum_{t=1}^{T-1} \log a_{i_t i_{t+1}} \right) + \sum_{I} P(O, I| \bar{\lambda}) \left( \sum_{t=1}^{T} \log b_{i_t o_t} \right)
-    \end{aligned}
-    $$
+$$
+\begin{aligned}
+Q(\lambda, \bar{\lambda}) &= \sum_{I} P(O, I| \bar{\lambda}) \log P(O, I|\lambda) = \sum_{I} P(O, I| \bar{\lambda}) \left( \log \pi_{i_1} + \sum_{t=1}^{T-1} \log a_{i_t i_{t+1}} + \sum_{t=1}^{T} \log b_{i_t o_t} \right) \\
+&= \sum_{I} P(O, I| \bar{\lambda}) \log \pi_{i_1} + \sum_{I} P(O, I| \bar{\lambda}) \left( \sum_{t=1}^{T-1} \log a_{i_t i_{t+1}} \right) + \sum_{I} P(O, I| \bar{\lambda}) \left( \sum_{t=1}^{T} \log b_{i_t o_t} \right)
+\end{aligned}
+$$
 
 3. EM 算法 M 步：极大化 $Q$ 函数
 
@@ -411,11 +415,7 @@ $$
         $$
 
         $$
-        \pi_i = \frac{P(O, i_1 = q_i|\bar{\lambda})}{P(O|\bar{\lambda})}
-        $$
-
-        $$
-        \pi_i = \gamma_1(i)
+        \pi_i = \frac{P(O, i_1 = q_i|\bar{\lambda})}{P(O|\bar{\lambda})} = \gamma_1(i)
         $$
 
         其中 $\gamma$ 就是[算法推广](#算法推广)中求解的 $\gamma$ 。
@@ -471,7 +471,13 @@ $$
         分子分母同时除以 $P(O|\bar{\lambda})$ 可得：
 
         $$
-        a_{ij} = \frac{\displaystyle\frac{\sum_{t=1}^{T-1} P(O, i_t = q_i, i_{t+1} = q_j | \bar{\lambda})}{P(O|\bar{\lambda})}}{\displaystyle\frac{\sum_{t=1}^{T-1} P(O, i_t = q_i | \bar{\lambda})}{P(O|\bar{\lambda})}} = \frac{\sum_{t=1}^{T-1} P(i_t = q_i, i_{t+1} = q_j | O, \bar{\lambda})}{\sum_{t=1}^{T-1} P(i_t = q_i | O, \bar{\lambda})} = \frac{\sum_{t=1}^{T-1} \xi_t(i, j)}{\sum_{t=1}^{T-1} \gamma_t(i)}
+        a_{ij} = \frac{\displaystyle\frac{\sum_{t=1}^{T-1} P(O, i_t = q_i, i_{t+1} = q_j | \bar{\lambda})}{P(O|\bar{\lambda})}}{\displaystyle\frac{\sum_{t=1}^{T-1} P(O, i_t = q_i | \bar{\lambda})}{P(O|\bar{\lambda})}} = \frac{\sum_{t=1}^{T-1} P(i_t = q_i, i_{t+1} = q_j | O, \bar{\lambda})}{\sum_{t=1}^{T-1} P(i_t = q_i | O, \bar{\lambda})}
+        $$
+
+        也就是：
+
+        $$
+        a_{ij} = \frac{\sum_{t=1}^{T-1} \xi_t(i, j)}{\sum_{t=1}^{T-1} \gamma_t(i)}
         $$
 
         其中 $\gamma$ 和 $\xi$ 就是[算法推广](#算法推广)中求解的 $\gamma$ 和 $\xi$ 。
@@ -482,8 +488,9 @@ $$
 
         $$
         \begin{aligned}
-        \sum_{I} P(O, I|\bar{\lambda}) \left( \sum_{t=1}^{T} \log b_{i_t o_t} \right) &= \sum_{t=1}^{T} \sum_{j=1}^{N} \log b_{j o_t} \left[ \sum_{i_1, \ldots, i_{t-1}, i_{t+1}, \ldots, i_T} P(O, i_1, \ldots, i_t = q_j, \ldots, i_T|\bar{\lambda}) \right] \\
-        &= \sum_{t=1}^{T} \sum_{j=1}^{N} \log b_{j o_t} P(O, i_t = q_j|\bar{\lambda})
+        &\sum_{I} P(O, I|\bar{\lambda}) \left( \sum_{t=1}^{T} \log b_{i_t o_t} \right) \\
+        =& \sum_{t=1}^{T} \sum_{j=1}^{N} \log b_{j o_t} \left[ \sum_{i_1, \ldots, i_{t-1}, i_{t+1}, \ldots, i_T} P(O, i_1, \ldots, i_t = q_j, \ldots, i_T|\bar{\lambda}) \right] \\
+        =& \sum_{t=1}^{T} \sum_{j=1}^{N} \log b_{j o_t} P(O, i_t = q_j|\bar{\lambda})
         \end{aligned}
         $$
 
@@ -526,14 +533,22 @@ $$
         分子分母同时除以 $P(O|\bar{\lambda})$ 可得：
 
         $$
-        b_{jk} = \frac{\displaystyle\frac{\sum_{t=1}^{T} P(O, i_t = q_j | \bar{\lambda}) \mathbb{I}(o_t = v_k)}{P(O|\bar{\lambda})}}{\displaystyle\frac{\sum_{t=1}^{T} P(O, i_t = q_j | \bar{\lambda})}{P(O|\bar{\lambda})}} = \frac{\sum_{t=1}^{T} P(i_t = q_j | O, \bar{\lambda}) \mathbb{I}(o_t = v_k)}{\sum_{t=1}^{T} P(i_t = q_j | O, \bar{\lambda})} = \frac{\sum_{t=1, o_t = v_k}^{T} \gamma_t(j)}{\sum_{t=1}^{T} \gamma_t(j)}
+        b_{jk} = \frac{\displaystyle\frac{\sum_{t=1}^{T} P(O, i_t = q_j | \bar{\lambda}) \mathbb{I}(o_t = v_k)}{P(O|\bar{\lambda})}}{\displaystyle\frac{\sum_{t=1}^{T} P(O, i_t = q_j | \bar{\lambda})}{P(O|\bar{\lambda})}} = \frac{\sum_{t=1}^{T} P(i_t = q_j | O, \bar{\lambda}) \mathbb{I}(o_t = v_k)}{\sum_{t=1}^{T} P(i_t = q_j | O, \bar{\lambda})}
+        $$
+
+        也就是：
+
+        $$
+        b_{jk} = \frac{\sum_{t=1, o_t = v_k}^{T} \gamma_t(j)}{\sum_{t=1}^{T} \gamma_t(j)}
         $$
 
         其中 $\gamma$ 就是[算法推广](#算法推广)中求解的 $\gamma$ 。
 
-## 预测问题
+## 预测问题（Prediction Problem）
 
-> Viterbi 算法也是一个动态规划算法，熟悉动态规划的读者理解起来会比较轻松。如果不了解什么是动态规划的话可以观看下列视频后再来看详细推导。
+Viterbi 算法也是一个动态规划算法，熟悉动态规划的读者理解起来会比较轻松。
+
+> 如果不了解什么是动态规划的话可以观看下列视频后再来看详细推导。
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=596607341&bvid=BV1ZB4y1y7gC&cid=720556511&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
@@ -543,7 +558,7 @@ $$
 
 ### 近似算法
 
-近似算法思想：在每个时刻 $t$ 选择在该时刻最有可能出现的状态 $i_t^*$ ，从而得到一个状态序列 $I^* = (i_1^*, i_2^*, \ldots, i_T^*)$ ，将它作为预测的结果。具体算法如下：
+在每个时刻 $t$ 选择在该时刻最有可能出现的状态 $i_t^*$ ，从而得到一个状态序列 $I^* = (i_1^*, i_2^*, \ldots, i_T^*)$ ，将它作为预测的结果。
 
 给定隐马尔可夫模型 $\lambda$ 和观测序列 $O$ ，在时刻 $t$ 处于状态 $q_i$ 的概率$\gamma_t(i)$ 为：
 
@@ -753,7 +768,7 @@ if __name__ == '__main__':
     print('Log-lik   :', model.score(obs_seq))
 ```
 
-## 计算问题
+## 1. 计算问题
 
 这个部分的代码可以观看[上面的讲解](#计算问题)对照学习。
 
@@ -803,7 +818,7 @@ def score(self, obs):
     return float(_logsumexp(alpha[-1]))
 ```
 
-## 学习问题
+## 2. 学习问题
 
 这个部分的代码可以观看[上面的讲解](#baum-welch-算法)对照学习。
 
@@ -848,7 +863,7 @@ def fit(self, sequences, max_iter=100, tol=1e-4, verbose=False):
     return self
 ```
 
-## 预测问题
+## 3. 预测问题
 
 这个部分的代码可以观看[上面的讲解](#viterbi-算法)对照学习。
 
@@ -878,7 +893,7 @@ def viterbi(self, obs):
 
 1. HMM 中用到的 BW 算法是特殊的 EM 算法，它究竟特殊在哪里？
 
-    HMM 的 Baum–Welch 算法是 **EM 算法的一个特例** ，它特殊的地方在于它的 **隐变量结构** 和 **E 步的计算方式** 。
+    Baum–Welch 算法是 **EM 算法的一个特例** ，它特殊的地方在于它的 **隐变量结构** 和 **E 步的计算方式** 。
 
     - 特殊的隐变量结构 ———— 马尔可夫链
 
