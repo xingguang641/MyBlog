@@ -9,9 +9,9 @@ draft: false
 
 # 高斯混合模型基本原理
 
-前面我们讲到了诸多的 **分类算法（Classification Algorithm）**，虽然它们的数学原理差别很大，但它们其实都属于 **有监督学习（Supervised Learning）**这一个类别当中。也就是说：它们在训练过程中需要数据拥有自己对应的标签。
+前面我们讲到了诸多的 **分类算法（Classification Algorithm）**，虽然它们的数学原理差别很大，但它们其实都属于 **有监督学习（Supervised Learning）** 这一个类别当中。也就是说：它们在训练过程中需要数据拥有自己对应的标签。
 
-而我们今天要讲的 **高斯混合模型**（Gaussian Mixture Model，简称 GMM），它是一个 **聚类算法（Clustering Algorithm）**，而聚类算法不同于分类算法，它们属于 **无监督学习（Unsupervised Learning）**这一类别。也就是说：高斯混合模型不要求数据有自己的标签，高斯混合模型会自动地将数据分为不同的类别。
+而我们今天要讲的 **高斯混合模型**（Gaussian Mixture Model，简称 GMM），它是一个 **聚类算法（Clustering Algorithm）**，而聚类算法不同于分类算法，它们属于 **无监督学习（Unsupervised Learning）** 这一类别。也就是说：高斯混合模型不要求数据有自己的标签，高斯混合模型会自动地将数据分为不同的类别。
 
 我们来思考一个简单的问题：如果给你一些数据，你想用什么模型去拟合这些数据的分布呢？可能很多人的第一想法就是用正态分布去拟合，毕竟正态分布是生活中最为常见的分布。其实这个想法是正确的，但仍有缺陷：虽然正态分布是最常见的分布，但现实世界太过于复杂，我们不能确保一个正态分布就能拟合出所有的数据集。对此，我们可以试着想一想：如果用多个正态分布去拟合，效果会不会更好？没错，这正是高斯混合模型的出发点。
 
@@ -83,9 +83,9 @@ $$
 $$
 \begin{align*}
 \log P(X | \theta) &= \sum_{Z} q(Z | \theta) \log \frac{P(X, Z | \theta)}{q(Z | \theta)} - \sum_{Z} q(Z | \theta) \log \frac{P(Z | X, \theta)}{q(Z | \theta)} \\
-&= \mathbb{E}_{Z \sim P(Z|X,\theta^{(t)})} \Big[ \log P(X, Z | \theta) \Big] - \sum_{Z} q(Z | \theta) \log q(Z | \theta) + \operatorname{KL}(q(Z | \theta) \parallel P(Z | X, \theta)) \\
-&= \mathbb{E}_{Z \sim P(Z|X,\theta^{(t)})} \Big[\log P(X, Z | \theta) \Big] + H(q(Z | \theta)) + \operatorname{KL}(q(Z | \theta) \parallel P(Z | X, \theta)) \\
-&= ELBO(q, \theta | X) + \operatorname{KL}(q(Z | \theta) \parallel P(Z | X, \theta))
+&= \mathbb{E}_{Z \sim P(Z|X,\theta^{(t)})} \Big[ \log P(X, Z | \theta) \Big] - \sum_{Z} q(Z | \theta) \log q(Z | \theta) + \operatorname{KL}\Big(q(Z | \theta) \parallel P(Z | X, \theta)\Big) \\
+&= \mathbb{E}_{Z \sim P(Z|X,\theta^{(t)})} \Big[\log P(X, Z | \theta) \Big] + H(q(Z | \theta)) + \operatorname{KL}\Big(q(Z | \theta) \parallel P(Z | X, \theta)\Big) \\
+&= ELBO(q, \theta | X) + \operatorname{KL}\Big(q(Z | \theta) \parallel P(Z | X, \theta)\Big)
 \end{align*}
 $$
 
@@ -109,7 +109,7 @@ EM 算法本质上是通过最大化 ELBO 来间接最大化对数似然函数�
 将上面的式子稍微变形：
 
 $$
-L(\theta) - \text{ELBO}(q,\theta | X) = \text{KL}(q \parallel P(Z | X,\theta))
+L(\theta) - \text{ELBO}(q,\theta | X) = \text{KL}\Big(q \parallel P(Z | X,\theta)\Big)
 $$
 
 要使 ELBO 逼近 $L(\theta)$ ，就要让 KL 散度最小，先通过当前参数 $\theta^{(t)}$ 估计 $q^{(t+1)}$ ，得 $q^{(t+1)}(Z) = P\left(Z | X, \theta^{(t)}\right)$ ，于是有：
@@ -117,7 +117,7 @@ $$
 $$
 \begin{align*}
 L(\theta) &= \log P(X | \theta) = \mathbb{E}_{Z \sim P(Z | X, \theta^{(t)})} \Big[ \log P(X | \theta) \Big] \\
-&= ELBO(\theta | q^{(t+1)}, X) + \text{KL}(P(Z | X, \theta^{(t)}) \parallel P(Z | X, \theta))
+&= ELBO(\theta | q^{(t+1)}, X) + \text{KL}\Big(P(Z | X, \theta^{(t)}) \parallel P(Z | X, \theta)\Big)
 \end{align*}
 $$
 
@@ -145,7 +145,7 @@ $$
 
 ### E-step
 
-我们先用 **琴声不等式（Jensen's inequality）**放缩的方式求解出 ELBO：
+我们先用 **琴声不等式（Jensen's inequality）** 放缩的方式求解出 ELBO：
 
 $$
 \begin{align*}

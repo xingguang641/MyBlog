@@ -21,6 +21,12 @@ draft: false
 
 3. [【Mathigon】贝叶斯推断和图模型](https://mathigon.org/course/bayesian-inference-and-graphical-models/introduction)
 
+## 高斯网络
+
+1. [高斯网络详细讲解](https://liangliangzhuang.github.io/MachineLearningNote/高斯网络.html)
+
+2. [ML白板推导18：高斯网络](https://zhuanlan.zhihu.com/p/463764463)
+
 ## 马尔科夫随机场
 
 1. [AI算法工程师手册：马尔可夫随机场](https://www.bookstack.cn/read/huaxiaozhuan-ai/spilt.3.a1c8cb11a2e246b2.md)
