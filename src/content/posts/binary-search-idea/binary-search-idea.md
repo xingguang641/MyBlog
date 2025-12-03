@@ -86,19 +86,19 @@ draft: false
 
 2. **关键的单调性**
 
-    如果 $P(X)$ 成立（即我们可以在最大值 $\le X$ 的限制下完成任务），那么对于任何 $X' > X$ 的值，$P(X')$ 也一定成立。
+    如果 $P(X)$ 成立，那么对于任何 $X' > X$ 的值，$P(X')$ 也一定成立。
 
-    *   **直观理解：** 如果我能在最长耗时 10 分钟的限制下完成所有工作，那我当然也能在最长耗时 11 分钟的限制下完成。
+    *   **直观理解**：如果能在最长耗时 10 分钟的限制下完成工作，那么也能在最长耗时 11 分钟的限制下完成。
 
-    相反，如果 $P(X)$ 不成立（即最大值 $\le X$ 的限制无法满足），那么对于任何 $X'' < X$ 的值，$P(X'')$ 也一定不成立。
+    如果 $P(X)$ 不成立，那么对于任何 $X'' < X$ 的值，$P(X'')$ 也一定不成立。
 
-    *   **直观理解：** 如果我不能在最长耗时 10 分钟的限制下完成所有工作，那我肯定也不能在最长耗时 9 分钟的限制下完成。
+    *   **直观理解**：如果不能在最长耗时 10 分钟的限制下完成工作，那肯定不能在最长耗时 9 分钟的限制下完成。
 
 3. **形成 "False-True" 序列**
 
     这就形成了一个关于 $X$ 的单调序列：
 
-    $$\underbrace{\text{False}, \dots, \text{False}}_{\text{太小，无法满足}}, \underbrace{\text{True}}_{\text{最优解 } X_{\text{opt}}}, \underbrace{\text{True}, \dots}_{\text{可以满足，但不是最优}}$$
+    $$\underbrace{\text{False}, \dots, \text{False}}_{\text{无法满足}}, \underbrace{\text{True}}_{\text{最优解 } X_{\text{opt}}}, \underbrace{\text{True}, \dots, \text{True}}_{\text{可以满足}}$$
 
 由于这个判定函数的返回值是 **单调的**（从 $\text{False}$ 变为 $\text{True}$ ），因此我们就可以对答案的范围进行二分查找。
 
@@ -195,6 +195,18 @@ int main() {
 
 }
 ```
+
+---
+
+# 逆向求解相关问题收集
+
+## 刀砍毒杀怪兽问题
+
+[题目链接](https://github.com/algorithmzuo/algorithm-journey/blob/main/src/class051/Code07_CutOrPoison.java)
+
+## 可以安排的最多任务数目
+
+[题目链接](https://leetcode.cn/problems/maximum-number-of-tasks-you-can-assign/description/)
 
 ---
 
