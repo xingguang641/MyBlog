@@ -13,7 +13,7 @@ draft: false
 
 在许多复杂的模型中（例如具有高维隐变量的贝叶斯模型或深度学习模型），精确推断（Exact Inference）往往因为涉及到复杂的积分或求和运算而 **计算代价高昂** ，甚至是 **难以计算** 。近似推断的目的就是在 **计算精度和计算资源之间进行权衡** ，以便在有限的时间内获得一个足够好的近似解。
 
-## 近似推断概览
+## 近似推断概览（Overview）
 
 近似推断方法主要分为两大类：
 
@@ -409,17 +409,17 @@ $$
 P(z | x) = \frac{P(x, z)}{P(x)}
 $$
 
-直接最小化 $\displaystyle KL\Big(q(z)|P(z|x)\Big)$ 不切实际，因为 $P(x)$ 很难计算。通过代入后验的定义，我们从 KL 散度展开：
+直接最小化 $\displaystyle \text{KL}\Big(q(z)|P(z|x)\Big)$ 不切实际，因为 $P(x)$ 很难计算。通过代入后验的定义，我们从 KL 散度展开：
 
 $$
-KL\Big(q(z) \parallel P(z|x)\Big) = \int q(z) \log \frac{q(z)}{P(z|x)} \, dz
+\text{KL}\Big(q(z) \parallel P(z|x)\Big) = \int q(z) \log \frac{q(z)}{P(z|x)} \, dz
 $$
 
 把后验分布代入公式可得：
 
 $$
 \begin{align*}
-KL\Big(q(z) \parallel P(z|x)\Big) 
+\text{KL}\Big(q(z) \parallel P(z|x)\Big) 
 &= \int q(z) \log \frac{q(z)}{P(x,z)/P(x)} \, dz \\
 &= \int q(z) \log \frac{q(z)}{P(x,z)} \, dz + \int q(z) \log P(x) \, dz
 \end{align*}
@@ -428,7 +428,7 @@ $$
 因为 $\log P(x)$ 与 $z$ 无关且 $\displaystyle \int q(z) \, dz = 1$ ，所以公式可以化简为：
 
 $$
-KL\Big(q(z) \parallel P(z|x)\Big) = \int q(z) \log \frac{q(z)}{P(x, z)} \, dz + \log P(x)
+\text{KL}\Big(q(z) \parallel P(z|x)\Big) = \int q(z) \log \frac{q(z)}{P(x, z)} \, dz + \log P(x)
 $$
 
 于是得到：
@@ -678,7 +678,7 @@ $$
 
 在变分推断（VI）、马尔可夫链蒙特卡洛（MCMC）和重要性采样（IS）等全局近似方法中，推断要么依赖一个整体的可导优化目标，要么直接依赖复杂的采样机制来重构后验。这些方法皆是 **从全局视角出发** 处理后验分布。
 
-然而，在许多贝叶斯模型中，后验分布往往具有清晰的 **可分解的因子结构**：由先验和大量局部似然项以乘积形式组成。EP 的核心思想是 **化整为零**：它不从整体入手，而是让每个因子通过 **局部信息传递** 和 **反复协商** ，逐步校准全局近似分布，直至收敛稳定。
+然而在许多贝叶斯模型中，后验分布往往具有清晰的 **可分解的因子结构**：由先验和大量局部似然项以乘积形式组成。EP 的核心思想是 **化整为零** ，它不从整体入手，而是让每个因子通过 **局部信息传递** 和 **反复协商** ，逐步校准全局近似分布，直至收敛稳定。
 
 EP 避免直接处理全局 KL 散度，而是在 “因子—全局” 的往复过程中，利用反向 KL 投影逐步调整近似分布，使其尽可能保留真实后验的局部矩信息。
 
@@ -694,7 +694,7 @@ $$
 
 其中 $t_0(\theta) = P(\theta)$ 为先验因子，其余 $t_i(\theta)$ 对应似然项。
 
-EP 并不要求因子间的独立性，而是在算法设计上引入一组 **可处理的（Tractable）** 近似因子 $\bar{t}_i(\theta) \in \mathcal{Q}$ ，使得所有近似因子的乘积仍属于某个选定的指数族 $\mathcal{Q}$ ：
+EP 并不要求因子间的独立性，而是在算法设计上引入一组 **可处理的** 近似因子 $\bar{t}_i(\theta) \in \mathcal{Q}$ ，使得所有近似因子的乘积仍属于某个选定的指数族 $\mathcal{Q}$ ：
 
 $$
 q(\theta) \propto \prod_{i=0}^{n} \bar{t}_i(\theta) \quad q(\theta) \in \mathcal{Q}
@@ -728,9 +728,9 @@ $$
 
     它是将 Cavity 分布与 **真实的局部因子 $t_i(\theta)$** 相乘得到的。**倾斜分布承载了待投影的真实局部信息**。
 
-由于 $\tilde{P}_i(\theta)$ 通常不属于我们选定的指数族 $\mathcal{Q}$ ，我们无法直接用其作为全局表达，而只能从中抽取 **充分统计量**（如期望 $m_i$、协方差 $S_i$ 等）作为 EP 迭代的 **关键输入**：
+由于 $\bar{P}_i(\theta)$ 通常不属于我们选定的指数族 $\mathcal{Q}$ ，我们无法直接用其作为全局表达，而只能从中抽取 **充分统计量**（如期望 $m_i$、协方差 $S_i$ 等）作为 EP 迭代的 **关键输入**：
 $$
-\mathbb{E}_{\tilde{P}_i}[u(\theta)] = \int u(\theta) \tilde{P}_i(\theta) d\theta
+\mathbb{E}_{\bar{P}_i}[u(\theta)] = \int u(\theta) \bar{P}_i(\theta) d\theta
 $$
 
 ## 投影机制（Moment Projection）
@@ -738,12 +738,16 @@ $$
 EP 的更新本质上是通过 **矩匹配投影** ，将 Tilted Distribution 中蕴含的真实局部信息 “压缩” 到指数族 $\mathcal{Q}$ 中，以校准全局近似。这一投影定义为最小化 **反向 KL 散度**：
 
 $$
-q^{\text{new}}(\theta) = \arg \min_{q \in \mathcal{Q}} KL\Big(\bar{P}_i(\theta) \parallel q(\theta)\Big)
+q^{\text{new}}(\theta) = \arg \min_{q \in \mathcal{Q}} \text{KL}\Big(\bar{P}_i(\theta) \parallel q(\theta)\Big)
 $$
 
 这也是 EP 与 VI 最根本的区别：EP 采用反向 KL 散度。与 VI 的前向 KL 倾向于收缩分布不同，反向 KL 倾向于 **覆盖真实分布的支撑域** ，从而避免了近似分布过度收缩（零塌陷）的问题。
 
-在指数族框架下，最小化反向 KL 等价于让新的近似分布 $q^{\text{new}}$ 与 $\tilde{P}_i$ **匹配同一组充分统计量**（矩匹配）：
+> 关于正向 KL 和反向 KL 的区别可以看下面这个视频
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=114558102410096&bvid=BV1r6jHzpE1J&cid=30166354742&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+在指数族框架下，最小化反向 KL 等价于让新的近似分布 $q^{\text{new}}$ 与 $\bar{P}_i$ **匹配同一组充分统计量（矩匹配）**：
 
 $$
 \mathbb{E}_{q^{\text{new}}}\Big[u(\theta)\Big] = \mathbb{E}_{\bar{P}_i}\Big[u(\theta)\Big]
@@ -755,7 +759,9 @@ $$
 \bar{t}_i^{\text{new}}(\theta) \propto \frac{q^{\text{new}}(\theta)}{q_{-i}(\theta)}
 $$
 
-这个更新将局部的真实信息传回到全局近似中，同时保持了指数族结构。在自然参数空间中，更新表现为参数的相减：
+这个更新将局部的真实信息传回到全局近似中，同时保持了指数族结构。
+
+在自然参数空间中，更新表现为参数的相减：
 
 $$
 \lambda_i^{\text{new}} = \eta^{\text{new}} - \eta_{-i}
@@ -763,7 +769,7 @@ $$
 
 其中 $\eta^{\text{new}}$ 和 $\eta_{-i}$ 分别是 $q^{\text{new}}$ 和 $q_{-i}$ 的自然参数。
 
-为提高稳定性，实际实现常采用 **阻尼**（Damping）：
+为提高稳定性，实际实现常采用 **阻尼（Damping）**：
 
 $$
 \lambda_i \leftarrow (1 - \rho) \lambda_i + \rho \lambda_i^{\text{new}} \quad 0 < \rho \leq 1
@@ -781,7 +787,7 @@ $$
 
 由于该映射 $F$ 通常 **不对应某个显式的优化目标** ，EP 缺乏 VI 的 **变分下界保证** ，也不具备 MCMC 的 **渐近一致性** 。其收敛性分析依赖于局部线性化，通过调节雅可比矩阵 $J$ 的谱半径来确保收敛。
 
-尽管缺乏全局理论保证，EP 在许多模型中表现出良好的数值稳定性。其优势在于反向 KL 散度 $KL(\tilde{P}_i \parallel q)$ 确保了近似后验 $q$ 能够 **尽可能保留** 真实分布的支撑域，并在多模态（Multimodal）或强相关结构下，维持 **更大的方差、更宽的尾部和更忠实的协方差结构** 。这是 EP 在高斯过程、鲁棒回归等非共轭模型中，表现常优于标准 VI 的主要原因。
+尽管缺乏全局理论保证，EP 在许多模型中表现出良好的数值稳定性。其优势在于反向 KL 散度 $\text{KL}(\tilde{P}_i \parallel q)$ 确保了近似后验 $q$ 能够 **尽可能保留** 真实分布的支撑域，并在多模态（Multimodal）或强相关结构下，维持 **更大的方差、更宽的尾部和更忠实的协方差结构** 。这是 EP 在高斯过程、鲁棒回归等非共轭模型中，表现常优于标准 VI 的主要原因。
 
 ---
 
