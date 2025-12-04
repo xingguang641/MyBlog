@@ -34,7 +34,7 @@ draft: false
 
 ---
 
-# 马尔可夫蒙特卡洛
+# 马尔可夫蒙特卡洛基本原理
 
 **马尔可夫蒙特卡洛方法**（Markov Chain Monte Carlo，简称 MCMC）是一类用于从复杂概率分布中抽样的算法。它的提出源于一个普遍而棘手的问题：当一个概率分布无法直接采样，且归一化常数难以计算时，我们仍希望获得来自该分布的代表性样本，以便进行积分估计、贝叶斯推断和模型分析。
 
@@ -54,7 +54,7 @@ $$
 
 因此我们迫切需要一种方法，能够在不知道 $Z$ 的前提下，从 $P(x)$ 中生成近似样本。MCMC 正是针对这一难题提出的：它不要求直接采样，而是构造一个特殊的随机过程，其长期行为自然会收敛到目标分布。
 
-![MCMC 图像](src\content\posts\approximate-inference\MCMC1.jpg)
+![马尔可夫蒙特卡洛图像](src\content\posts\approximate-inference\马尔可夫蒙特卡洛1.jpg)
 
 ## 蒙特卡洛方法（Monte Carlo Method）
 
@@ -295,7 +295,7 @@ Gibbs 采样的优势在于简洁高效，只要各维度的条件分布可直�
 
 ---
 
-# 重要性采样
+# 重要性采样基本原理
 
 在复杂概率模型迅速发展的 1990 年代，贝叶斯推断面临着一个核心困难：随着模型结构变得越来越灵活，后验分布 $P(z|x)$ 几乎不可能再通过解析方式获得。尽管当时已有 MCMC 等基于采样的推断方法，但其计算代价在高维模型或大数据场景下往往难以承受，这促使研究者寻找一种更稳定、更具可扩展性的近似思路。
 
@@ -311,7 +311,7 @@ $$
 
 在此情形下，**重要性采样（Importance Sampling）** 提供了一种从可采样分布转移到目标分布的基本技术手段。通过从一个易处理的提议分布中采样并施加权重修正，可以构造对原期望的近似估计。该思想既构成了 VI 中随机梯度估计方法的理论基础，也与 MCMC 中的若干技巧共享相同的数学机制。
 
-![IS 图像](src\content\posts\approximate-inference\IS1.jpg)
+![重要性采样图像](src\content\posts\approximate-inference\重要性采样1.jpg)
 
 ## 理论基础（Theoretical Foundation）
 
@@ -377,7 +377,7 @@ $$
 
 ---
 
-# 变分推断
+# 变分推断基本原理
 
 在贝叶斯统计中，我们试图求解潜变量的 **后验分布**：
 
@@ -399,7 +399,7 @@ $$
 
 以下从 ELBO 的推导开始，逐步介绍变分推断的理论基础与主要算法步骤。
 
-![VI 图像](src\content\posts\approximate-inference\VI1.jpg)
+![变分推断图像](src\content\posts\approximate-inference\变分推断1.jpg)
 
 ## 证据下界（Evidence Lower Bound Optimization）
 
@@ -674,7 +674,7 @@ $$
 
 ---
 
-# 期望传播
+# 期望传播基本原理
 
 在变分推断（VI）、马尔可夫链蒙特卡洛（MCMC）和重要性采样（IS）等全局近似方法中，推断要么依赖一个整体的可导优化目标，要么直接依赖复杂的采样机制来重构后验。这些方法皆是 **从全局视角出发** 处理后验分布。
 
@@ -682,7 +682,7 @@ $$
 
 EP 避免直接处理全局 KL 散度，而是在 “因子—全局” 的往复过程中，利用反向 KL 投影逐步调整近似分布，使其尽可能保留真实后验的局部矩信息。
 
-![EP 图像](src\content\posts\approximate-inference\EP1.jpg)
+![期望传播图像](src\content\posts\approximate-inference\期望传播1.jpg)
 
 ## 因子结构（Factorization Structure）
 
