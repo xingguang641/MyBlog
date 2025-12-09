@@ -2,7 +2,7 @@
 title: 【机器学习笔记】数据处理 (Google ML)
 published: 2025-10-23
 description: 基于 Google ML 课程的数据处理笔记
-tags: [Machine Learning, Google ML, Data Processing, Feature Engineering]
+tags: [Machine Learning, Google ML, Data Processing, Feature Engineering, Note]
 category: ML Note
 draft: false 
 ---
