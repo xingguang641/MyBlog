@@ -7,7 +7,7 @@ category: Guides
 draft: false
 ---
 
-本文将展示基于 [Expressive Code](https://expressive-code.com/) 构建的增强型代码块显示效果。以下示例涵盖了从基础高亮到高级交互的各类场景，更多详细参数配置可参考官方文档。
+> 写在前面：本文将展示基于 [Expressive Code](https://expressive-code.com/) 构建的增强型代码块显示效果。以下示例涵盖了从基础高亮到高级交互的各类场景，更多详细参数配置可参考官方文档。
 
 ## 核心功能演示
 
@@ -53,8 +53,6 @@ Text formatting: [1mBold[0m [2mDimmed[0m [3mItalic[0m [4mUnderline[0m
 console.log('Title attribute example')
 ```
 
-&nbsp;
-
 ```html
 <!-- src/content/index.html -->
 <div>File name comment example</div>
@@ -67,8 +65,6 @@ console.log('Title attribute example')
 echo "This terminal frame has no title"
 ```
 
-&nbsp;
-
 ```powershell title="PowerShell 终端示例"
 Write-Output "This one has a title!"
 ```
@@ -79,8 +75,6 @@ Write-Output "This one has a title!"
 ```sh frame="none"
 echo "Look ma, no frame! (无边框模式)"
 ```
-
-&nbsp;
 
 ```ps frame="code" title="PowerShell Profile.ps1"
 # 强制使用代码编辑器样式，而非默认的终端样式
@@ -169,8 +163,6 @@ function demo() {
 这是一个普通行
 ```
 
-&nbsp;
-
 ```diff
 --- a/README.md
 +++ b/README.md
@@ -241,8 +233,6 @@ function getLongString() {
 }
 ```
 
-&nbsp;
-
 ```js wrap=false
 // 关闭自动换行 (wrap=false)
 function getLongString() {
@@ -259,8 +249,6 @@ function getLongString() {
   return 'This is a very long string that will most probably not fit into the available space unless the container is extremely wide'
 }
 ```
-
-&nbsp;
 
 ```js wrap preserveIndent=false
 // 关闭缩进保留 (文字将顶格换行)
@@ -315,8 +303,6 @@ engine.shutdown({ reason: 'End of example boilerplate code' })
 console.log('Greetings from line 2!')
 console.log('I am on line 3')
 ```
-
-&nbsp;
 
 ```js showLineNumbers=false
 // 显式禁用行号

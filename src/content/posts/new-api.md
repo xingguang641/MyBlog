@@ -9,7 +9,7 @@ draft: false
 
 # NewAPI 项目部署
 
-NewAPI 是一个基于 One API 二次开发的强大的 API 管理与分发系统，支持多种大模型渠道。本文将介绍如何使用 Docker Compose 快速部署一个环境隔离的 NewAPI 实例。
+NewAPI 是一个由 One API 深度二次开发而来的 **统一大模型 API 管理与分发系统** ，它在功能上更完善、在渠道兼容性上也更灵活。通过它，你可以在同一套界面中管理不同来源的模型接口，实现统一鉴权、流量分发、负载均衡以及多渠道容灾，使调用大模型变得更加简单可靠。本文将带你了解如何通过 **Docker Compose** 来快速部署一个环境隔离、配置独立、且易于维护的 NewAPI 实例，适合个人使用，也适合团队在服务器上搭建生产环境。
 
 ## 获取项目代码
 
@@ -17,7 +17,7 @@ NewAPI 是一个基于 One API 二次开发的强大的 API 管理与分发系�
 
 ::github{repo="QuantumNous/new-api"}
 
-首先，使用 Git 将项目克隆到本地：
+首先使用 Git 将项目克隆到本地：
 
 ```bash showLineNumbers
 git clone https://github.com/QuantumNous/new-api.git
@@ -26,9 +26,7 @@ cd new-api
 
 ## 配置 Docker Compose
 
-为了实现数据与宿主机的解耦，我们将使用 Docker 命名卷（Named Volumes）来替代传统的文件路径映射。
-
-请编辑项目根目录下的 `docker-compose.yml` 文件，将其内容替换为以下配置：
+为了实现数据与宿主机的解耦，我们将使用 Docker 命名卷（Named Volumes）来替代传统的文件路径映射。请编辑项目根目录下的 `docker-compose.yml` 文件，将其内容替换为以下配置：
 
 ```yaml showLineNumbers
 # New-API Docker Compose Configuration (独立部署版)
@@ -141,15 +139,20 @@ docker compose up -d
 
 由于我们采用了全容器化部署，以下是一些常用的维护指令：
 
-*   **查看运行日志**:
+*   **查看运行日志**
+
     ```bash
     docker logs -f new-api
     ```
-*   **备份日志文件到本地**:
+
+*   **备份日志文件到本地**
+
     ```bash
     docker cp new-api:/app/logs ./logs_backup
     ```
-*   **停止服务**:
+
+*   **停止服务**
+
     ```bash
     docker compose down
     ```

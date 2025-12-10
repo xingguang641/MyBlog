@@ -1,5 +1,5 @@
 ---
-title: 【ACM 算法随笔】差分思想
+title: 【ACM 算法随笔】差分数组与差分思想
 published: 2025-11-25
 description: 记录一些 ACM 常用技巧
 tags: [Algorithm, Trick, Note, ACM]
@@ -7,7 +7,7 @@ category: ACM Note
 draft: false
 ---
 
-# 差分技巧与差分思想
+# 差分数组基本原理
 
 差分是一种常用的数组处理技巧，它的核心思想是将原本作用在整个区间上的更新，巧妙地转化成只在区间端点进行的局部操作。对一个数组构造差分数组时，我们记录的是相邻元素之间的变化量：
 
