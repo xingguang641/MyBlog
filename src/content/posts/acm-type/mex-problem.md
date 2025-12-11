@@ -1,10 +1,10 @@
 ---
-title: 【ACM 算法随笔】MEX 问题
-published: 2025-11-07
-description: 记录一些 ACM 常用技巧
-tags: [Algorithm, Trick, Note]
-category: ACM Note
-draft: true
+title: 【ACM 算法题单】MEX 问题
+published: 2025-12-11
+description: 记录一些 ACM 常见题型
+tags: [Algorithm, Problem Type, Mex]
+category: ACM Type
+draft: false
 ---
 
 

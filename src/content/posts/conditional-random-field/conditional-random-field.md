@@ -132,7 +132,7 @@ $$
     \text{where } M_i(y_{i-1}, y_i | X) = \exp \left( \sum_{k=1}^{K} w_k f_k(y_{i-1}, y_i, X, i) \right)
     $$
 
-    特别地，对于起始位置 $i = 1$ 和结束位置 $i = n + 1$ 的矩阵定义为（确保初始位置和结尾位置的状态是确定的）：
+    特别地，对于起始位置 $i = 1$ 和结束位置 $i = n + 1$ 的矩阵定义为（确保初始和结尾位置状态确定）：
 
     $$
     \mathbf{M}_1(X) = 
@@ -215,8 +215,10 @@ $$
 P(y_{i-1}, y_i | X) = \frac{\alpha_{i-1}(y_{i-1} = q_j | X) M_i(q_j, q_k | X) \beta_i(y_i = q_k | X)}{Z(X)}
 $$
 
+其中 $Z(X)$ 为归一化因子：
+
 $$
-\text{where } Z(X) = \boldsymbol{\alpha}_n(X)^{\rm T} \mathbf{I} = \boldsymbol{\alpha}_{n+1}(X)^{\rm T} \mathbf{I} = \mathbf{I}^{\rm T} \boldsymbol{\beta}_0(X) \quad \mathbf{I} = (1, \ldots, 1) \in \mathbb{R}^{m \times 1}
+Z(X) = \boldsymbol{\alpha}_n(X)^{\rm T} \mathbf{I} = \boldsymbol{\alpha}_{n+1}(X)^{\rm T} \mathbf{I} = \mathbf{I}^{\rm T} \boldsymbol{\beta}_0(X) \quad \mathbf{I} = (1, \ldots, 1) \in \mathbb{R}^{m \times 1}
 $$
 
 ### 计算期望值
