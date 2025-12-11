@@ -21,7 +21,7 @@ $$
 y = wx + b
 $$
 
-当输入变量扩展到多个维度时（例如根据 “面积” 、“房龄” 、“距离地铁距离” 共同预测 “房价” ），这种思想就推广为 **多元线性回归（Multiple Linear Regression）**。此时模型的目标是找到一个函数，能够描述输入向量 $x = [x_1, x_2, \ldots, x_n]^{\rm T}$ 与输出变量 $y$ 之间的关系：
+当输入变量扩展到多个维度时（例如根据 “面积” 、“房龄” 、“距离地铁距离” 共同预测 “房价” ），这种思想就推广为 **多元线性回归（Multiple Linear Regression）**。此时模型的目标是找到一个函数，它能够描述输入向量 $x = [x_1, x_2, \ldots, x_n]^{\rm T}$ 与输出变量 $y$ 之间的关系：
 
 $$
 y = w^{\rm T} x + b
@@ -37,9 +37,7 @@ $$
 
 # 线性回归代码讲解
 
-为了便于理解和可视化，下面的代码演示了 **简单线性回归**（单特征）的实现过程。
-
-> 先浏览完整代码，建立整体印象。若有不理解的细节，再结合后文的 “原理讲解” 部分对照阅读。
+为了便于理解和可视化，下面的代码展示了 **简单线性回归（单特征）** 的基本实现过程（建议先通读一遍代码以建立整体印象；若有细节暂时不理解，可在阅读后文的 “原理讲解” 部分时再回头对照理解）。
 
 ```py frame="code" title="linear_regression.py"
 import numpy as np
@@ -105,7 +103,7 @@ if __name__ == "__main__":
 
 ## 1. 损失函数
 
-如何衡量模型预测得准不准？我们需要一个评估指标。线性回归最常用的是 **均方误差**（Mean Squared Error，简称 MSE）。下面给出具体代码：
+如何衡量模型预测的准确性？我们需要一个评估指标。在线性回归中，最常用的指标是 **均方误差**（Mean Squared Error，简称 MSE）。下面给出对应的代码实现：
 
 ```py showLineNumbers
 def loss_func(w, b, data):
@@ -116,20 +114,21 @@ def loss_func(w, b, data):
     return total_cost / len(data)
 ```
 
-代码中的 `loss_func` 对应如下数学公式：
+函数 `loss_func` 对应的数学公式为：
 
 $$
 L(w, b) = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
 $$
 
 其中：
-- $y_i$ ：第 $i$ 个样本的真实标签。
-- $\hat{y}_i = w x_i + b$ ：模型对第 $i$ 个样本的预测值。
-- $(y_i - \hat{y}_i)^2$ ：预测误差的平方。
+
+* $y_i$ ：第 $i$ 个样本的真实标签。
+* $\hat{y}_i = w x_i + b$ ：模型对第 $i$ 个样本的预测值。
+* $(y_i - \hat{y}_i)^2$ ：预测误差的平方。
 
 ## 2. 梯度下降
 
-有了损失函数后，我们的目标就是找到最优的 $w$ 和 $b$ 使得损失最小。在没有解析解或特征维度较高时，最常见的方法便是 **梯度下降（Gradient Descent）**———— 根据损失函数的梯度不断更新参数，就像沿着山坡的最陡方向一步步 “下山” 。
+在有了损失函数之后，我们的目标就是找到使损失最小的最优参数 $w$ 和 $b$ 。当解析解不可行或特征维度较高时，最常用的方法便是 **梯度下降（Gradient Descent）**———— 根据损失函数的梯度不断更新参数，就像沿着山坡的最陡方向一步步 “下山” 。
 
 参数更新公式为：
 
@@ -137,21 +136,21 @@ $$
 w \leftarrow w - \alpha \frac{\partial L}{\partial w} \quad\quad b \leftarrow b - \alpha \frac{\partial L}{\partial b}
 $$
 
-其中 $\alpha$ 是 **学习率（Learning Rate）**，控制每一步跨多大。
+其中 $\alpha$ 是 **学习率（Learning Rate）**，用于控制每一步更新的幅度。
 
 ```py showLineNumbers
 def grad_desc(cur_w, cur_b, alpha, data):
     sum_w = 0
     sum_b = 0
-    # 对每个点，代入公式求和
+    # 对每个样本点，累加梯度
     for i in range(len(data)):
         x, y = data[i]
         sum_w += (cur_w * x + cur_b - y) * x
         sum_b += cur_w * x + cur_b - y
-    # 用公式求当前梯度
+    # 计算当前梯度
     grad_w = 2 / len(data) * sum_w
     grad_b = 2 / len(data) * sum_b
-    # 梯度下降，更新当前的w和b
+    # 更新参数
     updated_w = cur_w - alpha * grad_w
     updated_b = cur_b - alpha * grad_b
     return updated_w, updated_b
@@ -165,25 +164,25 @@ $$
 L = \frac{1}{n}\sum e_i^2
 $$
 
-根据链式法则：
+根据链式法则，可以得到：
 
-1.  **对 $w$ 求偏导**：
+1. **对 $w$ 求偏导**
 
-    $$
-    \frac{\partial L}{\partial w} = \frac{1}{n} \sum_{i=1}^{n} 2e_i \cdot \frac{\partial e_i}{\partial w} = \frac{2}{n} \sum_{i=1}^{n} \underbrace{((w x_i + b) - y_i)}_{\text{误差}} \cdot x_i
-    $$
+$$
+\frac{\partial L}{\partial w} = \frac{1}{n} \sum_{i=1}^{n} 2 e_i \cdot \frac{\partial e_i}{\partial w} = \frac{2}{n} \sum_{i=1}^{n} \underbrace{((w x_i + b) - y_i)}_{\text{误差}} \cdot x_i
+$$
 
-2.  **对 $b$ 求偏导**：
+2. **对 $b$ 求偏导**
 
-    $$
-    \frac{\partial L}{\partial b} = \frac{1}{n} \sum_{i=1}^{n} 2e_i \cdot \frac{\partial e_i}{\partial b} = \frac{2}{n} \sum_{i=1}^{n} ((w x_i + b) - y_i)
-    $$
+$$
+\frac{\partial L}{\partial b} = \frac{1}{n} \sum_{i=1}^{n} 2 e_i \cdot \frac{\partial e_i}{\partial b} = \frac{2}{n} \sum_{i=1}^{n} ((w x_i + b) - y_i)
+$$
 
 代码中的更新规则正是对上述推导的直接实现。
 
 ## 3. 内容拓展
 
-虽然在本示例中使用了梯度下降进行训练，但对于线性回归这种凸优化问题，其实可以通过 **最小二乘法（Least Squares）**直接求得参数的闭式解，这被称为 **解析解（Analytical Solution）**。
+虽然在本示例中使用梯度下降进行训练，但对于线性回归这种凸优化问题，其实可以通过 **最小二乘法（Least Squares）** 直接求得参数的闭式解，也就是所谓的 **解析解（Analytical Solution）**。
 
 ### 统计视角下的推导
 
@@ -195,16 +194,16 @@ $$
 
 其中 $\varepsilon_i$ 是随机噪声。
 
-为了让模型拟合最好，我们要最小化残差平方和（SSE）：
+为了让模型拟合效果最佳，我们希望最小化残差平方和（SSE）：
 
 $$
-J(\beta_0, \beta_1) = \sum_{i=1}^{n} (y_i - (\beta_0 + \beta_1 x_i))^2
+J(\beta_0, \beta_1) = \sum_{i=1}^{n} \big(y_i - (\beta_0 + \beta_1 x_i)\big)^2
 $$
 
-这是一个求极值问题。通过对 $\beta_0$ 、$\beta_1$ 分别求偏导并令其为 0，我们可以解出最优参数的闭式解：
+这是一个求极值的问题。通过对 $\beta_0$ 和 $\beta_1$ 分别求偏导并令其为 0，可以得到最优参数的闭式解：
 
 $$
-\hat{\beta}_1 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n} (x_i - \bar{x})^2}
+\hat{\beta}*1 = \frac{\sum*{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n} (x_i - \bar{x})^2}
 $$
 
 $$
@@ -213,10 +212,10 @@ $$
 
 （注：这里的 $\beta_1$ 对应前文的 $w$ ，$\beta_0$ 对应前文的 $b$ ）
 
-### 为什么还需要梯度下降？
+### 为什么仍需要梯度下降？
 
-1.  **计算复杂度**：解析解需要计算矩阵的逆（在多元回归中），当特征维度很高时，计算量极其巨大。而梯度下降通过迭代逼近，在海量数据下更高效。
-2.  **通用性**：绝大多数复杂的机器学习模型（如深度学习）没有解析解，必须依靠梯度下降法进行优化。因此，在线性回归中学习梯度下降，是为了给未来打基础。
+1. **计算复杂度**：解析解需要计算矩阵的逆（尤其在多元回归中），当特征维度很高时，计算量会非常大。而梯度下降通过迭代逼近最优解，在海量数据场景下更加高效。
+2. **通用性**：大多数复杂的机器学习模型（如深度神经网络）没有解析解，必须依赖梯度下降或其变种进行优化。因此在线性回归中学习梯度下降，不仅能理解优化机制，也为后续复杂模型的学习打下基础。
 
 ---
 

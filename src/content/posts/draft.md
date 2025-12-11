@@ -31,3 +31,9 @@ draft: true
 [【算法思维】一招“贡献法”把O(N^3)降维O(N)](https://www.bilibili.com/video/BV1mGS2BeExn/?vd_source=fa3402acfae673b97b3b53d7f33e156b)
 
 > 理解评论区说的支配原理是什么意思
+
+# 折半搜索（常见切题视角）
+
+[算法讲解063【必备】双向广搜](https://www.bilibili.com/video/BV11w411y79P/?vd_source=fa3402acfae673b97b3b53d7f33e156b)
+
+> 视频中的三道题都看

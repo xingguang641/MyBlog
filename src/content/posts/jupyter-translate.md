@@ -70,7 +70,7 @@ access_key_id = "LTAIxxxxxxxxxxxxxxxx"
 access_key_secret = "xxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
-## 开始翻译
+## 执行翻译任务
 
 配置完成后，即可使用命令行工具进行翻译。
 

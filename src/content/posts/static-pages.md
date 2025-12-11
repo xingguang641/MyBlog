@@ -17,9 +17,7 @@ draft: false
 
 ## 创建页面组件
 
-接下来，我们需要创建一个 Astro 页面文件来渲染上述内容。
-
-在 `src/pages` 目录下新建一个 `.astro` 文件（推荐与你的 Markdown 文件名一致，例如 `achievements.astro`）。
+接下来，我们需要创建一个 Astro 页面文件来渲染上述内容。在 `src/pages` 目录下新建一个 `.astro` 文件（推荐与你的 Markdown 文件名一致，例如 `achievements.astro`）。
 
 你可以直接复制 `about.astro` 的样例代码并稍作修改，或者使用下面的自定义模板代码。该代码会自动获取 `src/content/spec` 中的内容并渲染到主布局中。
 
@@ -51,7 +49,7 @@ const { Content } = await render(achievementsPost);
 </MainGridLayout>
 ```
 
-## 配置导航栏入口
+## 配置页面导航
 
 页面文件准备好后，最后一步是将其添加至博客顶部导航栏，使访客能够正常访问。
 

@@ -11,9 +11,9 @@ draft: false
 
 # 条件随机场基本原理
 
-由于 MEMM 存在标注偏置问题，为此 Lafferty J、 Mccallum A 和 Pereira F C N 三人在 2001 年提出了一种 **线性链条件随机场** （Conditional Random Fields，简称 CRF）模型，该模型拥有 MEMM 的所有优点，同时还 **不存在标注偏置问题** 。条件随机场的一般定义如下：
+由于 MEMM 存在标注偏置问题，为此 Lafferty J、 Mccallum A 和 Pereira F C N 三人在 2001 年提出了一种 **线性链条件随机场**（Conditional Random Fields，简称 CRF）模型，该模型拥有 MEMM 的所有优点，同时还 **不存在标注偏置问题** 。条件随机场的一般定义如下：
 
-设 $X$ 与 $Y$ 是随机变量， $P(Y|X)$ 是在给定 $X$ 的条件下 $Y$ 的条件概率分布。若随机变量 $Y$ 构成一个由无向图 $G = (V, E)$ 表示的马尔可夫随机场，即 $P(Y_v \mid X, Y_w, w \neq v) = P(Y_v \mid X, Y_w, w \sim v)$ 对任意结点 $v$ 成立，则称条件概率分布 $P(Y|X)$ 为条件随机场。
+设 $X$ 与 $Y$ 是随机变量， $P(Y|X)$ 是在给定 $X$ 的条件下 $Y$ 的条件概率分布。若随机变量 $Y$ 构成一个由无向图 $G = (V, E)$ 表示的马尔可夫随机场，即 $P(Y_v | X, Y_w, w \neq v) = P(Y_v | X, Y_w, w \sim v)$ 对任意结点 $v$ 成立，则称条件概率分布 $P(Y|X)$ 为条件随机场。
 
 式中 $w \sim v$ 表示在图 $G = (V, E)$ 中与结点 $v$ 有边连接的所有结点 $w$ ，$w \neq v$ 表示结点 $v$ 以外的所有结点， $Y_v$ 、$Y_w$ 为结点 $v$ 、 $w$ 对应的随机变量。
 
@@ -26,7 +26,7 @@ draft: false
 设 $X = (x_1, x_2, \ldots, x_n)$ 和 $Y = (y_1, y_2, \ldots, y_n)$ 均为线性链表示的随机变量序列，若在给定随机量序列 $X$ 的条件下，随机变量序列 $Y$ 的条件概率分布 $P(Y|X)$ 构成条件随机场，即满足马尔可夫性（在 $i = 1$ 和 $n$ 时只考虑单边）：
 
 $$
-P(y_i \mid X, y_1, \cdots, y_{i-1}, y_{i+1}, \cdots, y_n) = P(y_i \mid X, y_{i-1}, y_{i+1}) \quad i = 1, 2, \ldots, n
+P(y_i | X, y_1, \cdots, y_{i-1}, y_{i+1}, \cdots, y_n) = P(y_i | X, y_{i-1}, y_{i+1}) \quad i = 1, 2, \ldots, n
 $$
 
 则称 $P(Y|X)$ 为线性链条件随机场。线性链条件随机场通常用来对序列标注问题进行建模，在序列标注问题中， $X$ 可以看作 **观测序列** ，$Y$ 可以看做对应的 **状态序列** 。
@@ -66,7 +66,7 @@ f_k(Y, X) = \sum_i f_k(y_{i-1}, y_i, X, i) \quad k = 1, 2, \ldots, K
 $$
 
 $$
-F(Y, X) = (f_1(Y, X), f_2(Y, X), \ldots, f_K(Y, X)) \in \mathbb{R}^{K \times 1}
+F(Y, X) = \Big(f_1(Y, X), f_2(Y, X), \ldots, f_K(Y, X)\Big) \in \mathbb{R}^{K \times 1}
 $$
 
 $$
@@ -101,9 +101,9 @@ $$
 
 综上所述，这三个问题分别对应 CRF 的三类核心任务：
 
-* **条件概率与边缘计算**：计算 $P(Y | X)$ 、单点与对边缘 $P(y_i | X),P(y_{i-1},y_i | X)$ 及其期望
-* **参数学习**：最大化条件对数似然，利用边缘期望构造梯度，借助 L-BFGS、共轭梯度或随机优化等数值方法求解
-* **序列解码**：在给定 $X$ 与参数下，用 Viterbi 或相应的动态规划 / 搜索方法找到使 $P(Y | X)$ 最大的状态序列
+* **条件概率与边缘计算**：计算条件概率 $P(Y | X)$ 、$P(y_i | X)$ 、$P(y_{i-1},y_i | X)$ 及其期望
+* **参数学习**：最大化条件对数似然，利用边缘期望构造梯度，借助随机优化等数值方法求解
+* **序列解码**：在给定 $X$ 与参数下，用 Viterbi 或相应的动态规划/搜索方法找到使 $P(Y | X)$ 最大的状态序列
 
 在理解了这些问题及其相互关系后，我们可以进一步展开每一部分的具体算法推导。
 
@@ -208,11 +208,11 @@ $$
 定义完前向向量和后向向量，接下来便可以很容易地计算出在位置 $i$ 的状态是 $q_j$ 的条件概率和在位置 $i-1$ 是状态 $q_j$ 且在位置 $i$ 是状态 $q_k$ 的条件概率：
 
 $$
-P(y_i | X) = P(y_i = q_j | X) = \frac{\alpha_i(y_i = q_j | X) \beta_i(y_i = q_j | X)}{Z(X)}
+P(y_i | X) = \frac{\alpha_i(y_i = q_j | X) \beta_i(y_i = q_j | X)}{Z(X)}
 $$
 
 $$
-P(y_{i-1}, y_i | X) = P(y_{i-1} = q_j, y_i = q_k | X) = \frac{\alpha_{i-1}(y_{i-1} = q_j | X) M_i(q_j, q_k | X) \beta_i(y_i = q_k | X)}{Z(X)}
+P(y_{i-1}, y_i | X) = \frac{\alpha_{i-1}(y_{i-1} = q_j | X) M_i(q_j, q_k | X) \beta_i(y_i = q_k | X)}{Z(X)}
 $$
 
 $$
@@ -221,25 +221,24 @@ $$
 
 ### 计算期望值
 
-利用前面定义的前向向量和后向向量，我们可以轻松地计算出特征函数关于联合分布 $P(X, Y)$ 和条件分布 $P(Y|X)$ 的数学期望。
+利用前面定义的前向向量和后向向量，我们可以轻松地计算出特征函数关于联合分布 $P(X, Y)$ 和条件分布 $P(Y|X)$ 的数学期望。考虑特征函数：
 
-- 特征函数 $f_k(Y, X) = \sum_{i=1}^{n}f_k(y_{i-1}, y_i, X, i)$ 关于条件分布 $P(Y|X)$ 的数学期望是：
+$$
+f_k(Y, X) = \sum_{i=1}^{n}f_k(y_{i-1}, y_i, X, i)
+$$
+
+关于条件分布 $P(Y|X)$ 的数学期望是：
 
 $$
 \begin{align*}
-&\mathbb{E}_{P(Y|X)} \Big[ f_k(Y, X) \Big] \\
-= &\sum_Y P(Y|X) f_k(Y, X) = \sum_Y \left[ P(Y|X) \sum_{i=1}^{n+1} f_k(y_{i-1}, y_i, X, i) \right] \\
-= &\sum_Y \sum_{i=1}^{n+1} P(Y|X) f_k(y_{i-1}, y_i, X, i) = \sum_{i=1}^{n+1} \sum_Y P(Y|X) f_k(y_{i-1}, y_i, X, i) \\
-= &\sum_{i=1}^{n+1} \sum_{j=1}^m \sum_{k=1}^m \Big[ f_k(y_{i-1} = q_j, y_i = q_k, X, i) P(y_{i-1} = q_j, y_i = q_k | X) \Big] \\
-= &\sum_{i=1}^{n+1} \sum_{j=1}^m \sum_{k=1}^m \left[ f_k(y_{i-1} = q_j, y_i = q_k, X, i) \cdot \frac{\alpha_{i-1}(y_{i-1} = q_j | X) \, M_i(q_j, q_k | X) \, \beta_i(y_i = q_k | X)}{Z(X)} \right]
+\mathbb{E}_{P(Y|X)} \Big[ f_k(Y, X) \Big] &= \sum_Y \left[ P(Y|X) \sum_{i=1}^{n+1} f_k(y_{i-1}, y_i, X, i) \right] = \sum_{i=1}^{n+1} \sum_Y P(Y|X) f_k(y_{i-1}, y_i, X, i) \\
+&= \sum_{i=1}^{n+1} \sum_{j=1}^m \sum_{k=1}^m \Big[ f_k(y_{i-1} = q_j, y_i = q_k, X, i) P(y_{i-1} = q_j, y_i = q_k | X) \Big]
 \end{align*}
 $$
 
-$$
-\text{where } Z(X) = \boldsymbol{\alpha}_n(X)^{\rm T} \mathbf{I} = \boldsymbol{\alpha}_{n+1}(X)^{\rm T} \mathbf{I} = \mathbf{I}^{\rm T} \boldsymbol{\beta}_0(X) \quad \mathbf{I} = (1, \ldots, 1) \in \mathbb{R}^{m \times 1}
-$$
+其中 $Z(X)$ 为归一化因子。
 
-- 假设经验分布为 $\bar{P}(X)$ ，则特征函数 $f_k(Y, X) = \sum_{i=1}^{n}f_k(y_{i-1}, y_i, X, i)$ 关于联合分布 $P(X, Y)$ 的数学期望是：
+关于联合分布 $P(X, Y)$ 的数学期望是：
 
 $$
 \begin{align*}
@@ -248,7 +247,9 @@ $$
 \end{align*}
 $$
 
-综上，对于在给定模型参数 $w_k(k = 1, 2, \ldots, K)$ 、观测序列 $X = (x_1, x_2, \ldots, x_n)$ 和状态序列 $Y = (y_1, y_2, \ldots, y_n)$ 的条件下，只需前向扫描计算和后向扫描计算一次 $\boldsymbol{\alpha}_i(X)$ 和 $\boldsymbol{\beta}_i(X)$ ，规范化因子 $Z(X)$ 和条件概率 $P(y_i|X)$ 、 $P(y_{i-1}, y_i|X)$ 以及一些数学期望都可以被计算出来。
+其中 $\bar{P}(X)$ 为经验分布。
+
+综上所述，对于在给定模型参数 $w_k(k = 1, 2, \ldots, K)$ 、观测序列 $X = (x_1, x_2, \ldots, x_n)$ 和状态序列 $Y = (y_1, y_2, \ldots, y_n)$ 的条件下，只需前向扫描计算和后向扫描计算一次 $\boldsymbol{\alpha}_i(X)$ 和 $\boldsymbol{\beta}_i(X)$ ，规范化因子 $Z(X)$ 和条件概率 $P(y_i|X)$ 、 $P(y_{i-1}, y_i|X)$ 以及一些数学期望都可以被计算出来。
 
 ## 学习问题（Learning Problem）
 
@@ -279,7 +280,7 @@ Y^* &= \arg\max_Y  \boldsymbol{w}^T F(Y, X) \\
 $$
 
 $$
-\text{where } F_i(y_{i-1}, y_i, X) = (f_1(y_{i-1}, y_i, X, i), f_2(y_{i-1}, y_i, X, i), \ldots, f_K(y_{i-1}, y_i, X, i)) \in \mathbb{R}^{K \times 1}
+\text{where } F_i(y_{i-1}, y_i, X) = \Big(f_1(y_{i-1}, y_i, X, i), f_2(y_{i-1}, y_i, X, i), \ldots, f_K(y_{i-1}, y_i, X, i)\Big) \in \mathbb{R}^{K \times 1}
 $$
 
 首先求出位置 1 的各个标记 $y_1 = q_1, q_2, \ldots, q_m$ 的非规范化概率：
@@ -293,7 +294,7 @@ $$
 $$
 \delta_i(l) = \max_{1 \leq j \leq m} \left\{ \delta_{i-1}(j) + w^{\rm T} F_i(y_{i-1} = q_j, y_i = q_l, X) \right\} \quad l = 1, 2, \ldots, m
 $$
-
+f
 $$
 \Psi_i(l) = \arg\max_{1 \leq j \leq m} \left\{ \delta_{i-1}(j) + w^{\rm T} F_i(y_{i-1} = q_j, y_i = q_l, X) \right\} \quad l = 1, 2, \ldots, m
 $$

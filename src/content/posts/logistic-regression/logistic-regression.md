@@ -114,7 +114,7 @@ if __name__ == "__main__":
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=114675626875309&bvid=BV12VMzzxExF&cid=30475028383&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
-简单看一下代码中的损失函数：
+先来看一下代码中的损失函数实现：
 
 ```py showLineNumbers
 loss_func = lambda X, y, w: -np.mean(
@@ -122,48 +122,49 @@ loss_func = lambda X, y, w: -np.mean(
 )
 ```
 
-交叉熵损失函数的数学表达式如下：
+对应的数学表达式为交叉熵损失函数：
 
 $$
 J(\mathbf{w}) = -\frac{1}{N} \sum_{i=1}^{N} \Big[ y_i \ln(\hat{y}_i) + (1 - y_i)\ln(1 - \hat{y}_i) \Big]
 $$
 
-其中 $\hat{y}_i = \sigma(\mathbf{x}_i \mathbf{w})$ 。
+其中 $\hat{y}_i = \sigma(\mathbf{x}_i \mathbf{w})$ 表示模型对第 $i$ 个样本的预测概率。
 
 ## 2. 梯度下降
 
-逻辑回归模型在形式上只是比线性回归多嵌套了一层激活函数。从微积分的角度看，这仅增加了链式法则的一个环节。代码中的梯度计算非常简洁：
+逻辑回归在模型形式上与线性回归非常相似，只是在预测输出上多了一层 **Sigmoid 激活函数** 。从微积分角度来看，这仅仅增加了链式法则中的一个环节。代码中梯度计算的实现非常简洁：
 
 ```py showLineNumbers
 gradient = lambda X, y, w: X.T @ (sigmoid(X @ w) - y) / len(y)
+
 def grad_desc(cur_w, alpha, X, y):
     grad = gradient(X, y, cur_w)
     updated_w = cur_w - alpha * grad
     return updated_w
 ```
 
-其数学推导过程如下：
+其数学推导如下：
 
-- 预测值
+* **预测值**
 
 $$
 \hat{y} = \sigma(X\mathbf{w}) = \frac{1}{1 + e^{-X\mathbf{w}}}
 $$
 
-- 损失函数
+* **损失函数**
 
 $$
 J(\mathbf{w}) = -\frac{1}{N} \sum_{i=1}^{N} \Big[ y_i \ln(\hat{y}_i) + (1 - y_i)\ln(1 - \hat{y}_i) \Big]
 $$
 
-- 对权重求导
+* **权重梯度**
 
 $$
 \nabla J(\mathbf{w}) = \frac{\partial J(\mathbf{w})}{\partial \mathbf{w}}
 = \frac{1}{N} X^{\rm T} (\hat{y} - y)
 $$
 
-这一梯度推导的最终形式与线性回归的结果在结构上几乎一致，只是将预测值的定义换成了逻辑回归中的 $\hat{y}$ 。正因为两者在形式上的高度相似，逻辑回归也被视为 **广义线性模型（GLM）** 的一个典型特例。
+可以看到，这一梯度推导的最终形式与线性回归的结果在结构上几乎一致，只是将预测值替换为逻辑回归中的 $\hat{y}$ 。正因为两者在形式上的高度相似，逻辑回归也被视为 **广义线性模型（GLM）** 的一个典型特例。
 
 ## 3. 内容拓展
 
@@ -172,7 +173,7 @@ Logistic 回归本质上是一个 **线性分类器** ，其决策边界是线�
 常见的特征扩展（Feature Expansion）方法包括：
 
 - **多项式特征**：引入 $x_1^2$ 、$x_2^2$ 、$x_1x_2$ 等高阶项，使决策边界变为椭圆、抛物线等曲线。
-- **交互特征**：构造特征之间的乘积、比值等，刻画变量间的耦合关系。
+- **交互式特征**：构造特征之间的乘积、比值等，刻画变量间的耦合关系。
 
 本质上，这是通过将低维的原始特征映射到高维空间，使得数据在高维空间中变得线性可分。但需要警惕的是，特征维度过高容易导致 **过拟合（Overfitting）** ，通常需要配合正则化（L1/L2 Regularization）使用。
 
