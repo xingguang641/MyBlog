@@ -3,7 +3,7 @@ title: 【博客指南】从零开始发布一篇文章
 published: 2025-10-22
 description: 基于 Fuwari 主题的博客文章创建与部署全流程指南
 tags: [Fuwari, Blogging, Tutorial]
-category: Guides
+category: Blog Guides
 draft: false 
 ---
 

@@ -3,7 +3,7 @@ title: 【博客指南】如何创建一个独立页面
 published: 2025-11-24
 description: 基于 Fuwari 模板创建自定义独立页面（如成就、友链等）的完整教程
 tags: [Fuwari, Static Pages, Tutorial]
-category: Guides
+category: Blog Guides
 draft: false 
 ---
 

@@ -3,7 +3,7 @@ title: 【博客指南】丰富代码示例
 published: 2024-05-01
 description: 演示如何在 Markdown 中使用丰富代码功能
 tags: [Markdown, Blogging, Demo]
-category: Guides
+category: Blog Guides
 draft: false
 ---
 

@@ -3,7 +3,7 @@ title: 【博客指南】在博客中嵌入视频
 published: 2023-08-01
 description: 这篇文章演示了如何在博客文章中嵌入视频
 tags: [Example, Video]
-category: Guides
+category: Blog Guides
 draft: false
 ---
 
