@@ -21,10 +21,8 @@ draft: false
 
 5. [Mex 的常见用法和性质](https://www.luogu.com/article/be7l5b13)
 
-6. [一种静态/动态区间 mex 的全新快速算法（需要研究一下）](https://www.luogu.com.cn/article/804aooyr)
+6. [区间 mex 学习笔记](https://www.luogu.com.cn/article/uqy5sise)
 
-7. [区间 mex 学习笔记](https://www.luogu.com.cn/article/uqy5sise)
+7. [mex性质学习](https://blog.csdn.net/Fighting_Peter/article/details/109437948)
 
-8. [mex性质学习](https://blog.csdn.net/Fighting_Peter/article/details/109437948)
-
-9. [与 MEX 有关的题目](https://www.cnblogs.com/BigSmall-En/p/16526110.html)
+8. [与 MEX 有关的题目](https://www.cnblogs.com/BigSmall-En/p/16526110.html)

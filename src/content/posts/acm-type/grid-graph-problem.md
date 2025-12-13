@@ -21,22 +21,3 @@ draft: false
 
 <iframe width="100%" height="468" src="https://www.youtube.com/embed/Rr_I0tdgubY?si=uYdSRAubLxF4wbwt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
----
-
-# 子矩形相关问题收集
-
-## 均衡矩形
-
-[题目链接](https://atcoder.jp/contests/abc410/tasks/abc410_f)
-
-## 最大子矩形
-
-[题目链接](https://leetcode.cn/problems/PLYXKQ/description/)
-
-## 高光片段
-
-[题目链接](https://atcoder.jp/contests/abc420/tasks/abc420_f)
-
-## 统计全 1 子矩形
-
-[题目链接](https://leetcode.cn/problems/count-submatrices-with-all-ones/description/)

@@ -11,6 +11,8 @@ draft: false
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=113950951736220&bvid=BV1WiP2ezE5a&cid=28278981043&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
+&nbsp;
+
 # Ollama 模型配置
 
 在配置 **RAGFlow** 之前，第一步是准备好本地的 **大语言模型（LLM）**，而 **Ollama** 是一个非常方便的工具，可以用来在本地运行和管理这些模型。首先，需要在本机上下载并安装 Ollama 平台。安装完成后，接下来就是对环境进行一些必要的配置，以保证虚拟机中的 RAGFlow 可以顺利访问到本地模型。
@@ -67,8 +69,7 @@ $ docker compose -f docker-compose.yml up -d
 ```
 
 :::tip
-**镜像版本说明**：
-`v0.22.0` 之前的版本，官方提供了两种镜像：包含 embedding 模型的完整镜像和不含 embedding 模型的 slim 镜像。
+**镜像版本说明**：`v0.22.0` 之前的版本，官方提供了两种镜像：包含 embedding 模型的完整镜像和不含 embedding 模型的 slim 镜像。
 :::
 
 | RAGFlow image tag | 镜像大小 (GB) | 是否包含 embedding 模型 | 稳定性  |

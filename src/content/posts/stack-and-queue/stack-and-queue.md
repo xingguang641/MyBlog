@@ -1,7 +1,7 @@
 ---
 title: 【基础数据结构介绍】第二节：栈与队列
 published: 2025-11-04
-description: 深入浅出讲解栈与队列：原理、实现与代码详解
+description: 从原理到实现，系统讲解栈与队列的数据结构特性及典型代码示例
 tags: [Data Structure, Course, C/C++]
 category: Data Structure
 draft: false
@@ -81,7 +81,7 @@ void pop(SqStack *s, Elemtype *x){
 }
 ```
 
-## 顺序栈代码讲解
+## 顺序栈完整代码实现
 
 下面给出顺序栈的完整代码实现。
 
@@ -225,7 +225,7 @@ void LinkStack_pop(LinkStack *S, ElemType *e){
 }
 ```
 
-## 链栈代码讲解
+## 链栈完整代码实现
 
 下面给出链栈的完整代码实现。
 
@@ -397,7 +397,7 @@ void Depart_SqQueue(SqQueue *Q, int *e){
 
 ![循环队列图像](src/content/posts/stack-and-queue/循环队列7.png)
 
-## 循环队列代码讲解
+## 循环队列完整代码实现
 
 下面给出链队列的完整代码实现。
 
@@ -543,7 +543,7 @@ void Depart_LinkQueue(LinkQueue *Q, int *e){
 }
 ```
 
-## 链队列代码讲解
+## 链队列完整代码实现
 
 下面给出链队列的完整代码实现。
 

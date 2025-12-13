@@ -6,4 +6,3 @@ tags: [Computer Organization, Course, Memory System]
 category: Computer Organization
 draft: false
 ---
-
