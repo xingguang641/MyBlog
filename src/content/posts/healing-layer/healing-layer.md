@@ -3,8 +3,8 @@ title: 【常见问题解决方案】新浪微博图片无法显示
 published: 2025-11-12
 description: 解决老博客的新浪图片显示错误问题
 tags: [Course, Blogging]
-category: Fixes
-draft: false 
+category: Solutions
+draft: false
 ---
 
 ## 问题来源
