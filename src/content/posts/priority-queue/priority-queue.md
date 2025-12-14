@@ -7,13 +7,17 @@ category: Data Structure
 draft: false
 ---
 
+> 写在前面：本篇博客部分过程参考下面这个视频。
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=113147373624774&bvid=BV1HYtseiEQ8&cid=25889014654&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
 # 优先队列的基本结构
 
 **优先队列（Priority Queue）** 是一种特殊的队列结构。与普通队列严格遵循 “先进先出（FIFO）” 规则不同，优先队列并不关心元素进入队列的先后顺序，而是根据元素所具有的 **优先级** 来决定其出队次序。优先级高（或低，取决于具体定义）的元素将被优先取出，这使得优先队列在许多需要动态维护 “最优元素” 的场景中具有重要作用。
 
 在实际应用中，优先队列几乎总是通过 **堆（Heap）** 来实现，其中最常见的实现形式是 **二叉堆** 。堆在逻辑结构上是一棵二叉树，但并非任意形态的二叉树，而是一棵满足特定结构约束的 **完全二叉树** 。在此结构基础之上，堆还进一步满足堆序性质，从而保证队首元素始终是当前优先级最高（或最低）的元素。
 
-## 完全二叉树
+## 完全二叉树定义
 
 **完全二叉树（Complete Binary Tree）** 是二叉树这一类基本树结构中的一种重要类型，它并不关注节点中存储的数据内容或节点之间的逻辑大小关系，而是重点规范二叉树在层次结构和节点排列顺序上的整体形态。正是这种对结构的严格限制，使得完全二叉树在节点数量一定的情况下能够保持较小的高度，并具备良好的顺序存储特性。围绕这一结构特征，其定义如下：
 
@@ -89,13 +93,13 @@ draft: false
 
 因此堆的核心问题并不在于 “如何存储元素” ，而在于 **如何在保持完全二叉树结构不变的前提下，通过一系列局部调整，使整棵树重新满足堆序性质** 。无论是向堆中插入新元素、删除堆顶元素，还是从一组无序数据中直接构造堆结构，其本质都可以归结为对堆序性质的不断修复与维护。基于这一认识，接下来需要重点讨论的就是：**在给定一个无序数组的情况下，如何高效地将其整体转化为一个合法的堆结构** 。这一过程通常被称为 **建堆（Heapify）**，也是理解堆实现机制的关键一步。
 
-### 堆的创建
+### 堆的创建过程
 
 如前所述，一个无序数组在顺序存储下天然对应一棵 **完全二叉树** ，但这棵树通常并不满足堆序性质。建堆的目标是在 **保持节点相对位置不变**（即不破坏完全二叉树结构）的前提下，通过一系列局部调整，使整棵树满足大根堆或小根堆的要求。堆序性质仅涉及 **父节点与子节点之间的局部关系** ，因此，只要每个子树都满足堆序性质，整棵树自然就是一个合法的堆。
 
 ![建堆图像](src\content\posts\priority-queue\建堆1.jpg)
 
-建堆通常采用 **自底向上（Bottom-Up）** 的方式进行。这是因为在完全二叉树中，所有叶子节点本身就是合法的堆——它们没有子节点，不可能违反堆序性质。因此，我们可以从 **最后一个非叶子节点** 开始，依次向上，对每个节点执行 **向下调整（Sift Down / Heapify Down）** 操作。
+建堆通常采用 **自底向上（Bottom-Up）** 的方式进行。这是因为在完全二叉树中，所有叶子节点本身就是合法的堆——它们没有子节点，不可能违反堆序性质。因此，我们可以从 **最后一个非叶子节点** 开始，依次向上，对每个节点执行 **向下调整（Sift Down/Heapify Down）** 操作。
 
 ![建堆图像](src\content\posts\priority-queue\建堆2.jpg)
 
@@ -133,7 +137,7 @@ draft: false
 
 通过这个过程，我们可以清楚地看到，每次向下调整都是对局部子树的堆序修复，而自底向上的策略确保最终整棵树都符合堆的定义。相比逐个插入构建堆的方法，自底向上的建堆更为高效，总时间复杂度为 $O(n)$ ，因此成为构造堆的标准且高效的方法。建堆的完整代码如下：
 
-```c showLineNumbers
+```cpp showLineNumbers
 void heapify(vector<int>& arr, int n, int i) {
     int largest = i;          // 假设当前节点为最大
     int left = 2 * i + 1;     // 左子节点索引
@@ -161,15 +165,196 @@ void buildMaxHeap(vector<int>& arr) {
 
 ### 堆的插入操作
 
+堆的插入操作是保持堆结构稳定和有序的关键过程，以 **大根堆** 为例，确保每个父节点的值都大于或等于其子节点的值。在插入新元素时，必须保证堆的性质不会被破坏。假设现在需要在堆中插入一个新节点 **21** 。首先将新节点 **直接插入到堆数组的末尾** ，对应完全二叉树的最后一个位置。此时堆结构可能暂时不满足大根堆的条件，因为新节点可能比父节点更大或更小。这一步仅涉及元素的追加，不涉及任何比较或移动。
 
+![插入操作图像](src\content\posts\priority-queue\插入操作1.jpg)
+
+接下来进入 **自底向上的调整过程（上浮）**。该过程的核心思想是比较新节点与其父节点的大小关系，如果新节点大于父节点，则交换两者位置，让新节点逐级上移，直到堆性质得到恢复或者到达根节点为止。首次比较中，新节点 **21** 的父节点为 **17** ，21 > 17，因此交换两者的位置，使新节点上浮到父节点的位置，从而部分恢复堆结构。
+
+![插入操作图像](src\content\posts\priority-queue\插入操作2.jpg)
+
+![插入操作图像](src\content\posts\priority-queue\插入操作3.jpg)
+
+再次比较新节点与新的父节点 **19** ，21 > 19，仍需交换，新节点继续上浮。
+
+![插入操作图像](src\content\posts\priority-queue\插入操作4.jpg)
+
+![插入操作图像](src\content\posts\priority-queue\插入操作5.jpg)
+
+最后，新节点的父节点为 **100** ，100 > 21，无需交换，上浮操作完成，新节点被正确放置。
+
+![插入操作图像](src\content\posts\priority-queue\插入操作6.jpg)
+
+整个过程通过 **逐级比较与交换** ，保证新节点最终位于合适位置，使堆的完整性和堆序性质得到恢复。插入操作的 **时间复杂度为 $O(logn)$** ，与堆的高度成正比。该操作不仅适用于大根堆，也可应用于小根堆，只需将比较条件调整为父节点小于子节点即可。
+
+在实际应用中，堆的插入操作常与堆排序和优先队列结合使用。上浮操作可以快速将新加入的元素放置到合适位置，确保每次插入后堆仍然保持完整的二叉树结构和有序性，同时避免整体结构重建，从而在性能上具有很大优势。通过这种自底向上的策略，堆能够高效处理动态插入场景，支持大规模数据的实时管理。
+
+```cpp showLineNumbers
+// 大根堆插入操作
+void heapInsert(vector<int>& heap, int value) {
+    // 将新元素放到堆的末尾
+    heap.push_back(value);
+    int i = heap.size() - 1;  // 新节点索引
+    int parent = (i - 1) / 2;
+
+    // 自底向上调整（上浮）
+    while (i > 0 && heap[i] > heap[parent]) {
+        swap(heap[i], heap[parent]);
+        i = parent;
+        parent = (i - 1) / 2;
+    }
+}
+```
 
 ### 堆的删除操作
 
+堆的删除操作主要针对 **堆顶节点** ，不允许直接删除堆中其他位置的节点。以 **小根堆** 为例，小根堆要求每个父节点的值都不大于其子节点的值，因此在删除堆顶元素时，必须保证堆的这一性质不被破坏。删除操作的第一步是将 **堆中的最后一个节点的值覆盖到根节点** ，相当于将原本的堆顶元素移除。这一步操作可以快速完成删除，但此时堆顶的值可能较大，从而破坏小根堆的结构。
 
+![删除操作图像](src\content\posts\priority-queue\删除操作1.jpg)
+
+接下来进行 **自顶向下的下沉调整（Heapify-Down）**。从根节点开始，将当前节点与其左右子节点进行比较，选择值较小的子节点与当前节点交换。交换后，继续向下比较，直到当前节点的值不大于其左右子节点，或者节点已经成为叶子节点为止。这一过程保证了小根堆的每个父节点依然小于等于其子节点，堆结构得以恢复。
+
+![删除操作图像](src\content\posts\priority-queue\删除操作2.jpg)
+
+经过下沉调整，堆顶元素被正确替换，整个堆重新满足小根堆的性质。无论堆的大小如何，该操作都能够高效完成删除，并且保持堆的有序结构。最终堆的结构如下图所示：
+
+![删除操作图像](src\content\posts\priority-queue\删除操作3.jpg)
+
+整个删除过程通过 **覆盖堆顶 + 自顶向下下沉** 完成，时间复杂度为 $O(logn)$ ，与堆的高度成正比。通过这种方式，堆不仅可以高效删除堆顶元素，还能确保在后续插入或删除操作中维持堆序性质，为优先队列等应用提供可靠支持。完整的删除操作代码如下：
+
+```cpp showLineNumbers
+// 假设堆使用 vector<int> arr 表示，删除的是堆顶元素（小根堆示例）
+void heapDelete(vector<int>& arr) {
+    int n = arr.size();
+    if (n == 0) return; // 堆为空，无法删除
+
+    // 用最后一个元素覆盖堆顶
+    arr[0] = arr[n - 1];
+    arr.pop_back(); // 删除最后一个元素
+    n--;
+
+    // 自顶向下调整堆（下沉）
+    int i = 0;
+    while (true) {
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+        int smallest = i;
+
+        if (left < n && arr[left] < arr[smallest]) smallest = left;
+        if (right < n && arr[right] < arr[smallest]) smallest = right;
+
+        if (smallest != i) {
+            swap(arr[i], arr[smallest]);
+            i = smallest;
+        } else {
+            break; // 堆性质恢复
+        }
+    }
+}
+```
 
 ## 优先队列完整代码实现
 
+下面给出优先队列（以大根堆为例）的完整代码。
 
+```cpp frame="code" title="MaxHeap.cpp"
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// 对指定节点进行堆调整（大根堆）
+void heapify(vector<int>& arr, int n, int i) {
+    int largest = i;          // 假设当前节点为最大
+    int left = 2 * i + 1;     // 左子节点索引
+    int right = 2 * i + 2;    // 右子节点索引
+
+    if (left < n && arr[left] > arr[largest])
+        largest = left;
+
+    if (right < n && arr[right] > arr[largest])
+        largest = right;
+
+    if (largest != i) {
+        swap(arr[i], arr[largest]);
+        heapify(arr, n, largest);
+    }
+}
+
+// 建立大根堆
+void buildMaxHeap(vector<int>& arr) {
+    int n = arr.size();
+    for (int i = n / 2 - 1; i >= 0; --i) {
+        heapify(arr, n, i);
+    }
+}
+
+// 大根堆插入操作
+void heapInsert(vector<int>& heap, int value) {
+    heap.push_back(value);
+    int i = heap.size() - 1;
+    int parent = (i - 1) / 2;
+
+    while (i > 0 && heap[i] > heap[parent]) {
+        swap(heap[i], heap[parent]);
+        i = parent;
+        parent = (i - 1) / 2;
+    }
+}
+
+// 大根堆删除堆顶操作
+void heapDelete(vector<int>& heap) {
+    int n = heap.size();
+    if (n == 0) return;
+
+    heap[0] = heap[n - 1];
+    heap.pop_back();
+    n--;
+
+    int i = 0;
+    while (true) {
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+        int largest = i;
+
+        if (left < n && heap[left] > heap[largest]) largest = left;
+        if (right < n && heap[right] > heap[largest]) largest = right;
+
+        if (largest != i) {
+            swap(heap[i], heap[largest]);
+            i = largest;
+        } else {
+            break;
+        }
+    }
+}
+
+// 打印堆
+void printHeap(const vector<int>& heap) {
+    for (int val : heap) cout << val << " ";
+    cout << endl;
+}
+
+// 测试大根堆操作
+int main() {
+    vector<int> heap = { 10, 20, 15, 30, 40 };
+    cout << "初始数组: ";
+    printHeap(heap);
+
+    buildMaxHeap(heap);
+    cout << "建堆后: ";
+    printHeap(heap);
+
+    cout << "插入元素 50: ";
+    heapInsert(heap, 50);
+    printHeap(heap);
+
+    cout << "删除堆顶元素: ";
+    heapDelete(heap);
+    printHeap(heap);
+
+    return 0;
+}
+```
 
 ---
 

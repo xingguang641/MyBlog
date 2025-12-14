@@ -3,7 +3,7 @@ title: 【开源项目部署教程】RAGFlow 项目教程
 published: 2025-12-10
 description: 基于 Docker Compose 的 RAGFlow 独立部署教程
 tags: [RAG, Docker, Github, Agent]
-category: Github
+category: Github Tutorial
 draft: false 
 ---
 
