@@ -43,7 +43,7 @@ draft: false
 git clone https://github.com/infiniflow/ragflow.git
 ```
 
-## Docker 容器部署
+## Docker 部署
 
 进入 **docker** 文件夹，利用官方提前构建好的 Docker 镜像即可启动 RAGFlow 服务器。
 
@@ -77,91 +77,7 @@ $ docker compose -f docker-compose.yml up -d
 | v0.21.1           | ≈9        | ✔️                | 稳定版本 |
 | v0.21.1-slim      | ≈2        | ❌                 | 稳定版本 |
 
-通过以上步骤，可以快速在 Docker 中启动 RAGFlow 服务，无论是 CPU 还是 GPU 环境都能灵活配置，同时保证服务与镜像版本一致，方便后续使用和维护。如果你希望容器 **完全独立运行** ，不再与本地文件系统交互，可以将 `docker-compose.yml` 文件内容替换为以下配置：
-
-```yaml showLineNumbers
-include:
-  - ./docker-compose-base.yml
-
-services:
-  ragflow-cpu:
-    depends_on:
-      mysql:
-        condition: service_healthy
-    profiles:
-      - cpu
-    image: ${RAGFLOW_IMAGE}
-    command:
-      - --enable-adminserver
-    ports:
-      - ${SVR_WEB_HTTP_PORT}:80
-      - ${SVR_WEB_HTTPS_PORT}:443
-      - ${SVR_HTTP_PORT}:9380
-      - ${ADMIN_SVR_HTTP_PORT}:9381
-      - ${SVR_MCP_PORT}:9382
-    env_file: .env
-    networks:
-      - ragflow
-    restart: unless-stopped
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-
-  ragflow-gpu:
-    depends_on:
-      mysql:
-        condition: service_healthy
-    profiles:
-      - gpu
-    image: ${RAGFLOW_IMAGE}
-    command:
-      - --enable-adminserver
-    ports:
-      - ${SVR_WEB_HTTP_PORT}:80
-      - ${SVR_WEB_HTTPS_PORT}:443
-      - ${SVR_HTTP_PORT}:9380
-      - ${ADMIN_SVR_HTTP_PORT}:9381
-      - ${SVR_MCP_PORT}:9382
-    env_file: .env
-    networks:
-      - ragflow
-    restart: unless-stopped
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
-
-# 可选 executor 服务（GPU 加速任务），完全容器化
-# executor:
-#   depends_on:
-#     mysql:
-#       condition: service_healthy
-#   image: ${RAGFLOW_IMAGE}
-#   env_file: .env
-#   entrypoint: "/ragflow/entrypoint_task_executor.sh 1 3"
-#   networks:
-#     - ragflow
-#   restart: unless-stopped
-#   extra_hosts:
-#     - "host.docker.internal:host-gateway"
-#   deploy:
-#     resources:
-#       reservations:
-#         devices:
-#           - driver: nvidia
-#             count: all
-#             capabilities: [gpu]
-
-networks:
-  ragflow:
-    driver: bridge
-```
-
-这样，RAGFlow 容器将 **完全独立运行** ，所有日志、配置和历史数据都保存在容器内部，不再写入本地文件系统，同时仍保留端口映射方便访问。
+通过以上步骤，即可在 Docker 环境中快速启动 RAGFlow 服务，并可根据实际需求灵活选择 CPU 或 GPU 运行模式。同时该方式能够确保服务配置与镜像版本保持一致，便于后续的升级、使用与维护。需要注意的是，在访问服务时请关闭代理，否则可能导致服务无法正常访问。
 
 ## 访问 RAGFlow
 
@@ -172,5 +88,3 @@ networks:
 * **Admin Server**：`${ADMIN_SVR_HTTP_PORT}`（默认 9381）
 
 例如，在浏览器中访问 `http://localhost:${SVR_WEB_HTTP_PORT}` 就可以打开 RAGFlow 主界面；若启用了 HTTPS，则可使用 `https://localhost:${SVR_WEB_HTTPS_PORT}` 进行访问。
-
-通过上述方式，你即可直接与 RAGFlow 容器进行交互，无需依赖本地文件系统，所有操作、管理和问答服务均在容器内独立完成，确保系统环境干净、稳定。
