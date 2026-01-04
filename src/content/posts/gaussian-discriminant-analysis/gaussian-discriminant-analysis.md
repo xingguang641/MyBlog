@@ -7,13 +7,13 @@ category: ML Model
 draft: false
 ---
 
-# 高斯判别分析基本原理
+# 高斯判别基本原理
 
 虽然逻辑回归在机器学习任务中的效果非常好，但在样本呈现特殊分布的情况下，我们可以使用其他更好的算法。**高斯判别分析**（Gaussian Discriminant Analysis，简称 GDA）就是其中的一个。这篇博客的主要内容，就是介绍高斯判别分析算法的主要原理以及公式的推导。
 
 ![高斯判别分析图像](src\content\posts\gaussian-discriminant-analysis\高斯判别模型1.jpg)
 
-## 先验假设（Prior Assumptions）
+## 基本先验假设
 
 与逻辑回归不同，高斯判别分析需要两个先验假设，分别为：
 
@@ -49,7 +49,7 @@ draft: false
 
 有了以上的假设之后，我们就能进行下一步的推导。
 
-## 似然函数（Likelihood Function）
+## 对数似然函数
 
 在前面的先验假设中，我们需要用到 $\phi$ 、$\Sigma$ 、$\mu_0$ 和 $\mu_1$ 等参数，所以我们先要给出这些参数的参数估计。
 
@@ -86,7 +86,7 @@ $$
 
 ---
 
-# 代码讲解
+# 高斯判别代码讲解
 
 不同于前面两个模型，高斯判别模型是 **闭式解** 的分类器，无需梯度下降之类的梯度迭代。因此高斯判别分析的代码非常简单，下面是完整代码：
 
@@ -287,19 +287,17 @@ $$
 
 ### 线性模型推导
 
-仔细观察[上面](#先验假设-prior-assumptions)的先验条件，其实我们假设了正例跟负例的协方差矩阵相同，因此条件概率密度公式可以写成：
+仔细观察[上面](#先验假设-prior-assumptions)的先验条件，我们假设了正例跟负例的协方差矩阵相同，因此条件概率密度公式可以写成：
 
 $$
 P(x | y = k) = \frac{1}{(2\pi)^{\frac{n}{2}}|\Sigma|^{\frac{1}{2}}} \exp\left(-\frac{1}{2}(x-\mu_k)^{\rm T}\Sigma^{-1}(x-\mu_k)\right)
 $$
 
-代入 $\delta(x)$ 的尾项可得：
+代入 $\delta(x)$ 的尾项后，展开平方化简可得：
 
 $$
 \log\frac{P(x | y=1)}{P(x | y=0)} = - \frac{1}{2}(x - \mu_1)^{\rm T}\Sigma^{-1}(x - \mu_1) + \frac{1}{2}(x - \mu_0)^{\rm T}\Sigma^{-1}(x - \mu_0)
 $$
-
-最后展开平方项并化简可得：
 
 $$
 \delta(x) = (\Sigma^{-1}(\mu_1 - \mu_0))^{\rm T}x + \left(\log \frac{\phi}{1 - \phi} - \frac{1}{2}(\mu_1^{\rm T}\Sigma^{-1}\mu_1 - \mu_0^{\rm T}\Sigma^{-1}\mu_0)\right)
@@ -319,7 +317,7 @@ $$
 
 ---
 
-# 深层问题思考
+# 深层问题探究
 
 1. 高斯判别分析要求正例和负例满足一定的条件，其中一个便是协方差要求相同，这是为什么？
 
@@ -334,9 +332,9 @@ $$
 
     这个假设非常重要，因为它会带来下面的结果：
 
-    *   **线性判别分析（Linear Discriminant Analysis，简称 LDA）**：当我们假设 $\Sigma_0 = \Sigma_1 = \Sigma$ 时，对数几率 $\delta(x)$ 中的二次项（如 $x^{\rm T} \Sigma^{-1} x$ ）会被抵消，判别边界 $w^{\rm T} x + b = 0$ 是一条直线（或超平面）。此时 GDA 的决策边界与逻辑回归（Logistic Regression）类似，因此在决策边界层面 GDA 与 LDA 是高度相关的。
+    *   **线性判别分析（Linear Discriminant Analysis，简称 LDA）**：当我们假设 $\Sigma_0 = \Sigma_1 = \Sigma$ 时，对数几率 $\delta(x)$ 中的二次项（如 $x^{\rm T} \Sigma^{-1} x$ ）会被抵消，判别边界 $w^{\rm T} x + b = 0$ 是一条直线（或超平面）。此时 GDA 的决策边界与逻辑回归（Logistic Regression）类似，因此在决策边界层面 GDA 与 LDA 高度相关。
 
-    *   **二次判别分析（Quadratic Discriminant Analysis，简称 QDA）**：如果我们 **不强制** 协方差相等，即 $\Sigma_0 \ne \Sigma_1$ ，那么对数几率 $\delta(x)$ 中涉及 $x$ 的二次项将 **不会被抵消** 。此时 $\delta(x)$ 会出现 $x^{\rm T} A x$ 形式的二次项，导致决策边界是一条 **二次曲线/曲面** 。这种模型被称为二次判别分析。
+    *   **二次判别分析（Quadratic Discriminant Analysis，简称 QDA）**：如果我们 **不强制** 协方差相等，即假设 $\Sigma_0 \ne \Sigma_1$ ，那么对数几率 $\delta(x)$ 中涉及 $x$ 的二次项将 **不会被抵消** 。此时 $\delta(x)$ 会出现 $x^{\rm T} A x$ 形式的二次项，导致决策边界是一条 **二次曲线/曲面** 。这种模型被称为二次判别分析。
 
 2. 高斯判别分析与逻辑回归的区别是什么？
 
@@ -344,7 +342,7 @@ $$
 
 ---
 
-# 参考文献
+# 参考文献列表
 
 1. [高斯判别分析GDA推导与代码实现](https://www.cnblogs.com/LuckyGlass-blog/p/17159433.html)
 

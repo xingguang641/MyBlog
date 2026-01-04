@@ -7,7 +7,7 @@ category: Github Tutorial
 draft: false 
 ---
 
-# Jupyter Translate 项目
+# Jupyter Translate 项目部署
 
 Jupyter Translate 是一个能够将 `.ipynb` 文件进行自动翻译的工具，支持多种翻译引擎，能够在保留代码与输出不变的情况下，批量处理 Markdown 文本与注释的语言转换。通过简单的配置，你就可以让它在笔记本中实现一键翻译，适用于整理学习资料、生成双语 Notebook 或快速阅读外文教程。下面将介绍如何安装、配置并实际使用这个工具。
 
@@ -62,7 +62,7 @@ model_name = "deepseek-chat"
 2.  **开通服务**：访问 [机器翻译控制台](https://mt.console.aliyun.com/) 开通服务（通常有免费额度）。
 3.  **获取密钥**：访问 [RAM 访问控制](https://ram.console.aliyun.com/manage/ak) 创建 AccessKey。
 
-获取后，填入配置：
+获取上述信息后，将其填入配置：
 
 ```python showLineNumbers
 # 填入阿里云 AccessKey

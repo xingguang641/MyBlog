@@ -39,7 +39,7 @@ draft: false
 
 ---
 
-# 特征工程（Feature Engineering）
+# 特征工程
 
 **核心问题**：直接使用原始数据（Raw Data）进行训练效果最好吗？**答案**：通常不是。
 
@@ -62,7 +62,7 @@ draft: false
 
 # 📚 学习资源汇总
 
-## 数据可视化（Data Visualization）
+## 数据可视化
 
 > 数据可视化是理解数据分布、发现异常值的首要步骤。
 
@@ -73,7 +73,7 @@ draft: false
   <iframe width="100%" height="200" src="//player.bilibili.com/player.html?isOutside=true&aid=795023367&bvid=BV1YC4y147cE&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 </div>
 
-## 数据预处理实战（Preprocessing）
+## 数据预处理实战
 
 > 涵盖特征工程、数据清洗及 PyTorch 工程规范。
 

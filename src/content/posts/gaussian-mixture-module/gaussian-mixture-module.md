@@ -7,7 +7,7 @@ category: ML Model
 draft: false
 ---
 
-# 高斯混合模型基本原理
+# 高斯混合基本原理
 
 前面我们讲到了诸多的 **分类算法（Classification Algorithm）**，虽然它们的数学原理差别很大，但它们其实都属于 **有监督学习（Supervised Learning）** 这一个类别当中。也就是说：它们在训练过程中需要数据拥有自己对应的标签。
 
@@ -61,13 +61,13 @@ $$
 
 ---
 
-# EM 算法
+# EM 迭代算法
 
 由于无法直接对含有隐变量的似然函数求导，所以梯度下降无法求解出 GMM 的极大似然估计。对此我们引入一个专门解决此类问题的算法：EM 算法。
 
 ![高斯混合模型图像](src\content\posts\gaussian-mixture-module\EM算法1.jpg)
 
-## 证据下界（Evidence Lower Bound Optimization）
+## 证据下界
 
 我们可以先假设 $Z$ 服从的分布为 $Z \sim q(Z | \theta)$ ，于是有：
 
@@ -93,7 +93,7 @@ $$
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=114558102410096&bvid=BV1r6jHzpE1J&cid=30166354742&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
-## 流程介绍（Detailed Procedure）
+## 流程介绍
 
 EM 算法本质上是通过最大化 ELBO 来间接最大化对数似然函数。具体步骤分为 E-step 和 M-step。
 
@@ -137,7 +137,7 @@ $$
 \theta^{(t+1)} = \arg \max_{\theta} Q(\theta | \theta^{(t)}) = \arg \max_{\theta} \mathbb{E}_{Z \sim P(Z|X,\theta^{(t)})} \Big[ \log P(X, Z | \theta) \Big]
 $$
 
-## 理论推导（Theoretical Derivation）
+## 理论推导
 
 > 以下推导部分参考自该视频
 
@@ -202,7 +202,7 @@ $$
 \end{align*}
 $$
 
-## 收敛性证明（Convergence Analysis）
+## 收敛性证明
 
 EM 算法的流程并不复杂，但是还有一个很重要的问题需要我们思考：EM 算法收敛吗？如果 EM 算法无法正常收敛，那么这个算法的过程无论多么精美都没用。就让我们再证明一下 EM 算法的收敛性吧。
 
@@ -268,7 +268,7 @@ $$
 
 ---
 
-# 代码实现
+# 高斯混合代码实现
 
 准备了这么多，终于可以来看一下 GMM 的代码了。
 
@@ -410,9 +410,9 @@ $$
 
 ---
 
-# 参考文献
+# 参考文献列表
 
-## EM 算法
+## EM 迭代算法
 
 1. [EM算法的理解和详细推导](https://jaredddddd.github.io/2024/01/01/EM/)
 

@@ -24,7 +24,7 @@ git clone https://github.com/QuantumNous/new-api.git
 cd new-api
 ```
 
-## 配置 Docker Compose
+## 配置 Docker
 
 为了实现数据与宿主机的解耦，我们将使用 Docker 命名卷（Named Volumes）来替代传统的文件路径映射。请编辑项目根目录下的 `docker-compose.yml` 文件，将其内容替换为以下配置：
 
@@ -116,7 +116,7 @@ volumes:
 
 :::tip
 **配置说明**：
-上述配置使用了 `volumes` 模块定义了 `pg_data`、`app_data` 等命名卷。这意味着数据库文件和日志只会托管在 Docker 内部，**不会污染你的本地项目目录** 。即使删除了当前的文件夹，只要不手动删除 Docker Volume，数据依然保留。
+上述配置使用了 `volumes` 模块定义了 `pg_data`、`app_data` 等命名卷。这意味着数据库文件和日志只会托管在 Docker 内部，**不会污染你的本地项目目录** 。即使删除了当前的文件夹，只要不手动删除 Docker Volume，数据依然保留在 Docker 中。
 :::
 
 ## 启动服务

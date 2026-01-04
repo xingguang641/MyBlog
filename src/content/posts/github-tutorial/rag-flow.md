@@ -23,7 +23,7 @@ draft: false
 
 在环境配置完成之后，就可以通过 Ollama 下载所需的模型了。以 DeepSeek 大模型为例，命令非常简单，只需执行 `ollama run deepseek-r1:1.5b` ，Ollama 就会自动下载并启动该模型，准备好供 RAGFlow 使用。通过这一系列步骤，你就完成了本地 LLM 的准备工作，为后续的 RAGFlow 配置打下了基础。
 
-# RAGFlow 项目部署
+# RAGF 项目部署
 
 **RAGFlow** 是一个集成本地大语言模型与知识检索的问答系统，能够将本地大模型与外部知识库结合，实现智能问答、内容生成和信息检索的统一管理。它可以直接在本地 Python 环境中运行，但为了保证环境隔离、依赖一致性以及后续维护的便利，通常推荐使用 **Docker 容器化部署**。
 
@@ -43,7 +43,7 @@ draft: false
 git clone https://github.com/infiniflow/ragflow.git
 ```
 
-## Docker 部署
+## 配置 Docker
 
 进入 **docker** 文件夹，利用官方提前构建好的 Docker 镜像即可启动 RAGFlow 服务器。
 
