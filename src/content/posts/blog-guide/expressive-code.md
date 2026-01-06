@@ -42,7 +42,7 @@ Full RGB colors:
 Text formatting: [1mBold[0m [2mDimmed[0m [3mItalic[0m [4mUnderline[0m
 ```
 
-### 2. 窗口与终端样式
+### 2. 终端样式
 
 [📚 官方文档：窗口框架](https://expressive-code.com/key-features/frames/)
 
@@ -82,7 +82,7 @@ function Watch-Tail { Get-Content -Tail 20 -Wait $args }
 New-Alias tail Watch-Tail
 ```
 
-### 3. 文本标记与高亮
+### 3. 文本标记
 
 [📚 官方文档：文本标记](https://expressive-code.com/key-features/text-markers/)
 
@@ -257,7 +257,7 @@ function getLongString() {
 }
 ```
 
-## 插件功能
+## 插件功能演示
 
 ### 1. 代码折叠
 

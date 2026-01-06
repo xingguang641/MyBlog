@@ -80,7 +80,7 @@ draft: false
    ![背景填充](src\content\posts\photoshop\背景填充4.jpg)
    ![背景填充](src\content\posts\photoshop\背景填充5.jpg)
 
-这样，背景整洁统一，为后续的排版、展示或进一步加工提供了干净的底色，也让图片整体看起来更专业。
+这样背景就变得整洁统一，为后续的排版、展示或进一步加工提供了干净的底色。
 
 ### 快速填充
 

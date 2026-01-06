@@ -119,7 +119,7 @@ volumes:
 上述配置使用了 `volumes` 模块定义了 `pg_data`、`app_data` 等命名卷。这意味着数据库文件和日志只会托管在 Docker 内部，**不会污染你的本地项目目录** 。即使删除了当前的文件夹，只要不手动删除 Docker Volume，数据依然保留在 Docker 中。
 :::
 
-## 启动服务
+## 启动远程服务
 
 确保你的服务器已安装 Docker 和 Docker Compose。如果尚未安装，可以参考 [官方文档](https://docs.docker.com/compose/install/) 进行安装。
 
