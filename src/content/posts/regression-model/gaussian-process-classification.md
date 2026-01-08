@@ -17,7 +17,7 @@ draft: false
 
 不过要真正理解高斯过程分类背后的思想，我们需要从它的 “简化形式” 开始构建直觉 ———— 这便是 **贝叶斯逻辑回归（Bayesian Logistic Regression）**。可以将 GPC 看作是 “将贝叶斯逻辑回归扩展到无限维函数空间” 的自然结果：当我们把线性模型替换为高斯过程先验，逻辑回归便以一种更强大、更优雅的方式被泛化到非线性情形之中。
 
-![高斯过程回归分类](src\content\posts\gaussian-process-classification\高斯过程分类1.jpg)
+![高斯过程回归分类](src\content\posts\regression-model\高斯过程分类1.jpg)
 
 ## 贝叶斯逻辑回归
 

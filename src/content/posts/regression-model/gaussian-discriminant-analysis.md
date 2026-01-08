@@ -11,7 +11,7 @@ draft: false
 
 虽然逻辑回归在机器学习任务中的效果非常好，但在样本呈现特殊分布的情况下，我们可以使用其他更好的算法。**高斯判别分析**（Gaussian Discriminant Analysis，简称 GDA）就是其中的一个。这篇博客的主要内容，就是介绍高斯判别分析算法的主要原理以及公式的推导。
 
-![高斯判别分析图像](src\content\posts\gaussian-discriminant-analysis\高斯判别模型1.jpg)
+![高斯判别分析图像](src\content\posts\regression-model\高斯判别模型1.jpg)
 
 ## 基本先验假设
 

@@ -29,7 +29,7 @@ $$
 
 其中 $w = [w_1, w_2, \ldots, w_n]^{\rm T}$ 是权重向量（Weight），表示每个特征的重要性。$b$ 是偏置项（Bias），表示截距。从几何角度看，这个模型对应于 $n$ 维空间中的一个 **超平面（Hyperplane）**。训练模型的过程，本质上就是不断调整 $w$ 和 $b$ ，使这个超平面尽可能贴近所有训练数据点，从而最小化预测误差。
 
-![线性回归图像](src/content/posts/linear-regression/线性回归分析1.jpg)
+![线性回归图像](src\content\posts\regression-model\线性回归分析1.jpg)
 
 ---
 

@@ -1063,3 +1063,27 @@ print(y.shape)  # 输出: torch.Size([32, 64])
     > 关于更详细的讲解可以参考以下视频
 
     <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=889408481&bvid=BV1cP4y1t7cP&cid=379457443&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+---
+
+# 神经网络相关教程
+
+## 激活函数相关
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=115774953887638&bvid=BV1NXBLB2EE2&cid=34956052957&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+## 损失函数相关
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=115644930463746&bvid=BV1GHS1BzE6J&cid=34424164218&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+## 梯度下降相关
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=115694389697492&bvid=BV14kmxBiEja&cid=34635778203&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+&nbsp;
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=115796965595669&bvid=BV1mSvkBQEyr&cid=35037253112&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+&nbsp;
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=115830503249253&bvid=BV1sgivBFEDq&cid=35162751839&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>

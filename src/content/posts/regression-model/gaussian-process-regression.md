@@ -15,7 +15,7 @@ draft: false
 
 然而我们要真正理解高斯过程回归的思想，首先需要从它的简化形式出发，也就是 **贝叶斯线性回归（Bayesian Linear Regression）**。高斯过程回归正是基于贝叶斯回归思想的一种推广与扩展。
 
-![高斯过程回归图像](src\content\posts\gaussian-process-regression\高斯过程回归1.jpg)
+![高斯过程回归图像](src\content\posts\regression-model\高斯过程回归1.jpg)
 
 ## 贝叶斯线性回归
 

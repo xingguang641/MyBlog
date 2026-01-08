@@ -49,7 +49,7 @@ $$
 
 该公式左侧为典型的 **线性函数** ，右侧则是将后验概率之比（数学上称为 **几率** ，Odds）通过对数变换映射至实数域，这种建立线性预测值与 **对数几率** 之间映射关系的方法，也正是 Logistic 回归被称为 **对数几率回归** 的由来。
 
-![逻辑回归图像](src\content\posts\logistic-regression\逻辑回归分析1.jpg)
+![逻辑回归图像](src\content\posts\regression-model\逻辑回归分析1.jpg)
 
 ---
 
