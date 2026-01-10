@@ -19,7 +19,7 @@ draft: false
 
 MEMM 的具体定义如下：
 
-![最大熵马尔可夫模型图像](src\content\posts\maximum-entropy-markov-model\最大熵马尔可夫模型1.png)
+![最大熵马尔可夫模型图像](src\content\posts\maximum-entropy-markov\最大熵马尔可夫模型1.png)
 
 若想知道什么是最大熵马尔可夫模型，我们就必须先弄清楚什么是最大熵模型。
 
@@ -375,7 +375,7 @@ $$
 
 假设已知的观测序列为 $O = (o_1, o_2, o_3, o_4)$ ，所有可能的状态的集合为 $O = (1, 2, 3, 4, 5)$ ，各个时刻之间的状态转移概率如下图所示：
 
-![最大熵马尔可夫模型图像](src\content\posts\maximum-entropy-markov-model\最大熵马尔可夫模型2.png)
+![最大熵马尔可夫模型图像](src\content\posts\maximum-entropy-markov\最大熵马尔可夫模型2.png)
 
 由维特比算法易算得最优状态序列 $I^* = (1, 1, 1, 1)$ ，但是结合的实际情形可知，状态序列 $\bar{I} = (1, 2, 2, 2)$ 显然比 $I^*$ 更加合理，这是因为 $\bar{I}$ 每个时刻之间的状态转移都比 $I^*$ 更加 **自信** 。
 
