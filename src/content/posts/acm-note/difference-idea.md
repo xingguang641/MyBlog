@@ -27,7 +27,7 @@ $$
 
 ---
 
-# 等式变为不等式相关题目收集
+# 等式条件变为不等条件相关题目收集
 
 在许多问题中，**等式条件往往过于严格** ，直接求解会比较复杂；相比之下，**不等式的限制更宽松** ，通常更容易处理。因此我们常通过差分式思路，将原本的等式条件转化为两个不等式的差，从而简化计算过程：
 
@@ -41,7 +41,7 @@ $$
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=405456839&bvid=BV1DG411d7fh&cid=29083175448&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
-## K 个不同整数的子数组
+## K 种整数子数组
 
 [题目链接](https://leetcode.cn/problems/subarrays-with-k-different-integers/description/)
 
@@ -64,7 +64,7 @@ $$
 
 输入包含两行：
 
-- 第一行包含两个整数 $N$ 和 $k$ 。其中，$N$ 表示数组的长度，$k$ 的含义已在题目描述中给出。
+- 第一行包含两个整数 $N$ 和 $k$ 。其中 $N$ 表示数组的长度，$k$ 的含义已在题目描述中给出。
 - 第二行包含 $N$ 个整数，表示数组中的元素。
 
 > $N \quad k$

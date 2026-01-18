@@ -19,7 +19,7 @@ draft: false
 
 接下来，我将以 “两数之和” 为主线，带你串联起各类相关题型。相信这趟旅程会让你对熟悉的题目有全新的理解，也能收获更 **体系化的解题思维** 。
 
-## 两数之和
+## 两数之和母题
 
 [题目链接](https://leetcode.cn/problems/two-sum/description/)
 
@@ -164,7 +164,7 @@ for (int i = 0; i < n; i++){
 
 ---
 
-# 数组子段和相关题目收集
+# 数组子段和问题
 
 或许大家都知道，如果我们定义数组的前缀和为 $pre$ ，那么任意子数组的和都可以表示为：
 
@@ -178,7 +178,7 @@ $$
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=447731638&bvid=BV1Sj411q7fi&cid=1245726571&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
-## 累加和为定值的最长子数组
+## 累加和为定值的最长子数组长度
 
 [题目链接](https://www.nowcoder.com/practice/36fb0fd3c656480c92b569258a1223d5)
 
@@ -383,7 +383,7 @@ int main() {
 }
 ```
 
-## 正负一样多的最长子数组
+## 正负相同子数组
 
 [题目链接](https://www.nowcoder.com/practice/545544c060804eceaed0bb84fcd992fb)
 
@@ -462,7 +462,7 @@ int main() {
 }
 ```
 
-## 表现良好的最长时间段
+## 良好最长时间段
 
 [题目链接](https://leetcode.cn/problems/longest-well-performing-interval/)
 
@@ -536,7 +536,7 @@ $$
 
 这实际上是一个经典的 **单调栈问题**（也称 “寻找最远下邻问题” ）：我们需要为每一个 $right$ 找到其左侧 **距离最远** 且 **数值更小** 的下标 $left$ ，然后计算差值，再在这些差值中寻找最大值。
 
-> 关于单调栈的知识，可以参考我的博客：[【ACM 算法随笔】单调数据结构](https://xingguang641.com/posts/monotonic-stack-idea/monotonic-structure/)
+> 关于单调栈的知识，可以参考我的博客：[【ACM 算法随笔】单调结构与单调性质](https://xingguang641.com/posts/monotonic-stack-idea/monotonic-structure/)
 
 此外，这道题还有一个可以利用的特殊性质：数组中的数字只有 ±1，因此前缀和变化为 1，满足 **单调连续性** 。
 
@@ -584,7 +584,7 @@ int main() {
 
 由于前缀和变化的步长恒为 1，因此动态维护 **小于当前 $pre[i]$ 的前缀个数** 非常高效，只需统计每种前缀值出现的次数，即可在 $O(1)$ 时间完成更新。
 
-## 使数组和能被 P 整除
+## 构造 P 整除数组
 
 [题目链接](https://leetcode.cn/problems/make-sum-divisible-by-p/description/)
 

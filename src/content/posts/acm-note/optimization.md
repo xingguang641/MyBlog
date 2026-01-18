@@ -7,14 +7,22 @@ category: ACM Note
 draft: false
 ---
 
-# 贡献法
+# 贡献法优化枚举
 
 
 
-## 关注整体贡献法
+## 整体规划贡献法
 
 
 
 ## 对象交换贡献法
 
+区间子数组转具体元素
 
+# 随机化优化枚举
+
+
+
+# 标准化优化枚举
+
+1. [【ACM 算法题单】矩形相关问题](https://xingguang641.com/posts/acm-type/rectangle-problem/)
