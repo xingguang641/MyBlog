@@ -271,54 +271,6 @@ $case_i$ 表示第 $i$ 个测试用例。每个测试用例的格式如下：
 
 
 
-### Problem Statement
-
-给定一个由 $0$ 和 $1$ 组成的矩阵 `matrix` ，找出只包含 $1$ 的最大矩形，并返回其面积。
-
-注意：此题 `matrix` 输入格式为一维 $01$ 字符串数组。
-
-### Constraints
-
-- $rows == matrix.length$
-- $cols == matrix[0].length$
-- $0 <= row, cols <= 200$
-- $matrix[i][j]$ 仅包含 $0$ 或 $1$
-
-### Input
-
-输入包含多行：
-
-- 第一行包含一个整数 $n$ ，表示矩阵的行数。
-- 接下来 $n$ 行包含一个字符串，表示矩阵的一行。
-
-> $n$
-> 
-> $S_1$
-> 
-> $\ldots$
-> 
-> $S_2$
-
-### Output
-
-输出一个整数表示答案。
-
-### Sample Input 1
-
-```txt showLineNumbers=false
-4
-10100
-10111
-11111
-10010
-```
-
-### Sample Output 1
-
-```txt showLineNumbers=false
-6
-```
-
 ## 寻找高光片段
 
 [题目链接](https://atcoder.jp/contests/abc420/tasks/abc420_f)
