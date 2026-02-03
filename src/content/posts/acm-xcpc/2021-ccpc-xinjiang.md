@@ -78,13 +78,13 @@ $$
 ### Input
 
 * 第一行是一个正整数 $n$ 。
-* 第二行包含 $n$ 个整数 $a_0, a_1, \ldot, a_{n-1}$ 。
-* 第三行包含 $n$ 个整数 $b_0, b_1, \ldot, b_{n-1}$ 。
+* 第二行包含 $n$ 个整数 $a_0, a_1, \ldots, a_{n-1}$ 。
+* 第三行包含 $n$ 个整数 $b_0, b_1, \ldots, b_{n-1}$ 。
 * $0 \leq a_i, b_i \leq 5000, \sum a_i \leq 5000, \sum b_i \leq 5000, n \leq 2 \times 10^5$
 
 ### Output
 
-输出一行，包含 $n$ 个整数 $c_0, c_1, \ldot, c_{n-1}$ 。
+输出一行，包含 $n$ 个整数 $c_0, c_1, \ldots, c_{n-1}$ 。
 
 ### Sample Input 1
 
@@ -153,7 +153,11 @@ $$
 
 ### Problem Statement
 
-给定 $n$ 个正整数 $a_1, a_2, \ldots, a_n$ ，请求计算：$\sum_{i=1}^{n} \sum_{j=1}^{n} (a_i \oplus a_j)^2$
+给定 $n$ 个正整数 $a_1, a_2, \ldots, a_n$ ，请求计算：
+
+$$
+\sum_{i=1}^{n} \sum_{j=1}^{n} (a_i \oplus a_j)^2
+$$
 
 其中 “$\oplus$” 表示按位异或（XOR）操作。
 
