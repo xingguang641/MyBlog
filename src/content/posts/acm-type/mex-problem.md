@@ -9,7 +9,7 @@ draft: false
 
 
 
-# 参考文献
+# 参考文献列表
 
 1. [【算法基础】MEX的计算](https://blog.csdn.net/qq_44743100/article/details/138532755)
 
