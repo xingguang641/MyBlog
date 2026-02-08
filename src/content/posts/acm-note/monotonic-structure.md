@@ -182,6 +182,14 @@ draft: false
 
 
 
+## 带修定长滑窗
+
+[题目链接](https://github.com/algorithmzuo/algorithm-journey/blob/main/src/class071/Code06_DeleteOneNumberLengthKMaxSum.java)
+
+## 题目要点解析
+
+
+
 ---
 
 # 构造式单调性问题
