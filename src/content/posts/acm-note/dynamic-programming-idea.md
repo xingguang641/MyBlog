@@ -53,6 +53,10 @@ draft: false
 
 [题目链接](https://leetcode.cn/problems/profitable-schemes/)
 
+## 夏季特惠问题
+
+[题目链接](https://leetcode.cn/problems/tJau2o/)
+
 ---
 
 # 第二类背包DP问题

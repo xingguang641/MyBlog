@@ -164,6 +164,115 @@ for (int i = 0; i < n; i++){
 
 ---
 
+# 多元组序列问题
+
+在理解了 “两数之和” 的解法之后，我们其实已经不自觉地迈入了一类更一般的问题：如果目标不再是两个元素，而是由多个元素共同构成的子序列，该如何高效地处理？这类问题通常被统称为 **多元组序列问题** 。它们表面形式各异，有的要求统计满足条件的三元组，有的要求寻找四元组甚至更高维的组合，但在算法层面，它们与 “两数之和” 之间存在着非常紧密的内在联系。
+
+回顾 “两数之和” 的核心做法，我们并不是同时枚举两个位置，而是从左到右遍历数组，将 “右端点” 固定在当前位置，并在哈希表中维护左侧已经出现过的信息。对于当前元素，我们只需通过一次查询，就能判断是否存在与之匹配的历史元素，或统计其贡献。这种 **“枚举当前，查询历史”** 的模式，正是多元组序列问题的通用骨架。
+
+当我们将问题推广到三元组时，这种思想并不会失效。设想我们需要统计满足 $i < j < k$ 且 $A_i + A_j + A_k = target$ 的三元组数量。如果固定最右侧的位置 $k$ ，那么问题立即转化为：在区间 $[0, k-1]$ 中，有多少对 $(i, j)$ 满足 $A_i + A_j = target - A_k$ 。换句话说，三数之和并不是一个全新的问题，而是建立在 “两数之和” 之上的一次自然嵌套。随着最外层枚举的推进，内层始终维持着一个标准的 “两数之和” 结构。
+
+这种降维思路可以不断延续。四元组问题可以通过固定一个端点转化为三元组问题，而三元组问题又进一步退化为两数之和。尽管维数的增加往往会带来时间复杂度的上升，但从结构上看，这些问题依然遵循同一条主线：**通过逐步固定位置，将高维约束拆解为低维可维护的信息组合** 。正因如此，许多多元组问题在形式上看似复杂，但其核心并未超出“两数之和”的思想范畴。
+
+## 三数之和问题
+
+[题目链接](https://leetcode.cn/problems/3sum-with-multiplicity/description/)
+
+### Problem Statement
+
+给定一个整数数组 `arr` ，以及一个整数 `target` 作为目标值，返回满足 `i < j < k` 且 `arr[i] + arr[j] + arr[k] == target` 的元组 `i, j, k` 的数量。
+
+由于结果会非常大，请返回 $10^9 + 7$ 的模。
+
+### Constraints
+
+- $3 \leq arr.length \leq 3000$
+- $0 \leq arr[i] \leq 100$
+- $0 \leq target \leq 300$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含两个整数 $N$ 和 $target$ ，其中 $N$ 表示数组的长度，$target$ 表示目标和。
+- 第二行包含 $N$ 个整数，表示数组中的元素。
+
+> $N \quad target$
+>
+> $arr_1 \quad arr_2 \quad \ldots \quad arr_N$
+
+### Output
+
+输出满足条件的三元组的数量。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+10 8
+1 1 2 2 3 3 4 4 5 5
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+20
+```
+
+## 题目要点解析
+
+三数之和的做法并不复杂。我们可以先固定第三个下标 $k$ ，把它当作当前三元组的右端点，然后只考虑区间 $[0, k-1]$ 中的元素。在 $k$ 已经确定的情况下，问题就变成了：在前缀区间中寻找一对下标 $i < j$ ，使得它们对应的两个数与 $arr[k]$ 之和等于目标值。也就是说，每固定一个 $k$ ，就在它左侧跑一次两数之和。
+
+原问题中关于数值的约束可以写为：
+
+$$
+arr[i] + arr[j] + arr[k] = target
+$$
+
+将与 $k$ 相关的项移到等式右侧，就得到：
+
+$$
+arr[i] + arr[j] = target - arr[k]
+$$
+
+此时，问题就完全转化为一个标准的 **两数之和计数问题**：在前缀区间 $[0, k-1]$ 中，统计有多少对下标 $i < j$ 满足它们对应的元素之和等于 $target - arr[k]$ 。因此，只要我们能够在遍历过程中维护左侧区间中各个数值的出现次数，就可以在常数时间内计算出当前 $k$ 所贡献的有效三元组数量。
+
+下面给出完整代码：
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MOD = 1e9 + 7;
+const int MAXN = 3000 + 5;
+int n, target;
+int arr[MAXN];
+
+int main() {
+    cin >> n >> target;
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    ll ans = 0;
+    for (int k = 0; k < n; k++) {
+        unordered_map<int, int> counts;
+        
+        for (int j = 0; j < k; j++) {
+            int need = target - arr[k] - arr[j];
+            if (counts.count(need)) {
+                ans = (ans + counts[need]) % MOD;
+            }
+            counts[arr[j]]++;
+        }
+    }
+
+    cout << ans << endl;
+}
+
+```
+
+---
+
 # 数组子段和问题
 
 或许大家都知道，如果我们定义数组的前缀和为 $pre$ ，那么任意子数组的和都可以表示为：
@@ -536,7 +645,7 @@ $$
 
 这实际上是一个经典的 **单调栈问题**（也称 “寻找最远下邻问题” ）：我们需要为每一个 $right$ 找到其左侧 **距离最远** 且 **数值更小** 的下标 $left$ ，然后计算差值，再在这些差值中寻找最大值。
 
-> 关于单调栈的知识，可以参考我的博客：[【ACM 算法随笔】单调结构与单调性质](https://xingguang641.com/posts/monotonic-stack-idea/monotonic-structure/)
+> 关于单调栈的知识，可以参考我的博客：[【ACM 算法随笔】单调结构与单调性质](https://xingguang641.com/posts/acm-note/monotonic-structure/)
 
 此外，这道题还有一个可以利用的特殊性质：数组中的数字只有 ±1，因此前缀和变化为 1，满足 **单调连续性** 。
 
@@ -549,9 +658,36 @@ $$
 ```cpp frame="code" title="main.cpp"
 #include <bits/stdc++.h>
 using namespace std;
+const int MAXN = 1e4 + 100;
+int N; int hours[MAXN];
 
-int main() {
+int main(){
+    cin >> N;
+    for (int i = 0; i < N; i++){
+        cin >> hours[i];
+    }
 
+    unordered_map<int, int> first;
+    first[0] = -1; int pre = 0; int ans = 0;
+    for (int i = 0; i < N; i++){
+        if (hours[i] > 8) pre += 1;
+        else pre -= 1;
+
+        if (pre > 0){
+            ans = max(ans, i + 1);
+        }
+
+        else if (first.count(pre - 1)){
+            ans = max(ans, i - first[pre - 1]);
+        }
+
+        if (!first.count(pre)){
+            first[pre] = i;
+        }
+    }
+
+    cout << ans << endl;
+    return 0;
 }
 ```
 
@@ -668,8 +804,38 @@ $$
 ```cpp frame="code" title="main.cpp"
 #include <bits/stdc++.h>
 using namespace std;
+typedef long long ll;
+int N; ll p;
 
 int main() {
+    cin >> N >> p;
+    vector<long long> nums(N);
+    for (int i = 0; i < N; i++) {
+        cin >> nums[i];
+    }
 
+    ll total = 0;
+    for (ll x : nums) total += x;
+    int r = total % p;
+    if (r == 0) {
+        cout << 0 << endl;
+        return 0;
+    }
+
+    unordered_map<int, int> pos;
+    pos[0] = -1; ll pre = 0; int ans = N;
+    for (int i = 0; i < N; i++) {
+        pre = (pre + nums[i]) % p;
+
+        int need = (pre - r + p) % p;
+        if (pos.count(need)) {
+            ans = min(ans, i - pos[need]);
+        }
+
+        pos[pre] = i;
+    }
+
+    if (ans == N) cout << -1 << endl;
+    else cout << ans << endl;
 }
 ```
