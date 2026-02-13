@@ -27,7 +27,7 @@ draft: false
 
 ## 题目要点解析
 
-
+可以从前往后匹配也可以从后往前匹配
 
 ## 不同的子序列
 
@@ -68,6 +68,16 @@ draft: false
 ## 题目要点解析
 
 
+
+## 正则表达式匹配
+
+[题目链接](https://leetcode.cn/problems/regular-expression-matching)
+
+
+
+## 题目要点解析
+
+最长公共子序列+完全背包思想
 
 ---
 

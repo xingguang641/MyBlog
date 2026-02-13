@@ -17,6 +17,12 @@ draft: false
 
 在后续的内容中，我们将从不同角度讨论如何对暴力枚举进行拆解和重构，重点关注哪些枚举可以被削减、替换或延迟处理。这些方法并非孤立的技巧，而是可以相互组合使用的通用思路，为复杂问题提供可行的切入点。
 
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=494277801&bvid=BV1PN411j7aG&cid=1357040643&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+&nbsp;
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=494470926&bvid=BV1pN41157uX&cid=1358243247&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
 ---
 
 # 贡献法优化枚举
