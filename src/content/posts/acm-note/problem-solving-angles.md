@@ -199,7 +199,7 @@ $$
 A = (A_1, A_2, \ldots, A_N)
 $$
 
-序列 $A$ 的（不一定连续的）子序列一共有 $2^N$ 种。对于一个子序列 $(A_{i_1}, A_{i_2}, \ldots, A_{i_k})$ 其中 $1 \leq i_1 < i_2 < \cdots < i_k \leq N$ ，请你统计满足以下两个条件的子序列个数：
+序列 $A$ 的（不一定连续的）子序列一共有 $2^N$ 种。对于一个子序列 $(A_{i_1}, A_{i_2}, \ldots, A_{i_k})$ 其中 $1 \leq i_1 < i_2 < \ldots < i_k \leq N$ ，请你统计满足以下两个条件的子序列个数：
 
 1. 所有被选出的元素在原序列中 **不相邻** 。即对任意 $1 \leq j < k$ ，都有：
    $$
@@ -229,7 +229,7 @@ $$
 
 > $N \quad M$
 >
-> $A_1 \quad A_2 \quad \dots \quad A_N$
+> $A_1 \quad A_2 \quad \ldots \quad A_N$
 
 ### Output
 
@@ -237,27 +237,27 @@ $$
 
 ### Sample Input 1
 
-```
+```txt showLineNumbers=false
 7 6
 3 1 4 1 5 3 2
 ```
 
 ### Sample Output 1
 
-```
+```txt showLineNumbers=false
 6
 ```
 
 ### Sample Input 2
 
-```
+```txt showLineNumbers=false
 15 10
 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
 ```
 
 ### Sample Output 2
 
-```
+```txt showLineNumbers=false
 798
 ```
 
@@ -396,13 +396,13 @@ int main() {
 
 > $N \quad M$
 > 
-> $A_{11} \quad A{12} \quad \cdots \quad A_{1N}$
+> $A_{11} \quad A{12} \quad \ldots \quad A_{1N}$
 > 
-> $A_{21} \quad A{22} \quad \cdots \quad A_{2N}$
+> $A_{21} \quad A{22} \quad \ldots \quad A_{2N}$
 > 
-> $\cdots$
+> $\ldots$
 > 
-> $A_{N1} \quad A{N2} \quad \cdots \quad A_{NN}$
+> $A_{N1} \quad A{N2} \quad \ldots \quad A_{NN}$
 
 
 ### Output
@@ -411,7 +411,7 @@ int main() {
 
 ### Sample Input 1
 
-```txt allowbreaks
+```txt showLineNumbers=false
 2 7
 1 2
 3 1
@@ -419,15 +419,13 @@ int main() {
 
 ### Sample Output 1
 
-```txt
+```txt showLineNumbers=false
 5
 ```
 
----
-
 ### Sample Input 2
 
-```txt allowbreaks
+```txt showLineNumbers=false
 3 100000
 1 2 3
 3 5 8
@@ -436,15 +434,13 @@ int main() {
 
 ### Sample Output 2
 
-```txt
+```txt showLineNumbers=false
 13712
 ```
 
----
-
 ### Sample Input 3
 
-```txt allowbreaks
+```txt showLineNumbers=false
 5 402
 8 1 3 8 9
 8 2 4 1 8
@@ -455,7 +451,7 @@ int main() {
 
 ### Sample Output 3
 
-```txt
+```txt showLineNumbers=false
 384
 ```
 

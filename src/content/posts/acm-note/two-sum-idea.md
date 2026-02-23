@@ -1017,7 +1017,7 @@ int main() {
 > 
 > $S_2$
 > 
-> $cdots$
+> $ldots$
 > 
 > $N_T$
 > 
