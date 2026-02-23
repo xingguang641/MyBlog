@@ -146,6 +146,92 @@ draft: false
 
 因此最远上/下邻问题通常需要通过 **正向遍历求左侧最远邻、反向遍历求右侧最远邻** 的方式分别计算，才能保证结果的正确性。
 
+我们发现，单调栈在这个问题中不会弹出任何元素，因此本质上就是在维护一组 “历史前缀中的代表元素” 。而当问题只关心是否存在更大的前缀元素时，这种结构实际上等价于一个前缀最大值数组。具体来说，如果我们要求每个位置 $i$ 左侧最远的、满足 $a[j] > a[i]$ 的位置 $j$ ，可以先预处理一个前缀最大值数组：
+
+$$
+mx[i] = \max(a[1], a[2], \dots, a[i])
+$$
+
+这个数组本身是单调不降的。对于当前位置 $i$ ，如果 $mx[i-1] \le a[i]$ ，那么显然左侧不存在更大的元素；否则，说明在区间 $[1, i-1]$ 内一定存在满足条件的解。此时，由于前缀最大值具有单调性，我们可以在前缀最大值数组上通过二分查找，找到 **最早使得前缀最大值大于当前值的位置** ，从而确定最远上邻。
+
+可以看到，这种做法本质上仍然是利用 “前缀信息的单调性” ，只不过不再显式维护候选集合，而是将 “可能成为最远上邻的元素” 隐含在前缀最大值结构之中。相比单调栈，它的结构更加直接，也更接近于 “区间极值 + 二分” 的模型。
+
+## 元素最右侧较小
+
+[题目链接](https://www.geeksforgeeks.org/dsa/find-the-farthest-smaller-number-in-the-right-side/)
+
+### Problem Statement
+
+给定一个整数数组 `arr[]` ，数组长度为 $N$ 。对于每个下标 $i$ ，请在其右侧找到一个下标 $j$ ，满足 `j > i` 且 `arr[j] < arr[i]` 。
+
+并且在所有满足条件的 $j$ 中，选择 **下标最大的那个**（即最靠右的位置）。
+
+如果不存在满足条件的下标，则该位置的答案为 $-1$。
+
+最终输出一个长度为 $N$ 的数组，其中第 $i$ 个元素表示对应位置的最远满足条件的下标。
+
+子数组元素采用 **0 基索引** 。
+
+### Constraints
+
+- $1 \leq N \leq 10^5$
+- $-10^9 \leq arr[i] \leq 10^9$
+
+### Input
+
+输入包含两行：
+
+* 第一行包含一个整数 $N$ ，表示数组长度。
+* 第二行包含 $N$ 个整数，表示数组中的各个元素。
+
+> $N$
+>
+> $arr_0 \quad arr_1 \quad \ldots \quad arr_{N-1}$
+
+### Output
+
+输出一行 $N$ 个整数，第 $i$ 个整数表示位置 $i$ 右侧最远的小于 `arr[i]` 的下标，若不存在则输出 $-1$ 。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+5
+2 5 1 3 2
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+2 4 -1 4 -1
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+5
+2 3 5 4 1
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+4 4 4 4 -1
+```
+
+## 题目要点解析
+
+
+
+## 寻找累加和至多为 K 的最长数组
+
+[题目链接](https://www.nowcoder.com/practice/3473e545d6924077a4f7cbc850408ade)
+
+
+
+## 题目要点解析
+
+
+
 ---
 
 # 滑动窗口极值问题
@@ -162,6 +248,8 @@ draft: false
 
 [题目链接](https://leetcode.cn/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/)
 
+
+
 ## 题目要点解析
 
 
@@ -169,6 +257,8 @@ draft: false
 ## 接雨水最小花盆
 
 [题目链接](https://www.luogu.com.cn/problem/P2698)
+
+
 
 ## 题目要点解析
 
@@ -178,6 +268,8 @@ draft: false
 
 [题目链接](https://leetcode.cn/problems/max-value-of-equation/description/)
 
+
+
 ## 题目要点解析
 
 
@@ -185,6 +277,8 @@ draft: false
 ## 带修定长滑窗
 
 [题目链接](https://github.com/algorithmzuo/algorithm-journey/blob/main/src/class071/Code06_DeleteOneNumberLengthKMaxSum.java)
+
+
 
 ## 题目要点解析
 
@@ -206,6 +300,8 @@ draft: false
 
 [题目链接](https://leetcode.cn/problems/longest-substring-with-at-least-k-repeating-characters/description/)
 
+
+
 ## 题目要点解析
 
 
@@ -222,6 +318,8 @@ draft: false
 
 [题目链接](https://leetcode.cn/problems/remove-duplicate-letters/description/)
 
+
+
 ## 题目要点解析
 
 
@@ -230,6 +328,8 @@ draft: false
 
 [题目链接](https://www.nowcoder.com/practice/77199defc4b74b24b8ebf6244e1793de)
 
+
+
 ## 题目要点解析
 
 
@@ -237,6 +337,8 @@ draft: false
 ## 使数组按非递减顺序排列的方法
 
 [题目链接](https://leetcode.cn/problems/steps-to-make-array-non-decreasing/description/)
+
+
 
 ## 题目要点解析
 

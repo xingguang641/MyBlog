@@ -56,7 +56,7 @@ draft: false
 
 当 $n \approx 20$ 时，排列级别的枚举已经失去了可行性，但这并不意味着暴力思路完全被否定。在这一数量级下，指数级复杂度依然可能通过。与前一个阶段相比，题目不再关心元素出现的具体顺序，而是更关注 **哪些元素被选入当前方案** ，以及这些选择之间是否满足给定的约束条件。
 
-也正因为如此，题目的核心对象从 “排列” 转变为 “集合” 。许多看似不同的操作流程，最终得到的其实是同一个元素子集。在这一阶段，能否意识到 “顺序不重要、选择才重要” ，往往直接决定了是否能够找到正确且可行的解法。
+正因如此，问题的关注点不再是元素出现的先后次序，而是最终被选取的元素组合本身。许多表面上流程不同的操作，实际上只是以不同顺序构造出了同一个子集。本质被抽离之后，问题从 “如何排列” 转化为 “如何选择” 。
 
 在这一数量级下，最常见、也最稳定的建模方式便是 **状态压缩** 。通过使用一个二进制位掩码来表示当前选中的元素集合，可以将 “是否选择某个元素” 这一抽象概念，直接映射为位运算上的 0/1 状态。这样一来，原本分散在搜索路径中的信息被集中到一个统一的状态中，许多重复子问题也因此被自然合并。在实现层面，状态压缩通常依赖于位运算来完成集合的表示与操作，其核心思想可以概括为：
 
@@ -83,6 +83,8 @@ draft: false
 * 在中间阶段，仅使用常见的 $O(n)$ 或 $O(n \log n)$ 算法对左右结果进行合并
 
 合并阶段通常借助排序、哈希或双指针等手段完成，用于高效匹配左右两侧的中间结果，从而构造满足条件的解。
+
+![折半查找图像](src\content\posts\acm-note\折半查找.png)
 
 这种结构的本质在于：**指数级复杂度被严格限制在左右两端，而中间只允许出现线性或近线性的处理** 。也正因为这一点，折半搜索并不是简单地 “把问题拆成两半” ，而是通过对复杂度分布的重新安排，使原本不可行的 $2^n$ 级问题重新落入可计算的范围之内。
 
@@ -139,6 +141,12 @@ $n \log n$ 量级的问题往往考察选手对 **算法设计、数据结构选
 
 在高量级数据下，问题的关键不再是 “如何遍历” ，而是 **如何抽象问题、识别可利用的数学结构，并将其转化为高效计算方法** 。这一阶段考察的主要能力是数学分析与算法思想的结合，以及在极大数据量下仍能设计出理论上可行、实际运行稳定的算法。
 
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=615345165&bvid=BV1ph4y1M75E&cid=1177580746&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+&nbsp;
+
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=751457417&bvid=BV13k4y1D7Dn&cid=1440956015&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
 ---
 
 # 数学归纳法思维
@@ -183,21 +191,405 @@ $n \log n$ 量级的问题往往考察选手对 **算法设计、数据结构选
 
 [题目链接](https://atcoder.jp/contests/abc427/tasks/abc427_f)
 
+### Problem Statement
 
+给定一个长度为 $N$ 的整数序列
+
+$$
+A = (A_1, A_2, \ldots, A_N)
+$$
+
+序列 $A$ 的（不一定连续的）子序列一共有 $2^N$ 种。对于一个子序列 $(A_{i_1}, A_{i_2}, \ldots, A_{i_k})$ 其中 $1 \leq i_1 < i_2 < \cdots < i_k \leq N$ ，请你统计满足以下两个条件的子序列个数：
+
+1. 所有被选出的元素在原序列中 **不相邻** 。即对任意 $1 \leq j < k$ ，都有：
+   $$
+   1 + i_j \neq i_{j+1}
+   $$
+
+2. 子序列的元素和是 $M$ 的倍数。即：
+   $$
+   \sum_{j=1}^k A_{i_j} \equiv 0 \pmod M
+   $$
+
+即使两个子序列的值相同，只要取自不同的位置，也视为不同的子序列。
+
+### Constraints
+
+- $1 \leq N \leq 60$
+- $1 \leq M \leq 10^9$
+- $0 \leq A_i < M$
+- 输入全部为整数
+
+### Input
+
+输入包含两行：
+
+* 第一行包含两个整数 $N$ 和 $M$
+* 第二行包含 $N$ 个整数，表示序列 $A$
+
+> $N \quad M$
+>
+> $A_1 \quad A_2 \quad \dots \quad A_N$
+
+### Output
+
+输出满足条件的子序列数量。
+
+### Sample Input 1
+
+```
+7 6
+3 1 4 1 5 3 2
+```
+
+### Sample Output 1
+
+```
+6
+```
+
+### Sample Input 2
+
+```
+15 10
+5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+```
+
+### Sample Output 2
+
+```
+798
+```
 
 ## 题目要点解析
 
+这是一个典型的 **不相邻约束下的子序列计数问题** 。由于 $N \le 60$ ，直接枚举所有 $2^N$ 个子序列不可行，因此采用 **折半搜索** 将问题拆分为两个规模可控的子问题。
 
+我们将序列 $A$ 按下标划分为左右两部分：左半部分为 $A_1 \sim A_k$ ，右半部分为 $A_{k+1} \sim A_N$ ，其中 $k=\lfloor N/2 \rfloor$ 。对每一部分分别进行子序列枚举，并要求在枚举过程中满足 “不选相邻元素” 的约束。枚举时使用二进制掩码或递归搜索均可，但必须保证任意两个被选下标不相邻。
+
+在枚举左半部分时，对每一个合法子序列，记录两个信息：其元素和对 $M$ 取模后的值 $s$ ，以及一个布尔量 $t$ ，表示该子序列是否选取了左半部分的最后一个元素 $A_k$ 。我们将所有枚举结果按照 $t$ 的取值分成两组，并分别统计每种模值 $s$ 出现的次数。
+
+同样地，在枚举右半部分时，对每一个合法子序列，记录其元素和模 $M$ 的值 $s'$ ，以及一个布尔量 $u$ ，表示该子序列是否选取了右半部分的第一个元素 $A_{k+1}$ 。同样按照 $u$ 的取值分类，并统计每种模值的出现次数。
+
+在合并左右两部分时，需要显式处理跨越分界线的相邻约束。若左半部分的子序列选取了 $A_k$（即 $t=1$ ），则右半部分的子序列不能选取 $A_{k+1}$（即只能选择 $u=0$ 的状态）；若左半部分未选取 $A_k$（即 $t=0$ ），则右半部分可以选择任意合法状态。
+
+对于每一对合法的左右状态组合，我们设左半部分的模值为 $s$ ，右半部分的模值为 $s'$ ，则整体子序列的元素和模 $M$ 的值为 $(s+s') \bmod M$ 。我们需要统计满足 $(s+s') \bmod M = 0$ 的组合数量。具体实现时，可以对右半部分按模值建立计数表，对左半部分的每个模值 $s$ ，在允许的右半状态集合中查找模值为 $(M-s)\bmod M$ 的出现次数，并将乘积累加到答案中。
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MAXN = 100;
+int n, mid; ll modM;
+ll arr[MAXN];
+
+// cntLeft[t][mod]：左半部分，t = 是否选了arr[mid]
+unordered_map<ll, ll> cntLeft[2];
+void dfsLeft(int pos, bool lastTaken, bool takeLast, ll sumMod) {
+    if (pos > mid) {
+        cntLeft[takeLast][sumMod]++;
+        return;
+    }
+
+    // 不选当前元素
+    dfsLeft(pos + 1, false, takeLast, sumMod);
+    // 选当前元素（需满足不相邻）
+    if (!lastTaken) {
+        bool newTakeLast = takeLast;
+        if (pos == mid) newTakeLast = true;
+        dfsLeft(pos + 1, true, newTakeLast,
+               (sumMod + arr[pos]) % modM);
+    }
+}
+
+// cntRight[u][mod]：右半部分，u = 是否选了arr[mid+1]
+unordered_map<ll, ll> cntRight[2];
+void dfsRight(int pos, bool lastTaken, bool takeFirst, ll sumMod) {
+    if (pos > n) {
+        cntRight[takeFirst][sumMod]++;
+        return;
+    }
+
+    // 不选当前元素
+    dfsRight(pos + 1, false, takeFirst, sumMod);
+    // 选当前元素（需满足不相邻）
+    if (!lastTaken) {
+        bool newTakeFirst = takeFirst;
+        if (pos == mid + 1) newTakeFirst = true;
+        dfsRight(pos + 1, true, newTakeFirst,
+                (sumMod + arr[pos]) % modM);
+    }
+}
+
+int main() {
+    cin >> n >> modM;
+    for (int i = 1; i <= n; i++) {
+        cin >> arr[i];
+    }
+
+    mid = n / 2;
+    dfsLeft(1, false, false, 0);
+    dfsRight(mid + 1, false, false, 0);
+
+    ll answer = 0;
+    for (int takeLast = 0; takeLast <= 1; takeLast++) {
+        for (auto &[leftMod, leftCount] : cntLeft[takeLast]) {
+            ll need = (modM - leftMod) % modM;
+            if (takeLast) {
+                // 左边选了 arr[mid]，右边不能选 arr[mid+1]
+                if (cntRight[0].count(need)) {
+                    answer += leftCount * cntRight[0][need];
+                }
+            } else {
+                // 左边没选 arr[mid]，右边随意
+                if (cntRight[0].count(need)) {
+                    answer += leftCount * cntRight[0][need];
+                }
+                if (cntRight[1].count(need)) {
+                    answer += leftCount * cntRight[1][need];
+                }
+            }
+        }
+    }
+
+    cout << answer << "\n";
+}
+```
 
 ## 通往整数的路径
 
 [题目链接](https://atcoder.jp/contests/abc402/tasks/abc402_f)
 
+### Problem Statement
 
+给定一个 $N \times N$ 的格子。格子中每个位置 $(i, j)$ 都写有一个数字 $A_{i,j}$（取值范围是 $1$ 到 $9$ ）。目前棋子最开始放在格子 $(1,1)$ 。
+
+你需要进行以下操作 **共 $2N-1$ 次**：
+
+* 把当前棋子所在格子中的数字 **追加到字符串 $S$** 的末尾
+* 然后把棋子朝 **下方或右方** 移动一格
+    *注意：在第 $2N-1$ 次操作中不再移动棋子*
+
+执行完这些操作后，棋子最终会到达格子 $(N, N)$ ，并且字符串 $S$ 的长度为 $2N-1$ 。
+
+把字符串 $S$ 视为一个十进制整数，然后对 $M$ 取模后的余数就是得分。
+
+你的任务是：
+
+> 输出可以得到的 **最大得分** 。
+
+也就是说，你可以在每次移动时任意选择向右或者向下，但必须最后从 $(1,1)$ 到达 $(N,N)$ ，并要 **最大化 $S \bmod M$** 。
+
+### Constraints
+
+- $1 \leq N \leq 20$
+- $2 \leq M \leq 10^9$
+- $1 \leq A_{ij} \leq 9$
+- 所有输入均为整数
+
+### Input
+
+输入包含多行。
+
+- 第一行包含两个整数 $N$ 和 $M$
+- 接下来 $N$ 行，每行包含 $N$ 个整数，表示矩阵 $A$
+
+> $N \quad M$
+> 
+> $A_{11} \quad A{12} \quad \cdots \quad A_{1N}$
+> 
+> $A_{21} \quad A{22} \quad \cdots \quad A_{2N}$
+> 
+> $\cdots$
+> 
+> $A_{N1} \quad A{N2} \quad \cdots \quad A_{NN}$
+
+
+### Output
+
+输出一个整数表示可以达到的最大得分 （即最大化字符串 $S$ 对 $M$ 取模的结果）。
+
+### Sample Input 1
+
+```txt allowbreaks
+2 7
+1 2
+3 1
+```
+
+### Sample Output 1
+
+```txt
+5
+```
+
+---
+
+### Sample Input 2
+
+```txt allowbreaks
+3 100000
+1 2 3
+3 5 8
+7 1 2
+```
+
+### Sample Output 2
+
+```txt
+13712
+```
+
+---
+
+### Sample Input 3
+
+```txt allowbreaks
+5 402
+8 1 3 8 9
+8 2 4 1 8
+4 1 8 5 9
+6 2 1 6 7
+6 6 7 7 6
+```
+
+### Sample Output 3
+
+```txt
+384
+```
 
 ## 题目要点解析
 
+这是一个典型的 **路径枚举 + 数值拼接取模最大化问题** 。从 $(1,1)$ 走到 $(N,N)$ 的所有合法路径一共有 $C_{2N-2}^{N-1}$ 条，路径长度固定为 $2N-1$ 。每条路径对应一个十进制整数 $S$ ，其值由沿途经过的数字顺序拼接得到，目标是在所有路径中最大化 $S \bmod M$ 。由于 $N \le 20$ ，路径总数在 $10^{11}$ 级别，必须使用折半或分层 DP 才能处理。
 
+关键观察是：路径长度是固定的，可以在 “中点层” 将路径一分为二。我们考虑所有满足 $i+j = N+1$ 的格子作为分界点（即从起点走了 $N-1$ 步的位置）。任意一条完整路径，都可以唯一拆分为：从 $(1,1)$ 到某个中点格子的前半段路径，以及从该中点格子到 $(N,N)$ 的后半段路径。
+
+对于前半段路径，我们枚举所有从 $(1,1)$ 走到每个中点 $(i,j)$ 的路径，并计算对应字符串表示的数值对 $M$ 取模的结果。由于拼接是十进制，我们在转移时维护：
+
+$$
+value = (previous \times 10 + A_{i,j}) \bmod M
+$$
+
+对每一个中点格子，记录所有可能的前半段模值集合。
+
+对于后半段路径，我们从 $(N,N)$ 反向走到各个中点，同样枚举所有路径。但为了便于合并，这里需要注意位权问题：后半段对应的是字符串的 “低位部分” 。因此我们只记录后半段路径所形成的整数值 $tail$ ，并在合并时使用：
+
+$$
+S \bmod M = (head \times 10^{len} + tail) \bmod M
+$$
+
+其中 $10^{len} \bmod M$ 可以预先计算。
+
+合并阶段，对于每一个中点格子，我们已经拥有该中点处所有可能的前半段模值集合 ${head}$ 和后半段模值集合 ${tail}$。如果直接枚举所有 $(head, tail)$ 的组合进行合并，会导致平方级复杂度，从而无法通过。
+
+注意到在固定 $head$ 的情况下，上式可以写成：
+
+$$
+(x + tail) \bmod M,\quad x = (head \times 10^{len}) \bmod M
+$$
+
+在这里，其实用到了一个非常常见的 **取模最大化的思考方式** 。由于在合并前，$head$ 和 $tail$ 都已经分别对 $M$ 取过模，因此它们的取值范围都在 $[0, M)$ 之内。于是对于任意一组数 $a, b \in [0, M)$ 有：
+
+$$
+(a + b) \bmod M =
+\begin{cases}
+a + b, & a + b < M \\
+a + b - M, & M \le a + b < 2M
+\end{cases}
+$$
+
+也就是说，结果只可能来自这两种情况：一是 **不发生取模**（ $a+b<M$ ），二是 **恰好跨过一次 $M$**（因为 $a+b$ 不可能达到 $2M$ 以上）。
+
+因此，当我们希望最大化 $(a+b)\bmod M$ 时，优先目标是让 $a+b$ 尽量接近但不超过 $M$ ；如果无法做到这一点，则退而求其次，选择 $a+b$ 尽量大的情况。正是基于这一观察，在固定 $a$ 的前提下，可以在所有 $b$ 中寻找满足 $b < M-a$ 的最大值，或直接取 $b$ 的最大值，从而覆盖这两种可能性。这也解释了为什么在合并阶段只需要对后半段的模值集合排序并进行二分查找，就能够保证不会漏掉最优解。
+
+此时问题转化为：在给定的 ${tail}$ 中选择一个值，使得 $(x + tail) \bmod M$ 最大。为此，我们先将 ${tail}$ 排序。对于固定的 $x$，理想情况下希望 $x + tail < M$ ，即 $tail < M - x$ ，因此可以通过二分查找，在 ${tail}$ 中找到严格小于 $M - x$ 的最大值进行尝试。同时，也需要考虑直接取 ${tail}$ 中的最大值（对应发生取模的情况）。对这两种情况取最大值即可。
+
+通过这种方式，合并阶段的复杂度从暴力枚举的平方级，降低为对每个 $head$ 进行一次二分查找，从而使整体算法在 $N \le 20$ 的条件下可以顺利通过。
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MAXN = 25;
+int n; ll modM;
+ll grid[MAXN][MAXN];
+// pow10[i] = 10^i % modM
+ll pow10[MAXN * 2];
+
+// leftVals[i][j]：从 (1,1) 到 (i,j) 的所有前缀模值
+vector<ll> leftVals[MAXN][MAXN];
+void dfsLeft(int x, int y, ll curVal) {
+    curVal = (curVal * 10 + grid[x][y]) % modM;
+    if (x + y == n + 1) {
+        leftVals[x][y].push_back(curVal);
+        return;
+    }
+
+    if (x + 1 <= n) dfsLeft(x + 1, y, curVal);
+    if (y + 1 <= n) dfsLeft(x, y + 1, curVal);
+}
+
+// rightVals[i][j]：从 (i,j) 到 (n,n) 的所有后缀模值（不包含 (i,j)）
+vector<ll> rightVals[MAXN][MAXN];
+void dfsRight(int x, int y, ll curVal, int len) {
+    // 到中点就停，不再把 grid[x][y] 加进去
+    if (x + y == n + 1) {
+        rightVals[x][y].push_back(curVal);
+        return;
+    }
+    curVal = (grid[x][y] * pow10[len] + curVal) % modM;
+
+    if (x - 1 >= 1) dfsRight(x - 1, y, curVal, len + 1);
+    if (y - 1 >= 1) dfsRight(x, y - 1, curVal, len + 1);
+}
+
+int main() {
+    cin >> n >> modM;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            cin >> grid[i][j];
+        }
+    }
+    // 预处理 10 的幂
+    pow10[0] = 1 % modM;
+    for (int i = 1; i <= 2 * n; i++) {
+        pow10[i] = (pow10[i - 1] * 10) % modM;
+    }
+
+    dfsLeft(1, 1, 0);
+    dfsRight(n, n, 0, 0);
+
+    ll answer = 0;
+    for (int i = 1; i <= n; i++) {
+        int j = n + 1 - i;
+        if (j < 1 || j > n) continue;
+
+        int rightLen = (n - i) + (n - j);
+        auto &L = leftVals[i][j];
+        auto &R = rightVals[i][j];
+        if (L.empty() || R.empty()) continue;
+
+        sort(R.begin(), R.end());
+        for (ll leftVal : L) {
+            ll x = (leftVal * pow10[rightLen]) % modM;
+            ll need = (modM - x) % modM;
+
+            // 尝试 a + b < M 的最大情况
+            auto it = lower_bound(R.begin(), R.end(), need);
+            if (it != R.begin()) {
+                --it;
+                answer = max(answer, (x + *it) % modM);
+            }
+
+            // 尝试 a + b >= M 的情况
+            answer = max(answer, (x + R.back()) % modM);
+        }
+    }
+
+    cout << answer << "\n";
+}
+```
 
 ---
 
@@ -210,3 +602,7 @@ $n \log n$ 量级的问题往往考察选手对 **算法设计、数据结构选
 正因如此，通过具体题目的分析来理解增量法显得尤为重要。只有在反复的实战中，才能逐渐熟悉 **哪些题目中隐藏着单调性或可递推结构** ，哪些信息可以在状态转移时被高效地更新，从而避免重复计算。这一过程本身，就是对 **增量思维** 的训练。
 
 总体而言，学习增量法的目标，并不是掌握若干固定技巧，而是形成一种 **敏感性**：当问题规模逐步扩展、状态逐步演化时，能够主动思考 **哪些量是可以被持续维护的，哪些计算是可以被省略的** 。这种思考模式在多种算法题型中都会反复出现，具有很强的通用性。
+
+
+
+

@@ -20,9 +20,9 @@ draft: false
 * **连续约束型** ———— 状态与 “当前区间是否延续” 相关
 * **离散选择型** ———— 状态与 “当前元素是否选择” 相关
 
-理解这两种模式的差异，有助于在面对新的问题时快速判断应如何设计状态与转移，从而建立清晰的动态规划模型。
+理解这两种模式的差异，有助于在面对新的问题时快速判断应如何设计状态与转移，从而建立清晰的动规模型。
 
-## 子数组最大累加和
+## 子数组最大总和
 
 [题目链接](https://leetcode.cn/problems/maximum-subarray)
 
@@ -65,7 +65,7 @@ draft: false
 
 
 
-## 线性打家劫舍问题
+## 线性打家劫舍
 
 [题目链接](https://leetcode.cn/problems/house-robber)
 
@@ -75,7 +75,7 @@ draft: false
 
 
 
-## 环数组最大累加和（对偶问题）
+## 环数组最大总和（对偶问题）
 
 [题目链接](https://leetcode.cn/problems/maximum-sum-circular-subarray/)
 
@@ -85,7 +85,7 @@ draft: false
 
 环形数组最大累加和可以拆成线性数组最大累加和与线性数组最小累加和两个对偶子问题。
 
-## 环形打家劫舍问题
+## 环形打家劫舍
 
 [题目链接](https://leetcode.cn/problems/house-robber-ii/)
 
@@ -95,7 +95,7 @@ draft: false
 
 
 
-## 子数组最大累乘积
+## 子数组最大乘积
 
 [题目链接](https://leetcode.cn/problems/maximum-product-subarray/)
 
@@ -132,7 +132,7 @@ $$
 $$
 dp[i][j] =
 \max\Big(
-dp[i-1][j],;
+dp[i-1][j],
 dp[i-L][j-1] + w[i]
 \Big)
 $$
@@ -152,7 +152,7 @@ $$
 $$
 dp[i][j] =
 \max\Big(
-dp[i-1][j],;
+dp[i-1][j],
 \max_{0 \le t < i}
 \big(
 dp[t][j-1] + pre[i] - pre[t]
@@ -180,7 +180,7 @@ $$
 $$
 dp[i][j] =
 \max\big(
-dp[i-1][j],;
+dp[i-1][j],
 pre[i] + best
 \big)
 $$

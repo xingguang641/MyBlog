@@ -731,7 +731,7 @@ int main(){
 
 输入包含两行：
 
-- 第一行包含两个整数 $N$ 和 $p$ 。其中，$N$ 表示数组的长度，$p$ 的含义已在题目描述中给出。
+- 第一行包含两个整数 $N$ 和 $p$ 。其中 $N$ 表示数组的长度，$p$ 的含义已在题目描述中给出。
 - 第二行包含 $N$ 个整数，表示数组中的元素。
 
 > $N$
@@ -775,7 +775,7 @@ int main(){
 1 2 3
 ```
 
-### Sample Output 
+### Sample Output 3
 
 ```txt showLineNumbers=false
 0
@@ -837,5 +837,265 @@ int main() {
 
     if (ans == N) cout << -1 << endl;
     else cout << ans << endl;
+}
+```
+
+## 树上的路径总和
+
+[题目链接](https://leetcode.cn/problems/path-sum-iii/description/)
+
+### Problem Statement
+
+给定一个二叉树的根节点 `root` ，和一个整数 `targetSum` ，求该二叉树里节点值之和等于 `targetSum` 的 **路径** 的数目。
+
+**路径** 不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。
+
+![树上的路径问题图像](src\content\posts\acm-note\树上的路径问题.png)
+
+### Constraints
+
+- 二叉树的节点个数的范围是 $[0,1000]$
+- $-10^9 \leq Node.val \leq 10^9$
+- $-1000 \leq targetSum \leq 1000$
+
+### Input
+
+输入包含多行：
+
+- 第一行包含两个整数 $N$ 和 $targetSum$ 。其中 $N$ 表示节点个数。
+- 第二行包含 $N$ 个整数，表示这颗树 $1 \sim N$ 节点的权值，其中 $1$ 节点为根节点。
+- 接下来的 $N - 1$ 行中，每一行都会给出两个整数，表示这两个节点之间有边相连。
+
+> $N \quad targetSum$
+>
+> $Node_1 \quad Node_2 \quad \ldots \quad Node_N$
+> 
+> $Node_{u_1} \quad Node_{v_1}$
+>
+> $\dots$
+>
+> $Node_{u_{N-1}} \quad Node_{v{N-1}}$
+
+### Output
+
+输出一个整数表示答案。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+9 8
+10 5 -3 3 2 11 3 -2 1
+1 2
+1 3
+2 4
+2 5
+3 6
+4 7
+4 8
+5 9
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+3
+```
+
+## 题目要点解析
+
+这是一道典型的 “树上向下路径统计” 问题。由于路径只能从父节点走向子节点，因此在 DFS 过程中，当前递归栈上从根到当前节点形成的一条链，本质上就是一条一维序列。问题可以理解为：在这条动态路径中，寻找若干对位置，使得两者对应的路径和之差等于 `targetSum` 。
+
+设当前遍历到节点 $u$ 时，从根到 $u$ 的路径和为 `curSum` 。如果存在某个祖先节点，其对应的路径和为 `x` ，满足：
+
+$$
+curSum - x = targetSum
+$$
+
+那么从该祖先之后到当前节点这一段路径就是一个合法解。因此，在 DFS 过程中维护一个哈希表，记录当前路径上每个路径和出现的次数。访问当前节点时，先计算新的 `curSum` ，然后查询 `curSum - targetSum` 在哈希表中出现了多少次，并将其累加到答案中。随后将当前 `curSum` 计入哈希表，继续递归访问子树。递归返回父节点时，将当前 `curSum` 的出现次数减一，以完成回溯，确保哈希表中始终只保存当前递归路径上的信息。
+
+整棵树只需一次 DFS，每个节点进行常数次哈希查询与更新，时间复杂度为 $O(N)$ ，空间复杂度在最坏情况下为 $O(N)$ 。
+
+从结构上看，这类问题的关键在于路径方向单调，使得整棵树在遍历过程中始终可以被压缩成一条动态路径，从而把问题转化为路径上的 “两数之和” 在线匹配问题。这种转化方式在树上路径计数类问题中具有很强的普适性。
+
+下面是这道题的完整代码：
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MAXN = 1005;
+int N; ll targetSum;
+ll val[MAXN];
+vector<int> G[MAXN];
+
+void dfs(int u, int parent, ll pre) {
+    pre += val[u];
+    if (counts.count(pre)) {
+        ans += counts[pre];
+    }
+
+    counts[pre + targetSum]++;
+    for (int v : G[u]) {
+        if (v == parent) continue;
+        dfs(v, u, pre);
+    }
+    counts[pre + targetSum]--;
+}
+
+int main() {
+    cin >> N >> targetSum;
+    for (int i = 1; i <= N; i++) {
+        cin >> val[i];
+    }
+
+    for (int i = 1; i < N; i++) {
+        int u, v;
+        cin >> u >> v;
+        G[u].push_back(v);
+        G[v].push_back(u);
+    }
+
+    unordered_map<ll, int> counts;
+    counts[targetSum] = 1; ll ans = 0;
+
+    if (N > 0) {
+        dfs(1, 0, 0);
+    }
+
+    cout << ans << endl;
+}
+```
+
+## 翻转以聚类问题
+
+[题目链接](https://atcoder.jp/contests/abc408/tasks/abc408_d)
+
+### Problem Statement
+
+给定一个长度为 $N$ 的字符串 $S$ ，字符串仅由字符 `'0'` 和 `'1'` 组成。
+
+你可以进行任意次（包括 $0$ 次）如下操作：
+
+* 选择一个位置 $i$（ $1 \le i \le N$ ），将 $S_i$ 翻转（即 `'0'` 变为 `'1'`，或 `'1'` 变为 `'0'`）
+
+你的目标是使字符串中 **所有的 `'1'` 至多形成一个连续区间** 。
+
+换句话说，最终字符串需要满足以下条件之一：
+
+* 字符串中没有 `'1'`（全为 `'0'` ），或
+* 存在一段区间 $[l, r)$ ，使得：
+
+  * 当且仅当 $l \le i < r$ 时，$S_i = '1'$
+  * 其它位置均为 `'0'`
+
+请你求出，为了满足上述条件，**最少需要进行多少次翻转操作** 。
+
+### Constraints
+
+* $1 \le T \le 2 \times 10^5$
+* $1 \le N \le 2 \times 10^5$
+* $S$ 是一个仅由 `'0'` 和 `'1'` 组成的字符串
+* 所有测试用例中 $N$ 的总和不超过 $2 \times 10^5$
+
+### Input
+
+输入包含多个测试用例。
+
+* 第一行是一个整数 $T$ ，表示测试用例的数量。
+* 对于每个测试用例：
+
+  * 第一行是一个整数 $N$ ，表示字符串长度。
+  * 第二行是一个长度为 $N$ 的字符串 $S$。
+
+> $T$
+> 
+> $N_1$
+> 
+> $S_1$
+> 
+> $N_2$
+> 
+> $S_2$
+> 
+> $cdots$
+> 
+> $N_T$
+> 
+> $S_T$
+
+### Output
+
+对于每个测试用例，输出一行一个整数，表示最少需要的翻转次数。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+3
+5
+10011
+10
+1111111111
+7
+0000000
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+1
+0
+0
+```
+
+## 题目要点解析
+
+这道题可以等价地理解为一个区间选择问题。由于最终状态要求所有的 `'1'` 至多形成一个连续区间，因此我们可以直接假设答案对应于某个区间 $[l, r]$：该区间内的字符全部为 `'1'` ，区间外的字符全部为 `'0'` 。在这种视角下，问题不再关心翻转的顺序，而只关心为了达到这一目标状态，总共需要翻转多少个字符。
+
+在区间 $[l, r]$ 内，所有原本为 `'0'` 的字符都必须被翻转成 `'1'` ；而在区间外，所有原本为 `'1'` 的字符都必须被翻转成 `'0'` 。因此，翻转次数可以自然地拆分为这两部分之和。为了高效计算任意区间的代价，我们引入前缀和数组，其中 `pre0[i]` 表示前 $i$ 个字符中 `'0'` 的数量，`pre1[i]` 表示前 $i$ 个字符中 `'1'` 的数量。
+
+当区间选为 $[l, r]$ 时，总的翻转次数可以表示为：
+
+$$
+pre0[r] - pre0[l - 1] + pre1[l - 1] + pre1[n] - pre1[r]
+$$
+
+对该式进行整理，可以将其拆解为一项只与右端点 $r$ 有关的部分，以及一项只与左端点 $l$ 有关的部分：
+
+$$
+pre0[r] + pre1[n] - pre1[r] + \bigl(pre1[l - 1] - pre0[l - 1] \bigr)
+$$
+
+这一拆分形式非常关键，它使得问题可以用 “两数之和思想” 的方式来处理。当我们将右端点 $r$ 固定时，前半部分已经成为一个常数，此时要做的就是在所有满足 $l \le r$ 的左端点中，找出使 $pre1[l - 1] - pre0[l - 1]$ 最大的那个位置。
+
+因此，在从左到右扫描字符串的过程中，只需要维护截至当前位置之前该表达式的最大值，就可以在 $O(1)$ 时间内计算出以当前 $r$ 作为右端点时的最小翻转代价。整个字符串只需扫描一次即可完成所有区间的枚举与最优解更新。
+
+基于上述思路，下面给出这道题的完整代码：
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+int n; string s;
+
+int main(){
+    int T; cin >> T;
+    while (T--){
+        cin >> n >> s;
+        vector<int> pre0(n + 1, 0), pre1(n + 1, 0);
+        for (int i = 1; i <= n; i++){
+            pre0[i] = pre0[i - 1];
+            pre1[i] = pre1[i - 1];
+            if (s[i - 1] == '0') pre0[i]++;
+            else pre1[i]++;
+        }
+
+        int ans = INT_MAX, best = 0;
+        for (int r = 1; r <= n; r++){
+            int cur = pre0[r] + pre1[n] - pre1[r];
+            ans = min(ans, cur + best);
+            best = max(best, pre1[r] - pre0[r]);
+        }
+
+        cout << ans << '\n';
+    }
 }
 ```
