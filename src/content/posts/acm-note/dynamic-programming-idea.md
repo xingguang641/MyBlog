@@ -165,7 +165,61 @@ $$
 
 [题目链接](https://leetcode.cn/problems/ones-and-zeroes/description/)
 
+### Problem Statement
 
+给定一个字符串数组 `strs` ，其中每个字符串只包含 `'0'` 和 `'1'` 。同时给定两个整数 `m` 和 `n` 。
+
+要求从 `strs` 中选出最多 **多少个字符串** ，使得选出的字符串中 `'0'` 的总数不超过 `m` ，`'1'` 的总数不超过 `n` 。每个字符串最多只能使用一次。
+
+### Constraints
+
+- $1 \leq strs.length \leq 600$
+- $1 \leq strs[i].length \leq 100$
+- $strs[i]$ 仅包含 `'0'` 和 `'1'`
+- $1 \leq m, n \leq 100$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含三个整数 $N$ 、$m$ 和 $n$ ，$N$ 表示字符串数组的长度，$m$ 和 $n$ 分别表示可用的 `'0'` 和 `'1'` 的最大数量。
+- 第二行包含 $N$ 个只包含 `'0'` 和 `'1'` 的字符串，表示数组 $strs$ 。
+
+> $N \quad m \quad n$
+> 
+> $strs_1 \quad strs_2 \quad \ldots \quad strs_N$
+
+### Output
+
+输出一个整数，表示在满足 `'0'` 数量不超过 $m$ 且 `'1'` 数量不超过 $n$ 的前提下，最多能选出的字符串数量。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+5
+10 0001 111001 1 0
+5 3
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+4
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+3
+10 0 1
+1 1
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+2
+```
 
 ## 题目要点解析
 
@@ -175,7 +229,66 @@ $$
 
 [题目链接](https://leetcode.cn/problems/profitable-schemes/)
 
+### Problem Statement
 
+给定一个整数 `n` 表示成员总数，以及两个整数数组 `group` 和 `profit` 。数组中第 $i$ 个元素表示第 $i$ 种犯罪所需要的成员数和能带来的利润。若一个成员参与了一种犯罪，则该成员不能再参与其它犯罪。
+
+我们称一个犯罪计划为 **盈利计划** ，当且仅当该计划中涉及的犯罪总利润不小于 `minProfit` ，并且参与犯罪的成员总数不超过 `n` 。请统计 **盈利计划的总数** 。由于结果可能很大，请返回答案对 $10^9 + 7$ 取模的值。
+
+### Constraints
+
+- $1 \leq n \leq 100$
+- $0 \leq minProfit \leq 100$
+- $1 \leq group.length \leq 100$
+- $1 \leq group[i] \leq 100$
+- $profit.length == group.length$
+- $0 \leq profit[i] \leq 100$
+
+### Input
+
+输入包含三行：
+
+- 第一行包含三个整数 $N$ 、$minProfit$ 和 $n$ ，分别表示可选犯罪的数量、最小利润要求，以及成员总数。
+- 第二行包含 $N$ 个整数，表示数组 $group$ 中每种犯罪所需的成员数。
+- 第三行包含 $N$ 个整数，表示数组 $profit$ 中每种犯罪能带来的利润。
+
+> $N \quad n \quad minProfit$
+> 
+> $group_1 \quad group_2 \quad \ldots \quad group_N$
+> 
+> $profit_1 \quad profit_2 \quad \ldots \quad profit_N$
+
+### Output
+
+输出一个整数，表示所有满足条件的 **盈利计划** 的数量，对 $10^9 + 7$ 取模后的结果。 
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+5 3 2
+2 2
+2 3
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+2
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+10 5 3
+2 3 5
+6 7 8
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+7
+```
 
 ## 题目要点解析
 
@@ -185,7 +298,71 @@ $$
 
 [题目链接](https://leetcode.cn/problems/tJau2o/)
 
+### Problem Statement
 
+某公司游戏平台的夏季特惠开始了，你决定入手一些游戏。现在你一共有一个预算 `X` 元，平台上有 `n` 个游戏，每个游戏都有原价和现价，并且购买该游戏可以获得一定的快乐值。
+
+对于编号为 `i` 的游戏，原价为 `a_i` 元，现价只要 `b_i` 元，那么购买该游戏能 **优惠** `a_i - b_i` 元，并带来快乐值 `w_i` 。由于优惠的存在，你可能会出现 “冲动消费” 使得总支出超过预算，只要你的 **总优惠金额不小于超过预算的金额** ，心理上就不会觉得吃亏。
+
+你的目标是在这种 “心理上不吃亏” 的前提下，选择一些游戏使得 **总快乐值最大** 。每个游戏最多只能购买一次。
+
+### Constraints
+
+- $1 \leq n \leq 500$
+- $1 \leq a_i, b_i \leq 10^5$
+- $0 \leq w_i \leq 10^5$
+- 总预算 $X$ 是整数
+
+### Input
+
+输入包含四行：
+
+- 第一行包含两个整数 $n$ 和 $X$ ，分别表示游戏数量和预算。
+- 第二行包含 $n$ 个整数，分别表示每个游戏的原价数组 $a$ 。
+- 第三行包含 $n$ 个整数，分别表示每个游戏的现价数组 $b$ 。
+- 第四行包含 $n$ 个整数，分别表示每个游戏的快乐值数组 $w$ 。
+
+> $n \quad X$
+> 
+> $a_1 \quad a_2 \quad \ldots \quad a_n$
+> 
+> $b_1 \quad b_2 \quad \ldots \quad b_n$
+> 
+> $w_1 \quad w_2 \quad \ldots \quad w_n$
+
+### Output
+
+输出一个整数，表示在满足总优惠金额不小于超过预算金额的前提下，你能获得的最大快乐值。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+3 100
+100 80 120
+70 60 90
+30 20 50
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+100
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+4 200
+50 60 100 120
+40 50 90 100
+10 15 30 40
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+95
+```
 
 ## 题目要点解析
 
@@ -195,7 +372,66 @@ $$
 
 [题目链接](https://leetcode.cn/problems/target-sum)
 
+### Problem Statement
 
+给定一个整数数组 `nums` 和一个整数 `target` 。你可以对数组中的每个元素选择 **加号（+）或减号（−）** ，从而构造一个表达式：
+
+例如：对于数组 `[1, 1, 1, 1, 1]` ，可以有如下表达式
+
+```
+-1 + 1 + 1 + 1 + 1 = 3
+```
+
+请找出并返回可以使最终表达式等于 `target` 的 **所有不同表达式的方案数** 。
+
+### Constraints
+
+- $1 \leq nums.length \leq 20$
+- $0 \leq nums[i] \leq 1000$
+- $-1000 \leq target \leq 1000$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含两个个整数 $N$ 和 $target$ ，$N$ 表示数组 $nums$ 的长度，$target$ 表示目标和。
+- 第二行包含 $N$ 个整数，表示数组 $nums$ 的各个元素。
+
+> $N \quad target$
+> 
+> $nums_1 \quad nums_2 \quad \ldots \quad nums_N$
+
+### Output
+
+输出一个整数，表示所有能使表达式结果等于 `target` 的不同方案数。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+5
+1 1 1 1 1
+3
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+5
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+3
+1 2 7
+6
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+1
+```
 
 ## 题目要点解析
 
@@ -205,7 +441,62 @@ $$
 
 [题目链接](https://leetcode.cn/problems/last-stone-weight-ii)
 
+### Problem Statement
 
+有一堆石头，每块石头的重量都是正整数。每一回合，从中选出 **两块石头** ，然后将它们一起碰撞：
+
+* 设这两块石头的重量分别为 `x` 和 `y` ，且 `x <= y` ；
+* 碰撞后，如果 `x == y` ，则两块石头都会 **完全粉碎** 丢弃；
+* 如果 `x != y` ，则那块较轻的石头 `x` 会完全粉碎，而较重的那块石头会剩下重量为 `y - x` 的碎石重新放回石头堆中。
+
+最终最多只会剩下一块石头。请返回 **剩下那块石头的最小可能重量**（如果没有剩下则为 `0`）。
+
+### Constraints
+
+- $1 \leq stones.length \leq 30$
+- $1 \leq stones[i] \leq 100$
+- 石头重量都是正整数
+
+### Input
+
+输入包含两行：
+
+* 第一行包含一个整数 $N$ ，表示石头数量。
+* 第二行包含 $N$ 个整数，表示数组 `stones` 中每块石头的重量。
+
+> $N$
+> 
+> $stones_1 \quad stones_2 \quad \ldots \quad stones_N$
+
+### Output
+
+输出一个整数，表示最后剩下的石头的最小可能重量（若没有石头剩下则输出 `0` ）。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+6
+2 7 4 1 8 1
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+1
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+3
+31 26 33
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+2
+```
 
 ## 题目要点解析
 
@@ -215,7 +506,66 @@ $$
 
 [题目链接](https://www.luogu.com.cn/problem/P2918)
 
+### Problem Statement
 
+约翰的干草库存已经告罄，他打算为奶牛们采购干草。现在已知有 $N$ 个干草公司，编号从 $1$ 到 $N$ 。第 $i$ 家公司卖的干草包重量为 $P_i$ 磅，需要开销 $C_i$ 美元，并且每家公司都有 **充足货源** ，可以卖出 **无限多包干草** 。
+
+约翰希望至少采购到 $H$ 磅干草，请帮助他找到满足这一需求的 **最低总开销** 。也就是说，在购买总重量达到或超过 $H$ 的前提下，求最小的花费总和。
+
+### Constraints
+
+- $1 \leq N \leq 100$
+- $1 \leq H \leq 50000$
+- $1 \leq P_i \leq 5000$
+- $1 \leq C_i \leq 5000$
+
+### Input
+
+输入包含多行：
+
+* 第一行包含两个整数 $N$ 和 $H$ ，分别表示干草公司数量和至少需要采购的干草磅数。
+* 接下来 $N$ 行，每行包含两个整数 $P_i$ 和 $C_i$ ，分别表示第 $i$ 家公司的干草包重量和价格。
+
+> $N \quad H$
+>
+> $P_1 \quad C_1$
+>
+> $\ldots$
+>
+> $P_N \quad C_N$
+
+### Output
+
+输出一个整数，表示采购到至少 $H$ 磅干草所需的最少花费。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+3 100
+50 10
+40 9
+20 5
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+9
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+2 5000
+3000 1000
+2500 800
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+2000
+```
 
 ## 题目要点解析
 
@@ -301,7 +651,70 @@ $$
 
 [题目链接](https://leetcode.cn/problems/maximum-value-of-k-coins-from-piles)
 
+### Problem Statement
 
+给你一个 `piles` 数组，其中 `piles[i]` 是一个整数数组，表示第 `i` 堆硬币从上到下排列的硬币价值。
+
+每次行动，你可以从任意一堆中 **移除最上面的硬币** 并拾取它的价值。你总共可以执行 **最多 k 次操作**（即最多拿 `k` 个硬币）。
+
+请返回在最优策略下你能得到的 **最大硬币总价值** 。
+
+### Constraints
+
+* $1 \leq piles.length \leq 1000$
+* $1 \leq piles[i].length \leq 2000$
+* $1 \leq k \leq 2000$
+* 每个硬币的价值都是非负整数
+
+### Input
+
+输入包含多行：
+
+* 第一行包含两个整数 $N$ 和 $k$，分别表示堆数和最多可取的硬币数量。
+* 接下来 $N$ 行，每行以一个整数 $len_i$ 开头，表示第 $i$ 堆硬币的数量，后接 $len_i$ 个整数表示这一堆中硬币从上到下的价值。
+
+> $N \quad k$
+> $len_1 \quad piles[1][0] \quad piles[1][1] \quad \ldots \quad piles[1][len_1-1]$
+>
+> $len_2 \quad piles[2][0] \quad piles[2][1] \quad \ldots \quad piles[2][len_2-1]$
+>
+> $\vdots$
+>
+> $len_N \quad piles[N][0] \quad piles[N][1] \quad \ldots \quad piles[N][len_N-1]$
+
+### Output
+
+输出一个整数，表示在最多取出 `k` 个硬币的前提下，你能获得的最大总价值。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+3 2
+2 1 100
+3 50 50 50
+1 200
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+250
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+3 3
+3 10 10 10
+3 20 20 20
+3 30 30 30
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+90
+```
 
 ## 题目要点解析
 
@@ -311,7 +724,70 @@ $$
 
 [题目链接](https://www.luogu.com.cn/problem/P1833)
 
+### Problem Statement
 
+爱与愁大神后院里种了 $n$ 棵樱花树，每棵树都有一个美学值 $C_i$ 。每天上学前，他都会到后院赏花。每棵樱花树都有一个看花所需的时间 $T_i$ ，看一次可以获得 $C_i$ 的美学值。对于第 $i$ 棵树：
+
+* 如果 $P_i = 0$ ，表示可以 **无限次** 观看该树；
+* 如果 $P_i > 0$ ，表示最多可以观看该树 $P_i$ 次。
+
+爱与愁大神离开去上学前的时间为 $T_s$ ，上学开始的时间为 $T_e$ 。如果他在赏花过程中花费的总时间不超过 $T_e - T_s$ 分钟，就可以按时或提前上学。请你帮助他选择应观看的樱花树组合，使得 **总美学值最大** 。
+
+### Constraints
+
+* $1 \leq n \leq 10000$
+* $T_e - T_s \leq 1000$
+* $1 \leq T_i \leq 100$
+* $0 \leq C_i \leq 200$
+* $0 \leq P_i \leq 100$
+
+### Input
+
+输入包含 $n+1$ 行：
+
+- 第一行包含两个时间点 $T_s$ 和 $T_e$ 以及整数 $n$ ，其中时间格式为 `hh:mm` ，保证在同一天内且 $T_e \ge T_s$ 。
+- 接下来 $n$ 行，每行包含三个整数 $T_i$ 、$C_i$ 和 $P_i$ ，分别表示第 $i$ 棵樱花树的赏花时间、美学值以及最多观看次数。
+
+> $T_s \quad T_e \quad n$
+>
+> $T_1 \quad C_1 \quad P_1$
+>
+> $\ldots$
+>
+> $T_n \quad C_n \quad P_n$
+
+### Output
+
+输出一个整数，表示在不超过允许时间的情况下所能获得的最大美学值。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+6:50 7:00 3
+2 1 0
+3 3 1
+4 5 4
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+11
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+8:00 8:30 2
+5 10 1
+10 15 2
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+15
+```
 
 ## 题目要点解析
 
@@ -349,7 +825,52 @@ $$
 
 [题目链接](https://leetcode.cn/problems/longest-palindromic-subsequence/)
 
+### Problem Statement
 
+给定一个字符串 `s` ，找到它的 **最长回文子序列** 的长度。子序列是从原字符串中删除部分字符后留下的序列，并 **不改变剩余字符的顺序** 。回文序列是正读和反读都相同的字符串。
+
+例如，字符串 `"bbbab"` 的最长回文子序列是 `"bbbb"` ，长度为 `4` 。
+
+### Constraints
+
+- $1 \leq s.length \leq 1000$
+- `s` 仅由小写英文字母组成
+
+### Input
+
+输入包含一行：
+
+- 该行包含一个字符串 `s` 。
+
+> $s$
+
+### Output
+
+输出一个整数，表示字符串 `s` 的最长回文子序列的长度。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+bbbab
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+4
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+cbbd
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+2
+```
 
 ## 题目要点解析
 
@@ -359,7 +880,64 @@ $$
 
 [题目链接](https://leetcode.cn/problems/minimum-insertion-steps-to-make-a-string-palindrome/description/)
 
+### Problem Statement
 
+给定一个字符串 `s` ，你可以在 **任意位置插入字符** 使得这个字符串变成 **回文串** 。请返回使字符串成为回文串所需要的 **最少插入次数** 。
+
+注意，插入字符不会删除原有字符，你可以在字符串的头部、尾部或中间任意位置插入字符。
+
+### Constraints
+
+- $1 \leq s.length \leq 500$
+- `s` 仅由小写英文字母组成
+
+### Input
+
+输入包含一行：
+
+- 该行包含一个字符串 `s` 。
+
+> $s$
+
+### Output
+
+输出一个整数，表示将字符串 `s` 变成回文串所需的最少插入次数。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+zzazz
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+0
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+mbadm
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+2
+```
+
+### Sample Input 3
+
+```txt showLineNumbers=false
+leetcode
+```
+
+### Sample Output 3
+
+```txt showLineNumbers=false
+5
+```
 
 ## 题目要点解析
 
@@ -369,7 +947,59 @@ $$
 
 [题目链接](https://leetcode.cn/problems/predict-the-winner/description/)
 
+### Problem Statement
 
+给定一个长度为 $N$ 的整数数组 `nums` ，两位玩家轮流进行游戏，每一轮玩家从数组的 **最左端或最右端** 选择一个数字取走，取走后该数字从数组中移除。两位玩家都采用 **最优策略** 玩游戏。
+
+玩家 $1$ 先手，玩家 $2$ 后手。游戏结束后，玩家 $1$ 和玩家 $2$ 分别拥有自己的数字总和。请你预测 **先手玩家是否能够获胜**（即先手玩家的总和大于或等于后手玩家的总和）。
+
+如果先手玩家有获胜的策略，则返回 `true` ，否则返回 `false`。
+
+### Constraints
+
+* $1 \leq N \leq 20$
+* $0 \leq nums[i] \leq 10^7$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个整数 $N$ ，表示数组 `nums` 的长度。
+- 第二行包含 $N$ 个整数，表示数组中的各个元素。
+
+> $N$
+> 
+> $nums_1 \quad nums_2 \quad \ldots \quad nums_N$
+
+### Output
+
+输出一个布尔值（ `true` 或 `false` ），表示在双方采用最优策略的情况下，先手玩家是否能够获胜。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+5
+1 5 2 4 6
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+true
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+4
+1 5 233 7
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+true
+```
 
 ## 题目要点解析
 
@@ -379,7 +1009,60 @@ $$
 
 [题目链接](https://leetcode.cn/problems/minimum-score-triangulation-of-polygon/)
 
+### Problem Statement
 
+给你一个 **凸多边形** 的顶点数 $n$ 和一个长度为 $n$ 的整数数组 `values` ，其中 `values[i]` 表示第 $i$ 个顶点的权值。
+
+对于一个凸多边形的三角剖分，每次选取三个顶点组成一条三角形，并将该三角形一分为二直到整个多边形被划分成非重叠三角形。
+定义三角剖分的 **得分** 为所有组成三角形的权值乘积之和，每个三角形的得分为三个顶点对应权值的乘积。
+
+请返回这个凸多边形所有合法三角剖分中能够得到的 **最低得分** 。
+
+### Constraints
+
+* $3 \leq values.length \leq 50$
+* $1 \leq values[i] \leq 100$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个整数 $N$ ，表示顶点数（也是数组长度）。
+- 第二行包含 $N$ 个整数，表示数组 `values` 中每个顶点的权值。
+
+> $N$
+> 
+> $values_1 \quad values_2 \quad \ldots \quad values_N$
+
+### Output
+
+输出一个整数，表示所有合法三角剖分中能得到的最低得分。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+3
+1 2 3
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+6
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+4
+3 7 4 5
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+144
+```
 
 ## 题目要点解析
 
@@ -389,7 +1072,65 @@ $$
 
 [题目链接](https://leetcode.cn/problems/burst-balloons/)
 
+### Problem Statement
 
+有若干个气球排成一排，第 $i$ 个气球的数字为 `nums[i]` 。当你戳破一个气球时，你将获得的金币数等于该气球左侧和右侧未被戳破气球的数字乘积再乘以该气球本身的数字。如果某一侧已经没有未戳破的气球，则视为其数字为 $1$ 。
+
+换句话说，假设你依次戳破气球的顺序为 $i_1, i_2, \ldots, i_n$，戳破第 $k$ 个气球时获得的金币为：
+
+$$
+coins = nums[i_k] × left × right
+$$
+
+其中 `left` 是第 $i_k$ 个气球左边尚未被戳破的气球数字（若不存在则为 $1$），`right` 是第 $i_k$ 个气球右边尚未被戳破的气球数字（若不存在则为 $1$ ）。
+
+请返回你能获得的 **最大金币数** 。
+
+### Constraints
+
+* $1 \leq nums.length \leq 300$
+* $0 \leq nums[i] \leq 1000$
+
+### Input
+
+输入包含两行：
+
+* 第一行包含一个整数 $N$ ，表示气球的数量。
+* 第二行包含 $N$ 个整数，表示数组 `nums` 中每个气球的数字。
+
+> $N$
+> 
+> $nums_1 \quad nums_2 \quad \ldots \quad nums_N$
+
+### Output
+
+输出一个整数，表示能获得的最大金币数。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+4
+3 1 5 8
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+167
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+1
+5
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+5
+```
 
 ## 题目要点解析
 
@@ -399,7 +1140,65 @@ $$
 
 [题目链接](https://leetcode.cn/problems/boolean-evaluation-lcci/description/)
 
+### Problem Statement
 
+给定一个只包含字符 `'0'` 、`'1'` 和布尔运算符 `'&'` 、`'|'` 、`'^'` 的字符串 `s` 以及一个布尔值 `result` 。
+你需要统计有多少种不同的方式，在运算表达式中加入括号，使得整个表达式的计算结果为 `result` 。
+
+布尔运算规则如下：
+
+* `'&'` 表示逻辑与，如果左右两边都为真（ `1` ）则结果为真，否则为假（ `0` ）。
+* `'|'` 表示逻辑或，只要左右任意一侧为真（ `1` ）则结果为真。
+* `'^'` 表示逻辑异或，当左右两侧不同时结果为真。
+
+你需要返回使表达式结果为给定 `result` 的 **不同括号组合的数量** 。
+
+### Constraints
+
+- $1 \leq s.length \leq 19$
+- `s` 由数字 `'0'` 、`'1'` 与运算符 `'&'` 、`'|'` 、`'^'` 交替组成（即操作数与运算符交替出现）
+- `result` 为布尔值（ `true` 或 `false` ）
+
+### Input
+
+输入包含两行：
+
+* 第一行包含一个字符串 `s` ，表示布尔运算表达式。
+* 第二行包含一个整数 `result` ，若为 `1` 表示目标结果为 `true` ，若为 `0` 表示目标结果为 `false` 。
+
+> $s$
+> 
+> $result$
+
+### Output
+
+输出一个整数，表示所有不同的括号插入方式中，能够让表达式计算结果等于 `result` 的方案数。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+1^0|0|1
+0
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+2
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+0&0&0&1^1|0
+1
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+10
+```
 
 ## 题目要点解析
 
@@ -409,7 +1208,52 @@ $$
 
 [题目链接](https://www.nowcoder.com/practice/e391767d80d942d29e6095a935a5b96b)
 
+### Problem Statement
 
+给定一个由 `'['` 、`']'` 、`'('` 、`')'` 组成的字符串，请问最少插入多少个括号才能使这个字符串的所有括号 **左右配对** 。
+
+例如，当前字符串是 `"([[])"` ，那么插入一个 `']'` 即可满足所有括号匹配的要求。
+
+### Constraints
+
+* 字符串长度满足一定范围（具体原题未明示，但可认为长度 $\leq 10^5 $ ）
+* 字符串仅由上述 $4$ 种括号字符组成
+
+### Input
+
+输入包含一行：
+
+- 该行包含一个只由 `'['` 、`']'` 、`'('` 、`')'` 组成的字符串 `s` 。
+
+> $s$
+
+### Output
+
+输出一个整数，表示使字符串所有括号配对所需插入的最少括号数。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+([[])
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+1
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+([])[]
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+0
+```
 
 ## 题目要点解析
 
@@ -419,7 +1263,54 @@ $$
 
 [题目链接](https://leetcode.cn/problems/strange-printer/)
 
+### Problem Statement
 
+有台奇怪的打印机，它每次可以打印一串 **相同字符** 的序列，也就是说每次打印过程只能选择一个字符并将其连续地打印在一段区间上。
+
+给你一个字符串 `s` ，奇怪的打印机最开始是空的，它可以在任意位置开始打印。每次打印它会选择一个区间并将同一个字符覆盖写入，在这个过程中会覆盖掉原来存在的字符。
+
+请问这台打印机 **打印出字符串 `s` 最少需要多少次打印操作** 。
+
+### Constraints
+
+- $1 \leq s.length \leq 100$
+- `s` 由小写英文字母组成
+
+### Input
+
+输入包含一行：
+
+- 该行包含一个字符串 `s` 。
+
+> $s$
+
+### Output
+
+输出一个整数，表示奇怪的打印机打印出字符串 `s` 最少需要的操作次数。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+aba
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+2
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+aaabbb
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+2
+```
 
 ## 题目要点解析
 
@@ -429,7 +1320,69 @@ $$
 
 [题目链接](https://www.luogu.com.cn/problem/P3205)
 
+### Problem Statement
 
+为了在晚会上有更好的演出效果，小 A 需要按照身高将合唱队的人排成一个队形。合唱队共有 $n$ 个人，编号从 $1$ 到 $n$ ，第 $i$ 个人的身高为 $h_i$ ，且所有身高互不相同。
+
+小 A 想知道有多少种 **初始队形排列** 能够最终生成他理想中的队形。生成过程如下：
+
+* 首先，所有人按某种顺序站成一个初始队形；
+* 然后从左到右依次将每个人插入新的队列中。
+
+  * 第一个人直接进入空队列；
+  * 对于后面的每个人，如果他比队列中最后一个人高，则将他插入队列的 **最右边** ；
+  * 如果他比队列中最后一个人矮，则将他插入队列的 **最左边** 。
+
+当所有人都插入结束后，就得到一个最终队形。如果最终队形恰好与给定的理想队形一致，则认为这个初始队形是合法的。
+
+请你计算 **所有能生成理想队形的初始队形数量** ，并输出答案对 $19650827$ 取模后的结果。
+
+### Constraints
+
+* $1 \leq n \leq 1000$
+* $1000 \leq h_i \leq 2000$
+* 所有身高互不相同
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个整数 $N$ ，表示队伍中人的数量。
+- 第二行包含 $N$ 个整数，表示理想队形中每个人的身高。
+
+> $N$
+>
+> $h_1 \quad h_2 \quad \ldots \quad h_N$
+
+### Output
+
+输出一个整数，表示满足条件的合法初始队形数量对 $19650827$ 取模后的结果。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+3
+1 2 3
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+1
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+4
+2 1 4 3
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+8
+```
 
 ## 题目要点解析
 
@@ -439,7 +1392,61 @@ $$
 
 [题目链接](https://leetcode.cn/problems/remove-boxes/)
 
+### Problem Statement
 
+给你一个由数字表示的盒子序列 `boxes` ，每个盒子的颜色由一个正整数表示。你可以执行以下操作：
+
+每一次操作，你可以选择 **连续的一组颜色相同的盒子**（长度至少为 $1$ ），将这一组盒子取出并获得积分。取出长度为 $k$ 的这一组盒子后，你将获得的积分为 $k^2$ 。
+
+取出之后，剩余的盒子会重新拼接成一个新的连续序列。你可以重复执行上述操作，直到所有盒子都被取出。
+
+请返回你能获得的 **最大积分数** 。
+
+### Constraints
+
+- $1 \leq boxes.length \leq 100$
+- $1 \leq boxes[i] \leq 100$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个整数 $N$ ，表示盒子数量。
+- 第二行包含 $N$ 个整数，表示数组 `boxes` 中每个盒子的颜色。
+
+> $N$
+> 
+> $boxes_1 \quad boxes_2 \quad \ldots \quad boxes_N$
+
+### Output
+
+输出一个整数，表示能够获得的最大积分数。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+9
+1 3 2 2 2 3 4 3 1
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+23
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+5
+1 1 1 1 1
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+25
+```
 
 ## 题目要点解析
 
@@ -449,7 +1456,56 @@ $$
 
 [题目链接](https://leetcode.cn/problems/count-different-palindromic-subsequences/)
 
+### Problem Statement
 
+给定一个字符串 `s` ，请你统计其中 **不同的非空回文子序列** 的个数。
+
+注意：
+
+* 子序列定义为可以通过删除原字符串中任意位置的字符（可能不连续）得到的新字符串；
+* 只统计 **不同的回文子序列** ，重复的回文序列只计数一次；
+* 最终结果可能很大，请返回答案对 $10^9 + 7$ 取模的值。
+
+### Constraints
+
+- $1 \leq s.length \leq 1000$
+- `s` 仅由小写英文字母组成
+
+### Input
+
+输入包含一行：
+
+- 该行包含一个字符串 `s` 。
+
+> $s$
+
+### Output
+
+输出一个整数，表示字符串 `s` 中不同的非空回文子序列的数量，对 $10^9 + 7$ 取模后的结果。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+bccb
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+6
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+aaa
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+3
+```
 
 ## 题目要点解析
 
@@ -510,6 +1566,76 @@ $$
 上述转移仅依赖于子节点的状态，且不存在跨子树的耦合关系。**不同子树之间相互独立，决策可以完全分解** 。由此可通过一次自底向上的深度优先遍历完成全部状态计算，整体时间复杂度为 $O(n)$ 。
 
 从结构角度分析，该类问题之所以能够高效求解，根本原因在于树的无环性与层级结构保证了相邻约束的局部性。约束仅在父子节点之间传递，不会形成全局依赖闭环，从而使得整体最优解可以通过对子树最优解的组合得到。这种 “局部约束、子树独立” 的性质，是树形动态规划能够成立的理论基础。**一旦图结构出现环，这种分解性将不再成立，问题复杂度也将显著提升** 。
+
+## 最大二叉搜索树
+
+[题目链接](https://leetcode.cn/problems/largest-bst-subtree/)
+
+
+
+## 题目要点解析
+
+
+
+## 最大搜索树累加和
+
+[题目链接](https://leetcode.cn/problems/maximum-sum-bst-in-binary-tree/description/)
+
+
+
+## 题目要点解析
+
+
+
+## 二叉树的直径
+
+[题目链接](https://leetcode.cn/problems/diameter-of-binary-tree/)
+
+
+
+## 题目要点解析
+
+
+
+## 二叉树硬币分配
+
+[题目链接](https://leetcode.cn/problems/distribute-coins-in-binary-tree/)
+
+
+
+## 题目要点解析
+
+
+
+## 没有上司的舞会
+
+[题目链接](https://leetcode.cn/problems/house-robber-iii/)
+
+
+
+## 题目要点解析
+
+
+
+## 监控二叉树问题
+
+[题目链接](https://leetcode.cn/problems/binary-tree-cameras/)
+
+
+
+## 题目要点解析
+
+
+
+## 相邻不同最长路
+
+[题目链接](https://leetcode.cn/problems/longest-path-with-different-adjacent-characters/)
+
+
+
+## 题目要点解析
+
+
 
 ## 依赖背包问题
 
@@ -607,6 +1733,36 @@ $$
 
 这种写法的本质，是将树形 DP 改写为 “带区间跳跃的线性 DP” 。状态规模为 $O(nV)$ ，每个节点仅被处理一次，不再需要在每个父节点处反复枚举子节点进行合并。相比传统 $O(nV^2)$ 的合并式写法，这种结构更加扁平、更加统一，也更便于进行滚动数组或空间压缩优化。从结构角度看，传统树形背包是 “自底向上逐层汇总” ，而 DFN 优化后的写法则变为 “沿 DFS 序单向扫描” 。
 
+## 带修二叉树高度
+
+[题目链接](https://leetcode.cn/problems/height-of-binary-tree-after-subtree-removal-queries/)
+
+
+
+## 题目要点解析
+
+
+
+## 删边的最小代价
+
+[题目链接](https://leetcode.cn/problems/minimum-score-after-removals-on-a-tree/)
+
+
+
+## 题目要点解析
+
+
+
+## 大学生最优选课
+
+[题目链接](https://www.luogu.com.cn/problem/P2014)
+
+
+
+## 题目要点解析
+
+
+
 ## 换根转移问题
 
 在树型动态规划中，**根节点是否固定、以及根的选择是否影响答案** ，本身就是题目性质的一部分。具体来看，树上 DP 的问题大致可以分为三类：一类是题目 **明确规定了根节点** ，状态与转移均围绕该根展开；一类是题目 **没有规定根节点，但无论选择哪个节点作为根，最终答案都相同** ；还有一类则是题目 **既未规定根节点，且不同根对应的答案彼此不同** 。换根 DP 正是为第三类问题服务的。
@@ -618,6 +1774,74 @@ $$
 典型做法通常分为两个阶段。第一阶段，任选一个节点作为初始根，自底向上进行一次 DFS，计算每个节点在 “只考虑其子树” 的条件下的 DP 值。第二阶段，再进行一次 DFS，将来自父节点方向的补充信息向下传递，使每个节点都能够在常数时间内构造出 “以自己为根” 时所需的完整状态。通过这种方式，每条边只会被正向、反向各处理一次，整体复杂度保持在 $O(n)$ 。
 
 从更抽象的角度看，换根 DP 解决的是 **状态定义依赖根节点的问题** 。它要求我们将某个节点的整体状态，拆分为 “来自各个相邻方向的独立贡献” ，并保证这些贡献可以被删除、替换和重新组合。一旦这种可分解性成立，根节点的切换就不再需要重做计算，而只是一种视角上的平移。这也正是换根 DP 能够在多种树上统计问题中反复出现的根本原因。
+
+## 最大深度和问题
+
+[题目链接](https://www.luogu.com.cn/problem/P347)
+
+
+
+## 题目要点解析
+
+
+
+## 染色的最大收益
+
+[题目链接](https://www.luogu.com.cn/problem/CF1187E)
+
+
+
+## 题目要点解析
+
+
+
+## 翻转最少的首都
+
+[题目链接](https://www.luogu.com.cn/problem/CF219D)
+
+
+
+## 题目要点解析
+
+
+
+## 流量和最大的根
+
+[题目链接](http://poj.org/problem?id=3585)
+
+
+
+## 题目要点解析
+
+
+
+## 每个节点一定距离以内的权值和
+
+[题目链接](https://www.luogu.com.cn/problem/P3047)
+
+
+
+## 题目要点解析
+
+
+
+## 可改重心的节点
+
+[题目链接](https://www.luogu.com.cn/problem/CF708C)
+
+
+
+## 题目要点解析
+
+
+
+## 用时最少的节点
+
+[题目链接](https://www.luogu.com.cn/problem/P6419)
+
+
+
+## 题目要点解析
 
 
 
@@ -635,6 +1859,8 @@ $$
 
 正是由于这一规模缩减性质，重心分治所形成的递归树高度被严格限制在 $O(\log n)$ 以内。由此可以保证：即便在每一层递归中，需要围绕当前重心执行一次代价较高的枚举、配对或组合统计操作，这类操作也 **只会在对数层数的递归中被执行** ，而不会在不平衡的递归路径上反复出现。整体时间复杂度因此可以被稳定地控制在可分析、可预期的范围之内。因此，重心分治为一类原本难以通过普通树型 DP 高效解决的 **枚举主导型树上问题** ，提供了稳定且可分析的算法框架。
 
+## 动态点分治问题
+
 
 
 ---
@@ -642,6 +1868,12 @@ $$
 # 状压动态规划问题
 
 分配问题、棋盘问题、旅行问题
+
+---
+
+# 数位动态规划问题
+
+
 
 ---
 
