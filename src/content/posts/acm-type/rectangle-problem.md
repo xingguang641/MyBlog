@@ -299,7 +299,7 @@ $case_i$ 表示第 $i$ 个测试用例。每个测试用例的格式如下：
 
 
 
-## 最大子矩形
+## 最大全 1 矩形
 
 [题目链接](https://leetcode.cn/problems/PLYXKQ/description/)
 

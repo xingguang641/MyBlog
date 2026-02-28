@@ -75,7 +75,7 @@ draft: false
 
 
 
-## 环数组最大总和（对偶问题）
+## 环数组最大总和
 
 [题目链接](https://leetcode.cn/problems/maximum-sum-circular-subarray/)
 

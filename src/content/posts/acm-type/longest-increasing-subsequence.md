@@ -67,9 +67,9 @@ $$
 
 
 
-## 带修最长递增序列
+## 带修递增子序列
 
-[题目链接](https://www.luogu.com.cn/problem/P877)
+[题目链接](https://www.luogu.com.cn/problem/P8776)
 
 
 
@@ -79,9 +79,20 @@ $$
 
 ## 最长递增子排列
 
-[题目链接](https://www.luogu.com.cn/problem/P143)
+[题目链接](https://www.luogu.com.cn/problem/P1439)
 
 
 
 ## 题目要点解析
+
+
+
+## 使数组严格递增
+
+[题目链接](https://leetcode.cn/problems/make-array-strictly-increasing/description/)
+
+
+
+## 题目要点解析
+
 
