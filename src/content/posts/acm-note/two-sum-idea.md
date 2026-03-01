@@ -1099,3 +1099,12 @@ int main(){
     }
 }
 ```
+
+## 相乘结果为正或为负的子数组数量
+
+[题目链接](https://codeforces.com/problemset/problem/1215/B)
+
+
+
+## 题目要点解析
+
