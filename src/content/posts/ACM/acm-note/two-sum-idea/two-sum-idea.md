@@ -645,7 +645,7 @@ $$
 
 这实际上是一个经典的 **单调栈问题**（也称 “寻找最远下邻问题” ）：我们需要为每一个 $right$ 找到其左侧 **距离最远** 且 **数值更小** 的下标 $left$ ，然后计算差值，再在这些差值中寻找最大值。
 
-> 关于单调栈的知识，可以参考我的博客：[【ACM 算法随笔】单调结构与单调性质](https://xingguang641.com/posts/acm-note/monotonic-structure/)
+> 关于单调栈的知识，可以参考我的博客：[【ACM 算法随笔】单调结构与单调性质](https://xingguang641.com/posts/acm/acm-note/monotonic-structure/monotonic-structure/)
 
 此外，这道题还有一个可以利用的特殊性质：数组中的数字只有 ±1，因此前缀和变化为 1，满足 **单调连续性** 。
 
@@ -701,7 +701,7 @@ int main(){
 
 这实际上就是 **逆序对的共轭问题 ———— 顺序对** ，因此可以直接使用 **归并分治** 来解决。
 
-> 关于归并分治的知识，可以参考我的博客：[【ACM 算法随笔】归并排序与归并分治](https://xingguang641.com/posts/merge-sort/merge-sort/)
+> 关于归并分治的知识，可以参考我的博客：[【ACM 算法随笔】归并排序与归并分治](https://xingguang641.com/posts/acm/acm-note/merge-sort/merge-sort/)
 
 现在我们考虑如何利用 **单调连续性**：由于前缀和的变化每次仅 ±1，当遍历到某个下标时，我们只需要知道 **小于当前 $pre[i]$ 的前缀个数** 即可统计顺序对数量。
 
@@ -850,7 +850,7 @@ int main() {
 
 **路径** 不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。
 
-![树上的路径问题图像](src\content\posts\acm-note\树上的路径问题.png)
+![树上的路径问题图像](src\content\posts\ACM\acm-note\two-sum-idea\树上的路径问题.png)
 
 ### Constraints
 

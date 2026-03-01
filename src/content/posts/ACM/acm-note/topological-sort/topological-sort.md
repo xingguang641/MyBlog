@@ -19,7 +19,7 @@ draft: false
 
 需要注意的是，拓扑排序存在的前提是图中不含有向环。一旦图中出现有向环，便意味着某些顶点之间存在相互依赖或循环依赖，从而导致先后关系自相矛盾。在这种情况下，无法构造出满足所有约束的线性序列，拓扑排序也就不存在。
 
-![拓扑排序图像](src\content\posts\acm-note\拓扑排序.png)
+![拓扑排序图像](src\content\posts\ACM\acm-note\topological-sort\拓扑排序.png)
 
 ## 拓扑建模分析
 

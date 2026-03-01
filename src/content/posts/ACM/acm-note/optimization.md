@@ -643,13 +643,9 @@ Yes
 
 # 参考文献列表
 
-## 基础枚举技巧论
-
-1. [关于枚举子集的优化](https://www.cnblogs.com/YhjOI/p/18751870)
-
 ## 针对性枚举优化
 
-1. [【ACM 算法题单】矩形相关问题](https://xingguang641.com/posts/acm-type/rectangle-problem/)
+1. [【ACM 算法题单】矩形相关问题](https://xingguang641.com/posts/acm/acm-type/rectangle-problem/)
 
 ## 系统性枚举优化
 

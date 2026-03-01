@@ -23,7 +23,7 @@ $$
 dp[i-1][j-1]
 $$
 
-![整数拆分图解](src\content\posts\integer-partition\整数拆分图解1.png)
+![整数拆分图解](src\content\posts\ACM\acm-type\DP-problems\integer-partition\整数拆分图解1.png)
 
 若所有数都不小于 $2$ ，则可以对每一份统一减去 $1$ ，总和减少 $j$ ，份数保持不变，于是问题转化为将 $i-j$ 拆分为 $j$ 份正整数，其贡献为：
 
@@ -31,7 +31,7 @@ $$
 dp[i-j][j]
 $$
 
-![整数拆分图解](src\content\posts\integer-partition\整数拆分图解2.png)
+![整数拆分图解](src\content\posts\ACM\acm-type\DP-problems\integer-partition\整数拆分图解2.png)
 
 两类情况互不重叠且覆盖全部可能，因此得到递推式：
 
@@ -49,7 +49,7 @@ $$
 dp[i][j-1]
 $$
 
-![整数拆分图解](src\content\posts\integer-partition\无份数限制整数拆分1.png)
+![整数拆分图解](src\content\posts\ACM\acm-type\DP-problems\integer-partition\无份数限制整数拆分1.png)
 
 若至少使用一个 $j$ ，则去掉一个 $j$ 后问题转化为拆分 $i-j$ ，最大仍可为 $j$ ，贡献为：
 
@@ -57,7 +57,7 @@ $$
 dp[i-j][j]
 $$
 
-![整数拆分图解](src\content\posts\integer-partition\无份数限制整数拆分2.png)
+![整数拆分图解](src\content\posts\ACM\acm-type\DP-problems\integer-partition\无份数限制整数拆分2.png)
 
 因此得到递推式：
 
@@ -137,9 +137,9 @@ $$
 
 对于任意一个费雷斯图，如果沿着主对角线将其翻转（即行与列互换），我们会得到一个新的费雷斯图，它对应着原整数 $S$ 的另一个拆分。这个过程被称为 **共轭拆分** 。这一变换在整数拆分集合上构成双射，因此保持计数不变。
 
-![费雷斯变换](src\content\posts\integer-partition\费雷斯变换.png)
+![费雷斯变换](src\content\posts\ACM\acm-type\DP-problems\integer-partition\费雷斯变换.png)
 
-借助这一对称性，可以建立如下等价关系：将 $S$ 拆分为恰好 $n$ 个部分的方案数，等价于将 $S$ 拆分为最大部分恰好为 $n$ 的方案数。为了方便计算，我们利用[差分技巧](https://xingguang641.com/posts/acm-note/difference-idea/#等式条件变为不等条件相关题目收集)，将 “恰好的限制” 转化为 “至多的限制” ，结合费雷斯变换的对等关系，我们得到：
+借助这一对称性，可以建立如下等价关系：将 $S$ 拆分为恰好 $n$ 个部分的方案数，等价于将 $S$ 拆分为最大部分恰好为 $n$ 的方案数。为了方便计算，我们利用[差分技巧](https://xingguang641.com/posts/acm/acm-note/difference-idea/#等式条件变为不等条件相关题目收集)，将 “恰好的限制” 转化为 “至多的限制” ，结合费雷斯变换的对等关系，我们得到：
 
 $$
 \text{count}(\text{恰好 } n \text{ 份}) = \text{count}(\text{最大数值} \le n) - \text{count}(\text{最大数值} \le n-1)
@@ -223,4 +223,8 @@ $$
 
 根据此公式，计算 $p(n)$ 只需要累加之前计算过的 $p(n-G_k)$ 的值，其中 $G_k$ 是五边形数。这不仅降低了计算的维度，还使得计算复杂度大幅下降，在实际应用中表现出极高的计算效率。
 
+---
 
+# 参考文献列表
+
+1. [浅谈整数分拆问题](https://www.luogu.com.cn/article/lyaba9l8)
