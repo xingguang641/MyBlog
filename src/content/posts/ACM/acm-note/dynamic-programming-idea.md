@@ -1,5 +1,5 @@
 ---
-title: 【ACM 算法随笔】动态规划思想
+title: 【ACM 算法随笔】动态规划分类
 published: 2026-02-06
 description: 记录一些 ACM 常用技巧
 tags: [Algorithm, Trick, Note, ACM]
@@ -74,18 +74,6 @@ draft: false
 
 
 ## 题目要点解析
-
-
-
----
-
-# 状压动态规划问题
-
-分配问题、棋盘问题（轮廓线）、旅行问题（排列问题）
-
----
-
-# 数位动态规划问题
 
 
 
@@ -191,8 +179,12 @@ draft: false
 
 ## 经典 DP 分类
 
-1. [【ACM 算法随笔】背包动态规划相关问题](https://xingguang641.com/posts/acm/acm-type/dp-classification/knapsack-dp/)
+1. [【ACM 算法题单】背包动态规划相关问题](https://xingguang641.com/posts/acm/acm-type/dp-classification/knapsack-dp/)
 
-2. [【ACM 算法随笔】区间动态规划相关问题](https://xingguang641.com/posts/acm/acm-type/dp-classification/interval-dp/)
+2. [【ACM 算法题单】区间动态规划相关问题](https://xingguang641.com/posts/acm/acm-type/dp-classification/interval-dp/)
 
-3. [【ACM 算法随笔】树型动态规划相关问题](https://xingguang641.com/posts/acm/acm-type/dp-classification/tree-dp/)
+3. [【ACM 算法题单】树型动态规划相关问题](https://xingguang641.com/posts/acm/acm-type/dp-classification/tree-dp/)
+
+4. [【ACM 算法题单】状压动态规划相关问题](https://xingguang641.com/posts/acm/acm-type/dp-classification/tree-dp/)
+
+5. [【ACM 算法题单】数位动态规划相关问题](https://xingguang641.com/posts/acm/acm-type/dp-classification/tree-dp/)
