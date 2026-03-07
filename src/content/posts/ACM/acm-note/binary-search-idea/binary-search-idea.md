@@ -266,7 +266,7 @@ int main() {
 
 [题目链接](https://www.luogu.com.cn/problem/P1462)
 
-## Problem Statement
+### Problem Statement
 
 在艾泽拉斯大陆上有一位名叫歪嘴哦的神奇术士，他是部落的中坚力量。
 
@@ -286,7 +286,7 @@ int main() {
 
 如果无法到达奥格瑞玛，则输出 `AFK` 。
 
-## Constraints
+### Constraints
 
 * 对于 (60%) 的数据：
   $n \leq 200$
@@ -304,7 +304,7 @@ int main() {
 
 可能存在两条公路连接同一对城市。
 
-## Input
+### Input
 
 输入包含以下内容:
 
@@ -328,7 +328,7 @@ int main() {
 > 
 > $a_m \quad b_m \quad c_m$
 
-## Output
+### Output
 
 输出一个整数，表示路径上单次城市收费最大值的最小可能值。
 
@@ -338,7 +338,7 @@ int main() {
 AFK
 ```
 
-## Sample Input
+### Sample Input 1
 
 ```txt showLineNumbers=false
 4 4 8
@@ -352,7 +352,7 @@ AFK
 3 4 3
 ```
 
-## Sample Output
+### Sample Output 1
 
 ```txt showLineNumbers=false
 10
