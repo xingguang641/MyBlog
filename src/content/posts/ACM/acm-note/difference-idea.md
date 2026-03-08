@@ -547,23 +547,19 @@ $$
 在许多算法竞赛问题中，我们经常需要统计满足某种 **双边约束** 的组合数量，例如：
 
 $$
-\text{lower} \le \text{nums}[i] + \text{nums}[j] \le \text{upper}
+\text{lower} \leq T \leq \text{upper}
 $$
 
-这个条件本质上描述的是一个 **区间限制** 。如果直接在双重循环中逐一检查，时间复杂度通常会达到 $O(n^2)$ ，在数据规模稍大时难以接受。解决这类问题的关键，在于将原本的 **双边不等式约束** 转化为更容易处理的 **单边不等式** 。为此我们可以引入中间变量：
-
-* 令 $T = \text{nums}[i] + \text{nums}[j]$
-
-原本的条件是：$\text{lower} \le T \le \text{upper}$ ，可以等价地写成两个单边条件的组合：
+这个条件本质上描述的是一个 **区间限制** 。如果直接在双重循环中逐一检查，时间复杂度通常会达到 $O(n^2)$ ，在数据规模稍大时难以接受。解决这类问题的关键，在于将原本的 **双边不等式约束** 转化为更容易处理的 **单边不等式** 。原本的条件 $\text{lower} \leq T \leq \text{upper}$ 可以等价地写成两个单边条件的组合：
 
 $$
-T \le \text{upper} \quad \text{且} \quad T \ge \text{lower}
+T \leq \text{upper} \quad \text{且} \quad T \geq \text{lower}
 $$
 
-在此基础上，进一步引入一个计数函数 $f(X)$ ，表示满足 $T \le X$ 的组合数量，那么原问题就可以转化为：
+在此基础上，我们可以引入一个计数函数 $f(X)$ ，表示满足 $T \leq X$ 的组合数量，那么原问题就可以转化为：
 
 $$
-\text{count}(\text{lower} \le T \le \text{upper}) = f(\text{upper}) - f(\text{lower} - 1)
+\text{count}(\text{lower} \leq T \leq \text{upper}) = f(\text{upper}) - f(\text{lower} - 1)
 $$
 
 这种转化思路核心在于：**先解决一个更宽松、易于统计的单边条件问题，再通过差分的方式恢复精确的双边计数结果** 。该技巧在区间统计、二分答案、双指针以及前缀结构等场景中都具有极强的通用性，是算法竞赛中非常值得熟练掌握的一类思想。

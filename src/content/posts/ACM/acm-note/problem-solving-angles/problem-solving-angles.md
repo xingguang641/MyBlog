@@ -599,6 +599,78 @@ int main() {
 
 总体而言，学习增量法的目标，并不是掌握若干固定技巧，而是形成一种 **敏感性**：当问题规模逐步扩展、状态逐步演化时，能够主动思考 **哪些量是可以被持续维护的，哪些计算是可以被省略的** 。这种思考模式在多种算法题型中都会反复出现，具有很强的通用性。
 
+## 限距下降跳跃
 
+[题目链接](https://atcoder.jp/contests/abc408/tasks/abc408_f)
 
+### Problem Statement
+
+有 `N` 个脚手架排成一排，编号为 `1` 到 `N` 。第 `i` 个脚手架的高度为 `H_i`。
+
+高桥将进行如下游戏：
+
+* 开始时，他可以任选一个脚手架 `i` 站上去。
+* 如果当前站在脚手架 `i`，他可以移动到脚手架 `j`，当且仅当满足：
+
+  * `1 ≤ |i - j| ≤ R`
+  * `H_j ≤ H_i - D`
+
+也就是说：
+
+* 目标脚手架与当前位置的距离 **不超过 `R` 且不为 0**
+* 目标脚手架的高度 **至少比当前脚手架低 `D`**
+
+高桥会不断移动，直到 **无法再进行合法移动为止** 。
+
+求他最多可以移动多少次。
+
+### Constraints
+
+- $1 \leq N \leq 5 × 10^5$
+- $1 \leq D, R \leq N$
+
+### Input
+
+输入包含两行：
+
+* 第一行包含三个整数 $N$ 、$D$ 、$R$ 。
+* 第二行包含 $N$ 个整数 $H_i$ 表示数组元素。
+
+> $N \quad D \quad R$
+>
+> $H_1 \quad H_2 \quad \ldots \quad H_N$
+
+### Output
+
+输出一个整数，表示最多可以进行的移动次数。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+5 2 1
+5 3 1 4 2
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+2
+```
+
+---
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+4 1 2
+3 1 4 2
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+3
+```
+
+## 题目要点解析
 
