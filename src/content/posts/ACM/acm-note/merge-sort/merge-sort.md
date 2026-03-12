@@ -185,6 +185,11 @@ CDQ 分治 **本质上就是归并分治在多维偏序问题中的直接应用*
 * 动态序列中的偏序统计问题，如带时间维度的逆序对或贡献统计
 * 若干经典竞赛题中出现的 “离线 + 树状数组 + 分治” 结构问题
 
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px;">
+  <iframe width="100%" height="200" src="//player.bilibili.com/player.html?isOutside=true&aid=114607746195424&bvid=BV1sa7zz1EVx&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+  <iframe width="100%" height="200" src="//player.bilibili.com/player.html?isOutside=true&aid=114653598322831&bvid=BV1RsTiz4EAw&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+</div>
+
 从这一角度看，CDQ 分治并不是对归并分治的 “扩展” ，而是 **对其合并阶段能力的充分利用** 。只要问题能够被抽象为 “在分治结构下进行单向贡献统计” ，便往往可以自然地转化为 CDQ 分治模型。
 
 ---
