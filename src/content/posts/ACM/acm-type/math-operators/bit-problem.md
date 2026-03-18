@@ -263,7 +263,7 @@ int main(){
 
 ### Constraints
 
-- $1 \leq k \leq \textit{nums.length} \leq 10^5$
+- $1 \leq k \leq nums.length \leq 10^5$
 - $1 \leq nums[i] \leq 10^9$
 - 所有输入均为整数
 

@@ -397,6 +397,16 @@ int main() {
 }
 ```
 
+## 有效三角形个数
+
+[题目链接](https://leetcode.cn/problems/valid-triangle-number/description/)
+
+
+
+## 题目要点解析
+
+
+
 ---
 
 # 数组子段和问题

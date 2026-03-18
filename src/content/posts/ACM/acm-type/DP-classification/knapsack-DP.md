@@ -499,6 +499,16 @@ $$
 
 
 
+## 完全平方数构造
+
+[题目链接](https://leetcode.cn/problems/perfect-squares/description/?source=vscode)
+
+
+
+## 题目要点解析
+
+
+
 ---
 
 # 第二类背包问题
