@@ -2,7 +2,7 @@
 title: 【ACM 算法题单】矩形相关问题
 published: 2025-12-13
 description: 记录一些 ACM 常见题型
-tags: [Algorithm, Problem Type, Grid Graph]
+tags: [Algorithm, Problem Type]
 category: ACM Type
 draft: false
 ---
