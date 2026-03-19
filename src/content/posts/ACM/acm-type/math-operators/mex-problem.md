@@ -35,7 +35,15 @@ draft: false
 
 ### 任意区间的在线查询
 
+需要用到主席树
 
+---
+
+# MEX区间计数问题
+
+需要用到极小mex区间（比较困难）（两数之和思想）
+
+还有一个简单的差分方法（比较简单）
 
 ---
 
@@ -43,7 +51,7 @@ draft: false
 
 1. [【ACM 教程】求区间 MEX 的多种方法](https://zhuanlan.zhihu.com/p/563177000)
 
-2. [【OI Beats】MEX 相关题目](https://entiesci.github.io/oi-beats/site/数学/MEX/)
+2. [【OI Beats】MEX 相关题目合集](https://entiesci.github.io/oi-beats/site/数学/MEX/)
 
 3. [【Little_corn】关于 MEX 的几个问题](https://www.cnblogs.com/little-corn/p/18722880)
 
@@ -52,3 +60,5 @@ draft: false
 5. [【BigSmall_En】与 MEX 有关的题目](https://www.cnblogs.com/BigSmall-En/p/16526110.html)
 
 6. [关于序列极小 MEX 区间的一个性质](https://www.cnblogs.com/LUHCUH/p/18732094)
+
+7. [浅谈「极小 MEX 区间」问题](https://www.luogu.com.cn/article/4cu6e946)
