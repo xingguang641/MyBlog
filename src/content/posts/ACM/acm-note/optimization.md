@@ -430,9 +430,8 @@ $$
 ### Constraints
 
 - $1 \leq t \leq 10^5$
-- 对于每个测试用例：
-  * $1 \leq n \leq 10^5$
-  * $1 \leq a_i \leq 10^9$
+- $1 \leq n \leq 10^5$
+- $1 \leq a_i \leq 10^9$
 - 所有测试用例中所有 $n$ 的总和不超过 $10^5$
 
 ### Input

@@ -324,9 +324,7 @@ int main(){
 
 ### Problem Statement
 
-给你一个字符串 `s` 和一个整数 `k` ，请你返回字符串中 **最长子串的长度** ，要求该子串中的 **每个字符出现次数都不少于 k 次** 。
-
-如果不存在满足条件的子串，则返回 `0` 。
+给你一个字符串 `s` 和一个整数 `k` ，请你返回字符串中 **最长子串的长度** ，要求该子串中的 **每个字符出现次数都不少于 k 次** 。如果不存在满足条件的子串，则返回 `0` 。
 
 ### Constraints
 
@@ -460,10 +458,10 @@ acdb
 
 $$
 \begin{aligned}
-while (stack.top() > c \, \&\& \, count[stack.top()] > 1) \{\\
-\quad count[stack.top()]--; \\
-\quad stack.pop(); \\
-\}
+& while (stack.top() > c \, \&\& \, count[stack.top()] > 1) \{\\
+& \quad count[stack.top()]--; \\
+& \quad stack.pop(); \\
+& \}
 \end{aligned}
 $$
 
@@ -588,24 +586,16 @@ int main(){
 
 3. [【算法】滑动窗口算法详解](https://blog.csdn.net/2401_87820834/article/details/145998759)
 
-4. [【Gaowalyrrn】滑动窗口法](https://www.cnblogs.com/Gaowaly/p/18344802)
-
 ## 单调栈与队列
 
 1. [【OI WiKi】单调栈相关知识](https://oi-wiki.org/ds/monotonous-stack/)
 
-2. [关于单调栈的详细讲解及应用案例](https://blog.csdn.net/zy_dreamer/article/details/131036101)
+2. [【算法通关手册】单调栈](https://algo.itcharge.cn/03_stack_queue_hash_table/03_02_monotone_stack/)
 
-3. [【算法通关手册】单调栈](https://algo.itcharge.cn/03_stack_queue_hash_table/03_02_monotone_stack/)
+3. [数据结构之单调栈：从原理到实战](https://blog.csdn.net/2301_79248256/article/details/155377188)
 
-4. [数据结构之单调栈：从原理到实战，玩转高效解题](https://blog.csdn.net/2301_79248256/article/details/155377188)
+4. [【OI WiKi】单调队列相关知识](https://oi-wiki.org/ds/monotonous-queue/)
 
-5. [如何优雅地使用单调栈（一）：基础篇](https://www.cnblogs.com/molinchn/p/14772025.html)
+5. [单调队列：实用而好写的数据结构](https://www.cnblogs.com/jerrycyx/p/18683014)
 
-6. [【OI WiKi】单调队列相关知识](https://oi-wiki.org/ds/monotonous-queue/)
-
-7. [数据结构之单调队列](https://blog.csdn.net/2301_79248256/article/details/155452653)
-
-8. [单调队列：实用而好写的数据结构](https://www.cnblogs.com/jerrycyx/p/18683014)
-
-9. [算法学习笔记：单调栈/单调队列](https://www.cnblogs.com/P2441M/p/18637702)
+6. [算法学习笔记：单调栈/单调队列](https://www.cnblogs.com/P2441M/p/18637702)

@@ -393,7 +393,7 @@ int main() {
 }
 ```
 
-## 有效三角形个数
+## 有效三角形数
 
 [题目链接](https://leetcode.cn/problems/valid-triangle-number/description/)
 
@@ -1005,7 +1005,7 @@ int main() {
 >
 > $\dots$
 >
-> $Node_{u_{N-1}} \quad Node_{v{N-1}}$
+> $Node_{u_{N-1}} \quad Node_{v_{N-1}}$
 
 ### Output
 

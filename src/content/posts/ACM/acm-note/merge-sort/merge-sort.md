@@ -453,10 +453,10 @@ int main(){
 
 # 参考文献列表
 
-1. [排序——归并排序（Merge sort）](https://blog.csdn.net/justidle/article/details/104203958)
+1. [【OI WiKi】归并排序相关知识](https://oi-wiki.org/basic/merge-sort/)
 
-2. [【OI WiKi】归并排序相关知识](https://oi-wiki.org/basic/merge-sort/)
+2. [归并排序（Merge sort）教程](https://blog.csdn.net/justidle/article/details/104203958)
 
-3. [图解归并排序，带你彻底了解清楚！](https://blog.csdn.net/qq_37084904/article/details/119217434)
+3. [【OI WiKi】CDQ 分治相关知识](https://oi-wiki.org/misc/cdq-divide/)
 
-4. [【OI WiKi】CDQ 分治相关知识](https://oi-wiki.org/misc/cdq-divide/)
+4. [[学习笔记]CDQ分治和整体二分](https://www.luogu.com.cn/article/nl6r7elc)

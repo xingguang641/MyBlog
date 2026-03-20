@@ -55,10 +55,6 @@ draft: false
 
 3. [【Little_corn】关于 MEX 的几个问题](https://www.cnblogs.com/little-corn/p/18722880)
 
-4. [【sleepy66】MEX 的常见用法和性质](https://www.luogu.com/article/be7l5b13)
+4. [【BigSmall_En】与 MEX 有关的题目](https://www.cnblogs.com/BigSmall-En/p/16526110.html)
 
-5. [【BigSmall_En】与 MEX 有关的题目](https://www.cnblogs.com/BigSmall-En/p/16526110.html)
-
-6. [关于序列极小 MEX 区间的一个性质](https://www.cnblogs.com/LUHCUH/p/18732094)
-
-7. [浅谈「极小 MEX 区间」问题](https://www.luogu.com.cn/article/4cu6e946)
+5. [浅谈「极小 MEX 区间」问题](https://www.luogu.com.cn/article/4cu6e946)

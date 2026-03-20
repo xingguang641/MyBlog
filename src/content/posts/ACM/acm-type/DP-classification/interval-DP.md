@@ -732,9 +732,3 @@ aaa
 ## 题目要点解析
 
 
-
----
-
-# 参考文献列表
-
-1. [区间 DP 详解](https://blog.csdn.net/fgddfjhdhj/article/details/149242740)
