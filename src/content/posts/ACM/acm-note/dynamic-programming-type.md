@@ -183,16 +183,6 @@ $$
 
 
 
-## 最长有效括号
-
-[题目链接](https://leetcode.cn/problems/longest-valid-parentheses/)
-
-
-
-## 题目要点解析
-
-
-
 ## 不同的子序列
 
 [题目链接](https://leetcode.cn/problems/distinct-subsequences-ii/)
