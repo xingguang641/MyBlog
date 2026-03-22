@@ -42,8 +42,8 @@ $$
 $$
 dp[i][j][k] =
 \begin{cases}
-1 & \text{存在可行方案} \\
-0 & \text{不存在可行方案}
+1 & \text{if reachable} \\
+0 & \text{if unreachable}
 \end{cases}
 $$
 

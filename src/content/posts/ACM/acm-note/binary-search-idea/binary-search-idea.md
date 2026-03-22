@@ -346,6 +346,16 @@ int main() {
 }
 ```
 
+## 饥饿的高桥先生
+
+[题目链接](https://atcoder.jp/contests/abc415/tasks/abc415_e)
+
+
+
+## 题目要点解析
+
+
+
 ---
 
 # 离线型中位数问题
@@ -800,6 +810,6 @@ int main() {
 
 1. [【OI WiKi】二分查找相关知识](https://oi-wiki.org/basic/binary/)
 
-2. [【二分查找】详细图解](https://blog.csdn.net/qq_45978890/article/details/116094046)
+2. [【二分查找】超级详细的图解](https://blog.csdn.net/qq_45978890/article/details/116094046)
 
 3. [【数据结构】二分查找 (四种写法)](https://www.cnblogs.com/MarisaMagic/p/17093253.html)
