@@ -166,6 +166,16 @@ int main(){
 }
 ```
 
+## 数列递增区间加
+
+[题目链接](https://atcoder.jp/contests/abc421/tasks/abc421_g)
+
+
+
+## 题目要点解析
+
+
+
 ---
 
 # 多重差分题目收集
@@ -401,6 +411,26 @@ int main() {
     cout << count(k, nums) - count(k - 1, nums);
 }
 ```
+
+## 最值期望问题
+
+[题目链接](https://atcoder.jp/contests/abc411/tasks/abc411_e)
+
+
+
+## 题目要点解析
+
+
+
+## 数的平方等于两数乘积的方法数
+
+[题目链接](https://atcoder.jp/contests/abc411/tasks/abc411_e)
+
+
+
+## 题目要点解析
+
+
 
 ---
 

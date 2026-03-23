@@ -186,7 +186,7 @@ CDQ 分治 **本质上就是归并分治在多维偏序问题中的直接应用*
   <iframe width="100%" height="200" src="//player.bilibili.com/player.html?isOutside=true&aid=114653598322831&bvid=BV1RsTiz4EAw&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 </div>
 
-从这一角度看，CDQ 分治并不是对归并分治的扩展，而是 **对其合并阶段能力的充分利用** 。只要问题能够被抽象为 “在分治结构下进行单向贡献统计” ，便往往可以自然地转化为 CDQ 分治模型。
+从这一角度看，CDQ 分治并不是对归并分治的简单扩展，而是 **对其合并阶段所蕴含的“序”的价值的深度挖掘** 。只要一个问题能够被抽象为 “在分治递归结构下进行的单向贡献统计” ，它往往就能摆脱暴力搜索的桎梏，自然地转化为一个高效且优雅的 CDQ 分治模型，从而实现从线性序到多维约束的逻辑跨越。
 
 ---
 
