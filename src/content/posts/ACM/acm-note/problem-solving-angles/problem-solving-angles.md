@@ -724,6 +724,16 @@ int main() {
 
 
 
+## 数组逆序对构造
+
+[题目链接](https://leetcode.cn/problems/k-inverse-pairs-array/)
+
+
+
+## 题目要点解析
+
+
+
 ---
 
 # 参考文献列表

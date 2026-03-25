@@ -53,3 +53,13 @@ $$
 
 ## 题面要点解析
 
+
+
+## 整除子序列问题
+
+[题目链接](https://github.com/algorithmzuo/algorithm-journey/blob/main/src/class071/Code02_MaxSumDividedBy7.java)
+
+
+
+## 题目要点解析
+
