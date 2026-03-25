@@ -969,12 +969,4 @@ int main(){
 
 # 参考文献列表
 
-## 针对性枚举优化
-
-1. [【ACM 算法题单】矩形相关问题](https://xingguang641.com/posts/acm/acm-type/rectangle-problem/)
-
-## 系统性枚举优化
-
-1. [【塔尖 WiKi】枚举优化](https://wsy0655.github.io/algo-wiki/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/%E6%9E%9A%E4%B8%BE/%E6%9E%9A%E4%B8%BE%E4%BC%98%E5%8C%96/)
-
-2. [浅谈玄学算法：模拟退火](https://www.luogu.com.cn/article/2mnd34y4)
+1. [【ACM 算法题单】矩形相关问题](https://xingguang641.com/posts/acm/acm-type/enum-optim/rectangle-problem/)
