@@ -468,3 +468,5 @@ int main(){
 4. [[学习笔记]CDQ分治和整体二分](https://www.luogu.com.cn/article/nl6r7elc)
 
 5. [【数据结构】二维数点/二维偏序](https://blog.csdn.net/qq_30320171/article/details/129787418)
+
+6. [【Add_Catalyst】偏序问题专题合集](https://www.cnblogs.com/Cat-litter/articles/19243793)
