@@ -37,6 +37,16 @@ draft: false
 
 
 
+## 树上最大累加和
+
+[题目链接](https://atcoder.jp/contests/abc416/tasks/abc416_f)
+
+
+
+## 题目要点解析
+
+
+
 ## 邻点决策问题
 
 在树结构中，图的边仅存在于父子节点之间，且整体无环。因此，若问题对相邻节点施加约束，则该约束仅作用于父子节点之间，不会在同层节点之间产生横向影响，也不会因环结构而形成复杂的连锁依赖。这种结构性特征保证了约束传播的局部性，使得问题可以通过树形动态规划进行有效分解。**树的无环性是约束可分解性的前提** 。
@@ -82,6 +92,16 @@ $$
 ## 相邻不同最长路
 
 [题目链接](https://leetcode.cn/problems/longest-path-with-different-adjacent-characters/)
+
+
+
+## 题目要点解析
+
+
+
+## 赫奇帕奇的金杯
+
+[题目链接](https://www.luogu.com.cn/problem/CF855C)
 
 
 
