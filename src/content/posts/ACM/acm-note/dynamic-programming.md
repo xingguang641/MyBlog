@@ -7,7 +7,7 @@ category: ACM Note
 draft: false
 ---
 
-> 本篇博客写作灵感来源于 N 神的动态规划概述
+> 写在前面：本篇博客写作灵感来源于 N 神的动态规划概述
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=114531325973175&bvid=BV1m9EUzLEB4&cid=30031939563&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 

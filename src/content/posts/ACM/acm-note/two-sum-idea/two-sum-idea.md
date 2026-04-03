@@ -7,7 +7,7 @@ category: ACM Note
 draft: false
 ---
 
-> 本篇博客写作灵感来源于灵神的两数之和理解
+> 写在前面：本篇博客写作灵感来源于灵神的两数之和理解
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=305008442&bvid=BV1bP411c7oJ&cid=888954096&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 

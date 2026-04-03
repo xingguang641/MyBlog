@@ -550,6 +550,16 @@ int main() {
 
 
 
+## 变化阈值子数组
+
+[题目链接](https://leetcode.cn/problems/subarray-with-elements-greater-than-varying-threshold/description/)
+
+
+
+## 题目要点解析
+
+
+
 ---
 
 # 最远上与下邻问题

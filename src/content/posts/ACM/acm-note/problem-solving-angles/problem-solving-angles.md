@@ -7,7 +7,7 @@ category: ACM Note
 draft: false
 ---
 
-> 写在前面：本篇思路来自左神的天字一号技巧
+> 写在前面：本篇博客写作灵感来源于左神的天字一号技巧
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=702591812&bvid=BV1Cm4y1M72N&cid=1243239041&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
