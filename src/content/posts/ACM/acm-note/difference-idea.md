@@ -585,10 +585,10 @@ $$
 
 ### Constraints
 
-- 所有输入值都是整数
 - $1 \leq N, M \leq 4000$
 - $1 \leq L_i \leq R_i \leq N$
 - $1 \leq S_i \leq 10^9$
+- 所有输入均为整数
 
 ### Input
 
