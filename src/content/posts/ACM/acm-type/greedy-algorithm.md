@@ -73,6 +73,22 @@ draft: false
 
 ---
 
+# 子串拼接贪心问题
+
+
+
+## 最大数
+
+[题目链接](https://leetcode.cn/problems/largest-number/description/)
+
+
+
+## 题目要点解析
+
+
+
+---
+
 # 参考文献列表
 
 1. [算法基础篇：贪心算法拓展之区间问题](https://blog.csdn.net/2301_79248256/article/details/155039748)

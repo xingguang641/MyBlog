@@ -1,5 +1,5 @@
 ---
-title: 【ACM 算法随笔】等价关系维护
+title: 【ACM 算法随笔】并查集的应用
 published: 2026-04-03
 description: 记录一些 ACM 常用技巧
 tags: [Algorithm, Trick, Note, ACM]
@@ -19,7 +19,7 @@ draft: false
 
 ## 题目要点解析
 
-
+虚点技巧
 
 ## 金字塔对齐问题
 
@@ -62,6 +62,16 @@ GCD并查集（枚举因子）（中介并查集）
 ## 移除最多的石头
 
 [题目链接](https://leetcode.cn/problems/most-stones-removed-with-same-row-or-column/description/)
+
+
+
+## 题目要点解析
+
+
+
+## 程序自动分析
+
+[题目链接](https://www.luogu.com.cn/problem/P1955)
 
 
 
@@ -221,6 +231,16 @@ GCD并查集（枚举因子）（中介并查集）
 
 扩展域并查集可以被种类并查集替代
 
+## 相对举例问题
+
+[题目链接](https://www.luogu.com.cn/problem/P8779)
+
+
+
+## 题目要点解析
+
+
+
 ## 增量偶权环查询
 
 [题目链接](https://leetcode.cn/problems/incremental-even-weighted-cycle-queries/description/)
@@ -230,3 +250,73 @@ GCD并查集（枚举因子）（中介并查集）
 ## 题目要点解析
 
 
+
+## 银河英雄传说
+
+[题目链接](https://www.luogu.com.cn/problem/P1196)
+
+
+
+## 题目要点解析
+
+
+
+## 除法求值问题
+
+[题目链接](https://leetcode.cn/problems/evaluate-division/description/)
+
+
+
+## 题目要点解析
+
+
+
+## 甄别食物链问题
+
+[题目链接](https://www.luogu.com.cn/problem/P2024)
+
+
+
+## 题目要点解析
+
+带权并查集（种类并查集）、扩展域并查集
+
+## 最小冲突分配
+
+[题目链接](https://www.luogu.com.cn/problem/P1525)
+
+
+
+## 题目要点解析
+
+扩展域并查集
+
+## 敌人敌人是朋友
+
+[题目链接](https://www.luogu.com.cn/problem/P1892)
+
+
+
+## 题目要点解析
+
+扩展域并查集
+
+## 异或带权并查集
+
+[题目链接](https://acm.hdu.edu.cn/showproblem.php?pid=3234)
+
+
+
+## 题目要点解析
+
+
+
+## 区间奇偶问题
+
+[题目链接](https://www.luogu.com.cn/problem/P5937)
+
+
+
+## 题目要点解析
+
+真正的取模带权并查集，跟种类并查集和扩展域并查集有区别，但可以用扩展域并查集来做
