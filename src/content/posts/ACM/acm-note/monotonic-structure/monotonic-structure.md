@@ -1,5 +1,5 @@
 ---
-title: 【ACM 算法随笔】单调结构与单调性质
+title: 【ACM 算法随笔】单调结构的应用
 published: 2025-11-27
 description: 记录一些 ACM 常用技巧
 tags: [Algorithm, Trick, Note, ACM]

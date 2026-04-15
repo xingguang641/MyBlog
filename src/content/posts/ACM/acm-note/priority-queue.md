@@ -1,5 +1,5 @@
 ---
-title: 【ACM 算法随笔】优先队列应用
+title: 【ACM 算法随笔】优先队列的应用
 published: 2026-02-13
 description: 记录一些 ACM 常用技巧
 tags: [Algorithm, Trick, Note, ACM]
