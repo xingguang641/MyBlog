@@ -392,7 +392,7 @@ int main(){
 
 解决该问题的关键在于利用归并排序中左右子区间的 **天然位置顺序** 。在分治的合并阶段，左区间的所有元素下标 $i$ 必然小于右区间的所有元素下标 $j$ 。由于左右子区间在统计前已各自有序，我们可以通过双指针扫描：对于右区间的每一个 $nums[j]$ ，在左区间中找到第一个满足 $nums[i] > 2 \cdot nums[j]$ 的位置。一旦找到，根据有序性，左区间从 $i$ 到末尾的所有元素都必然满足该条件，从而实现 $O(n \log n)$ 的高效计数。
 
-需要注意的是，本题与普通逆序对或数组小和问题略有不同，因为比较条件 $nums[i] > 2 \cdot nums[j]$ 具有 **非对称性** 。这意味着我们不能在归并过程中顺便计数，而必须 **在此之前** 先用一个独立的逻辑完成该层级的翻转对统计。
+需要注意的是，本题与普通逆序对或数组小和问题略有不同，因为比较条件 $nums[i] > 2 \cdot nums[j]$ 具有 **非对称性** 。这意味着我们不能在归并过程中顺便计数，必须 **在此之前** 用一个独立的逻辑完成该层级的翻转对统计。
 
 ```cpp frame="code" title="main.cpp"
 #include <bits/stdc++.h>
@@ -459,11 +459,11 @@ int main(){
 
 1. [【OI WiKi】归并排序相关知识](https://oi-wiki.org/basic/merge-sort/)
 
-2. [归并排序（Merge sort）教程](https://blog.csdn.net/justidle/article/details/104203958)
+2. [【CSDN 教程】归并排序介绍](https://blog.csdn.net/justidle/article/details/104203958)
 
 3. [【OI WiKi】CDQ 分治相关知识](https://oi-wiki.org/misc/cdq-divide/)
 
-4. [[学习笔记]CDQ分治和整体二分](https://www.luogu.com.cn/article/nl6r7elc)
+4. [【学习笔记】CDQ 分治和整体二分](https://www.luogu.com.cn/article/nl6r7elc)
 
 5. [【数据结构】二维数点/二维偏序](https://blog.csdn.net/qq_30320171/article/details/129787418)
 
