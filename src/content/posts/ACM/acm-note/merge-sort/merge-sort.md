@@ -230,7 +230,7 @@ CDQ 分治（由陈丹琦在 2008 年国际信息学奥林匹克中国国家队�
 
 - $0 < n \leq 10^5$
 - $-100 \leq s[i] \leq 100$
-- 所有输入都是整数
+- 所有输入均为整数
 
 ### Input
 
@@ -344,8 +344,8 @@ int main(){
 
 ### Constraints
 
-- 给定数组的长度不会超过 50000
-- 输入数组中的所有数字都在 32 位整数的表示范围内
+- 给定数组的长度不会超过 $50000$
+- 输入数组中的所有数字都在 $32$ 位整数的表示范围内
 
 ### Input
 
@@ -459,12 +459,12 @@ int main(){
 
 1. [【OI WiKi】归并排序相关知识](https://oi-wiki.org/basic/merge-sort/)
 
-2. [【CSDN 教程】归并排序介绍](https://blog.csdn.net/justidle/article/details/104203958)
+2. [【CSDN 博客】归并排序介绍](https://blog.csdn.net/justidle/article/details/104203958)
 
 3. [【OI WiKi】CDQ 分治相关知识](https://oi-wiki.org/misc/cdq-divide/)
 
-4. [【学习笔记】CDQ 分治和整体二分](https://www.luogu.com.cn/article/nl6r7elc)
+4. [【Luogu 博客】CDQ 分治和整体二分](https://www.luogu.com.cn/article/nl6r7elc)
 
-5. [【数据结构】二维数点/二维偏序](https://blog.csdn.net/qq_30320171/article/details/129787418)
+5. [【CSDN 博客】二维数点/二维偏序](https://blog.csdn.net/qq_30320171/article/details/129787418)
 
 6. [【Add_Catalyst】偏序问题专题合集](https://www.cnblogs.com/Cat-litter/articles/19243793)

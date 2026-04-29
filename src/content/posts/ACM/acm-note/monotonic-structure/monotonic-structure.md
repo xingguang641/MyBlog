@@ -17,7 +17,7 @@ draft: false
 
 在各种数组与序列相关的题目中，滑动窗口几乎是最常见、也最实用的技巧之一。它的核心做法很简单：通过两个指针在序列上同步向前移动，始终维护一个当前的区间，并在移动的过程中不断检查区间是否满足题目的要求。不过，滑动窗口并不是可以随意使用的。它之所以高效，是因为许多问题本身具备一种关于窗口长度的单调性。典型的情形是：**窗口越长越不满足条件，或者窗口越长越容易满足条件** 。只要存在这种单调性，我们在扩张右端点的时候，就能确保左端点不会回退，从而保证整个过程不会出现重复扫描的情况。
 
-其中一个典型的例子是「子数组和不超过 $k$ 」这个条件。如果数组中的元素全为非负整数，那么随着窗口长度增加，窗口的累加和只会上升而不会下降。这样一来，窗口越短就越满足条件，我们就可以放心地在累加和超过上限时收缩左端点，从而在线性时间内完成整个搜索。但如果数组中出现负整数，窗口累加和就不再单调，此时窗口累加和随着窗口的扩张反而会因负数的加入而下降。由于单调性被破坏，滑动窗口便失去原本的高效性，需要换用[其他算法](#寻找累加和至多为-k-的最长数组)。
+其中一个典型的例子是「区间和不超过 $k$ 」。如果数组中的元素均为非负整数，那么随着窗口长度增加，窗口累加和只会上升而不会下降。这样一来，窗口越短就越满足条件，我们就可以放心地在累加和超过上限时收缩左端点，从而在线性时间内完成整个搜索。但如果数组中存在负整数，窗口累加和便不再单调，此时窗口累加和随着窗口的扩张反而会因负数的加入而下降。由于单调性被破坏，滑动窗口便失去原本的高效性，需要换用[其他算法](#寻找累加和至多为-k-的最长数组)。
 
 ![滑动窗口图像](src\content\posts\ACM\acm-note\monotonic-structure\滑动窗口1.png)
 
@@ -74,7 +74,7 @@ draft: false
 - $2 \leq n \leq 10^5$
 - $1 \leq k \leq n$
 - $0 \leq startTime[i] < endTime[i] \leq eventTime$
-- 会议按 `startTime` 升序排列，且不重叠
+- 会议按 `startTime` 升序排列且不重叠
 
 ### Input
 
@@ -86,9 +86,9 @@ draft: false
 
 > $n \quad k \quad eventTime$
 > 
-> $startTime_0 \quad startTime_1 \quad \dots \quad startTime_{n-1}$
+> $startTime_0 \quad startTime_1 \quad \ldots \quad startTime_{n-1}$
 > 
-> $endTime_0 \quad endTime_1 \quad \dots \quad endTime_{n-1}$
+> $endTime_0 \quad endTime_1 \quad \ldots \quad endTime_{n-1}$
 
 ### Output
 
@@ -200,11 +200,11 @@ int main() {
 > 
 > $m$
 > 
-> $words_0 \quad words_1 \quad \dots \quad words_{m-1}$
+> $words_0 \quad words_1 \quad \ldots \quad words_{m-1}$
 
 ### Output
 
-输出一行整数，表示所有符合条件的起始索引，以空格隔开；如果不存在答案，请输出 $-1$ 。
+输出一行整数，表示所有符合条件的起始索引，以空格隔开；如果不存在答案，请输出 `-1` 。
 
 ### Sample Input 1
 
@@ -304,7 +304,69 @@ int main() {
 
 [题目链接](https://leetcode.cn/problems/minimum-number-of-flips-to-make-the-binary-string-alternating/description/)
 
+### Problem Statement
 
+给你一个二进制字符串 `s` 。你可以对字符串执行以下两种操作：
+
+1. **删除**：删除字符串的第一个字符，并将其追加到字符串的末尾。
+2. **反转**：选择字符串中的任一字符，将其从 `0` 反转为 `1` ，或者从 `1` 反转为 `0` 。
+
+目标是使字符串 `s` 变为 **交替字符串** ，求所需的 **最少** 反转次数。
+
+交替字符串定义为：字符序列中没有相邻的字符相等。
+
+例如，`"01010"` 和 `"10101"` 是交替字符串，而 `"0110"` 不是。
+
+### Constraints
+
+- $1 \leq s.length \leq 10^5$
+- `s[i]` 为 `'0'` 或 `'1'`
+
+### Input
+
+输入仅包含一行：
+
+> $s$
+
+### Output
+
+输出一个整数，表示使 `s` 变为交替字符串所需的最少反转次数。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+111000
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+2
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+010
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+0
+```
+
+### Sample Input 3
+
+```txt showLineNumbers=false
+1110
+```
+
+### Sample Output 3
+
+```txt showLineNumbers=false
+1
+```
 
 ## 题目要点解析
 
@@ -314,17 +376,64 @@ int main() {
 
 [题目链接](https://atcoder.jp/contests/abc429/tasks/abc429_d)
 
+### Problem Statement
 
+有一个周长为 $M$ 的池塘，圆周上有一个小屋和 $n$ 个人。对于实数 $x$（ $0 \leq x < M$ ），定义点 $x$ 为距离小屋顺时针方向 $x$ 距离的位置。第 $i$ 个人位于点 $A_i$ 。
 
-## 题目要点解析
+给定整数 $C$（ $1 \leq C \leq n$ ）。对于 $i = 0, 1, \ldots, M-1$ ，定义 $X_i$ 如下：
 
+高桥从点 $(i + 0.5)$ 开始沿顺时针方向移动。只要遇到的总人数少于 $C$ ，他就会继续移动；一旦遇到的总人数达到或超过 $C$ ，他就会立即停止。在此过程中，遇到的总人数即为 $X_i$ 。如果停止点有多个人，他们都会被计入。
 
+请计算 $\sum_{i=0}^{M-1} X_i$ 。
 
-## 串联所有的单词
+### Constraints
 
-[题目链接](https://leetcode.cn/problems/substring-with-concatenation-of-all-words/description/)
+- $1 \leq n \leq 5 \times 10^5$
+- $1 \leq M \leq 10^{12}$
+- $0 \leq A_i \leq M-1$
+- $1 \leq C \leq n$
+- 所有输入均为整数
 
+### Input
 
+输入包含多行：
+
+- 第一行包含三个整数 $n$ 、$M$ 和 $C$ 。
+- 第二行包含 $n$ 个整数，表示每个人的位置。
+
+> $n \quad M \quad C$
+>
+> $A_1 \quad A_2 \quad \ldots \quad A_n$
+
+### Output
+
+输出一个整数表示答案。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+5 3 2
+1 2 1 0 1
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+9
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+1 1000000000000 1
+1
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+1000000000000
+```
 
 ## 题目要点解析
 
@@ -334,7 +443,68 @@ int main() {
 
 [题目链接](https://leetcode.cn/problems/maximum-coins-from-k-consecutive-bags/description/)
 
+### Problem Statement
 
+在一条数轴上有无限多个袋子，每个坐标对应一个袋子。其中一些袋子里装有硬币。
+
+给你一个二维数组 `coins` ，其中 `coins[i] = [li, ri, ci]` 表示从坐标 `li` 到 `ri` 的每个袋子中都有 `ci` 枚硬币。这些区间是互不重叠的。
+
+另给你一个整数 `k` 。返回通过收集连续 `k` 个袋子可以获得的 **最多** 硬币数量。
+
+### Constraints
+
+- $1 \leq coins.length \leq 10^5$
+- $1 \leq k \leq 10^9$
+- $1 \leq li \leq ri \leq 10^9$
+- $1 \leq ci \leq 1000$
+- 给定的区间互不重叠
+
+### Input
+
+输入包含两行：
+
+- 第一行包含两个整数 $n$ 和 $k$ 。
+- 第二行包含 $n$ 行，每行包含三个整数，表示第 $i$ 个区间的信息。
+
+> $n \quad k$
+>
+> $li_1 \quad ri_1 \quad ci_1$
+>
+> $\ldots$
+>
+> $li_n \quad ri_n \quad ci_n$
+
+### Output
+
+输出一个整数，表示收集连续 $k$ 个袋子可获得的最大硬币数量。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+3 4
+8 10 1
+1 3 2
+5 6 4
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+10
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+1 2
+1 10 3
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+6
+```
 
 ## 题目要点解析
 
@@ -344,7 +514,77 @@ int main() {
 
 [题目链接](https://leetcode.cn/problems/minimum-number-of-operations-to-make-array-continuous/description/)
 
+### Problem Statement
 
+给你一个整数数组 `nums` 。每一次操作中，你可以将数组中任一元素替换为 **任意整数** 。
+
+如果数组满足以下条件，则称其为 **连续** 的：
+
+1. 数组中所有元素都是 **唯一** 的（没有重复元素）。
+2. 数组中最大元素与最小元素之间的差值等于 `nums.length - 1` 。
+
+例如，`nums = [4, 2, 5, 3]` 是连续的，因为重新排序后得到 `[2, 3, 4, 5]` ，最大值与最小值差为 $5 - 2 = 3$ ，且长度为 $4$ 。而 `nums = [1, 2, 3, 5, 6]` 不是连续的。
+
+请返回使 `nums` 成为连续数组所需的 **最少** 操作次数。
+
+### Constraints
+
+- $1 \leq nums.length \leq 10^5$
+- $1 \leq nums[i] \leq 10^9$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个整数 $n$ ，表示数组长度。
+- 第二行包含 $n$ 个整数，表示数组元素。
+
+> $n$
+>
+> $nums_1 \quad nums_2 \quad \ldots \quad nums_n$
+
+### Output
+
+输出一个整数，表示使数组连续所需的最少操作次数。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+4
+4 2 5 3
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+0
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+5
+1 2 3 5 6
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+1
+```
+
+### Sample Input 3
+
+```txt showLineNumbers=false
+4
+1 10 100 1000
+```
+
+### Sample Output 3
+
+```txt showLineNumbers=false
+3
+```
 
 ## 题目要点解析
 
@@ -364,7 +604,52 @@ int main() {
 
 [题目链接](https://leetcode.cn/problems/longest-balanced-substring-i/description/)
 
+### Problem Statement
 
+给定一个由小写英文字母组成的字符串 $s$ 。
+
+如果一个子串中所有出现过的 **不同字符** 出现的次数都相同，则称该子串为 **平衡子串** 。
+
+返回 $s$ 中最长的平衡子串的长度。
+
+### Constraints
+
+- $1 \leq s.length \leq 1000$
+- $s$ 仅由小写英文字母组成
+
+### Input
+
+输入仅包含一行：
+
+> $s$
+
+### Output
+
+输出一个整数，表示最长的平衡子串的长度。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+abbac
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+4
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+zzabccy
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+4
+```
 
 ## 题目要点解析
 
@@ -374,7 +659,63 @@ int main() {
 
 [题目链接](https://leetcode.cn/problems/count-complete-substrings/description/)
 
+### Problem Statement
 
+给你一个字符串 `word` 和一个整数 `k` 。
+
+如果一个字符串满足以下条件，则称它是一个 **完全子字符串**：
+
+1. 字符串中的每个字符都恰好出现 `k` 次。
+2. 相邻字符在字母表中的顺序至多相差 $1$（即 `abs(word[i] - word[i+1]) <= 1` ）。
+
+返回 `word` 中完全子字符串的数目。
+
+### Constraints
+
+- $1 \leq word.length \leq 10^5$
+- $1 \leq k \leq word.length$
+- `word` 仅由小写英文字母组成
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个字符串 $word$ 。
+- 第二行包含一个整数 $k$ 。
+
+> $word$
+>
+> $k$
+
+### Output
+
+输出一个整数，表示 `word` 中完全子字符串的数目。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+igigee
+2
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+3
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+aaabbbccc
+3
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+6
+```
 
 ## 题目要点解析
 
@@ -384,7 +725,63 @@ int main() {
 
 [题目链接](https://leetcode.doocs.org/lc/2067/)
 
+### Problem Statement
 
+给你一个字符串 `word` 和一个整数 `count` 。
+
+如果一个字符串满足以下条件，则称它是一个 **等计数子串**：
+
+1. 字符串中出现的每个字符都恰好出现 `count` 次。
+2. 字符串中的字符在字母表中是连续的（例如 `"abc"` 或 `"cba"` ）。
+
+返回 `word` 中等计数子串的数目。
+
+### Constraints
+
+- $1 \leq word.length \leq 10^5$
+- $1 \leq count \leq word.length$
+- `word` 仅由小写英文字母组成
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个字符串 $word$ 。
+- 第二行包含一个整数 $count$ 。
+
+> $word$
+>
+> $count$
+
+### Output
+
+输出一个整数，表示 `word` 中等计数子串的数目。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+aaabbbccc
+3
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+3
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+abcd
+2
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+0
+```
 
 ## 题目要点解析
 
@@ -394,7 +791,58 @@ int main() {
 
 [题目链接](https://leetcode.cn/problems/longest-substring-with-at-least-k-repeating-characters/description/)
 
+### Problem Statement
 
+给你一个字符串 `s` 和一个整数 `k` ，请你找出 `s` 中的最长子串，要求该子串中的每一字符出现次数都不少于 `k` 。如果有多个这样的子串，返回其中最长的长度。
+
+如果不存在这样的子字符串，则返回 $0$ 。
+
+### Constraints
+
+- $1 \leq s.length \leq 10^4$
+- $s$ 仅由小写英文字母组成
+- $1 \leq k \leq 10^5$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个字符串 $s$ 。
+- 第二行包含一个整数 $k$ 。
+
+> $s$
+>
+> $k$
+
+### Output
+
+输出一个整数，表示符合要求的最长子串的长度。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+aaabb
+3
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+3
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+ababbc
+2
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+5
+```
 
 ## 题目要点解析
 
@@ -414,7 +862,60 @@ int main() {
 
 [题目链接](https://leetcode.cn/problems/find-the-longest-equal-subarray/description/)
 
+### Problem Statement
 
+给你一个下标从 $0$ 开始的整数数组 `nums` 和一个整数 `k` 。
+
+如果子数组中所有元素都相等，则认为子数组是 **等值** 的。注意，空子数组是等值的。
+
+在从数组中删除最多 `k` 个元素后，返回其中最长的等值子数组的长度。
+
+### Constraints
+
+- $1 \leq nums.length \leq 10^5$
+- $1 \leq nums[i] \leq nums.length$
+- $0 \leq k \leq nums.length$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含两个整数 $n$ 和 $k$ ，分别表示数组长度和最多可删除的元素个数。
+- 第二行包含 $n$ 个整数，表示数组元素。
+
+> $n \quad k$
+>
+> $nums_1 \quad nums_2 \quad \dots \quad nums_n$
+
+### Output
+
+输出一个整数，表示删除最多 $k$ 个元素后能得到的最长等值子数组的长度。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+6 3
+1 3 2 3 1 3
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+3
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+6 2
+1 1 2 2 1 1
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+4
+```
 
 ## 题目要点解析
 
@@ -424,7 +925,62 @@ int main() {
 
 [题目链接](https://leetcode.cn/problems/swap-for-longest-repeated-character-substring/description/)
 
+### Problem Statement
 
+如果字符串中的所有字符都相同，那么这个字符串是单字符重复的字符串。
+
+给你一个字符串 `text` ，你只能交换其中两个字符一次或者什么都不做，然后得到一些单字符重复的子串。返回其中最长的子串的长度。
+
+### Constraints
+
+- $1 \leq text.length \leq 2 \cdot 10^4$
+- `text` 仅由小写英文字母组成
+
+### Input
+
+输入仅包含一行：
+
+> $text$
+
+### Output
+
+输出一个整数，表示在执行最多一次交换后，单字符重复子串的最大长度。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+ababa
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+3
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+aaabaaa
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+6
+```
+
+### Sample Input 3
+
+```txt showLineNumbers=false
+aaabbaaa
+```
+
+### Sample Output 3
+
+```txt showLineNumbers=false
+4
+```
 
 ## 题目要点解析
 
@@ -434,7 +990,58 @@ int main() {
 
 [题目链接](https://leetcode.cn/problems/longest-repeating-character-replacement/description/)
 
+### Problem Statement
 
+给你一个字符串 `s` 和一个整数 `k` 。你可以选择字符串中的任一字符，并将其更改为任何其他大写英文字符。该操作最多可执行 `k` 次。
+
+在执行上述操作后，返回包含相同字母的最长子串的长度。
+
+### Constraints
+
+- $1 \leq s.length \leq 10^5$
+- `s` 仅由大写英文字母组成
+- $0 \leq k \leq s.length$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个整数 $k$ 。
+- 第二行包含一个字符串 $s$ 。
+
+> $k$
+>
+> $s$
+
+### Output
+
+输出一个整数，表示在最多替换 $k$ 次字符后，包含相同字母的最长子串的长度。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+2
+ABAB
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+4
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+1
+AABABBA
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+4
+```
 
 ## 题目要点解析
 
@@ -533,7 +1140,42 @@ int main() {
 
 [题目链接](https://www.luogu.com.cn/problem/CF280B)
 
+### Problem Statement
 
+给定一个长度为 $n$ 的整数数组 $a$ 。你需要找出数组中任意两个元素 $a[i]$ 和 $a[j]$（ $i \le j$ ），使得它们的异或和 $a[i] \oplus a[j]$ 最大。该异或和必须满足：对于所有满足 $i < k < j$ 的 $k$ ，都有 $a[k] < \min(a[i], a[j])$ 。
+
+### Constraints
+
+- $1 \leq n \leq 10^5$
+- $1 \leq a[i] \leq 10^9$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个整数 $n$ 。
+- 第二行包含 $n$ 个整数，表示数组元素。
+
+> $n$
+>
+> $a_1 \quad a_2 \quad \ldots \quad a_n$
+
+### Output
+
+输出一个整数，表示满足条件的最大异或和。
+
+### Sample Input
+
+```txt showLineNumbers=false
+5
+5 2 1 4 3
+```
+
+### Sample Output
+
+```txt showLineNumbers=false
+7
+```
 
 ## 题目要点解析
 
@@ -543,7 +1185,62 @@ int main() {
 
 [题目链接](https://leetcode.cn/problems/subarray-with-elements-greater-than-varying-threshold/description/)
 
+### Problem Statement
 
+给你一个整数数组 `nums` 和一个整数 `threshold` 。
+
+找出数组 `nums` 中的一个子数组，且满足以下条件：
+
+1. 子数组的长度为 `k` 。
+2. 子数组中的每个元素都大于 `threshold / k` 。
+
+返回满足条件的任意子数组的 **长度** `k`。如果没有这样的子数组，返回 `-1` 。
+
+### Constraints
+
+- $1 \leq nums.length \leq 10^5$
+- $1 \leq nums[i], threshold \leq 10^9$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含两个整数 $n$ 和 $threshold$ 。
+- 第二行包含 $n$ 个整数，表示数组的元素。
+
+> $n \quad threshold$
+>
+> $nums_1 \quad nums_2 \quad \ldots \quad nums_n$
+
+### Output
+
+输出一个整数，表示满足条件的子数组长度 $k$ ；若不存在，输出 `-1` 。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+5 6
+1 3 4 3 1
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+3
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+5 7
+6 5 6 5 8
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+1
+```
 
 ## 题目要点解析
 
@@ -570,7 +1267,7 @@ int main() {
 从更宏观的视角来看，单调栈在处理此类问题时表现出一种只进不出的单向累加状态，这其实揭示了它与前缀最大值结构的等价性。为了进一步简化代码实现，我们可以预处理一个前缀最大值数组：
 
 $$
-mx[i] = \max(a[1], a[2], \dots, a[i])
+mx[i] = \max(a[1], a[2], \ldots, a[i])
 $$
 
 由于该数组本身具有天然的单调不降属性，对于当前位置 $i$ ，如果 $mx[i-1] \leq a[i]$ ，那么显然左侧不存在更大的元素；否则，说明在区间 $[1, i-1]$ 内一定存在满足条件的解。此时，由于前缀最大值具有单调性，我们可以在前缀最大值数组上通过二分查找，找到 **最早使得前缀最大值大于当前值的位置** ，从而确定最远上邻。
@@ -682,7 +1379,54 @@ int main(){
 
 [题目链接](https://www.luogu.com.cn/problem/P2698)
 
+### Problem Statement
 
+给定 $n$ 个雨滴的坐标 $(x_i, y_i)$ ，你需要选择一个宽度为 $w$ 的花盆（即花盆覆盖的水平区间为 $[x, x+w]$ ），使得花盆内所有雨滴的纵坐标极差（最大纵坐标与最小纵坐标之差）至少为 $d$ 。
+
+求满足条件的最小花盆宽度 $w$ 。如果不存在这样的宽度，返回 $-1$ 。
+
+### Constraints
+
+- $1 \leq n \leq 10^5$
+- $1 \leq d \leq 10^6$
+- $0 \leq x_i, y_i \leq 10^6$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含两个整数 $n$ 和 $d$ 。
+- 接下来的 $n$ 行，每行包含两个整数 $x_i$ 和 $y_i$ 。
+
+> $n \quad d$
+>
+> $x_1 \quad y_1$
+>
+> $x_2 \quad y_2$
+>
+> $\ldots$
+>
+> $x_n \quad y_n$
+
+### Output
+
+输出一个整数，表示满足条件的最小花盆宽度 $w$ 。若不存在，输出 `-1` 。
+
+### Sample Input
+
+```txt showLineNumbers=false
+4 5
+6 3
+2 4
+4 10
+12 15
+```
+
+### Sample Output
+
+```txt showLineNumbers=false
+2
+```
 
 ## 题目要点解析
 
@@ -692,17 +1436,71 @@ int main(){
 
 [题目链接](https://leetcode.cn/problems/max-value-of-equation/description/)
 
+### Problem Statement
 
+给你一个数组 `points` 和一个整数 `k` 。数组中每个元素都表示二维平面上的点的坐标，其中 `points[i] = [xi, yi]` ，并且按照 `xi` 从小到大排序。
 
-## 题目要点解析
+请你返回 `yi + yj + |xi - xj|` 的最大值，其中 `|xi - xj| <= k` 且 `1 <= i < j <= points.length` 。
 
+### Constraints
 
+- $2 \leq points.length \leq 10^5$
+- $points[i].length == 2$
+- $-10^8 \leq points[i][0], points[i][1] \leq 10^8$
+- $0 \leq k \leq 2 \cdot 10^8$
+- `points` 中的所有点坐标 $xi$ 互不相同，且按 $xi$ 升序排列。
 
-## 带修定长滑窗
+### Input
 
-[题目链接](https://github.com/algorithmzuo/algorithm-journey/blob/main/src/class071/Code06_DeleteOneNumberLengthKMaxSum.java)
+输入包含两行：
 
+- 第一行包含两个整数 $n$ 和 $k$ ，分别表示数组长度和最大水平距离限制。
+- 接下来的 $n$ 行，每行包含两个整数 $xi$ 和 $yi$ 。
 
+> $n \quad k$
+>
+> $x_1 \quad y_1$
+>
+> $x_2 \quad y_2$
+>
+> $\dots$
+>
+> $x_n \quad y_n$
+
+### Output
+
+输出一个整数，表示满足条件的最大值。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+4 1
+1 3
+2 0
+5 10
+6 -10
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+4
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+3 3
+0 0
+3 0
+9 2
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+3
+```
 
 ## 题目要点解析
 
@@ -714,22 +1512,22 @@ int main(){
 
 ## 单调滑动窗口
 
-1. [算法与数据结构：滑动窗口法总结](https://blog.csdn.net/Dby_freedom/article/details/89066140)
+1. [【CSDN 博客】滑动窗口法总结](https://blog.csdn.net/Dby_freedom/article/details/89066140)
 
-2. [滑动窗口算法核心代码模板](https://labuladong.online/algo/essential-technique/sliding-window-framework/)
+2. [【labuladong】滑动窗口核心代码模板](https://labuladong.online/algo/essential-technique/sliding-window-framework/)
 
-3. [【算法】滑动窗口算法详解](https://blog.csdn.net/2401_87820834/article/details/145998759)
+3. [【CSDN 博客】滑动窗口算法详解](https://blog.csdn.net/2401_87820834/article/details/145998759)
 
 ## 单调栈与队列
 
 1. [【OI WiKi】单调栈相关知识](https://oi-wiki.org/ds/monotonous-stack/)
 
-2. [【算法通关手册】单调栈](https://algo.itcharge.cn/03_stack_queue_hash_table/03_02_monotone_stack/)
+2. [【算法通关手册】单调栈详解](https://algo.itcharge.cn/03_stack_queue_hash_table/03_02_monotone_stack/)
 
-3. [数据结构之单调栈：从原理到实战](https://blog.csdn.net/2301_79248256/article/details/155377188)
+3. [【CSDN 博客】数据结构之单调栈](https://blog.csdn.net/2301_79248256/article/details/155377188)
 
 4. [【OI WiKi】单调队列相关知识](https://oi-wiki.org/ds/monotonous-queue/)
 
-5. [单调队列：实用而好写的数据结构](https://www.cnblogs.com/jerrycyx/p/18683014)
+5. [【Jerrycyx】实用而好写的数据结构](https://www.cnblogs.com/jerrycyx/p/18683014)
 
-6. [算法学习笔记：单调栈/单调队列](https://www.cnblogs.com/P2441M/p/18637702)
+6. [【P2441M】单调栈/单调队列](https://www.cnblogs.com/P2441M/p/18637702)
