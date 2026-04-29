@@ -44,7 +44,7 @@ draft: false
 ### Constraints
 
 - $1 \leq stamp.length \leq target.length \leq 1000$
-- `stamp` 和 `target` 只包含小写字母
+- `stamp` 和 `target` 仅由小写英文字母组成
 
 ### Input
 

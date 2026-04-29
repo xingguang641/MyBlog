@@ -928,7 +928,7 @@ false
 
 # 参考文献列表
 
-## 经典 DP 问题
+## 经典DP问题
 
 1. [【ACM 算法题单】子数组最大累加和问题](https://xingguang641.com/posts/acm/acm-type/dp-problems/maximum-subarray-sum/)
 
@@ -940,7 +940,7 @@ false
 
 5. [【ACM 算法题单】有效括号问题](https://xingguang641.com/posts/acm/acm-type/dp-problems/regular-bracket/)
 
-## 经典 DP 分类
+## 经典DP分类
 
 1. [【ACM 算法题单】背包动态规划相关问题](https://xingguang641.com/posts/acm/acm-type/dp-classification/knapsack-dp/)
 
