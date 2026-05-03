@@ -55,8 +55,8 @@ $$
 
 某国为了防御敌国的导弹袭击，开发了一种导弹拦截系统。但这种系统存在一个缺陷：
 
-* 第一发炮弹可以到达任意高度；
-* 之后每一发炮弹的高度 **都不能高于前一发炮弹的高度** 。
+- 第一发炮弹可以到达任意高度；
+- 之后每一发炮弹的高度 **都不能高于前一发炮弹的高度** 。
 
 由于系统仍在试用阶段，目前只有 **一套拦截系统** ，因此可能无法拦截所有导弹。
 
@@ -67,21 +67,26 @@ $$
 
 ### Constraints
 
-- $n \le 10^5$
+- $n \leq 10^5$
 - $0 \leq h_i \leq 5 \times 10^4$
 
 ### Input
 
-输入仅包含一行：
+输入包含两行：
 
+- 第一行包含一个整数 $n$ ，表示数组的长度。
+- 第二行包含 $n$ 个整数，表示数组的元素。
+
+> $n$
+> 
 > $nums_1 \quad nums_2 \quad \ldots \quad nums_n$
 
 ### Output
 
-输出两行：
+输出包含两行：
 
-* 一套系统最多能拦截的导弹数量
-* 拦截所有导弹所需的最少系统数量
+- 一套系统最多能拦截的导弹数量
+- 拦截所有导弹所需的最少系统数量
 
 ### Sample Input 1
 
@@ -119,7 +124,73 @@ int main(){
 
 [题目链接](https://leetcode.cn/problems/russian-doll-envelopes)
 
+### Problem Statement
 
+给你一个二维整数数组 `envelopes` ，其中 $envelopes[i] = [w_i, h_i]$ ，表示第 $i$ 个信封的宽度和高度。
+
+当另一个信封的宽度和高度都比这个信封大的时候，这个信封就可以放进另一个信封里，如同俄罗斯套娃一样。
+
+请计算 **最多** 能有多少个信封能形成一组 “俄罗斯套娃” 信封（即可以把一个信封放到另一个信封里面）。
+
+**注意**：不允许旋转信封。
+
+### Constraints
+
+- $1 \leq envelopes.length \leq 10^5$
+- $envelopes[i].length == 2$
+- $1 \leq w_i, h_i \leq 10^5$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个整数 $N$ ，表示信封的数量。
+- 接下来 $N$ 行，每行包含两个整数 $w_i$ 和 $h_i$ ，表示每个信封的宽度和高度。
+
+> $N$
+> 
+> $w_1 \quad h_1$
+> 
+> $w_2 \quad h_2$
+> 
+> $\ldots$
+> 
+> $w_N \quad h_N$
+
+### Output
+
+输出一个整数，表示最多能套娃的信封数目。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+4
+5 4
+6 4
+6 7
+2 3
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+3
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+3
+1 1
+1 1
+1 1
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+1
+```
 
 ## 题目要点解析
 
@@ -129,7 +200,85 @@ int main(){
 
 [题目链接](https://leetcode.cn/problems/minimum-operations-to-make-the-array-k-increasing)
 
+根据你最新的“竞赛题面标准版”格式要求，我为你提取并整理了 LeetCode 第 2111 题（使数组 K 递增的最少操作次数）的内容：
 
+---
+
+### Problem Statement
+
+给你一个下标从 **0** 开始包含 $n$ 个正整数的数组 `arr` ，和一个正整数 `k` 。
+
+如果对于每一个满足 $k \leq i \leq n - 1$ 的下标 $i$ ，都有 $arr[i-k] \leq arr[i]$ ，那么我们称数组 `arr` 是 **k 递增** 的。
+
+- 比方说，`arr = [4, 1, 5, 2, 6, 2]` 对于 $k = 2$ 是 k 递增的，因为：
+    - $arr[0] \leq arr[2] (4 \leq 5)$
+    - $arr[1] \leq arr[3] (1 \leq 2)$
+    - $arr[2] \leq arr[4] (5 \leq 6)$
+    - $arr[3] \leq arr[5] (2 \leq 2)$
+- 相反，`arr = [4, 1, 5, 2, 6, 2]` 对于 $k = 3$ 不是 k 递增的，因为 $arr[0] > arr[3]$ 。
+
+在一步操作中，你可以选择一个下标 $i$ 并将 $arr[i]$ 改成 **任意** 正整数。
+
+请你返回使数组 `arr` 变成 **k 递增** 的 **最少** 操作次数。
+
+### Constraints
+
+- $1 \leq arr.length \leq 10^5$
+- $1 \leq arr[i], k \leq arr.length$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含两个整数 $N$ 和 $k$ 。
+- 第二行包含 $N$ 个整数，表示数组 $arr$ 中的元素。
+
+> $N \quad k$
+> 
+> $arr_0 \quad arr_1 \quad \ldots \quad arr_{N-1}$
+
+### Output
+
+输出一个整数，表示使数组变成 k 递增的最少操作次数。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+6 1
+5 4 3 2 1 1
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+4
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+6 2
+4 1 5 2 6 2
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+0
+```
+
+### Sample Input 3
+
+```txt showLineNumbers=false
+6 3
+4 1 5 2 6 2
+```
+
+### Sample Output 3
+
+```txt showLineNumbers=false
+2
+```
 
 ## 题目要点解析
 
@@ -139,7 +288,72 @@ int main(){
 
 [题目链接](https://leetcode.cn/problems/maximum-length-of-pair-chain)
 
+### Problem Statement
 
+给你一个包含 $n$ 个数对的数组 `pairs` ，其中 $pairs[i] = [left_i, right_i]$ 且 $left_i < right_i$ 。
+
+现在，我们定义一种 **跟随** 关系，当且仅当 $b < c$ 时，数对 $p2 = [c, d]$ 才可以跟在 $p1 = [a, b]$ 后面。我们用这种形式来构造 **数对链** 。
+
+请你返回能够形成的序列链的 **最长长度** 。
+
+你不需要用到所有的数对，你可以以任何顺序选择其中的一些数对来构造。
+
+### Constraints
+
+- $n == pairs.length$
+- $1 \leq n \leq 1000$
+- $-1000 \leq left_i < right_i \leq 1000$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个整数 $n$ ，表示数对的数量。
+- 接下来 $n$ 行，每行包含两个整数 $left_i$ 和 $right_i$ 。
+
+> $n$
+> 
+> $left_1 \quad right_1$
+> 
+> $left_2 \quad right_2$
+> 
+> $\ldots$
+> 
+> $left_n \quad right_n$
+
+### Output
+
+输出一个整数，表示最长数对链的长度。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+3
+1 2
+2 3
+3 4
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+2
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+3
+1 2
+7 8
+4 5
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+3
+```
 
 ## 题目要点解析
 
@@ -149,7 +363,48 @@ int main(){
 
 [题目链接](https://www.luogu.com.cn/problem/P8776)
 
+### Problem Statement
 
+给定一个长度为 $N$ 的整数序列：$A_1, A_2, \ldots, A_N$ 。
+
+现在，你可以从中选择一个 **连续** 的区间，该区间的长度为 $K$ ，并将该区间内的所有数字全部修改成任意一个相同的整数。
+
+请你返回在进行至多一次上述修改操作后，整个序列的 **最长不下降子序列** 的长度最大是多少。
+
+最长不下降子序列的定义是：从原序列中按顺序取出若干个数字，使得这些数字满足非递减关系。
+
+### Constraints
+
+- $1 \leq K \leq N \leq 10^5$
+- $1 \leq A_i \leq 10^6$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含两个整数 $N$ 和 $K$ 。
+- 第二行包含 $N$ 个整数，表示数组 $A$ 中的各个元素。
+
+> $N \quad K$
+> 
+> $A_1 \quad A_2 \quad \ldots \quad A_N$
+
+### Output
+
+输出一个整数，表示在修改后能获得的最长不下降子序列的最大长度。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+5 1
+1 4 2 8 5
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+4
+```
 
 ## 题目要点解析
 
@@ -159,7 +414,78 @@ int main(){
 
 [题目链接](https://leetcode.cn/problems/make-array-strictly-increasing/description/)
 
+### Problem Statement
 
+给你两个整数数组 `arr1` 和 `arr2` ，返回使 `arr1` 严格递增所需要的最小操作次数。
+
+每一步操作中，你可以分别从 `arr1` 和 `arr2` 中各选出一个索引，分别为 $i$ 和 $j$ ，用 `arr2[j]` 替换 `arr1[i]` 。
+
+如果无法让 `arr1` 严格递增，请返回 $-1$ 。
+
+### Constraints
+
+- $1 \leq arr1.length, arr2.length \leq 2000$
+- $0 \leq arr1[i], arr2[i] \leq 10^9$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含两个整数 $N$ 和 $M$ ，分别表示 $arr1$ 和 $arr2$ 的长度。
+- 第二行包含 $N$ 个整数，表示 $arr1$ 中的元素。
+- 第三行包含 $M$ 个整数，表示 $arr2$ 中的元素。
+
+> $N \quad M$
+> 
+> $arr1_0 \quad arr1_1 \quad \ldots \quad arr1_{N-1}$
+> 
+> $arr2_0 \quad arr2_1 \quad \ldots \quad arr2_{M-1}$
+
+### Output
+
+输出一个整数，表示使 $arr1$ 严格递增所需的最小操作次数。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+4 3
+1 5 3 6
+1 3 2
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+1
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+4 3
+1 5 3 6
+4 3 1
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+2
+```
+
+### Sample Input 3
+
+```txt showLineNumbers=false
+4 3
+1 5 3 6
+1 6 3 3
+```
+
+### Sample Output 3
+
+```txt showLineNumbers=false
+-1
+```
 
 ## 题目要点解析
 

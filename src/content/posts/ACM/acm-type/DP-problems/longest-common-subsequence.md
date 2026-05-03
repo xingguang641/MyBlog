@@ -45,7 +45,74 @@ $$
 
 [题目链接](https://leetcode.cn/problems/longest-common-subsequence/)
 
+### Problem Statement
 
+给定两个字符串 `text1` 和 `text2` ，返回这两个字符串的最长 **公共子序列** 的长度。如果不存在 **公共子序列** ，返回 $0$ 。
+
+一个字符串的 **子序列** 是指这样一个新的字符串：它是由原字符串在不改变字符的相对顺序的情况下删除某些字符（也可以不删除任何字符）后组成的新字符串。
+
+- 例如，`"ace"` 是 `"abcde"` 的子序列，但 `"aec"` 不是 `"abcde"` 的子序列。
+
+两个字符串的 **公共子序列** 是这两个字符串所共同拥有的子序列。
+
+### Constraints
+
+- $1 \leq text1.length, text2.length \leq 1000$
+- `text1` 和 `text2` 仅由小写英文字符组成
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个字符串，表示 $text1$ 。
+- 第二行包含一个字符串，表示 $text2$ 。
+
+> $text1$
+> 
+> $text2$
+
+### Output
+
+输出一个整数，表示这两个字符串的最长公共子序列的长度。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+abcde
+ace
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+3
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+abc
+abc
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+3
+```
+
+### Sample Input 3
+
+```txt showLineNumbers=false
+abc
+def
+```
+
+### Sample Output 3
+
+```txt showLineNumbers=false
+0
+```
 
 ## 题目要点解析
 
@@ -55,7 +122,57 @@ $$
 
 [题目链接](https://leetcode.cn/problems/distinct-subsequences/description/)
 
+### Problem Statement
 
+给你两个字符串 `s` 和 `t` ，统计并返回在 `s` 的 **子序列** 中 `t` 出现的个数，结果需要对 $10^9 + 7$ 取模。
+
+题目测试用例保证压力在可控范围内，结果不会超过 $2^{63} - 1$ 。
+
+### Constraints
+
+- $1 \leq s.length, t.length \leq 1000$
+- `s` 和 `t` 由英文字母组成
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个字符串，表示 $s$ 。
+- 第二行包含一个字符串，表示 $t$ 。
+
+> $s$
+> 
+> $t$
+
+### Output
+
+输出一个整数，表示在 $s$ 的子序列中 $t$ 出现的个数。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+rabbbit
+rabbit
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+3
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+babgbag
+bag
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+5
+```
 
 ## 题目要点解析
 
@@ -65,7 +182,61 @@ $$
 
 [题目链接](https://leetcode.cn/problems/edit-distance/description/)
 
+### Problem Statement
 
+给你两个单词 `word1` 和 `word2` ， 请返回将 `word1` 转换成 `word2` 所使用的最少操作数。
+
+你可以对一个单词进行如下三种操作：
+
+- 插入一个字符
+- 删除一个字符
+- 替换一个字符
+
+### Constraints
+
+- $0 \leq word1.length, word2.length \leq 500$
+- `word1` 和 `word2` 仅由小写英文字母组成
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个字符串，表示 $word1$ 。
+- 第二行包含一个字符串，表示 $word2$ 。
+
+> $word1$
+> 
+> $word2$
+
+### Output
+
+输出一个整数，表示将 $word1$ 转换成 $word2$ 所需的最少操作数。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+horse
+ros
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+3
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+intention
+execution
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+5
+```
 
 ## 题目要点解析
 
@@ -75,17 +246,85 @@ $$
 
 [题目链接](https://leetcode.cn/problems/interleaving-string/description/)
 
+### Problem Statement
 
+给定三个字符串 `s1` 、`s2` 、`s3`，请你帮忙验证 `s3` 是否是由 `s1` 和 `s2` **交错** 组成的。
 
-## 题目要点解析
+两个字符串 `s` 和 `t` 交错的定义与过程如下，其中每个字符串都会被分割成若干 **非空** 子字符串：
 
+- $s = s_1 + s_2 + \ldots + s_n$
+- $t = t_1 + t_2 + \ldots + t_m$
+- 如果 $|n - m| \leq 1$ ，且满足下述任意一种拼接顺序，则认为其是交错的：
+    - $s_1 + t_1 + s_2 + t_2 + s_3 + t_3 + \ldots$
+    - $t_1 + s_1 + t_2 + s_2 + t_3 + s_3 + \ldots$
 
+**注意**：$a + b$ 表示字符串 $a$ 和 $b$ 连接。
 
-## 最长公共序列串
+### Constraints
 
-[题目链接](https://github.com/algorithmzuo/algorithm-journey/blob/main/src/class068/Code05_MinimumDeleteBecomeSubstring.java)
+- $0 \leq s1.length, s2.length \leq 100$
+- $0 \leq s3.length \leq 200$
+- `s1` 、`s2` 、`s3` 均由小写英文字母组成
 
+### Input
 
+输入包含三行：
+
+- 第一行包含一个字符串，表示 $s1$ 。
+- 第二行包含一个字符串，表示 $s2$ 。
+- 第三行包含一个字符串，表示 $s3$ 。
+
+> $s1$
+> 
+> $s2$
+> 
+> $s3$
+
+### Output
+
+如果 `s3` 是由 `s1` 和 `s2` 交错组成的，输出 `true` ；否则，输出 `false` 。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+aabcc
+dbbca
+aadbbcbcac
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+true
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+aabcc
+dbbca
+aadbbbaccc
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+false
+```
+
+### Sample Input 3
+
+```txt showLineNumbers=false
+""
+""
+""
+```
+
+### Sample Output 3
+
+```txt showLineNumbers=false
+true
+```
 
 ## 题目要点解析
 
@@ -95,7 +334,76 @@ $$
 
 [题目链接](https://leetcode.cn/problems/regular-expression-matching)
 
+### Problem Statement
 
+给你一个字符串 `s` 和一个字符规律 `p` ，请你来实现一个支持 `'.'` 和 `'*'` 的正则表达式匹配。
+
+- `'.'` 匹配任意单个字符
+- `'*'` 匹配零个或多个前面的那一个元素
+
+所谓匹配，是要涵盖 **整个** 字符串 `s` 的，而不是部分字符串。
+
+### Constraints
+
+- $1 \leq s.length \leq 20$
+- $1 \leq p.length \leq 20$
+- `s` 只包含从 `a-z` 的小写字母
+- `p` 只包含从 `a-z` 的小写字母，以及字符 `.` 和 `*`
+- 保证每次出现字符 `*` 时，前面都匹配到有效的字符
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个字符串，表示 $s$ 。
+- 第二行包含一个字符串，表示 $p$ 。
+
+> $s$
+> 
+> $p$
+
+### Output
+
+如果输入字符串 $s$ 与字符规律 $p$ 匹配，输出 `true` ；否则，输出 `false` 。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+aa
+a
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+false
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+aa
+a*
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+true
+```
+
+### Sample Input 3
+
+```txt showLineNumbers=false
+ab
+.*
+```
+
+### Sample Output 3
+
+```txt showLineNumbers=false
+true
+```
 
 ## 题目要点解析
 
@@ -105,7 +413,57 @@ $$
 
 [题目链接](https://leetcode.cn/problems/shortest-common-supersequence/description/)
 
+### Problem Statement
 
+给出两个字符串 `str1` 和 `str2` ，返回同时以 `str1` 和 `str2` 作为 **子序列** 的最短字符串。如果答案不止一个，则可以返回满足条件的 **任意一个** 答案。
+
+如果从字符串 $T$ 中删除一些字符（也可能不删除），可以形成字符串 $S$ ，那么 $S$ 就是 $T$ 的子序列。
+
+### Constraints
+
+- $1 \leq str1.length, str2.length \leq 1000$
+- `str1` 和 `str2` 仅由小写英文字母组成
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个字符串，表示 $str1$ 。
+- 第二行包含一个字符串，表示 $str2$ 。
+
+> $str1$
+> 
+> $str2$
+
+### Output
+
+输出一个字符串，表示满足条件的最短公共超序列。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+abac
+cab
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+cabac
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+aaaaaaaa
+aaaaaaaa
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+aaaaaaaa
+```
 
 ## 题目要点解析
 
@@ -115,4 +473,4 @@ $$
 
 # 参考文献列表
 
-1. [【Luogu 专栏】最长公共子序列问题](https://www.luogu.com/article/ml584xxs)
+1. [【Luogu 博客】最长公共子序列问题](https://www.luogu.com/article/ml584xxs)

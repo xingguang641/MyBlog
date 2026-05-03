@@ -331,7 +331,57 @@ int main() {
 
 [题目链接](https://leetcode.cn/problems/house-robber)
 
+### Problem Statement
 
+你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，**如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警** 。
+
+给定一个代表每个房屋存放金额的非负整数数组 `nums` ，计算你 **在不惊动警报装置的情况下** ，一夜之内能够偷窃到的最高金额。
+
+### Constraints
+
+- $1 \leq nums.length \leq 100$
+- $0 \leq nums[i] \leq 400$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个整数 $N$ ，表示房屋的数量。
+- 第二行包含 $N$ 个整数，表示每个房屋中存放的金额。
+
+> $N$
+> 
+> $nums_0 \quad nums_1 \quad \ldots \quad nums_{N-1}$
+
+### Output
+
+输出一个整数，表示你能够偷窃到的最高金额。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+4
+1 2 3 1
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+4
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+5
+2 7 9 3 1
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+12
+```
 
 ## 题目要点解析
 
@@ -341,7 +391,57 @@ int main() {
 
 [题目链接](https://leetcode.cn/problems/house-robber-ii/)
 
+### Problem Statement
 
+你是一个专业的小偷，计划偷窃沿街的房屋，每间房内都藏有一定的现金。这个地方所有的房屋都 **围成一圈** ，这意味着第一个房屋和最后一个房屋是紧挨着的。同时，相邻的房屋装有相互连通的防盗系统，**如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警** 。
+
+给定一个代表每个房屋存放金额的非负整数数组 `nums` ，计算你 **在不惊动警报装置的情况下** ，今晚能够偷窃到的最高金额。
+
+### Constraints
+
+- $1 \leq nums.length \leq 100$
+- $0 \leq nums[i] \leq 1000$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个整数 $N$ ，表示房屋的数量。
+- 第二行包含 $N$ 个整数，表示每个房屋中存放的金额。
+
+> $N$
+> 
+> $nums_0 \quad nums_1 \quad \ldots \quad nums_{N-1}$
+
+### Output
+
+输出一个整数，表示你能够偷窃到的最高金额。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+3
+2 3 2
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+3
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+4
+1 2 3 1
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+4
+```
 
 ## 题目要点解析
 
@@ -351,7 +451,38 @@ int main() {
 
 [题目链接](https://github.com/algorithmzuo/algorithm-journey/blob/main/src/class128/Code05_MaximizeMedian1.java)
 
+### Problem Statement
 
+给定一个长度为 $n$ 的数组 `arr` 。
+
+一个合法的子序列定义为：在原数组中，任意相邻的两个数至少要有一个被挑选所组成的子序列。
+
+请在所有合法的子序列中，找到最大的中位数。
+
+**注意**：中位数的定义为 **上中位数** 。
+
+- $[1, 2, 3, 4]$ 的上中位数是 $2$ 。
+- $[1, 2, 3, 4, 5]$ 的上中位数是 $3$ 。
+
+### Constraints
+
+- $2 \leq n \leq 10^5$
+- $1 \leq arr[i] \leq 10^9$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个整数 $n$ ，表示数组的长度。
+- 第二行包含 $n$ 个整数，表示数组 `arr` 中的元素。
+
+> $n$
+> 
+> $arr_0 \quad arr_1 \quad \ldots \quad arr_{n-1}$
+
+### Output
+
+输出一个整数，表示所有合法子序列中可能的最大中位数。
 
 ## 题目要点解析
 
@@ -417,7 +548,33 @@ $$
 
 [题目链接](https://github.com/algorithmzuo/algorithm-journey/blob/main/src/class071/Code03_MagicScrollProbelm.java)
 
+### Problem Statement
 
+给定一个数组 `nums` ，其中可能包含正数、负数和 $0$ 。
+
+现在你有 **2 个** 魔法卷轴。每个魔法卷轴可以将数组 `nums` 中 **连续** 的一段区间内的所有数字全部变成 $0$ 。
+
+你可以选择不使用卷轴，或者使用 $1$ 个或 $2$ 个卷轴。请返回在经过操作后，数组整体累加和可能的最大值。
+
+### Constraints
+
+- $1 \leq n \leq 10^6$
+- $-10^9 \leq nums[i] \leq 10^9$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个整数 $n$ ，表示数组的长度。
+- 第二行包含 $n$ 个整数，表示数组 `nums` 中的元素。
+
+> $n$
+> 
+> $nums_0 \quad nums_1 \quad \ldots \quad nums_{n-1}$
+
+### Output
+
+输出一个整数，表示在至多使用 $2$ 个魔法卷轴后，数组可能达到的最大累加和。
 
 ## 题目要点解析
 
@@ -427,7 +584,58 @@ $$
 
 [题目链接](https://leetcode.cn/problems/maximum-sum-of-3-non-overlapping-subarrays)
 
+### Problem Statement
 
+给你一个整数数组 `nums` 和一个整数 `k` ，找出三个长度为 `k` 、互不重叠的子数组，它们的全部元素和最大。
+
+我们需要返回这三个子数组起始下标的列表。如果存在多个结果，返回字典序最小的一个。
+
+### Constraints
+
+- $1 \leq nums.length \leq 2 \times 10^4$
+- $1 \leq nums[i] < 2^{16}$
+- $1 \leq k \leq \lfloor nums.length / 3 \rfloor$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含两个整数 $n$ 和 $k$ ，其中 $n$ 为数组长度。
+- 第二行包含 $n$ 个整数，表示数组 `nums` 中的元素。
+
+> $n \quad k$
+> 
+> $nums_0 \quad nums_1 \quad \ldots \quad nums_{n-1}$
+
+### Output
+
+输出三个整数，表示这三个互不重叠子数组的起始下标。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+8 2
+1 2 1 2 6 7 5 1
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+0 3 5
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+7 2
+1 2 1 2 1 2 1
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+0 2 4
+```
 
 ## 题目要点解析
 
@@ -437,7 +645,33 @@ $$
 
 [题目链接](https://github.com/algorithmzuo/algorithm-journey/blob/main/src/class071/Code05_ReverseArraySubarrayMaxSum.java)
 
+### Problem Statement
 
+给定一个数组 `nums` 。现在允许你随意选择数组中 **连续** 的一段区间进行 **翻转** 操作（即子数组逆序调整）。
+
+- 例如：对于数组 `[1, 2, 3, 4, 5, 6]` ，翻转下标范围 `[2, 4]` 的子数组后，得到 `[1, 2, 5, 4, 3, 6]` 。
+
+请返回在 **必须进行一次** 翻转操作后，所得数组的 **最大子数组累加和** 是多少。
+
+### Constraints
+
+- $1 \leq n \leq 10^6$
+- $-10^9 \leq nums[i] \leq 10^9$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个整数 $n$ ，表示数组的长度。
+- 第二行包含 $n$ 个整数，表示数组 `nums` 中的元素。
+
+> $n$
+> 
+> $nums_0 \quad nums_1 \quad \ldots \quad nums_{n-1}$
+
+### Output
+
+输出一个整数，表示必须翻转一次后，数组可能达到的最大子数组累加和。
 
 ## 题目要点解析
 
@@ -447,7 +681,44 @@ $$
 
 [题目链接](https://www.luogu.com.cn/problem/P1121)
 
+### Problem Statement
 
+给出由 $n$ 个整数（可能为负数）组成的环状序列 $a_1, a_2, \ldots, a_n$ 。
+
+你需要从该环状序列中选出两段 **互不重叠** 的非空连续子段，使得这两段子段中所有整数的和最大。
+
+### Constraints
+
+- $2 \leq n \leq 2 \times 10^5$
+- $-10^4 \leq a_i \leq 10^4$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个整数 $n$ ，表示环状序列的长度。
+- 第二行包含 $n$ 个整数，表示环状序列中的各个元素。
+
+> $n$
+> 
+> $a_1 \quad a_2 \quad \ldots \quad a_n$
+
+### Output
+
+输出一个整数，表示环状最大两段子段和的最大值。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+7
+2 -4 3 -1 2 -4 3
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+9
+```
 
 ## 题目要点解析
 
@@ -495,7 +766,49 @@ $$
 
 [题目链接](https://www.luogu.com.cn/problem/P1018)
 
+### Problem Statement
 
+今年是 $2000$ 年，若某个同学能够解答出这个问题，他将获得 “中学生数学竞赛” 的冠军。
+
+这个问题是：有一个正整数 $N$（由 $n$ 位数字组成），现在你需要在这 $n$ 位数字之间插入 $k$ 个乘号，使得最终的乘积最大。
+
+注意：
+
+- 乘号不能放在数字的首尾。
+- 插入的 $k$ 个乘号将 $N$ 分成了 $k+1$ 个部分，这 $k+1$ 个部分的乘积即为最终结果。
+
+### Constraints
+
+- $6 \leq n \leq 40$
+- $1 \leq k \leq 6$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含两个整数 $n$ 和 $k$ 。
+- 第二行包含一个长度为 $n$ 的正整数 $N$ 。
+
+> $n \quad k$
+> 
+> $N$
+
+### Output
+
+输出一个整数，表示能够得到的最大乘积。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+4 2
+1231
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+62
+```
 
 ## 题目要点解析
 
@@ -505,7 +818,68 @@ $$
 
 [题目链接](https://www.luogu.com.cn/problem/P1026)
 
+### Problem Statement
 
+给出一个长度不超过 $200$ 的字符串 $S$ ，该字符串由 $p$ 个部分组成，每个部分长度均为 $20$ 。现在需要将字符串 $S$ 分成 $k$ 个部分，使得这 $k$ 个部分中包含的单词总数最多。
+
+**单词统计规则**：
+
+- 单词在一个部分中出现，指的是该单词是该部分的子串。
+- 如果一个单词在某个位置已经作为开头被统计过，则在该位置不能再统计其他单词（即每个起始位置最多贡献 $1$ 个单词）。
+- 单词表中的单词可能存在包含关系，需按上述规则计算。
+
+### Constraints
+
+- $1 \leq p \leq 10$
+- $2 \leq k \leq 40$
+- $1 \leq s \leq 6$
+
+### Input
+
+输入包含多行：
+
+- 第一行包含两个整数 $p$ 和 $k$ 。
+- 接下来的 $p$ 行，每行包含一个长度为 $20$ 的字符串，共同拼接成总字符串 $S$ 。
+- 下一行包含一个整数 $s$ ，表示单词表中的单词个数。
+- 接下来的 $s$ 行，每行包含一个单词。
+
+> $p \quad k$
+> 
+> $S_{part1}$
+> 
+> $\ldots$
+> 
+> $S_{partP}$
+> 
+> $s$
+> 
+> $word_1$
+> 
+> $\ldots$
+> 
+> $word_s$
+
+### Output
+
+输出一个整数，表示最多能统计到的单词个数。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+1 3
+thisisabookyouareaoh
+4
+is
+a
+ok
+sab
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+7
+```
 
 ## 题目要点解析
 
@@ -515,7 +889,58 @@ $$
 
 [题目链接](https://www.luogu.com.cn/problem/P1043)
 
+### Problem Statement
 
+在一条圆圈上有 $n$ 个数字（可能为负数），现在要将这 $n$ 个数字划分为 $m$ 个连续的部分（每个部分至少包含一个数字）。每一部分所有数字之和对 $10$ 取模（注意：在数学中，取模运算的结果应当在 $0$ 到 $9$ 之间，例如 $-1 \bmod 10 = 9$ ）。
+
+最后将这 $m$ 个部分得到的数值相乘，请问最终的乘积最大和最小分别是多少。
+
+### Constraints
+
+- $1 \leq n \leq 50$
+- $1 \leq m \leq 9$
+- $-10^4 \leq a_i \leq 10^4$
+
+### Input
+
+输入包含多行：
+
+- 第一行包含两个整数 $n$ 和 $m$ 。
+- 接下来的 $n$ 行，每行包含一个整数，按顺序表示圆圈上的数字。
+
+> $n \quad m$
+> 
+> $a_1$
+> 
+> $a_2$
+> 
+> $\ldots$
+> 
+> $a_n$
+
+### Output
+
+输出包含两行：
+
+- 第一行输出一个整数表示可能的最小乘积。
+- 第二行输出一个整数表示可能的最大乘积。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+4 2
+4
+3
+-1
+2
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+7
+81
+```
 
 ## 题目要点解析
 
@@ -525,4 +950,4 @@ $$
 
 # 参考文献列表
 
-1. [【动态规划 Part 5】划分型 DP](https://www.cnblogs.com/namelessstory/p/19013752)
+1. [【elainafan】动态规划之划分型 DP](https://www.cnblogs.com/namelessstory/p/19013752)
