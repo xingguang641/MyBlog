@@ -716,4 +716,4 @@ int main() {
 
 1. [【immix】用线段树解决括号序列问题](https://linlexiao.com/posts/a60cdb098078/)
 
-2. [【life_is_movie】括号序列问题](https://www.luogu.com/article/xxxvyhgv)
+2. [【life_is_movie】有效括号序列问题](https://www.luogu.com/article/xxxvyhgv)
