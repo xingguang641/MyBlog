@@ -283,9 +283,45 @@ Bessie 需要建造 $K$ 头不同的机器人奶牛。每头机器人奶牛有 $
 
 状态转移设计，如何设计有限的状态转移得到所有状态是这类问题的难点。
 
+# 最小的包含区间
+
+[题目链接](https://leetcode.cn/problems/smallest-range-covering-elements-from-k-lists/description/)
+
+
+
+## 题目要点解析
+
+
+
+## 题目相关拓展
+
+[题目链接](https://leetcode.cn/problems/minimize-deviation-in-array/description/)
+
+
+
+# 组团买票问题
+
+[题目链接](https://github.com/algorithmzuo/algorithm-journey/blob/main/src/class091/Code03_GroupBuyTickets1.java)
+
+
+
+## 题目要点解析
+
+
+
 ---
 
 # 区间最优调度问题
+
+
+
+# 会议室安排问题
+
+[题目链接](https://leetcode.doocs.org/lc/252/)
+
+
+
+## 题目要点解析
 
 
 

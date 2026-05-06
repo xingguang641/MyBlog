@@ -9,7 +9,7 @@ draft: false
 
 # 子串拼接贪心问题
 
-a + b > b + a 贪心策略
+记录各种贪心排序
 
 ## 最大数构造问题
 
@@ -19,7 +19,27 @@ a + b > b + a 贪心策略
 
 ## 题目要点解析
 
+交叉组合排序
 
+## 完成所有任务的最少初始能量
+
+[题目链接](https://leetcode.cn/problems/minimum-initial-energy-to-finish-tasks/description/)
+
+
+
+## 题目要点解析
+
+差值贪心排序
+
+## 知识竞赛
+
+[题目链接](https://www.nowcoder.com/practice/2a9089ea7e5b474fa8f688eae76bc050)
+
+
+
+## 题目要点解析
+
+最小值贪心排序/差值绝对值贪心排序（最小值贪心需要证明正确性，可以对拍）
 
 ---
 
@@ -109,6 +129,22 @@ a + b > b + a 贪心策略
 
 ---
 
+# 整数均摊贪心问题
+
+
+
+## 平均值最小总和
+
+[题目链接](https://github.com/algorithmzuo/algorithm-journey/blob/main/src/class091/Code04_SplitMinimumAverageSum.java)
+
+
+
+## 题目要点解析
+
+
+
+---
+
 # 田忌赛马贪心问题
 
 解锁任务型贪心
@@ -146,6 +182,16 @@ a + b > b + a 贪心策略
 ## IPO问题
 
 [题目链接](https://leetcode.cn/problems/ipo/description/)
+
+
+
+## 题目要点解析
+
+
+
+## 最低的加油次数
+
+[题目链接](https://leetcode.cn/problems/minimum-number-of-refueling-stops/description/)
 
 
 
