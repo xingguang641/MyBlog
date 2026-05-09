@@ -431,57 +431,11 @@ draft: false
 
 
 
----
+## 最大异或和问题
 
-# 果子合并贪心问题
+[题目链接](https://codeforces.com/gym/675909/problem/K)
 
 
-
-## 果子的合并难题
-
-[题目链接](https://www.luogu.com.cn/problem/P1090)
-
-### Problem Statement
-
-在一个果园里，多多已经打下了 $n$ 堆果子，每堆果子都有一定的质量。多多决定把这些果子合并成一堆。
-
-每次合并时，多多可以把两堆果子合并到一起，消耗的体力等于两堆果子的质量之和。经过 $n-1$ 次合并后，所有的果子就合并成了一堆。
-
-由于多多体力有限，他希望在将所有果子合并成一堆的过程中，消耗的总体力最小。请你计算并输出这个最小体力值。
-
-### Constraints
-
-- $1 \leq n \leq 10^4$
-- 每堆果子的质量均小于 $2 \times 10^4$
-- 保证最终耗费的总体力值小于 $2^{31}$
-
-### Input
-
-输入包含两行：
-
-- 第一行包含一个整数 $n$ ，表示果子的堆数。
-- 第二行包含 $n$ 个整数，用空格隔开，表示第 $i$ 堆果子的质量 $a_i$ 。
-
-> $n$
-> 
-> $a_1 \quad a_2 \quad \ldots \quad a_n$
-
-### Output
-
-输出一个整数，表示最小消耗的体力值。
-
-### Sample Input
-
-```txt showLineNumbers=false
-3
-1 2 9
-```
-
-### Sample Output
-
-```txt showLineNumbers=false
-15
-```
 
 ## 题目要点解析
 
@@ -560,128 +514,6 @@ draft: false
 ## 题目要点解析
 
 
-
----
-
-# 会议安排贪心问题
-
-有排序做法也有不排序做法
-
-区间调度问题，一般都需要用优先队列
-
-## 会议的安排问题
-
-[题目链接](https://github.com/algorithmzuo/algorithm-journey/blob/main/src/class090/Code03_MeetingMonopoly1.java)
-
-### Problem Statement
-
-给定若干场会议的开始时间和结束时间。每场会议必须 **独占时间段** ，即如果你参加了某场会议，在该会议结束之前，你不能参加其他会议。
-
-请返回你最多能参加的会议数量。
-
-### Constraints
-
-- $1 \leq n \leq 10^5$
-- $0 \leq start_i < end_i \leq 10^9$
-
-### Input
-
-输入包含多行：
-
-- 第一行包含一个整数 $n$ ，表示会议的总数。
-- 接下来的 $n$ 行，每行包含两个整数，分别表示第 $i$ 场会议的开始时间 $start_i$ 和结束时间 $end_i$ 。
-
-> $n$
-> 
-> $start_1 \quad end_1$
-> 
-> $start_2 \quad end_2$
-> 
-> $\ldots$
-> 
-> $start_n \quad end_n$
-
-### Output
-
-输出一个整数，表示你能参加的最大会议数量。
-
-## 题目要点解析
-
-
-
-## 最大的会议数量
-
-[题目链接](https://leetcode.cn/problems/maximum-number-of-events-that-can-be-attended/description/)
-
-### Problem Statement
-
-给你一个数组 $events$ ，其中 $events[i] = [startDay_i, endDay_i]$ ，表示会议 $i$ 开始于 $startDay_i$ ，结束于 $endDay_i$ 。你可以在 $startDay_i \leq d \leq endDay_i$ 中的任意一天 $d$ 参加会议 $i$ 。每场会议你只需参加 **一天** 就可以算作已参加。每天你最多只能参加一场会议。
-
-请返回你能参加的最大会议数目。
-
-### Constraints
-
-- $1 \leq events.length \leq 10^5$
-- $events[i].length == 2$
-- $1 \leq startDay_i \leq endDay_i \leq 10^5$
-
-### Input
-
-输入包含多行：
-
-- 第一行包含一个整数 $n$ ，表示会议的总数。
-- 接下来的 $n$ 行，每行包含两个整数，分别表示第 $i$ 场会议的开始时间 $startDay_i$ 和结束时间 $endDay_i$ 。
-
-> $n$
-> 
-> $startDay_1 \quad endDay_1$
-> 
-> $startDay_2 \quad endDay_2$
-> 
-> $\ldots$
-> 
-> $startDay_n \quad endDay_n$
-
-### Output
-
-输出一个整数，表示你能参加的最大会议数目。
-
-### Sample Input 1
-
-```txt showLineNumbers=false
-4
-1 2
-2 3
-3 4
-1 2
-```
-
-### Sample Output 1
-
-```txt showLineNumbers=false
-4
-```
-
-### Sample Input 2
-
-```txt showLineNumbers=false
-5
-1 4
-4 4
-2 2
-3 4
-1 1
-```
-
-### Sample Output 2
-
-```txt showLineNumbers=false
-4
-```
-
-## 题目要点解析
-
-这题就是经典的区间调度问题
 
 ---
 
@@ -1455,6 +1287,6 @@ Error!
 
 1. [【CSDN 博客】贪心算法之区间问题](https://blog.csdn.net/2301_79248256/article/details/155039748)
 
-2. [【Luoge 题单】贪心算法专项训练](https://www.luogu.com.cn/training/5199)
+2. [【Luogu 博客】反悔贪心的再理解](https://www.luogu.com.cn/article/hwrxooq5)
 
-3. [【Luoge 题单】反悔贪心相关问题合集](https://www.luogu.com.cn/training/440831#problems)
+3. [【wshcl】反悔贪心相关题目收集](https://www.cnblogs.com/wshcl/p/18712932)

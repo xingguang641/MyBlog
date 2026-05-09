@@ -1,5 +1,5 @@
 ---
-title: 【ACM 算法随笔】拓扑排序与拓扑分析
+title: 【ACM 算法随笔】拓扑排序算法相关问题
 published: 2026-01-21
 description: 记录一些 ACM 常用技巧
 tags: [Algorithm, Trick, Note, ACM]
@@ -378,8 +378,8 @@ $Curtis \, Nishikino$ 已经知道了一些风筝间的关系，比如给出一�
 
 输入包含多行：
 
-- 第一行两个整数 $n$ 和 $m$ 。
-- 接下来一行 $n$ 个整数 $k_i$ 。
+- 第一行包含两个整数 $n$ 和 $m$ 。
+- 第二行包含 $n$ 个整数 $k_i$ 。
 - 接下来 $m$ 行，每行包含两个整数 $a$ 和 $b$ 。
 
 > $n \quad m$

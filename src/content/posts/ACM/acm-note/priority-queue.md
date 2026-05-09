@@ -79,21 +79,12 @@ draft: false
 
 为了确保探索过程有序且完备，每当我们从堆顶取出当前的最小状态 $(t, i)$ 时，需要执行两项关键的转移操作。第一是将 $a_{i+1}$ **拼接** 到当前子序列之后，生成新状态 $(t + a_{i+1}, i + 1)$ ，代表子序列长度的增加。第二是将当前子序列中的末尾元素 $a_i$ **替换** 为更大的 $a_{i+1}$，生成状态 $(t - a_i + a_{i+1}, i + 1)$ 。这种包含与替换的策略保证了每一次从堆顶弹出的元素都是当前全局尚未被发现的最小值。
 
-$$
-State_{push1} = (t + a_{i+1}, i + 1)
-$$
-
-$$
-State_{push2} = (t - a_i + a_{i+1}, i + 1)
-$$
-
 通过这种方式，当我们第 $k-1$ 次从堆中取出元素时，所得到的 $t$ 就是序列中第 $k$ 个最小的子序列和。这种构造逻辑实际上是在一颗隐形的状态树上进行层序遍历，它利用了数组原本的有序性，避免了对 $2^n$ 空间的盲目搜索。
 
-回到原问题中包含负数的情况，我们可以发现一个重要的性质：原序列中所有正数之和 $maxSum$ 构成了该数组能够达到的全局最大子序列和。任何其他子序列相对于这个最大值的降低，实质上都是由于两种行为导致的：要么是放弃了某个原本选中的正数 $x$ ，损失了 $|x|$ ；要么是加入了一个原本未选的负数 $y$ ，损失了 $|y|$ 。
+回到原问题中包含负数的情况，我们可以发现原序列中所有正数之和 $maxSum$ 构成了该数组能够达到的全局最大子序列和。任何其他子序列相对于这个最大值的降低，实质上都是由于两种行为导致的：
 
-$$
-maxSum = \sum_{nums[i] > 0} nums[i]
-$$
+- 要么是放弃了某个原本选中的正数 $x$ ，损失了 $|x|$
+- 要么是加入了一个原本未选的负数 $y$ ，损失了 $|y|$
 
 基于这一观察，无论原数正负，它们对总和造成的破坏程度都整齐划一地由其 **绝对值** 来衡量。我们只需要将原序列的所有元素统一取绝对值并从小到大排序，就将其完美转化为了上述的简化模型。此时，原问题的第 $k$ 大子序列和就等价于用全局最大和 $maxSum$ 减去绝对值序列中的第 $k-1$ 小子序列和。这种巧妙的对称性转化，避开了对正负数排列组合的复杂讨论，利用最小堆在 $O(k \log k)$ 的复杂度内精准锁定了目标结果。
 
@@ -283,7 +274,7 @@ Bessie 需要建造 $K$ 头不同的机器人奶牛。每头机器人奶牛有 $
 
 状态转移设计，如何设计有限的状态转移得到所有状态是这类问题的难点。
 
-# 最小的包含区间
+## 最小的包含区间
 
 [题目链接](https://leetcode.cn/problems/smallest-range-covering-elements-from-k-lists/description/)
 
@@ -299,7 +290,7 @@ Bessie 需要建造 $K$ 头不同的机器人奶牛。每头机器人奶牛有 $
 
 
 
-# 组团买票问题
+## 组团买票问题
 
 [题目链接](https://github.com/algorithmzuo/algorithm-journey/blob/main/src/class091/Code03_GroupBuyTickets1.java)
 
@@ -313,17 +304,91 @@ Bessie 需要建造 $K$ 头不同的机器人奶牛。每头机器人奶牛有 $
 
 # 区间最优调度问题
 
+排序其中一端，然后用堆维护另一端
 
+## 会议室安排问题
 
-# 会议室安排问题
-
-[题目链接](https://leetcode.doocs.org/lc/252/)
+[题目链接](https://leetcode.doocs.org/lc/253/)
 
 
 
 ## 题目要点解析
 
+这题就是经典的区间调度问题
 
+## 最大的会议数量
+
+[题目链接](https://leetcode.cn/problems/maximum-number-of-events-that-can-be-attended/description/)
+
+### Problem Statement
+
+给你一个数组 $events$ ，其中 $events[i] = [startDay_i, endDay_i]$ ，表示会议 $i$ 开始于 $startDay_i$ ，结束于 $endDay_i$ 。你可以在 $startDay_i \leq d \leq endDay_i$ 中的任意一天 $d$ 参加会议 $i$ 。每场会议你只需参加 **一天** 就可以算作已参加。每天你最多只能参加一场会议。
+
+请返回你能参加的最大会议数目。
+
+### Constraints
+
+- $1 \leq events.length \leq 10^5$
+- $events[i].length == 2$
+- $1 \leq startDay_i \leq endDay_i \leq 10^5$
+
+### Input
+
+输入包含多行：
+
+- 第一行包含一个整数 $n$ ，表示会议的总数。
+- 接下来的 $n$ 行，每行包含两个整数，分别表示第 $i$ 场会议的开始时间 $startDay_i$ 和结束时间 $endDay_i$ 。
+
+> $n$
+> 
+> $startDay_1 \quad endDay_1$
+> 
+> $startDay_2 \quad endDay_2$
+> 
+> $\ldots$
+> 
+> $startDay_n \quad endDay_n$
+
+### Output
+
+输出一个整数，表示你能参加的最大会议数目。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+4
+1 2
+2 3
+3 4
+1 2
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+4
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+5
+1 4
+4 4
+2 2
+3 4
+1 1
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+4
+```
+
+## 题目要点解析
+
+这题就是经典的区间调度问题
 
 ---
 
@@ -581,8 +646,4 @@ int main() {
 
 # 参考文献列表
 
-1. [【Luogu 博客】浅谈前 k 优方案相关问题](https://www.luogu.com.cn/article/rcmx938z)
-
-2. [【wshcl】反悔贪心相关题目收集](https://www.cnblogs.com/wshcl/p/18712932)
-
-3. [【Luogu 博客】反悔贪心的再理解](https://www.luogu.com.cn/article/hwrxooq5)
+1. [【ACM 算法题单】贪心算法相关问题](https://xingguang641.com/posts/acm/acm-type/heap-problems/greedy-algorithm/)
