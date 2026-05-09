@@ -912,6 +912,6 @@ int main(){
 
 # 参考文献列表
 
-1. [【OI WiKi】前缀和 & 差分](https://oi-wiki.org/basic/prefix-sum/)
+1. [【OI WiKi】前缀和与差分相关知识](https://oi-wiki.org/basic/prefix-sum/)
 
 2. [【CSDN 博客】算法技巧之差分](https://blog.csdn.net/myRealization/article/details/104594255)

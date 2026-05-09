@@ -174,7 +174,7 @@ int main() {
 
 输出包含一行，包含 $N$ 个整数，两两之间用空格隔开，表示最小的 $N$ 个和。
 
-### Sample Input 1
+### Sample Input
 
 ```txt showLineNumbers=false
 3
@@ -182,7 +182,7 @@ int main() {
 1 2 3
 ```
 
-### Sample Output 1
+### Sample Output
 
 ```txt showLineNumbers=false
 2 3 3
@@ -265,7 +265,7 @@ Bessie 需要建造 $K$ 头不同的机器人奶牛。每头机器人奶牛有 $
 
 输出一个整数，表示建造 $K$ 头不同机器人奶牛的最小总成本之和。
 
-### Sample Input 1
+### Sample Input
 
 ```txt showLineNumbers=false
 2 3
@@ -273,7 +273,7 @@ Bessie 需要建造 $K$ 头不同的机器人奶牛。每头机器人奶牛有 $
 2 5 3
 ```
 
-### Sample Output 1
+### Sample Output
 
 ```txt showLineNumbers=false
 15
@@ -365,14 +365,14 @@ Bessie 需要建造 $K$ 头不同的机器人奶牛。每头机器人奶牛有 $
 
 输出一行浮点数（保留五位小数），每个数之间用空格隔开，表示每个窗口的中位数。
 
-### Sample Input 1
+### Sample Input
 
 ```txt showLineNumbers=false
 8 3
 1 3 -1 -3 5 3 6 7
 ```
 
-### Sample Output 1
+### Sample Output
 
 ```txt showLineNumbers=false
 1.00000 -1.00000 -1.00000 3.00000 5.00000 6.00000
@@ -492,7 +492,7 @@ int main() {
 
 输出一个整数，表示能够获得的最大总价值。
 
-### Sample Input 1
+### Sample Input
 
 ```txt showLineNumbers=false
 3
@@ -501,7 +501,7 @@ int main() {
 1 7
 ```
 
-### Sample Output 1
+### Sample Output
 
 ```txt showLineNumbers=false
 17

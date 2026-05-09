@@ -1,5 +1,5 @@
 ---
-title: 【ACM 算法题单】最短路相关问题
+title: 【ACM 算法题单】最短路算法相关问题
 published: 2026-03-03
 description: 记录一些 ACM 常见题型
 tags: [Algorithm, Problem Type]
@@ -1269,6 +1269,6 @@ $$
 
 1. [【Luogu 博客】最短路径树](https://www.luogu.com.cn/article/86gevhsv)
 
-2. [基础图论建模相关问题合集](https://www.luogu.com.cn/article/q5qnsttz)
+2. [【Luogu 博客】基础图论建模](https://www.luogu.com.cn/article/q5qnsttz)
 
 3. [【Luogu 题单】图论难题合集](https://www.luogu.com.cn/training/439858#problems)

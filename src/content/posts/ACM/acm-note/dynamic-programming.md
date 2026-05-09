@@ -86,7 +86,7 @@ $$
 
 输出一个整数，表示通关所需的最小钱数。
 
-### Sample Input 1
+### Sample Input
 
 ```txt showLineNumbers=false
 2
@@ -94,7 +94,7 @@ $$
 6 5
 ```
 
-### Sample Output 1
+### Sample Output
 
 ```txt showLineNumbers=false
 10
@@ -203,7 +203,7 @@ int main() {
 
 输出一个整数，表示最多能摘取的樱桃总数。
 
-### Sample Input 1
+### Sample Input
 
 ```txt showLineNumbers=false
 3
@@ -212,7 +212,7 @@ int main() {
 1 1 1
 ```
 
-### Sample Output 1
+### Sample Output
 
 ```txt showLineNumbers=false
 5
@@ -332,14 +332,14 @@ false
 
 输出一个整数，表示要求的最小能力值 $y$ 。
 
-### Sample Input 1
+### Sample Input
 
 ```txt showLineNumbers=false
 5 1
 1 0 1 0
 ```
 
-### Sample Output 1
+### Sample Output
 
 ```txt showLineNumbers=false
 4
@@ -384,7 +384,7 @@ false
 
 输出一个整数，表示最少踩到的石子数。
 
-### Sample Input 1
+### Sample Input
 
 ```txt showLineNumbers=false
 10
@@ -392,7 +392,7 @@ false
 2 3 5 6 7
 ```
 
-### Sample Output 1
+### Sample Output
 
 ```txt showLineNumbers=false
 2
@@ -729,9 +729,9 @@ false
 
 输入包含三行：
 
-* 第一行包含一个整数 $n$ ，表示排列的长度。
-* 第二行包含 $n$ 个整数，表示排列 $P_1$ 。
-* 第三行包含 $n$ 个整数，表示排列 $P_2$ 。
+- 第一行包含一个整数 $n$ ，表示排列的长度。
+- 第二行包含 $n$ 个整数，表示排列 $P_1$ 。
+- 第三行包含 $n$ 个整数，表示排列 $P_2$ 。
 
 > $n$
 > 
@@ -743,7 +743,7 @@ false
 
 输出一个整数，表示最长公共子序列的长度。
 
-### Sample Input 1
+### Sample Input
 
 ```txt showLineNumbers=false
 5
@@ -751,7 +751,7 @@ false
 1 2 3 4 5
 ```
 
-### Sample Output 1
+### Sample Output
 
 ```txt showLineNumbers=false
 3

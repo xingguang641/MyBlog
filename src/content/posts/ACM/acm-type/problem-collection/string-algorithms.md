@@ -1,0 +1,30 @@
+---
+title: 【ACM 算法题单】字符串算法相关问题
+published: 2026-05-09
+description: 记录一些 ACM 常见题型
+tags: [Algorithm, Problem Type]
+category: ACM Type
+draft: false
+---
+
+# 字符匹配算法原理
+
+
+
+## 字符串匹配算法
+
+
+
+## 回文串判断算法
+
+
+
+## 字符串哈希算法
+
+
+
+---
+
+# 参考文献列表
+
+1. [【OI WiKi】字符串哈希相关知识](https://oi-wiki.org/string/hash/)

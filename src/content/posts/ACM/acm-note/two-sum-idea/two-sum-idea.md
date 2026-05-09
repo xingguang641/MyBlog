@@ -195,14 +195,14 @@ for (int i = 0; i < n; i++){
 
 输出满足条件的三元组的数量。
 
-### Sample Input 1
+### Sample Input
 
 ```txt showLineNumbers=false
 10 8
 1 1 2 2 3 3 4 4 5 5
 ```
 
-### Sample Output 1
+### Sample Output
 
 ```txt showLineNumbers=false
 20
@@ -667,14 +667,14 @@ int main() {
 
 输出一个整数表示答案。
 
-### Sample Input 1
+### Sample Input
 
 ```txt showLineNumbers=false
 5
 1 -2 1 1 1
 ```
 
-### Sample Output 1
+### Sample Output
 
 ```txt showLineNumbers=false
 2
@@ -1004,7 +1004,7 @@ int main() {
 
 输出一个整数表示答案。
 
-### Sample Input 1
+### Sample Input
 
 ```txt showLineNumbers=false
 9 8
@@ -1019,7 +1019,7 @@ int main() {
 5 9
 ```
 
-### Sample Output 1
+### Sample Output
 
 ```txt showLineNumbers=false
 3
@@ -1147,7 +1147,7 @@ int main() {
 
 对于每个测试用例，输出一行一个整数，表示最少需要的翻转次数。
 
-### Sample Input 1
+### Sample Input
 
 ```txt showLineNumbers=false
 3
@@ -1159,7 +1159,7 @@ int main() {
 0000000
 ```
 
-### Sample Output 1
+### Sample Output
 
 ```txt showLineNumbers=false
 1
@@ -1357,7 +1357,7 @@ $$
 
 输出一行一个整数，表示计算结果。
 
-### Sample Input 1
+### Sample Input
 
 ```txt showLineNumbers=false
 7
@@ -1370,7 +1370,7 @@ $$
 4 7
 ```
 
-### Sample Output 1
+### Sample Output
 
 ```txt showLineNumbers=false
 3450

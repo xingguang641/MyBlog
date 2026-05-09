@@ -7,7 +7,7 @@ category: ACM Type
 draft: false
 ---
 
-# DFN 序相关问题
+# DFN序相关问题
 
 在树结构的算法中，DFN 序（Depth First Numbering）指的是在进行一次深度优先搜索时，按照节点被第一次访问的顺序为每个节点分配的编号。具体来说，当 DFS 第一次访问到节点 $u$ 时，就给它分配一个递增的时间戳，这个编号称为该节点的 **DFN 值** 。因此，DFN 序本质上就是 **节点在 DFS 遍历过程中被访问的先后顺序** 。
 
@@ -83,4 +83,4 @@ $$
 
 # 参考文献列表
 
-1. [【Daltao's blog】树上算法](https://taodaling.github.io/blog/2019/09/10/树上算法/)
+1. [【Daltao】树上算法](https://taodaling.github.io/blog/2019/09/10/树上算法/)
