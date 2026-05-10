@@ -1,19 +1,19 @@
 ---
 title: 【ACM 算法随笔】拓扑排序算法相关问题
 published: 2026-01-21
-description: 记录一些 ACM 常用技巧
-tags: [Algorithm, Trick, Note, ACM]
-category: ACM Note
+description: 记录一些 ACM 常见题型
+tags: [Algorithm, Problem Type]
+category: ACM Type
 draft: false
 ---
 
-# 拓扑排序基本原理
+# 拓扑排序算法原理
 
 **拓扑排序** 是针对有向无环图的一种线性排序方法，旨在构造出一个不违背任何局部依赖关系的全局顺序。其核心逻辑在于处理顶点间的先后约束：若图中存在有向边 $u \rightarrow v$ ，则在最终序列中顶点 $u$ 必须排在 $v$ 之前。从数学角度看，这实际上是偏序关系的一种 **线性扩展** ，即将元素间原本零散、部分可比的先后关系转化为一个完整的全序序列。由于满足约束的路径往往不止一条，当图中存在互不依赖的顶点时，其相对位置可以灵活调整，因此拓扑排序的结果通常并不唯一。
 
 作为一种严谨的算法工具，拓扑排序存在的前提是图中 **严格不含有向环** 。环路的存在意味着顶点间形成了循环依赖，导致先后关系在逻辑上自相矛盾，从而无法构造出任何有效的线性序列。基于这一特性，拓扑排序在算法设计中不仅被用于确定节点处理的先后次序，也常被作为检测有向图是否存在环路的关键手段。通过尝试构建拓扑序，算法可以判定图结构的合法性，从而保证后续逻辑推导的正确性。
 
-![拓扑排序图像](src\content\posts\ACM\acm-note\topological-sort\拓扑排序.png)
+![拓扑排序图像](src\content\posts\ACM\acm-type\graph-problems\topological-sort\拓扑排序.png)
 
 ## 拓扑建模分析
 
