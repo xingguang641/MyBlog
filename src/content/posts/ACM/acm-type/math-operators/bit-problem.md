@@ -1,5 +1,5 @@
 ---
-title: 【ACM 算法题单】BIT 相关问题
+title: 【ACM 算法题单】BIT相关问题
 published: 2026-03-03
 description: 记录一些 ACM 常见题型
 tags: [Algorithm, Problem Type]

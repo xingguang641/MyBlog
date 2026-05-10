@@ -1,5 +1,5 @@
 ---
-title: 【ACM 算法题单】ABS 相关问题
+title: 【ACM 算法题单】ABS相关问题
 published: 2026-03-11
 description: 记录一些 ACM 常见题型
 tags: [Algorithm, Problem Type]
