@@ -15,6 +15,6 @@ draft: false
 
 # 参考文献列表
 
-1. [数位DP题目合集](https://www.cnblogs.com/Brilliant11001/p/18389858)
+1. [【会咬人的氯化氢】数位DP题目合集](https://www.cnblogs.com/Brilliant11001/p/18389858)
 
-2. [数位DP题目详解](https://www.cnblogs.com/-ytz/p/16636155.html)
+2. [【yangtz】数位DP题目详解](https://www.cnblogs.com/-ytz/p/16636155.html)
