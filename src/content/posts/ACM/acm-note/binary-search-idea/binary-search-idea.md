@@ -159,9 +159,7 @@ if (a[m] < K) {
 
 # 二分查找基本性质
 
-双蛋问题
-
-[题目链接](https://www.luogu.com.cn/problem/U243958)
+[双蛋问题](https://www.luogu.com.cn/problem/U243958)
 
 ---
 
