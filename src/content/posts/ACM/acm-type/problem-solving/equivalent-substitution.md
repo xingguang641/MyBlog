@@ -11,7 +11,7 @@ draft: false
 
 
 
-## 组团买票问题
+## 复杂的购票难题
 
 [题目链接](https://github.com/algorithmzuo/algorithm-journey/blob/main/src/class091/Code03_GroupBuyTickets1.java)
 
@@ -55,7 +55,7 @@ draft: false
 
 
 
-## 灌溉花园的最少水龙头数目
+## 灌溉花园所需的最少水龙头数目
 
 [题目链接](https://leetcode.cn/problems/minimum-number-of-taps-to-open-to-water-a-garden/description/)
 

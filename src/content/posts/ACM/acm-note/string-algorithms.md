@@ -11,7 +11,11 @@ draft: false
 
 把回文串算法和字符串哈希加上，字符串哈希可以考虑单独开一个分支博客
 
-感觉可以一文搞定
+先讲解LSP数组的性质
+
+[Border理论](https://www.luogu.com/article/qgl51obr)
+
+[Border理论小记](https://www.luogu.com.cn/article/ds5cz0sg)
 
 ---
 
