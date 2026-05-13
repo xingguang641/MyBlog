@@ -9,13 +9,29 @@ draft: false
 
 # 字符匹配算法原理
 
-把回文串算法和字符串哈希加上，字符串哈希可以考虑单独开一个分支博客
+
+
+## 单模式匹配算法
+
+BM 算法    Sunday 算法    KMP 算法
 
 先讲解LSP数组的性质
 
 [Border理论](https://www.luogu.com/article/qgl51obr)
 
 [Border理论小记](https://www.luogu.com.cn/article/ds5cz0sg)
+
+拓展KMP（Z函数）
+
+## 多模式匹配算法
+
+AC 自动机
+
+---
+
+# 回文判断算法原理
+
+Manacher 算法    回文自动机
 
 ---
 
