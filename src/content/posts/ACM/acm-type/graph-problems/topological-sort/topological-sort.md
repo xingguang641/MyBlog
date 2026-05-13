@@ -1,5 +1,5 @@
 ---
-title: 【ACM 算法随笔】拓扑排序算法相关问题
+title: 【ACM 算法题单】拓扑排序算法相关问题
 published: 2026-01-21
 description: 记录一些 ACM 常见题型
 tags: [Algorithm, Problem Type]
