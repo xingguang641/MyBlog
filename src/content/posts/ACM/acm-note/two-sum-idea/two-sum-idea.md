@@ -164,7 +164,7 @@ for (int i = 0; i < n; i++){
 
 除了固定右端点，我们还可以切换至 **中心枚举** 的视角重新审视，并引入 **idx 数组** 来辅组枚举。这里的 $idx$ 数组存储的是元素下标，并按照对应元素的大小进行排序。它让我们在不破坏元素原始位置信息的前提下，获得了一套按数值排列的索引映射。然后我们依次枚举 $idx$ 中的元素作为中心点 $j$ ，并将之前处理过的 $idx$ 进行分拣：早于 $j$ 的放入左侧候选集，晚于 $j$ 的放入右侧候选集。由于这个过程是按数值大小推进的，左右两个集合提取出的元素天然有序，从而将棘手的偏序匹配转化为两个有序序列间的线性扫描。
 
-## 三数之和问题
+## 三数累加和问题
 
 [题目链接](https://leetcode.cn/problems/3sum-with-multiplicity/description/)
 
@@ -258,7 +258,7 @@ int main() {
 }
 ```
 
-## 统计好三元组
+## 统计好的三元组
 
 [题目链接](https://leetcode.cn/problems/count-good-triplets/description/)
 
@@ -358,7 +358,7 @@ int main() {
 }
 ```
 
-## 有效三角形数
+## 有效三角形数量
 
 [题目链接](https://leetcode.cn/problems/valid-triangle-number/description/)
 
