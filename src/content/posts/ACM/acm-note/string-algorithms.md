@@ -93,6 +93,56 @@ AC 自动机
 
 Manacher 算法    回文自动机
 
+## 最长的回文子串
+
+[题目链接](https://leetcode.cn/problems/longest-palindromic-substring/)
+
+
+
+## 题目要点解析
+
+水题
+
+## 回文子串的数量
+
+[题目链接](https://leetcode.cn/problems/palindromic-substrings/description/)
+
+
+
+## 题目要点解析
+
+水题
+
+## 不重叠回文子串
+
+[题目链接](https://leetcode.cn/problems/maximum-number-of-non-overlapping-palindrome-substrings/)
+
+
+
+## 题目要点解析
+
+贪心题
+
+## 拉拉队排练问题
+
+[题目链接](https://www.luogu.com.cn/problem/P1659)
+
+
+
+## 题目要点解析
+
+中心点对应一个回文串
+
+## 最长双回文子串
+
+[题目链接](https://www.luogu.com.cn/problem/P4555)
+
+
+
+## 题目要点解析
+
+前后缀分解
+
 ---
 
 # 参考文献列表
