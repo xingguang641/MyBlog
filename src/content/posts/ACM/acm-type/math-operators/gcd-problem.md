@@ -203,3 +203,7 @@ $$
 # 参考文献列表
 
 1. [【Luogu 博客】GCD相关问题及其题解](https://www.luogu.com/article/a2ddeqk4)
+
+2. [【知乎博客】关于交换求和次序的一点思考](https://zhuanlan.zhihu.com/p/2003830361403171881)
+
+3. [【知乎博客】数论恐怖技巧：交换求和](https://zhuanlan.zhihu.com/p/499839696)

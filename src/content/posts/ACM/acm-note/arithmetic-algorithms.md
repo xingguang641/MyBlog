@@ -13,7 +13,7 @@ draft: false
 
 ## 常见的数学算符
 
-1. [【ACM 算法题单】MOD相关问题](https://xingguang641.com/posts/acm/acm-type/math-operators/mod-problem/)
+1. [【ACM 算法题单】MOD相关问题](https://xingguang641.com/posts/acm/acm-type/math-operators/mod-problem/mod-problem/)
 
 2. [【ACM 算法题单】ABS相关问题](https://xingguang641.com/posts/acm/acm-type/math-operators/abs-problem/)
 

@@ -177,6 +177,52 @@ GCD并查集（枚举因子）（中介并查集）
 
 ---
 
+# 并查集置换群维护
+
+
+
+## 交换字符串元素
+
+[题目链接](https://leetcode.cn/problems/smallest-string-with-swaps/description/)
+
+
+
+## 题目要点解析
+
+
+
+## 执行交换操作后的最小汉明距离
+
+[题目链接](https://leetcode.cn/problems/minimize-hamming-distance-after-swap-operations/description/)
+
+
+
+## 题目要点解析
+
+
+
+## 情侣的牵手难题
+
+[题目链接](https://leetcode.cn/problems/couples-holding-hands/description/)
+
+
+
+## 题目要点解析
+
+
+
+## 数组最大交替和
+
+[题目链接](https://leetcode.cn/problems/maximize-alternating-sum-using-swaps/description/)
+
+
+
+## 题目要点解析
+
+
+
+---
+
 # 并查集传递性维护
 
 维护集合元素的相对关系

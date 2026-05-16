@@ -283,7 +283,7 @@ $$
 S \bmod M = (h \times 10^{N-1} + t) \bmod M
 $$
 
-为了最大化这个结果，我们可以令 $x = (h \times 10^{N-1}) \bmod M$ ，那么这个问题就变成经典的[两数之和取模问题](https://xingguang641.com/posts/acm/acm-type/math-operators/mod-problem/#mod两数之和问题)。由于在合并前 $x$ 和 $t$ 均已对 $M$ 取模，它们的取值范围均在 $[0, M)$ 之内。这意味着两数之和对 $M$ 取模只有两种可能的结果：
+为了最大化这个结果，我们可以令 $x = (h \times 10^{N-1}) \bmod M$ ，那么这个问题就变成经典的[两数之和取模问题](https://xingguang641.com/posts/acm/acm-type/math-operators/mod-problem/mod-problem/#mod两数之和问题)。由于在合并前 $x$ 和 $t$ 均已对 $M$ 取模，它们的取值范围均在 $[0, M)$ 之内。这意味着两数之和对 $M$ 取模只有两种可能的结果：
 
 $$
 (x + t) \bmod M =

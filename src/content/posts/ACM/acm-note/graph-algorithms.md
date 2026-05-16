@@ -9,51 +9,7 @@ draft: false
 
 # 基环树
 
-
-
-## 置换群
-
 将所有 i -> a_i 相连就构成置换图，如果a_i是任意数组那么图就是内向基环树，如果a_i是排列，那么图就是若干的置换环，可以用并查集维护
-
-## 交换字符串元素
-
-[题目链接](https://leetcode.cn/problems/smallest-string-with-swaps/description/)
-
-
-
-## 题目要点解析
-
-
-
-## 执行交换操作后的最小汉明距离
-
-[题目链接](https://leetcode.cn/problems/minimize-hamming-distance-after-swap-operations/description/)
-
-
-
-## 题目要点解析
-
-
-
-## 情侣的牵手难题
-
-[题目链接](https://leetcode.cn/problems/couples-holding-hands/description/)
-
-
-
-## 题目要点解析
-
-
-
-## 数组最大交替和
-
-[题目链接](https://leetcode.cn/problems/maximize-alternating-sum-using-swaps/description/)
-
-
-
-## 题目要点解析
-
-
 
 ## system
 
