@@ -27,10 +27,10 @@ draft: false
 
 ## 常见的数学分支
 
-1. [【ACM 算法题单】计算几何相关问题]()
+1. [【ACM 算法题单】计算几何相关问题](https://xingguang641.com/posts/acm/acm-type/math-branch/computational-geometry/)
 
-2. [【ACM 算法题单】组合数学相关问题]()
+2. [【ACM 算法题单】组合数学相关问题](https://xingguang641.com/posts/acm/acm-type/math-branch/combinatorics/)
 
-3. [【ACM 算法题单】线性代数相关问题]()
+3. [【ACM 算法题单】线性代数相关问题](https://xingguang641.com/posts/acm/acm-type/math-branch/linear-algebra/)
 
-4. [【ACM 算法题单】抽象代数相关问题]()
+4. [【ACM 算法题单】抽象代数相关问题](https://xingguang641.com/posts/acm/acm-type/math-branch/abstract-algebra/)

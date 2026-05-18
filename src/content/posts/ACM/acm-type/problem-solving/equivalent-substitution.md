@@ -11,7 +11,7 @@ draft: false
 
 
 
-## 复杂的购票难题
+## 观光团买票难题
 
 [题目链接](https://github.com/algorithmzuo/algorithm-journey/blob/main/src/class091/Code03_GroupBuyTickets1.java)
 

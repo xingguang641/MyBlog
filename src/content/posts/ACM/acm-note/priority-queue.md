@@ -13,7 +13,7 @@ draft: false
 
 在实际应用中，最优状态维护问题通常与 **状态扩展** 和 **搜索剪枝** 深度结合。在这种寻优模式下，堆顶始终维持着当前全局最优的状态；当该状态被取出后，算法通过精心设计的变换逻辑生成其后续候选状态并重新入堆。通过合理的算法设计，我们能够确保从最优状态扩展出的新状态依然具有较强的竞争力，从而在 **优中选优** 的过程中自然实现剪枝。通过这种方式，算法能够逐步提取前 $K$ 个结果。
 
-## 数组第K大和
+## 数组的第K大和
 
 [题目链接](https://leetcode.cn/problems/find-the-k-sum-of-an-array/description)
 
@@ -129,7 +129,23 @@ int main() {
 }
 ```
 
-## 序列合并问题
+## 最小的包含区间
+
+[题目链接](https://leetcode.cn/problems/smallest-range-covering-elements-from-k-lists/description/)
+
+
+
+## 题目要点解析
+
+
+
+## 题目相关拓展
+
+[题目链接](https://leetcode.cn/problems/minimize-deviation-in-array/description/)
+
+
+
+## 序列的合并问题
 
 [题目连接](https://www.luogu.com.cn/problem/P1631)
 
@@ -217,7 +233,7 @@ int main(){
 }
 ```
 
-## 机器人奶牛群
+## 组建机器人奶牛
 
 [题目链接](https://www.luogu.com.cn/problem/P2541)
 
@@ -272,39 +288,13 @@ Bessie 需要建造 $K$ 头不同的机器人奶牛。每头机器人奶牛有 $
 
 ## 题目要点解析
 
-状态转移设计，如何设计有限的状态转移得到所有状态是这类问题的难点。
-
-## 最小的包含区间
-
-[题目链接](https://leetcode.cn/problems/smallest-range-covering-elements-from-k-lists/description/)
-
-
-
-## 题目要点解析
-
-
-
-## 题目相关拓展
-
-[题目链接](https://leetcode.cn/problems/minimize-deviation-in-array/description/)
-
-
-
-## 组团买票问题
-
-[题目链接](https://github.com/algorithmzuo/algorithm-journey/blob/main/src/class091/Code03_GroupBuyTickets1.java)
-
-
-
-## 题目要点解析
-
-
+状态转移设计，如何设计有限的状态转移得到所有状态是这类问题的难点
 
 ---
 
 # 区间最优调度问题
 
-排序其中一端，然后用堆维护另一端
+排序其中一端，然后维护另一端
 
 ## 会议室安排问题
 
@@ -388,7 +378,7 @@ Bessie 需要建造 $K$ 头不同的机器人奶牛。每头机器人奶牛有 $
 
 ## 题目要点解析
 
-这题就是经典的区间调度问题
+这题就是经典的区间调度问题（排序两段都可以做，记得看灵神题解）
 
 ---
 
@@ -520,7 +510,7 @@ int main() {
 
 反悔贪心的巧妙之处在于它构建了一个允许推倒重来的 **反馈回路** 。通过引入优先队列等数据结构，算法能够量化当前决策的 **反悔成本** 与后续候选方案的 **边际收益** 。当新出现的全局选择优于历史操作时，算法利用这种差值度量实现决策的 **动态回溯与替换** 。本质上，反悔贪心将局部最优转化为一种可调控的 **状态空间搜索** ，通过对决策增量的持续维护，使得算法在执行过程中能够不断自我纠错，从而在低时间复杂度下逼近 **全局最优** 。
 
-## 工作调度问题
+## 工作的调度问题
 
 [题目链接](https://www.luogu.com.cn/problem/P2949)
 
@@ -640,7 +630,7 @@ int main() {
 
 ## 题目要点解析
 
-这是一道维护候选项的题，我们可以引入反悔状态。
+这是一道维护候选项的题，我们可以引入反悔状态
 
 ---
 

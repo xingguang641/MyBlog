@@ -260,6 +260,89 @@ int main() {
 }
 ```
 
+## 有效三角形数量
+
+[题目链接](https://leetcode.cn/problems/valid-triangle-number/description/)
+
+### Problem Statement
+
+给定一个包含非负整数的数组 `nums` ，返回其中可以组成三角形三条边的三元组个数。
+
+### Constraints
+
+- $1 \leq nums.length \leq 1000$
+- $0 \leq nums[i] \leq 1000$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个整数 $N$ ，表示数组长度。
+- 第二行包含 $N$ 个整数，表示数组元素。
+
+> $N$
+>
+> $nums_1 \quad nums_2 \quad \ldots \quad nums_N$
+
+### Output
+
+输出一个整数，表示可以组成三角形的个数。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+4
+2 2 3 4
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+3
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+4
+4 2 3 4
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+4
+```
+
+## 题目要点解析
+
+根据三角形的性质，若三边满足 $a \leq b \leq c$ ，则只需满足 $a + b > c$ 即可。因此，我们先对数组进行升序排序，随后固定最大边的下标 $k$ ，在区间 $[0, k-1]$ 内寻找满足条件的二元组 $(i, j)$ 。
+
+此时原问题的约束可以转化为：
+
+$$
+arr[i] + arr[j] > arr[k]
+$$
+
+在 $k$ 确定的情况下，我们可以使用 **双指针法** 快速计数。将左指针 $i$ 置于 $0$ ，右指针 $j$ 置于 $k-1$ 。
+
+若当前满足 $arr[i] + arr[j] > arr[k]$ ，说明在 $j$ 固定的前提下，下标在 $[i, j-1]$ 范围内的所有元素均可作为最小边与 $arr[j]$ 组成三角形，其贡献的组合数为：
+
+$$
+Ans = Ans + (j - i)
+$$
+
+若当前两数之和不满足条件，则向右移动 $i$ 以增大数值。
+
+```cpp frame="code" title="solution_2.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+
+}
+```
+
 ## 统计好的三元组
 
 [题目链接](https://leetcode.cn/problems/count-good-triplets/description/)
@@ -350,89 +433,6 @@ int main() {
 在这一步中，我们只需将这些已经遍历过的、数值较小的元素，根据它们在原数组中的原始位置分配到 **left** 或 **right** 两个集合中。具体而言，只有原始下标 $idx[p] < j$ 且满足 $arr[j] - arr[idx[p]] \leq a$ 的元素才会被放入 left 集合，以此作为合法的 $i$ 候选；同理，只有原始下标 $idx[p] > j$ 且满足 $arr[j] - arr[idx[p]] \leq b$ 的元素才会被放入 right 集合，作为合法的 $k$ 候选。
 
 由于我们是按照 `idx` 的升序逻辑进行遍历的，每次提取出的历史元素本身就遵循从小到大的排列，因此生成的 **left** 和 **right** 集合 **天然满足有序性** 。此时，三元组的构建就转化为了一个典型的有序数组跨集合匹配问题，即处理 $i$ 与 $k$ 之间的最后一道约束 $|arr[i] - arr[k]| \leq c$ 。我们只需枚举 **left** 中的每个元素 $x$ ，并在 **right** 中寻找落在区间 $[x-c, x+c]$ 内的元素。利用 **三指针技巧** 维护两个在 **right** 上单调滑动的边界，即可在摆脱值域依赖的前提下，以 $O(N^2)$ 的复杂度完成所有配对统计。
-
-```cpp frame="code" title="solution_2.cpp"
-#include <bits/stdc++.h>
-using namespace std;
-
-int main() {
-
-}
-```
-
-## 有效三角形数量
-
-[题目链接](https://leetcode.cn/problems/valid-triangle-number/description/)
-
-### Problem Statement
-
-给定一个包含非负整数的数组 `nums` ，返回其中可以组成三角形三条边的三元组个数。
-
-### Constraints
-
-- $1 \leq nums.length \leq 1000$
-- $0 \leq nums[i] \leq 1000$
-
-### Input
-
-输入包含两行：
-
-- 第一行包含一个整数 $N$ ，表示数组长度。
-- 第二行包含 $N$ 个整数，表示数组元素。
-
-> $N$
->
-> $nums_1 \quad nums_2 \quad \ldots \quad nums_N$
-
-### Output
-
-输出一个整数，表示可以组成三角形的个数。
-
-### Sample Input 1
-
-```txt showLineNumbers=false
-4
-2 2 3 4
-```
-
-### Sample Output 1
-
-```txt showLineNumbers=false
-3
-```
-
-### Sample Input 2
-
-```txt showLineNumbers=false
-4
-4 2 3 4
-```
-
-### Sample Output 2
-
-```txt showLineNumbers=false
-4
-```
-
-## 题目要点解析
-
-根据三角形的性质，若三边满足 $a \leq b \leq c$ ，则只需满足 $a + b > c$ 即可。因此，我们先对数组进行升序排序，随后固定最大边的下标 $k$ ，在区间 $[0, k-1]$ 内寻找满足条件的二元组 $(i, j)$ 。
-
-此时原问题的约束可以转化为：
-
-$$
-arr[i] + arr[j] > arr[k]
-$$
-
-在 $k$ 确定的情况下，我们可以使用 **双指针法** 快速计数。将左指针 $i$ 置于 $0$ ，右指针 $j$ 置于 $k-1$ 。
-
-若当前满足 $arr[i] + arr[j] > arr[k]$ ，说明在 $j$ 固定的前提下，下标在 $[i, j-1]$ 范围内的所有元素均可作为最小边与 $arr[j]$ 组成三角形，其贡献的组合数为：
-
-$$
-Ans = Ans + (j - i)
-$$
-
-若当前两数之和不满足条件，则向右移动 $i$ 以增大数值。
 
 ```cpp frame="code" title="solution_2.cpp"
 #include <bits/stdc++.h>
@@ -1113,6 +1113,96 @@ int main() {
 }
 ```
 
+## 相乘结果为正为负的子数组数量
+
+[题目链接](https://codeforces.com/problemset/problem/1215/B)
+
+### Problem Statement
+
+给定一个长度为 $N$ 的整数序列 $a$ ，其中所有元素都 **不等于 0** 。
+
+你需要计算以下两个值：
+
+1. 满足 $l \leq r$ 的下标对 $(l, r)$ 的数量，使得 $a_l \cdot a_{l+1} \cdots a_r$ 的乘积为 **负数** 。
+2. 满足 $l \leq r$ 的下标对 $(l,r)$ 的数量，使得 $a_l \cdot a_{l+1} \cdots a_r$ 的乘积为 **正数** 。
+
+换句话说，你需要统计：
+
+- 所有 **子数组乘积为负数** 的数量
+- 所有 **子数组乘积为正数** 的数量
+
+### Constraints
+
+- $1 \leq N \leq 2 \times 10^5$
+- $-10^9 \leq a_i \leq 10^9$
+- $a_i \neq 0$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个整数 $N$ ，表示数组长度。
+- 第二行包含 $N$ 个整数，表示数组元素。
+
+> $N$
+> 
+> $a_1 \quad a_2 \quad \ldots \quad a_N$
+
+### Output
+
+输出两个整数，分别表示乘积为负数的子数组和乘积为正数的子数组的数量。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+5
+5 -3 3 -1 1
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+8 7
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+10
+4 2 -4 3 1 2 -4 3 2 3
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+28 27
+```
+
+## 题目要点解析
+
+这道题要求统计所有子数组中 **乘积为正数** 和 **乘积为负数** 的数量。由于数组中不存在 $0$ ，子数组乘积的符号完全取决于其中 **负数的个数的奇偶性**：如果负数个数为偶数，则乘积为正；如果负数个数为奇数，则乘积为负。因此，本题的核心并不在于真正计算乘积，而是判断区间内负数个数的奇偶性。
+
+为了简化问题，可以先对原数组进行一次符号映射：将所有正数看作 $1$ ，所有负数看作 $-1$ 。这样数组的每个元素只表示符号信息，而不再关心具体数值。接下来再进一步利用奇偶性的特点，将 $1$ 视为 $0$ ，$-1$ 视为 $1$ 。此时问题就转化为了：对于一个由 $0$ 和 $1$ 构成的序列，统计所有子数组中 **1 的个数为奇数或偶数** 的区间数量。
+
+在这种表示方式下，可以引入 **前缀异或和** 。设 $pre_i$ 表示前 $i$ 个元素中 $1$ 的个数的奇偶性（即这些值的异或结果）。那么任意区间 $[l,r]$ 中 $1$ 的个数奇偶性可以表示为：
+
+$$
+pre_r \oplus pre_{l-1}
+$$
+
+如果结果为 $0$ ，说明区间中负数个数为偶数，乘积为正；如果结果为 $1$ ，说明区间中负数个数为奇数，乘积为负。这样一来，问题就与 **利用前缀和统计子数组性质** 的经典做法完全一致，只不过这里把加法换成了异或运算。
+
+具体实现时，可以在遍历数组的过程中维护当前前缀异或值，同时记录此前出现过多少次 $0$ 和 $1$ 。如果当前前缀值为 $x$ ，那么与之前 **相同前缀值** 配对的区间，其异或结果为 $0$ ，对应乘积为正；而与之前 **不同前缀值** 配对的区间，其异或结果为 $1$ ，对应乘积为负。于是可以在扫描数组的同时不断累加这两类区间的数量。
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
 ## 翻转以聚类问题
 
 [题目链接](https://atcoder.jp/contests/abc408/tasks/abc408_d)
@@ -1240,96 +1330,6 @@ int main(){
 
         cout << ans << '\n';
     }
-}
-```
-
-## 相乘结果为正为负的子数组数量
-
-[题目链接](https://codeforces.com/problemset/problem/1215/B)
-
-### Problem Statement
-
-给定一个长度为 $N$ 的整数序列 $a$ ，其中所有元素都 **不等于 0** 。
-
-你需要计算以下两个值：
-
-1. 满足 $l \leq r$ 的下标对 $(l, r)$ 的数量，使得 $a_l \cdot a_{l+1} \cdots a_r$ 的乘积为 **负数** 。
-2. 满足 $l \leq r$ 的下标对 $(l,r)$ 的数量，使得 $a_l \cdot a_{l+1} \cdots a_r$ 的乘积为 **正数** 。
-
-换句话说，你需要统计：
-
-- 所有 **子数组乘积为负数** 的数量
-- 所有 **子数组乘积为正数** 的数量
-
-### Constraints
-
-- $1 \leq N \leq 2 \times 10^5$
-- $-10^9 \leq a_i \leq 10^9$
-- $a_i \neq 0$
-
-### Input
-
-输入包含两行：
-
-- 第一行包含一个整数 $N$ ，表示数组长度。
-- 第二行包含 $N$ 个整数，表示数组元素。
-
-> $N$
-> 
-> $a_1 \quad a_2 \quad \ldots \quad a_N$
-
-### Output
-
-输出两个整数，分别表示乘积为负数的子数组和乘积为正数的子数组的数量。
-
-### Sample Input 1
-
-```txt showLineNumbers=false
-5
-5 -3 3 -1 1
-```
-
-### Sample Output 1
-
-```txt showLineNumbers=false
-8 7
-```
-
-### Sample Input 2
-
-```txt showLineNumbers=false
-10
-4 2 -4 3 1 2 -4 3 2 3
-```
-
-### Sample Output 2
-
-```txt showLineNumbers=false
-28 27
-```
-
-## 题目要点解析
-
-这道题要求统计所有子数组中 **乘积为正数** 和 **乘积为负数** 的数量。由于数组中不存在 $0$ ，子数组乘积的符号完全取决于其中 **负数的个数的奇偶性**：如果负数个数为偶数，则乘积为正；如果负数个数为奇数，则乘积为负。因此，本题的核心并不在于真正计算乘积，而是判断区间内负数个数的奇偶性。
-
-为了简化问题，可以先对原数组进行一次符号映射：将所有正数看作 $1$ ，所有负数看作 $-1$ 。这样数组的每个元素只表示符号信息，而不再关心具体数值。接下来再进一步利用奇偶性的特点，将 $1$ 视为 $0$ ，$-1$ 视为 $1$ 。此时问题就转化为了：对于一个由 $0$ 和 $1$ 构成的序列，统计所有子数组中 **1 的个数为奇数或偶数** 的区间数量。
-
-在这种表示方式下，可以引入 **前缀异或和** 。设 $pre_i$ 表示前 $i$ 个元素中 $1$ 的个数的奇偶性（即这些值的异或结果）。那么任意区间 $[l,r]$ 中 $1$ 的个数奇偶性可以表示为：
-
-$$
-pre_r \oplus pre_{l-1}
-$$
-
-如果结果为 $0$ ，说明区间中负数个数为偶数，乘积为正；如果结果为 $1$ ，说明区间中负数个数为奇数，乘积为负。这样一来，问题就与 **利用前缀和统计子数组性质** 的经典做法完全一致，只不过这里把加法换成了异或运算。
-
-具体实现时，可以在遍历数组的过程中维护当前前缀异或值，同时记录此前出现过多少次 $0$ 和 $1$ 。如果当前前缀值为 $x$ ，那么与之前 **相同前缀值** 配对的区间，其异或结果为 $0$ ，对应乘积为正；而与之前 **不同前缀值** 配对的区间，其异或结果为 $1$ ，对应乘积为负。于是可以在扫描数组的同时不断累加这两类区间的数量。
-
-```cpp frame="code" title="main.cpp"
-#include <bits/stdc++.h>
-using namespace std;
-
-int main(){
-
 }
 ```
 

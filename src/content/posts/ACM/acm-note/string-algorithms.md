@@ -151,4 +151,4 @@ Manacher 算法    回文自动机
 
 2. [【ACM 算法题单】字符串索引相关问题](https://xingguang641.com/posts/acm/acm-type/string-problems/string-index/)
 
-3. []()
+3. [【ACM 算法题单】字符串嵌套相关问题](https://xingguang641.com/posts/acm/acm-type/string-problems/string-nest/)
