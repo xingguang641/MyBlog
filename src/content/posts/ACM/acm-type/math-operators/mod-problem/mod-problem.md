@@ -57,4 +57,4 @@ $$
 
 # 参考文献列表
 
-1. []()
+1. [【ACM 算法题单】同余原理相关问题](https://xingguang641.com/posts/acm/acm-type/math-operators/mod-problem/congruence/)

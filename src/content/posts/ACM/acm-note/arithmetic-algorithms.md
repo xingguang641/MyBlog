@@ -9,6 +9,8 @@ draft: false
 
 
 
+---
+
 # 参考文献列表
 
 ## 常见的数学算符
@@ -22,3 +24,13 @@ draft: false
 4. [【ACM 算法题单】BIT相关问题](https://xingguang641.com/posts/acm/acm-type/math-operators/bit-problem/)
 
 5. [【ACM 算法题单】MEX相关问题](https://xingguang641.com/posts/acm/acm-type/math-operators/mex-problem/)
+
+## 常见的数学分支
+
+1. [【ACM 算法题单】计算几何相关问题]()
+
+2. [【ACM 算法题单】组合数学相关问题]()
+
+3. [【ACM 算法题单】线性代数相关问题]()
+
+4. [【ACM 算法题单】抽象代数相关问题]()

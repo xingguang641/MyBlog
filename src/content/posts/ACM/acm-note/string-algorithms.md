@@ -150,3 +150,5 @@ Manacher 算法    回文自动机
 1. [【ACM 算法题单】字符串哈希相关问题](https://xingguang641.com/posts/acm/acm-type/string-problems/string-hash/)
 
 2. [【ACM 算法题单】字符串索引相关问题](https://xingguang641.com/posts/acm/acm-type/string-problems/string-index/)
+
+3. []()

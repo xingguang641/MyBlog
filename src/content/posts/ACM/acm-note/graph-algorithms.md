@@ -7,18 +7,6 @@ category: ACM Note
 draft: false
 ---
 
-# 基环树
-
-将所有 i -> a_i 相连就构成置换图，如果a_i是任意数组那么图就是内向基环树，如果a_i是排列，那么图就是若干的置换环，可以用并查集维护
-
-## system
-
-[题目链接](https://www.luogu.com.cn/problem/P7981)
-
-
-
-## 题目要点解析
-
 
 
 ---
