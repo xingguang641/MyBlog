@@ -163,8 +163,8 @@ leetcode
 
 ### Constraints
 
-* $1 \leq N \leq 20$
-* $0 \leq nums[i] \leq 10^7$
+- $1 \leq N \leq 20$
+- $0 \leq nums[i] \leq 10^7$
 
 ### Input
 
@@ -226,8 +226,8 @@ true
 
 ### Constraints
 
-* $3 \leq values.length \leq 50$
-* $1 \leq values[i] \leq 100$
+- $3 \leq values.length \leq 50$
+- $1 \leq values[i] \leq 100$
 
 ### Input
 
@@ -409,6 +409,16 @@ $$
 ## 题目要点解析
 
 嵌套类型题
+
+## 最高加分二叉树
+
+[题目链接](https://www.luogu.com.cn/problem/P1040)
+
+
+
+## 题目要点解析
+
+
 
 ## 有效括号字符串
 
@@ -697,13 +707,3 @@ abcdabcdabcdabcdabcdabcdabcdabcddcbadcbadcbadcbadcbadcbadcbadcba
 ## 题目要点解析
 
 嵌套类型题
-
-## 最高加分二叉树
-
-[题目链接](https://www.luogu.com.cn/problem/P1040)
-
-
-
-## 题目要点解析
-
-

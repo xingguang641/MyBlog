@@ -605,7 +605,7 @@ int main() {
 
 ## 题目要点解析
 
-
+[打家劫舍对偶问题](https://xingguang641.com/posts/acm/acm-type/dp-problems/maximum-subarray-sum/#打家劫舍对偶问题)
 
 ---
 
