@@ -1,5 +1,5 @@
 ---
-title: 【ACM 算法随笔】Arithmetic算法汇总
+title: 【ACM 算法随笔】Math算法汇总
 published: 2026-05-14
 description: 记录一些 ACM 常用技巧
 tags: [Algorithm, Trick, Note, ACM]

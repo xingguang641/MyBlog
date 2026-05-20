@@ -174,7 +174,7 @@ int main(){
 
 输出 $T$ 行，第 $i$ 行表示第 $i$ 个测试用例的答案。
 
-### Sample Input 1
+### Sample Input
 
 ```txt showLineNumbers=false
 2
@@ -200,7 +200,7 @@ int main(){
 1000000000
 ```
 
-### Sample Output 1
+### Sample Output
 
 ```txt showLineNumbers=false
 1200
@@ -589,7 +589,7 @@ int main() {
 
 输出 $t$ 行，每行一个整数，表示该测试用例中所有子序列的分数之和，结果对 $998244353$ 取模。
 
-### Sample Input 1
+### Sample Input
 
 ```txt showLineNumbers=false
 5
@@ -605,7 +605,7 @@ int main() {
 ()()())()()(()()()((()
 ```
 
-### Sample Output 1
+### Sample Output
 
 ```txt showLineNumbers=false
 0

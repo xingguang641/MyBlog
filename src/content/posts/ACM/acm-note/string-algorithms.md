@@ -33,16 +33,6 @@ BM 算法    Sunday 算法    KMP 算法（需要强调KMP真正的优点：按�
 
 需要结合DFN序
 
-## 不断删除字符串
-
-[题目链接](https://www.luogu.com.cn/problem/P4824)
-
-
-
-## 题目要点解析
-
-类似消消乐的这种题目统一用栈解决
-
 ## 二叉树中的链表
 
 [题目链接](https://leetcode.cn/problems/linked-list-in-binary-tree/description/)
@@ -52,6 +42,16 @@ BM 算法    Sunday 算法    KMP 算法（需要强调KMP真正的优点：按�
 ## 题目要点解析
 
 依旧自上而下DFS降维
+
+## 不断删除字符串
+
+[题目链接](https://www.luogu.com.cn/problem/P4824)
+
+
+
+## 题目要点解析
+
+类似消消乐的这种题目统一用栈解决
 
 ## 找到好的字符串
 
@@ -123,16 +123,6 @@ Manacher 算法    回文自动机
 
 贪心题
 
-## 拉拉队排练问题
-
-[题目链接](https://www.luogu.com.cn/problem/P1659)
-
-
-
-## 题目要点解析
-
-中心点对应一个回文串
-
 ## 最长双回文子串
 
 [题目链接](https://www.luogu.com.cn/problem/P4555)
@@ -142,6 +132,16 @@ Manacher 算法    回文自动机
 ## 题目要点解析
 
 前后缀分解
+
+## 拉拉队排练问题
+
+[题目链接](https://www.luogu.com.cn/problem/P1659)
+
+
+
+## 题目要点解析
+
+中心点对应一个回文串
 
 ---
 

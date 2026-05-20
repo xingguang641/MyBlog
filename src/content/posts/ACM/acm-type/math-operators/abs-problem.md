@@ -57,16 +57,6 @@ $$
 
 
 
-## 存在重复的元素
-
-[题目链接](https://leetcode.cn/problems/contains-duplicate-iii/description/)
-
-
-
-## 题目要点解析
-
-
-
 ## 禁忌的差值删除
 
 [题目链接](https://atcoder.jp/contests/abc403/tasks/abc403_d)
@@ -75,3 +65,14 @@ $$
 
 ## 题目要点解析
 
+取模分类
+
+## 存在重复的元素
+
+[题目链接](https://leetcode.cn/problems/contains-duplicate-iii/description/)
+
+
+
+## 题目要点解析
+
+整除分类

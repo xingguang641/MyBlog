@@ -227,13 +227,13 @@ $$
 
 输出一个整数，表示不同的划分方案数。
 
-### Sample Input 1
+### Sample Input
 
 ```txt showLineNumbers=false
 7 3
 ```
 
-### Sample Output 1
+### Sample Output
 
 ```txt showLineNumbers=false
 4

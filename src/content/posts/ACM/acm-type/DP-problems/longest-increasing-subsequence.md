@@ -88,13 +88,13 @@ $$
 - 一套系统最多能拦截的导弹数量
 - 拦截所有导弹所需的最少系统数量
 
-### Sample Input 1
+### Sample Input
 
 ```txt showLineNumbers=false
 389 207 155 300 299 170 158 65
 ```
 
-### Sample Output 1
+### Sample Output
 
 ```txt showLineNumbers=false
 6
@@ -120,95 +120,15 @@ int main(){
 }
 ```
 
-## 套娃信封问题
-
-[题目链接](https://leetcode.cn/problems/russian-doll-envelopes)
-
-### Problem Statement
-
-给你一个二维整数数组 `envelopes` ，其中 $envelopes[i] = [w_i, h_i]$ ，表示第 $i$ 个信封的宽度和高度。
-
-当另一个信封的宽度和高度都比这个信封大的时候，这个信封就可以放进另一个信封里，如同俄罗斯套娃一样。
-
-请计算 **最多** 能有多少个信封能形成一组 “俄罗斯套娃” 信封（即可以把一个信封放到另一个信封里面）。
-
-**注意**：不允许旋转信封。
-
-### Constraints
-
-- $1 \leq envelopes.length \leq 10^5$
-- $envelopes[i].length == 2$
-- $1 \leq w_i, h_i \leq 10^5$
-
-### Input
-
-输入包含两行：
-
-- 第一行包含一个整数 $N$ ，表示信封的数量。
-- 接下来 $N$ 行，每行包含两个整数 $w_i$ 和 $h_i$ ，表示每个信封的宽度和高度。
-
-> $N$
-> 
-> $w_1 \quad h_1$
-> 
-> $w_2 \quad h_2$
-> 
-> $\ldots$
-> 
-> $w_N \quad h_N$
-
-### Output
-
-输出一个整数，表示最多能套娃的信封数目。
-
-### Sample Input 1
-
-```txt showLineNumbers=false
-4
-5 4
-6 4
-6 7
-2 3
-```
-
-### Sample Output 1
-
-```txt showLineNumbers=false
-3
-```
-
-### Sample Input 2
-
-```txt showLineNumbers=false
-3
-1 1
-1 1
-1 1
-```
-
-### Sample Output 2
-
-```txt showLineNumbers=false
-1
-```
-
-## 题目要点解析
-
-二维偏序问题
-
 ## 数组K递增问题
 
 [题目链接](https://leetcode.cn/problems/minimum-operations-to-make-the-array-k-increasing)
 
-根据你最新的“竞赛题面标准版”格式要求，我为你提取并整理了 LeetCode 第 2111 题（使数组 K 递增的最少操作次数）的内容：
-
----
-
 ### Problem Statement
 
-给你一个下标从 **0** 开始包含 $n$ 个正整数的数组 `arr` ，和一个正整数 `k` 。
+给你一个下标从 $0$ 开始包含 $n$ 个正整数的数组 `arr` ，和一个正整数 `k` 。
 
-如果对于每一个满足 $k \leq i \leq n - 1$ 的下标 $i$ ，都有 $arr[i-k] \leq arr[i]$ ，那么我们称数组 `arr` 是 **k 递增** 的。
+如果对于每个满足 $k \leq i \leq n - 1$ 的下标 $i$ 都有 $arr[i-k] \leq arr[i]$ ，那么称数组 `arr` 是 **k 递增** 的。
 
 - 比方说，`arr = [4, 1, 5, 2, 6, 2]` 对于 $k = 2$ 是 k 递增的，因为：
     - $arr[0] \leq arr[2] (4 \leq 5)$
@@ -284,6 +204,82 @@ int main(){
 
 取模分组问题
 
+## 嵌套的信封问题
+
+[题目链接](https://leetcode.cn/problems/russian-doll-envelopes)
+
+### Problem Statement
+
+给你一个二维整数数组 `envelopes` ，其中 $envelopes[i] = [w_i, h_i]$ ，表示第 $i$ 个信封的宽度和高度。
+
+当另一个信封的宽度和高度都比这个信封大的时候，这个信封就可以放进另一个信封里，如同俄罗斯套娃一样。
+
+请计算 **最多** 能有多少个信封能形成一组 “俄罗斯套娃” 信封（即可以把一个信封放到另一个信封里面）。
+
+**注意**：不允许旋转信封。
+
+### Constraints
+
+- $1 \leq envelopes.length \leq 10^5$
+- $envelopes[i].length == 2$
+- $1 \leq w_i, h_i \leq 10^5$
+
+### Input
+
+输入包含多行：
+
+- 第一行包含一个整数 $N$ ，表示信封的数量。
+- 接下来 $N$ 行，每行包含两个整数 $w_i$ 和 $h_i$ ，表示每个信封的宽度和高度。
+
+> $N$
+> 
+> $w_1 \quad h_1$
+> 
+> $w_2 \quad h_2$
+> 
+> $\ldots$
+> 
+> $w_N \quad h_N$
+
+### Output
+
+输出一个整数，表示最多能套娃的信封数目。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+4
+5 4
+6 4
+6 7
+2 3
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+3
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+3
+1 1
+1 1
+1 1
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+1
+```
+
+## 题目要点解析
+
+二维偏序问题
+
 ## 最长数对链问题
 
 [题目链接](https://leetcode.cn/problems/maximum-length-of-pair-chain)
@@ -306,7 +302,7 @@ int main(){
 
 ### Input
 
-输入包含两行：
+输入包含多行：
 
 - 第一行包含一个整数 $n$ ，表示数对的数量。
 - 接下来 $n$ 行，每行包含两个整数 $left_i$ 和 $right_i$ 。
@@ -365,9 +361,7 @@ int main(){
 
 ### Problem Statement
 
-给定一个长度为 $N$ 的整数序列：$A_1, A_2, \ldots, A_N$ 。
-
-现在，你可以从中选择一个 **连续** 的区间，该区间的长度为 $K$ ，并将该区间内的所有数字全部修改成任意一个相同的整数。
+给定一个长度为 $N$ 的整数序列：$A_1, A_2, \ldots, A_N$ 。你可以从中选择一个 **连续** 的区间，该区间的长度为 $K$ ，并将该区间内的所有数字全部修改成任意一个相同的整数。
 
 请你返回在进行至多一次上述修改操作后，整个序列的 **最长不下降子序列** 的长度最大是多少。
 
@@ -393,14 +387,14 @@ int main(){
 
 输出一个整数，表示在修改后能获得的最长不下降子序列的最大长度。
 
-### Sample Input 1
+### Sample Input
 
 ```txt showLineNumbers=false
 5 1
 1 4 2 8 5
 ```
 
-### Sample Output 1
+### Sample Output
 
 ```txt showLineNumbers=false
 4
@@ -429,7 +423,7 @@ int main(){
 
 ### Input
 
-输入包含两行：
+输入包含三行：
 
 - 第一行包含两个整数 $N$ 和 $M$ ，分别表示 $arr1$ 和 $arr2$ 的长度。
 - 第二行包含 $N$ 个整数，表示 $arr1$ 中的元素。

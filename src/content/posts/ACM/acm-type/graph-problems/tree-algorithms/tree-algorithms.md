@@ -65,9 +65,9 @@ $$
 
 
 
-## 另一颗树的子树
+## 树上逆序对计数
 
-[题目链接](https://leetcode.cn/problems/subtree-of-another-tree/description/)
+[题目链接](https://www.luogu.com.cn/problem/P3605)
 
 
 
@@ -78,16 +78,6 @@ $$
 ## 比较两树的权值
 
 [题目链接](https://atcoder.jp/contests/abc406/tasks/abc406_f)
-
-
-
-## 题目要点解析
-
-
-
-## 树上逆序对计数
-
-[题目链接](https://www.luogu.com.cn/problem/P3605)
 
 
 

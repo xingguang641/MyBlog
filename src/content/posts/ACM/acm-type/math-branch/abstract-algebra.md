@@ -7,13 +7,23 @@ category: ACM Type
 draft: false
 ---
 
-# 置换群
+# 置换群的基本性质
 
 
 
-## 简单的循环系统
+## 交换字符串元素
 
-[题目链接](https://www.luogu.com.cn/problem/P7981)
+[题目链接](https://leetcode.cn/problems/smallest-string-with-swaps/description/)
+
+
+
+## 题目要点解析
+
+
+
+## 执行交换操作后的最小汉明距离
+
+[题目链接](https://leetcode.cn/problems/minimize-hamming-distance-after-swap-operations/description/)
 
 
 
@@ -24,6 +34,16 @@ draft: false
 ## 佳佳的篝火晚会
 
 [题目链接](https://www.luogu.com.cn/problem/P1053)
+
+
+
+## 题目要点解析
+
+
+
+## 简单的循环系统
+
+[题目链接](https://www.luogu.com.cn/problem/P7981)
 
 
 

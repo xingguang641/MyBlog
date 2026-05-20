@@ -946,4 +946,4 @@ sab
 
 # 参考文献列表
 
-1. [【elainafan】动态规划之划分型 DP](https://www.cnblogs.com/namelessstory/p/19013752)
+1. [【elainafan】动态规划之划分型DP](https://www.cnblogs.com/namelessstory/p/19013752)
