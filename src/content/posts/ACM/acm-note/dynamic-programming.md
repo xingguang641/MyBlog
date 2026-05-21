@@ -148,9 +148,9 @@ int main() {
 }
 ```
 
-## 自由度压缩技巧
+## 自由度约简技巧
 
-在设计动态规划模型时，初学者常倾向于将所有变量直接映射为状态维度，这极易导致 **维度爆炸** ，使状态空间超出计算承载极限。事实上，许多看似独立的变量间往往存在隐含的 **约束关系** ，通过挖掘这些信息来剔除冗余维度，便是自由度压缩的核心。这种方法利用变量间 **依赖关系** ，仅需记录关键变量即可推导出其余变量。这不仅能有效简化状态表示，更是对问题本质结构的深度洞察，要求我们跳出直观记录的思维定式，寻找变量内部的 **关联性** ，从而构建出更高效的模型。
+在设计动态规划模型时，初学者常倾向于将所有变量直接映射为状态维度，这极易导致 **维度爆炸** ，使状态空间超出计算承载极限。事实上，许多看似独立的变量间往往存在隐含的 **约束关系** ，通过挖掘这些信息来剔除冗余维度，便是自由度约简的核心。这种方法利用变量间 **依赖关系** ，仅需记录关键变量即可推导出其余变量。这不仅能有效简化状态表示，更是对问题本质结构的深度洞察，要求我们跳出直观记录的思维定式，寻找变量内部的 **关联性** ，从而构建出更高效的模型。
 
 该技巧在处理多对象同起点且同步移动的问题尤为经典。例如，若有两个棋子同时从起点 $(0,0)$ 出发，每步均只能向右或向下移动，那么在任何时刻，这两个棋子的坐标 $(x_1, y_1)$ 和 $(x_2, y_2)$ 必然满足 **步数守恒** ，即 $x_1 + y_1 = x_2 + y_2 = step$ 。这意味着我们无需记录完整的四个坐标，仅需维护当前的步数 $step$ 以及两者的横坐标 $x_1$ 和 $x_2$ ，剩下的纵坐标 $y_1$ 和 $y_2$ 可通过 $step - x$ 直接推导得出。通过这种 **降维处理** ，原本冗余的状态空间被大幅压缩，使得原本计算代价极高的状态转移过程，变成了一个易于实现且运行高效的 **低维递推方程** 。
 
@@ -234,9 +234,9 @@ int main() {
 
 2. 如果字符串的长度 $> 1$ ，执行下述步骤：
 
-    * 在一个随机下标处将字符串分割成两个非空的子字符串。即，如果已知字符串 $s$ ，则可以将其分成 $x$ 和 $y$ ，且满足 $s = x + y$ 。
-    * **随机** 决定是否交换这两个子字符串。若交换，则 $s$ 变成 $y + x$ ；若不交换，则 $s$ 变成 $x + y$ 。
-    * 应用该算法继续递归地对两个子字符串进行扰乱。
+    - 在一个随机下标处将字符串分割成两个非空的子字符串。即，如果已知字符串 $s$ ，则可以将其分成 $x$ 和 $y$ ，且满足 $s = x + y$ 。
+    - **随机** 决定是否交换这两个子字符串。若交换，则 $s$ 变成 $y + x$ ；若不交换，则 $s$ 变成 $x + y$ 。
+    - 应用该算法继续递归地对两个子字符串进行扰乱。
 
 给你两个 **长度相等** 的字符串 $s1$ 和 $s2$ ，判断 $s2$ 是否是 $s1$ 的扰乱字符串。
 
@@ -250,8 +250,8 @@ int main() {
 
 输入包含两行：
 
-* 第一行包含一个字符串 $s1$ ，表示原始字符串。
-* 第二行包含一个字符串 $s2$ ，表示待检查的字符串。
+- 第一行包含一个字符串 $s1$ ，表示原始字符串。
+- 第二行包含一个字符串 $s2$ ，表示待检查的字符串。
 
 > $s1$
 > 
@@ -288,6 +288,10 @@ false
 ```
 
 ## 题目要点解析
+
+
+
+## 状态主维度理论
 
 
 
@@ -928,6 +932,18 @@ false
 
 # 参考文献列表
 
+## 经典的DP分类
+
+1. [【ACM 算法题单】背包动态规划相关问题](https://xingguang641.com/posts/acm/acm-type/dp-classification/knapsack-dp/)
+
+2. [【ACM 算法题单】区间动态规划相关问题](https://xingguang641.com/posts/acm/acm-type/dp-classification/interval-dp/)
+
+3. [【ACM 算法题单】树型动态规划相关问题](https://xingguang641.com/posts/acm/acm-type/dp-classification/tree-dp/)
+
+4. [【ACM 算法题单】状压动态规划相关问题](https://xingguang641.com/posts/acm/acm-type/dp-classification/state-dp/)
+
+5. [【ACM 算法题单】数位动态规划相关问题](https://xingguang641.com/posts/acm/acm-type/dp-classification/digit-dp/)
+
 ## 经典的DP问题
 
 1. [【ACM 算法题单】子数组最大累加和问题](https://xingguang641.com/posts/acm/acm-type/dp-problems/maximum-subarray-sum/)
@@ -940,14 +956,8 @@ false
 
 5. [【ACM 算法题单】有效括号问题](https://xingguang641.com/posts/acm/acm-type/dp-problems/regular-bracket/)
 
-## 经典的DP分类
+## 经典的DP优化
 
-1. [【ACM 算法题单】背包动态规划相关问题](https://xingguang641.com/posts/acm/acm-type/dp-classification/knapsack-dp/)
+1. [【ACM 算法题单】单调数据结构优化问题]()
 
-2. [【ACM 算法题单】区间动态规划相关问题](https://xingguang641.com/posts/acm/acm-type/dp-classification/interval-dp/)
-
-3. [【ACM 算法题单】树型动态规划相关问题](https://xingguang641.com/posts/acm/acm-type/dp-classification/tree-dp/)
-
-4. [【ACM 算法题单】状压动态规划相关问题](https://xingguang641.com/posts/acm/acm-type/dp-classification/state-dp/)
-
-5. [【ACM 算法题单】数位动态规划相关问题](https://xingguang641.com/posts/acm/acm-type/dp-classification/digit-dp/)
+2. [【ACM 算法题单】区间数据结构优化问题]()

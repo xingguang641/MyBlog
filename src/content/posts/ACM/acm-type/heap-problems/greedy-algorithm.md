@@ -71,6 +71,16 @@ draft: false
 
 交叉组合排序
 
+## 国王的奖赏游戏
+
+[题目链接](https://www.luogu.com.cn/problem/P1080)
+
+
+
+## 题目要点解析
+
+交叉组合排序
+
 ## 所需的最少能量
 
 [题目链接](https://leetcode.cn/problems/minimum-initial-energy-to-finish-tasks/description/)
@@ -748,6 +758,16 @@ $$
 ```txt showLineNumbers=false
 408
 ```
+
+## 题目要点解析
+
+
+
+## 我们一起来打CF
+
+[题目链接](https://www.luogu.com.cn/article/aqjndtsb)
+
+
 
 ## 题目要点解析
 

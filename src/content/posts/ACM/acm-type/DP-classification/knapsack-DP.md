@@ -71,6 +71,16 @@ $$
 
 
 
+## 构造目标正整数
+
+[题目链接](https://www.luogu.com.cn/problem/P1128)
+
+
+
+## 题目要点解析
+
+
+
 ## 二进制与字符串
 
 [题目链接](https://leetcode.cn/problems/ones-and-zeroes/description/)
