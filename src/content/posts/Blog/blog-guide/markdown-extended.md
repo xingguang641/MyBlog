@@ -19,7 +19,7 @@ draft: false
 ::github{repo="saicaca/fuwari"}
 ```
 
-## 多彩提示框
+## 自定义多彩提示框
 
 支持以下类型的提示框（admonitions）： `note` `tip` `important` `warning` `caution`
 

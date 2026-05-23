@@ -1,13 +1,13 @@
 ---
-title: 【开源项目部署教程】Jupyter Translate 项目教程
+title: 【开源项目部署教程】Translate项目教程
 published: 2025-10-21
 description: 基于 LLM 和阿里云机器翻译的 Jupyter Notebook 翻译工具部署指南
-tags: [Translate, Python, Github, Tutorial]
-category: Github Tutorial
+tags: [Translate, Python, Github]
+category: Github Project
 draft: false 
 ---
 
-# Jupyter Translate 项目部署
+# Translate项目部署
 
 Jupyter Translate 是一个能够将 `.ipynb` 文件进行自动翻译的工具，支持多种翻译引擎，能够在保留代码与输出不变的情况下，批量处理 Markdown 文本与注释的语言转换。通过简单的配置，你就可以让它在笔记本中实现一键翻译，适用于整理学习资料、生成双语 Notebook 或快速阅读外文教程。下面将介绍如何安装、配置并实际使用这个工具。
 
@@ -87,7 +87,7 @@ python main.py -e ai "jupyter file/rag_from_scratch_1_to_4.ipynb"
 
 程序运行完成后，会在原文件同级目录下生成一个新的文件，文件名通常以 `_zh` 结尾：
 
-*   **原文件**：`rag_from_scratch_1_to_4.ipynb`
-*   **翻译后**：`rag_from_scratch_1_to_4_zh.ipynb`
+-   **原文件**：`rag_from_scratch_1_to_4.ipynb`
+-   **翻译后**：`rag_from_scratch_1_to_4_zh.ipynb`
 
 你可以直接使用 Jupyter Lab 或 VS Code 打开该文件查看双语或翻译后的内容。

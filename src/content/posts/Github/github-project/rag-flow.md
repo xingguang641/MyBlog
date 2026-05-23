@@ -3,7 +3,7 @@ title: 【开源项目部署教程】RAGFlow 项目教程
 published: 2025-12-10
 description: 基于 Docker Compose 的 RAGFlow 独立部署教程
 tags: [RAG, Docker, Github, Agent]
-category: Github Tutorial
+category: Github Project
 draft: false 
 ---
 
@@ -13,7 +13,7 @@ draft: false
 
 &nbsp;
 
-# Ollama 模型配置
+# Ollama模型配置
 
 在配置 **RAGFlow** 之前，第一步是准备好本地的 **大语言模型（LLM）**，而 **Ollama** 是一个非常方便的工具，可以用来在本地运行和管理这些模型。首先，需要在本机上下载并安装 Ollama 平台。安装完成后，接下来就是对环境进行一些必要的配置，以保证虚拟机中的 RAGFlow 可以顺利访问到本地模型。
 
@@ -23,7 +23,7 @@ draft: false
 
 在环境配置完成之后，就可以通过 Ollama 下载所需的模型了。以 DeepSeek 大模型为例，命令非常简单，只需执行 `ollama run deepseek-r1:1.5b` ，Ollama 就会自动下载并启动该模型，准备好供 RAGFlow 使用。通过这一系列步骤，你就完成了本地 LLM 的准备工作，为后续的 RAGFlow 配置打下了基础。
 
-# RAGF 项目部署
+# RAGF项目部署
 
 **RAGFlow** 是一个集成本地大语言模型与知识检索的问答系统，能够将本地大模型与外部知识库结合，实现智能问答、内容生成和信息检索的统一管理。它可以直接在本地 Python 环境中运行，但为了保证环境隔离、依赖一致性以及后续维护的便利，通常推荐使用 **Docker 容器化部署**。
 
@@ -43,7 +43,7 @@ draft: false
 git clone https://github.com/infiniflow/ragflow.git
 ```
 
-## 配置 Docker
+## 配置Docker
 
 进入 **docker** 文件夹，利用官方提前构建好的 Docker 镜像即可启动 RAGFlow 服务器。
 
@@ -79,12 +79,12 @@ $ docker compose -f docker-compose.yml up -d
 
 通过以上步骤，即可在 Docker 环境中快速启动 RAGFlow 服务，并可根据实际需求灵活选择 CPU 或 GPU 运行模式。同时该方式能够确保服务配置与镜像版本保持一致，便于后续的升级、使用与维护。需要注意的是，在访问服务时请关闭代理，否则可能导致服务无法正常访问。
 
-## 访问 RAGFlow
+## 访问RAGFlow
 
 完成容器化部署后，你可以通过浏览器或 API 直接访问 RAGFlow 服务。Docker Compose 会将 RAGFlow 的 Web 服务端口映射到本地环境中，常用端口如下：
 
-* **HTTP**：`${SVR_WEB_HTTP_PORT}`（默认 80）
-* **HTTPS**：`${SVR_WEB_HTTPS_PORT}`（默认 443）
-* **Admin Server**：`${ADMIN_SVR_HTTP_PORT}`（默认 9381）
+- **HTTP**：`${SVR_WEB_HTTP_PORT}`（默认 80）
+- **HTTPS**：`${SVR_WEB_HTTPS_PORT}`（默认 443）
+- **Admin Server**：`${ADMIN_SVR_HTTP_PORT}`（默认 9381）
 
 例如，在浏览器中访问 `http://localhost:${SVR_WEB_HTTP_PORT}` 就可以打开 RAGFlow 主界面；若启用了 HTTPS，则可使用 `https://localhost:${SVR_WEB_HTTPS_PORT}` 进行访问。
