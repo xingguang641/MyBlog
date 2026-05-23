@@ -1,5 +1,5 @@
 ---
-title: 【博客指南】Markdown 扩展功能
+title: 【博客指南】Markdown扩展功能
 published: 2024-04-10
 updated: 2024-11-29
 description: 在 Fuwari 中了解更多关于 Markdown 功能的信息
@@ -8,7 +8,7 @@ category: Blog Guides
 draft: false 
 ---
 
-## GitHub 仓库卡片
+## GitHub仓库卡片
 你可以添加链接到 GitHub 仓库的动态卡片；页面加载时会从 GitHub API 拉取该仓库的信息。
 
 ::github{repo="Fabrizz/MMM-OnSpotify"}
@@ -19,7 +19,7 @@ draft: false
 ::github{repo="saicaca/fuwari"}
 ```
 
-## 提示框
+## 多彩提示框
 
 支持以下类型的提示框（admonitions）： `note` `tip` `important` `warning` `caution`
 

@@ -1,5 +1,5 @@
 ---
-title: 【博客指南】Fuwari 简易指南
+title: 【博客指南】Fuwari简易指南
 published: 2024-04-01
 description: 如何使用这个博客模板
 image: "./cover.jpeg"
@@ -12,7 +12,7 @@ draft: false
 
 这个博客模板是使用 [Astro](https://astro.build/) 构建的。对于本指南中未提及的内容，你可以在 [Astro Docs](https://docs.astro.build/) 中找到答案。
 
-## 文章的 Front-matter（前置信息）
+## 文章的前置信息
 
 ```yaml
 ---
@@ -36,9 +36,7 @@ draft: false
 | `category`    | 文章的分类。                                                                                                                                                                                   |
 | `draft`        | 如果这篇文章仍为草稿，则不会显示。                                                                                                                                                    |
 
-## 文章文件的存放位置
-
-
+## 文件的存放位置
 
 你的文章文件应放在 `src/content/posts/` 目录下。你也可以创建子目录，以便更好地整理文章和资源。
 

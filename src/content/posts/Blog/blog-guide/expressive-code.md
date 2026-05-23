@@ -1,5 +1,5 @@
 ---
-title: 【博客指南】丰富代码示例
+title: 【博客指南】Expressive-Code示例
 published: 2024-05-01
 description: 演示如何在 Markdown 中使用丰富代码功能
 tags: [Markdown, Blogging, Demo]
@@ -292,7 +292,7 @@ engine.freeMemory()
 engine.shutdown({ reason: 'End of example boilerplate code' })
 ```
 
-### 2. 代码行编号
+### 2. 代码行号
 
 [📚 官方文档：行号显示](https://expressive-code.com/plugins/line-numbers/)
 
