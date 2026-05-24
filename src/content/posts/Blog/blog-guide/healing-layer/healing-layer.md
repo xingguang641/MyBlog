@@ -1,5 +1,5 @@
 ---
-title: 【博客指南】新浪微博图片无法显示
+title: 【博客指南】微博图片报错解决方案
 published: 2026-05-24
 description: 解决老博客的新浪图片显示错误问题
 tags: [Blogging, BUG]

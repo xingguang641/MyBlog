@@ -7,7 +7,7 @@ category: ACM Type
 draft: false
 ---
 
-# 置换群的基本性质
+# 置换环的基本性质
 
 
 
@@ -50,3 +50,11 @@ draft: false
 ## 题目要点解析
 
 
+
+---
+
+# 参考文献列表
+
+1. [【OI WiKi】置换和排列相关知识](https://oi-wiki.org/math/permutation/)
+
+2. [【米游社专栏】置换环の使用说明书](https://www.miyoushe.com/wd/article/40834894)

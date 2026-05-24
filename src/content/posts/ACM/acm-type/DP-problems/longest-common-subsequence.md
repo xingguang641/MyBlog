@@ -176,6 +176,66 @@ bag
 
 
 
+## 最短公共父序列
+
+[题目链接](https://leetcode.cn/problems/shortest-common-supersequence/description/)
+
+### Problem Statement
+
+给出两个字符串 `str1` 和 `str2` ，返回同时以 `str1` 和 `str2` 作为 **子序列** 的最短字符串。如果答案不止一个，则可以返回满足条件的 **任意一个** 答案。
+
+如果从字符串 $T$ 中删除一些字符（也可能不删除），可以形成字符串 $S$ ，那么 $S$ 就是 $T$ 的子序列。
+
+### Constraints
+
+- $1 \leq str1.length, str2.length \leq 1000$
+- `str1` 和 `str2` 仅由小写英文字母组成
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个字符串，表示 $str1$ 。
+- 第二行包含一个字符串，表示 $str2$ 。
+
+> $str1$
+> 
+> $str2$
+
+### Output
+
+输出一个字符串，表示满足条件的最短公共超序列。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+abac
+cab
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+cabac
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+aaaaaaaa
+aaaaaaaa
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+aaaaaaaa
+```
+
+## 题目要点解析
+
+
+
 ## 最低的编辑距离
 
 [题目链接](https://leetcode.cn/problems/edit-distance/description/)
@@ -406,66 +466,6 @@ true
 ## 题目要点解析
 
 最长公共子序列+完全背包思想
-
-## 最短公共父序列
-
-[题目链接](https://leetcode.cn/problems/shortest-common-supersequence/description/)
-
-### Problem Statement
-
-给出两个字符串 `str1` 和 `str2` ，返回同时以 `str1` 和 `str2` 作为 **子序列** 的最短字符串。如果答案不止一个，则可以返回满足条件的 **任意一个** 答案。
-
-如果从字符串 $T$ 中删除一些字符（也可能不删除），可以形成字符串 $S$ ，那么 $S$ 就是 $T$ 的子序列。
-
-### Constraints
-
-- $1 \leq str1.length, str2.length \leq 1000$
-- `str1` 和 `str2` 仅由小写英文字母组成
-
-### Input
-
-输入包含两行：
-
-- 第一行包含一个字符串，表示 $str1$ 。
-- 第二行包含一个字符串，表示 $str2$ 。
-
-> $str1$
-> 
-> $str2$
-
-### Output
-
-输出一个字符串，表示满足条件的最短公共超序列。
-
-### Sample Input 1
-
-```txt showLineNumbers=false
-abac
-cab
-```
-
-### Sample Output 1
-
-```txt showLineNumbers=false
-cabac
-```
-
-### Sample Input 2
-
-```txt showLineNumbers=false
-aaaaaaaa
-aaaaaaaa
-```
-
-### Sample Output 2
-
-```txt showLineNumbers=false
-aaaaaaaa
-```
-
-## 题目要点解析
-
-
 
 ---
 

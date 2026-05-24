@@ -1,5 +1,5 @@
 ---
-title: 【开源项目部署教程】Translate项目教程
+title: 【开源项目部署教程】JupyTrans项目教程
 published: 2025-10-21
 description: 基于 LLM 和阿里云机器翻译的 Jupyter Notebook 翻译工具部署指南
 tags: [Translate, Python, Github]
@@ -7,7 +7,7 @@ category: Github Project
 draft: false 
 ---
 
-# Translate项目部署
+# JupyTrans项目部署
 
 Jupyter Translate 是一个能够将 `.ipynb` 文件进行自动翻译的工具，支持多种翻译引擎，能够在保留代码与输出不变的情况下，批量处理 Markdown 文本与注释的语言转换。通过简单的配置，你就可以让它在笔记本中实现一键翻译，适用于整理学习资料、生成双语 Notebook 或快速阅读外文教程。下面将介绍如何安装、配置并实际使用这个工具。
 

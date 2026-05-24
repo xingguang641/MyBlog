@@ -958,6 +958,6 @@ false
 
 ## 经典的DP优化
 
-1. [【ACM 算法题单】单调数据结构优化问题]()
+1. [【ACM 算法题单】单调数据结构优化问题](https://xingguang641.com/posts/acm/acm-type/dp-optimization/monotonic-structure/)
 
-2. [【ACM 算法题单】区间数据结构优化问题]()
+2. [【ACM 算法题单】区间数据结构优化问题](https://xingguang641.com/posts/acm/acm-type/dp-optimization/interval-structure/)
