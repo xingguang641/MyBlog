@@ -13,7 +13,51 @@ draft: false
 
 在完成压缩之后，问题的本质便转变为 **在一个一维数组中寻找满足题目条件的子区间** 。此时，我们可以直接套用各种成熟的一维算法，例如前缀和、哈希表、双指针或最大子段和等经典方法，从而高效地求解矩形的左右边界。通过这种典型的 **二维转一维** 技巧，我们成功地将整体时间复杂度优化到了 $O(n^3)$ ，这一复杂度在大多数矩形累加和相关问题中都足够高效，也构成了此类题目的 **核心解题框架** 。
 
-## 均衡矩形计数
+## 子矩阵的最大和
+
+[题目链接](https://leetcode.cn/problems/max-submatrix-lcci)
+
+### Problem Statement
+
+给定一个正整数、负整数和 $0$ 组成的 $N × M$ 矩阵，编写代码找出元素总和最大的子矩阵。
+
+返回一个数组 `[r1, c1, r2, c2]` ，其中 `r1, c1` 分别代表子矩阵左上角的行号和列号，`r2, c2` 分别代表右下角的行号和列号。若有多个满足条件的子矩阵，返回任意一个均可。
+
+### Constraints
+
+- $1 \leq matrix.length \leq 200$
+- $1 \leq matrix[0].length \leq 200$
+
+### Input
+
+输入包含多行：
+
+- 第一行包含两个整数 $N$ 和 $M$ ，表示矩阵大小。
+- 接下来 $M$ 行包含 $N$ 个整数，表示矩阵的一行。
+
+### Output
+
+输出一个四元组表示答案矩阵的坐标。
+
+### Sample Input
+
+```txt showLineNumbers=false
+2 2
+-1 0
+0 -1
+```
+
+### Sample Output
+
+```txt showLineNumbers=false
+0 1 0 1
+```
+
+## 题目要点解析
+
+
+
+## 均衡的矩形计数
 
 [题目链接](https://atcoder.jp/contests/abc410/tasks/abc410_f)
 
@@ -76,7 +120,7 @@ draft: false
 
 输出 $T$ 行，第 $i$ 行应该包含第 $i$ 个测试用例的答案。
 
-### Sample Input 1
+### Sample Input
 
 ```txt showLineNumbers=false
 3
@@ -109,56 +153,12 @@ draft: false
 .##...##...####.##...####..#..###..####.####.#..##
 ```
 
-### Sample Output 1
+### Sample Output
 
 ```txt showLineNumbers=false
 4
 79
 4032
-```
-
-## 题目要点解析
-
-
-
-## 子矩阵最大和
-
-[题目链接](https://leetcode.cn/problems/max-submatrix-lcci)
-
-### Problem Statement
-
-给定一个正整数、负整数和 $0$ 组成的 $N × M$ 矩阵，编写代码找出元素总和最大的子矩阵。
-
-返回一个数组 `[r1, c1, r2, c2]` ，其中 `r1, c1` 分别代表子矩阵左上角的行号和列号，`r2, c2` 分别代表右下角的行号和列号。若有多个满足条件的子矩阵，返回任意一个均可。
-
-### Constraints
-
-- $1 \leq matrix.length \leq 200$
-- $1 \leq matrix[0].length \leq 200$
-
-### Input
-
-输入包含多行：
-
-- 第一行包含两个整数 $N$ 和 $M$ ，表示矩阵大小。
-- 接下来 $M$ 行包含 $N$ 个整数，表示矩阵的一行。
-
-### Output
-
-输出一个四元组表示答案矩阵的坐标。
-
-### Sample Input 1
-
-```txt showLineNumbers=false
-2 2
--1 0
-0 -1
-```
-
-### Sample Output 1
-
-```txt showLineNumbers=false
-0 1 0 1
 ```
 
 ## 题目要点解析
@@ -171,9 +171,9 @@ draft: false
 
 完全子矩形（元素全为 $1$ 的矩形）是矩形类问题中第二类典型题型。与前一种矩形累加和问题相同，如果直接通过枚举子矩形的左上角和右下角来确定一个矩形，其时间复杂度会非常高，在数据规模稍大的情况下难以通过，因此我们需要找到新的枚举思路。不同于矩形累加和问题，完全子矩形问题不需要枚举矩形的上下边界，只需要单独 **枚举矩形的底边** 即可。以当前行为底边向上延伸，我们可以统计出每一列中连续为 $1$ 的高度，从而将原本的二维矩形问题转化为一维柱状图问题。此时，问题等价于 **「柱状图中最大的矩形」** 这一经典题目。
 
-由于「柱状图中最大的矩形」这一经典问题可以借助单调栈在 $O(n)$ 的时间内高效解决，当我们将矩阵中的每一行依次视为矩形的底边并进行处理时，整体时间复杂度便可以稳定地控制在 $O(n^2)$ 。在这一过程中，二维矩形问题被系统性地转化为一维柱状图问题，从而利用「柱状图中最大的矩形」这一成熟的算法工具。这种处理方式有效避免了对矩形四条边进行高维度暴力枚举，大幅降低了时间复杂度，是解决完全子矩形问题时最为常见、也最为标准的思路。
+由于「柱状图中最大的矩形」这一经典问题可以借助单调栈在 $O(n)$ 的时间内高效解决，当我们将矩阵中的每一行依次视为矩形的底边并进行处理时，整体时间复杂度便可以稳定地控制在 $O(n^2)$ 。在这一过程中，二维矩形问题被系统性地转化为一维柱状图问题，从而利用「柱状图中最大的矩形」这一成熟的算法工具。这种处理方式有效避免了对矩形四条边进行高维度暴力枚举，是解决完全子矩形问题时最为常见、也最为标准的思路。
 
-## 寻找最大矩形
+## 柱状图最大矩形
 
 [题目链接](https://leetcode.cn/problems/largest-rectangle-in-histogram/description/)
 
@@ -233,7 +233,63 @@ draft: false
 
 
 
-## 统计全一矩形
+## 最大的全一矩形
+
+[题目链接](https://leetcode.cn/problems/PLYXKQ/description/)
+
+### Problem Statement
+
+给定一个由 $0$ 和 $1$ 组成的矩阵 `matrix` ，找出只包含 $1$ 的最大矩形，并返回其面积。
+
+注意：此题 `matrix` 输入格式为一维 $01$ 字符串数组。
+
+### Constraints
+
+- $rows == matrix.length$
+- $cols == matrix[0].length$
+- $0 <= row, cols <= 200$
+- $matrix[i][j]$ 仅包含 $0$ 或 $1$
+
+### Input
+
+输入包含多行：
+
+- 第一行包含一个整数 $n$ ，表示矩阵的行数。
+- 接下来 $n$ 行包含一个字符串，表示矩阵的一行。
+
+> $n$
+> 
+> $S_1$
+> 
+> $\ldots$
+> 
+> $S_2$
+
+### Output
+
+输出一个整数表示答案。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+4
+10100
+10111
+11111
+10010
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+6
+```
+
+## 题目要点解析
+
+
+
+## 全一矩形的个数
 
 [题目链接](https://leetcode.cn/problems/count-submatrices-with-all-ones/description/)
 
@@ -299,63 +355,7 @@ draft: false
 
 
 
-## 最大全一矩形
-
-[题目链接](https://leetcode.cn/problems/PLYXKQ/description/)
-
-### Problem Statement
-
-给定一个由 $0$ 和 $1$ 组成的矩阵 `matrix` ，找出只包含 $1$ 的最大矩形，并返回其面积。
-
-注意：此题 `matrix` 输入格式为一维 $01$ 字符串数组。
-
-### Constraints
-
-- $rows == matrix.length$
-- $cols == matrix[0].length$
-- $0 <= row, cols <= 200$
-- $matrix[i][j]$ 仅包含 $0$ 或 $1$
-
-### Input
-
-输入包含多行：
-
-- 第一行包含一个整数 $n$ ，表示矩阵的行数。
-- 接下来 $n$ 行包含一个字符串，表示矩阵的一行。
-
-> $n$
-> 
-> $S_1$
-> 
-> $\ldots$
-> 
-> $S_2$
-
-### Output
-
-输出一个整数表示答案。
-
-### Sample Input 1
-
-```txt showLineNumbers=false
-4
-10100
-10111
-11111
-10010
-```
-
-### Sample Output 1
-
-```txt showLineNumbers=false
-6
-```
-
-## 题目要点解析
-
-
-
-## 寻找高光片段
+## 寻找高光的片段
 
 [题目链接](https://atcoder.jp/contests/abc420/tasks/abc420_f)
 
