@@ -1166,6 +1166,34 @@ $$
 
 ---
 
+# 数组同化贪心问题
+
+中位数贪心相关
+
+[中位数贪心及其证明](https://zhuanlan.zhihu.com/p/1922938031687595039)
+
+## 使数组元素相等
+
+[题目链接](https://leetcode.cn/problems/minimum-moves-to-equal-array-elements-ii/description/)
+
+
+
+## 题目要点解析
+
+
+
+## 构造模交替数组
+
+[题目链接](https://leetcode.cn/problems/minimum-operations-to-make-array-modulo-alternating-i/description/)
+
+
+
+## 题目要点解析
+
+
+
+---
+
 # 建筑抢修贪心问题
 
 经典反悔贪心之一

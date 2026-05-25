@@ -23,6 +23,16 @@ draft: false
 
 字符串去重（相当于暴力做法）
 
+## 最短唯一子数组
+
+[题目链接](https://leetcode.cn/problems/smallest-unique-subarray/description/)
+
+
+
+## 题目要点解析
+
+二分答案（字符串越短越可能重复）+字符串去重
+
 ## 重复叠加字符串
 
 [题目链接](https://leetcode.cn/problems/repeated-string-match/description/)
