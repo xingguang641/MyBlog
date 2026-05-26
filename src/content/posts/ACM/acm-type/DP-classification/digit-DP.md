@@ -11,6 +11,16 @@ draft: false
 
 
 
+## 好整数路径计数
+
+[题目链接](https://leetcode.cn/problems/count-good-integers-on-a-grid-path/description/)
+
+
+
+## 题目要点解析
+
+
+
 ---
 
 # 参考文献列表

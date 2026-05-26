@@ -484,3 +484,13 @@ int main(){
 ## 题目要点解析
 
 
+
+## 最大不动点数目
+
+[题目链接](https://leetcode.cn/problems/maximize-fixed-points-after-deletions/description/)
+
+
+
+## 题目要点解析
+
+二维偏序问题

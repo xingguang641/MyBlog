@@ -53,16 +53,6 @@ draft: false
 
 简单的字符串哈希+滑动窗口
 
-## 失配字符串问题
-
-[题目链接](https://leetcode.cn/problems/substring-with-concatenation-of-all-words/description/)
-
-
-
-## 题目要点解析
-
-字符串哈希+二分找不同点
-
 ---
 
 # 参考文献列表

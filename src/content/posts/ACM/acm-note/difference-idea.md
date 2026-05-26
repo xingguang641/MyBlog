@@ -1032,6 +1032,16 @@ int main(){
 }
 ```
 
+## 统计完全K次幂
+
+[题目链接](https://leetcode.cn/problems/count-k-th-roots-in-a-range/description/)
+
+
+
+## 题目要点解析
+
+如何处理浮点误差？
+
 ---
 
 # 参考文献列表

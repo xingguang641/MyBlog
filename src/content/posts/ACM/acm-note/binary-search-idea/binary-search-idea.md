@@ -157,11 +157,37 @@ if (a[m] < K) {
 
 ---
 
-# 二分查找基本性质
+# 二分查找相关问题
+
+
+
+### 二分查找与双蛋问题
 
 [双蛋问题](https://www.luogu.com.cn/problem/U243958)
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=96214853&bvid=BV1KE41137PK&cid=164251653&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+
+
+## 第K缺失正整数
+
+[题目链接](https://leetcode.cn/problems/count-the-number-of-fair-pairs/description/)
+
+
+
+## 题目要点解析
+
+二分查找第K个缺失的正整数大致位置在哪
+
+## 失配字符串问题
+
+[题目链接](https://leetcode.cn/problems/substring-with-concatenation-of-all-words/description/)
+
+
+
+## 题目要点解析
+
+二分查找不同点+字符串哈希
 
 ---
 
