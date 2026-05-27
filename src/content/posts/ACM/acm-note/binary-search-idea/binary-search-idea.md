@@ -159,31 +159,157 @@ if (a[m] < K) {
 
 # 二分查找相关问题
 
+二分查找是建立在 **单调性** 基础上的高效查找算法，其核心思想是通过不断 **缩小搜索区间** ，在 **对数时间复杂度** 内完成目标定位。与顺序扫描逐个判断不同，二分查找并不会遍历所有可能情况，而是利用数据之间已经存在的 **顺序关系** 或条件变化规律，每次排除掉一部分不可能的答案，从而快速逼近目标位置。正因为这种高效的查找能力，二分查找不仅广泛应用于基础的数据检索问题，也成为许多算法题中进行 **边界定位** 与条件判断的重要工具。掌握二分查找的关键，不仅在于熟悉代码模板，更在于识别问题中是否存在可供利用的单调性。
 
-
-### 二分查找与双蛋问题
-
-[双蛋问题](https://www.luogu.com.cn/problem/U243958)
-
-<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=96214853&bvid=BV1KE41137PK&cid=164251653&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
-
-
+二分查找通常有两类常见用法：一类是在 **有序数据** 中查找某个目标值，或寻找满足条件的位置与边界，例如查找元素、定位区间以及确定插入位置等；另一类则是利用条件结果所呈现出的 **单调变化** ，将问题抽象为一个 **二值序列** ，通过查找条件发生变化的 **临界点** 完成定位。虽然不同题目的表现形式各不相同，但其本质都建立在对单调性的识别与利用之上。实际上，许多题目并不会直接给出有序数组或明显的查找对象，而是需要先对问题进行分析与转化，从原始条件中挖掘出隐藏的单调关系，进而构造出能够进行二分查找的过程。
 
 ## 第K缺失正整数
 
-[题目链接](https://leetcode.cn/problems/count-the-number-of-fair-pairs/description/)
+[题目链接](https://leetcode.cn/problems/kth-missing-positive-number/description/)
 
+### Problem Statement
 
+给你一个 **严格递增** 的正整数数组 `arr` 和一个整数 `k` 。
+
+请你找出这个数组中第 `k` 个缺失的正整数。
+
+### Constraints
+
+- $1 \leq arr.length \leq 1000$
+- $1 \leq arr[i] \leq 1000$
+- $1 \leq k \leq 1000$
+
+### Input
+
+输入包含两行：
+
+- 第一行包含两个整数 $n$ 和 $k$ ，分别表示数组长度和缺失正整数的序号。
+- 第二行包含 $n$ 个整数，表示数组 $arr$ 中的元素。
+
+> $n \quad k$
+> 
+> $arr_1 \quad arr_2 \quad \ldots \quad arr_n$
+
+### Output
+
+输出一个整数，表示第 $k$ 个缺失的正整数。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+5 5
+2 3 4 7 11
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+9
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+4 2
+1 2 3 4
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+6
+```
 
 ## 题目要点解析
 
 二分查找第K个缺失的正整数大致位置在哪
 
+## 题目相关拓展
+
+[题目链接](https://leetcode.cn/problems/k-th-smallest-remaining-even-integer-in-subarray-queries/description/)
+
 ## 失配字符串问题
 
 [题目链接](https://leetcode.cn/problems/substring-with-concatenation-of-all-words/description/)
 
+### Problem Statement
 
+给定一个字符串 `s` 和一个字符串数组 `words` 。`words` 中所有字符串的 **长度相同** 。
+
+`s` 中的 **串联子串** 是指一个包含 `words` 中所有字符串以任意顺序排列连接起来的子串。
+
+- 例如，如果 `words = ["ab", "cd", "ef"]` ，那么 `"abcdef"` 、`"abefcd"` 、`"cdabef"` 、`"cdefab"` 、`"efabcd"` 和 `"efcdab"` 都是串联子串。
+- `"acdbef"` 不是串联子串，因为他不是 `words` 排列的连接。
+
+请你返回所有串联子串在 `s` 中的开始索引。你可以按 **任意顺序** 返回答案。
+
+### Constraints
+
+- $1 \leq s.length \leq 10^4$
+- $1 \leq words.length \leq 5000$
+- $1 \leq words[i].length \leq 30$
+- `s` 和 `words[i]` 仅由小写英文字母组成
+
+### Input
+
+输入包含三行：
+
+- 第一行包含一个字符串 $s$ 。
+- 第二行包含一个整数 $M$ ，表示数组 $words$ 的长度。
+- 第三行包含 $M$ 个由空格隔开的字符串，表示数组 $words$ 中的元素。
+
+> $s$
+> 
+> $M$
+> 
+> $words_1 \quad words_2 \quad \ldots \quad words_M$
+
+### Output
+
+输出若干个整数，表示所有串联子串在 `s` 中的开始索引；如果没有满足条件的子串，则输出 `-1` 。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+barfoothefoobarman
+2
+foo bar
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+0 9
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+wordgoodgoodgoodbestword
+4
+word good best word
+
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+-1
+```
+
+### Sample Input 3
+
+```txt showLineNumbers=false
+barfoofoobarthefoobarman
+3
+bar foo the
+```
+
+### Sample Output 3
+
+```txt showLineNumbers=false
+6 9 12
+```
 
 ## 题目要点解析
 

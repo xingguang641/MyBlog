@@ -956,6 +956,8 @@ false
 
 5. [【ACM 算法题单】有效括号问题](https://xingguang641.com/posts/acm/acm-type/dp-problems/regular-bracket/)
 
+6. [【ACM 算法题单】双蛋搜索问题](https://xingguang641.com/posts/acm/acm-type/dp-problems/egg-dropping-puzzle/)
+
 ## 经典的DP优化
 
 1. [【ACM 算法题单】单调数据结构优化问题](https://xingguang641.com/posts/acm/acm-type/dp-optimization/monotonic-structure/)

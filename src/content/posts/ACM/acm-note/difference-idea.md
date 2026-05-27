@@ -946,6 +946,78 @@ $$
 
 值得一提的是，这类双边约束条件天然契合[数位 DP](https://xingguang641.com/posts/acm/acm-type/dp-classification/digit-dp/)相关问题。例如统计某个区间内满足特定条件的数字，原本的双边约束可以直接转化为单边约束的计数函数 $f(X)$ 。然而数位 DP 中出现的上下界往往非常大，如果直接计算 $f(\text{lower}-1)$ 可能涉及高精度计算。为了避免这种情况，我们可以先计算 $f(\text{upper}) - f(\text{lower})$ ，再单独判断 $lower$ 是否满足要求。
 
+## 统计完全K次幂
+
+[题目链接](https://leetcode.cn/problems/count-k-th-roots-in-a-range/description/)
+
+### Problem Statement
+
+给你两个正整数 `l` 和 `r` ，以及一个整数 `k` 。
+
+如果一个整数 $x$ 满足 $x = y^k$ ，其中 $y$ 也是一个整数，那么我们称 $x$ 是一个 **完全 k 次幂** 。
+
+请你统计并返回闭区间 $[l, r]$ 内 **完全 k 次幂** 的数量。
+
+### Constraints
+
+- $1 \leq l \leq r \leq 10^9$
+- $1 \leq k \leq 30$
+
+### Input
+
+输入仅包含一行：
+
+> $l \quad r \quad k$
+
+### Output
+
+输出一个整数，表示区间内完全 $k$ 次幂的数量。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+1 9 3
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+2
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+8 30 2
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+3
+```
+
+## 题目要点解析
+
+根据差分思想，区间计数问题可以转化为两个前缀计数之差。设 `count(n)` 表示闭区间 $[0, n]$ 内完全 $k$ 次幂的数量，那么题目要求的闭区间 $[l, r]$ 内的答案就可以表示为：
+
+$$
+$count(r) - count(l - 1)
+$$
+
+对于给定的上限 $n$ ，我们需要寻找有多少个正整数 $y$ 满足 $y^k \leq n$ 。两边同时开 $k$ 次方，问题等价于求满足 $y \leq \lfloor n^{1/k} \rfloor$ 的正整数 $y$ 的个数。由于 $y \geq 1$ ，这个个数恰好就等于 $\lfloor n^{1/k} \rfloor$ 的值。当 $k = 1$ 时，任何正整数都是完全 $1$ 次幂，此时直接返回 $n$ 即可。当 $k \geq 2$ 时，最直观的方法是利用内置的浮点数函数 $pow(n, 1.0 / k)$ 进行计算，但这种方法会引入浮点数精度误差。在计算机内部，二进制浮点数表示会导致精度截断。例如，原本应该得到整数 $7$ ，但浮点数计算的实际结果可能是 $6.999999999$ ，直接向下取整就会错误地得到 $6$ 。
+
+为了消除这种精度隐患，我们需要在浮点数粗略估值的基础上进行二次验证与边界微调。首先利用浮点数函数得到一个初始估值 $y$ ，由于浮点误差的绝对值极小，该估值与真实值的偏差只会是 $0$ 或 $1$ 。此时我们可以通过整数乘法或快速幂来计算其确切的 $k$ 次幂值。如果发现 $(y + 1)^k \leq n$ ，说明初始估值偏小，应将 $y$ 向上修正。需要注意的是，在计算次幂进行验证时，为了防止大整数乘法发生溢出，应当引入防溢出检查，一旦乘积超过 $n$ 就要及时截断。
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
 ## 统计公平的数对
 
 [题目链接](https://leetcode.cn/problems/count-the-number-of-fair-pairs/description/)
@@ -1031,16 +1103,6 @@ int main(){
 
 }
 ```
-
-## 统计完全K次幂
-
-[题目链接](https://leetcode.cn/problems/count-k-th-roots-in-a-range/description/)
-
-
-
-## 题目要点解析
-
-如何处理浮点误差？
 
 ---
 
