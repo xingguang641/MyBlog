@@ -707,3 +707,72 @@ abcdabcdabcdabcdabcdabcdabcdabcddcbadcbadcbadcbadcbadcbadcbadcba
 ## 题目要点解析
 
 嵌套类型题
+
+## 扰乱字符串问题
+
+[题目链接](https://leetcode.cn/problems/scramble-string/description/)
+
+### Problem Statement
+
+使用下面描述的算法可以扰乱字符串 $s$ 得到字符串 $t$ ：
+
+1. 如果字符串的长度为 $1$ ，算法停止。
+
+2. 如果字符串的长度 $> 1$ ，执行下述步骤：
+
+    - 在一个随机下标处将字符串分割成两个非空的子字符串。即，如果已知字符串 $s$ ，则可以将其分成 $x$ 和 $y$ ，且满足 $s = x + y$ 。
+    - **随机** 决定是否交换这两个子字符串。若交换，则 $s$ 变成 $y + x$ ；若不交换，则 $s$ 变成 $x + y$ 。
+    - 应用该算法继续递归地对两个子字符串进行扰乱。
+
+给你两个 **长度相等** 的字符串 $s1$ 和 $s2$ ，判断 $s2$ 是否是 $s1$ 的扰乱字符串。
+
+### Constraints
+
+- $s1.length == s2.length$
+- $1 \leq s1.length \leq 30$
+- $s1$ 和 $s2$ 仅由小写英文字母组成
+
+### Input
+
+输入包含两行：
+
+- 第一行包含一个字符串 $s1$ ，表示原始字符串。
+- 第二行包含一个字符串 $s2$ ，表示待检查的字符串。
+
+> $s1$
+> 
+> $s2$
+
+### Output
+
+如果 $s2$ 是 $s1$ 的扰乱字符串，输出 `true` ；否则输出 `false` 。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+great
+rgeat
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+true
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+abcde
+caebd
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+false
+```
+
+## 题目要点解析
+
+小区间得到大区间

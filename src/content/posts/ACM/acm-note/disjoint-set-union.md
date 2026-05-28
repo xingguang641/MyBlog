@@ -205,7 +205,7 @@ GCD并查集（枚举因子）（中介并查集）
 
 ## 题目要点解析
 
-
+加法传递性并查集
 
 ## 除法的求值问题
 
@@ -215,17 +215,19 @@ GCD并查集（枚举因子）（中介并查集）
 
 ## 题目要点解析
 
-
+除法传递性并查集
 
 ## 异或带权并查集
 
-[题目链接](https://acm.hdu.edu.cn/showproblem.php?pid=3234)
+[题目链接](https://www.luogu.com.cn/problem/CF776D)
 
 
 
 ## 题目要点解析
 
+异或传递性并查集
 
+<iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=116481593645927&bvid=BV1jJ96B3E8v&cid=37909759022&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
 ## 增量偶权环查询
 

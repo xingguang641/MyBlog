@@ -1,5 +1,5 @@
 ---
-title: 【开源项目部署教程】JupyTrans项目教程
+title: 【开源项目部署教程】JupyTran项目教程
 published: 2025-10-21
 description: 基于 LLM 和阿里云机器翻译的 Jupyter Notebook 翻译工具部署指南
 tags: [Translate, Python, Github]
@@ -7,11 +7,11 @@ category: Github Project
 draft: false 
 ---
 
-# JupyTrans项目部署
+# JupyTran项目部署
 
 Jupyter Translate 是一个能够将 `.ipynb` 文件进行自动翻译的工具，支持多种翻译引擎，能够在保留代码与输出不变的情况下，批量处理 Markdown 文本与注释的语言转换。通过简单的配置，你就可以让它在笔记本中实现一键翻译，适用于整理学习资料、生成双语 Notebook 或快速阅读外文教程。下面将介绍如何安装、配置并实际使用这个工具。
 
-## 获取项目代码
+## 1. 获取项目代码
 
 首先访问项目的 GitHub 仓库：
 
@@ -39,7 +39,7 @@ pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 如果仍然安装失败，你可以打开 `requirements.txt` 查看具体内容，依次手动安装缺失的库。
 
-## 配置翻译服务
+## 2. 配置翻译服务
 
 该项目支持多种翻译后端。为了获得最佳的翻译质量和速度，我们通常结合使用 **大语言模型（LLM）** 和 **阿里云机器翻译**。你需要手动修改项目中的配置文件（通常在 `main.py` 或独立的 `config.py` 中）。
 
@@ -70,7 +70,7 @@ access_key_id = "LTAIxxxxxxxxxxxxxxxx"
 access_key_secret = "xxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
-## 执行翻译任务
+## 3. 执行翻译任务
 
 配置完成后，即可使用命令行工具进行翻译。
 

@@ -31,6 +31,8 @@ draft: false
 
 2. [【ACM 算法题单】组合数学相关问题](https://xingguang641.com/posts/acm/acm-type/math-branch/combinatorics/)
 
-3. [【ACM 算法题单】线性代数相关问题](https://xingguang641.com/posts/acm/acm-type/math-branch/linear-algebra/)
+3. [【ACM 算法题单】概率统计相关问题](https://xingguang641.com/posts/acm/acm-type/math-branch/probability-statistics/)
 
-4. [【ACM 算法题单】抽象代数相关问题](https://xingguang641.com/posts/acm/acm-type/math-branch/abstract-algebra/)
+4. [【ACM 算法题单】线性代数相关问题](https://xingguang641.com/posts/acm/acm-type/math-branch/linear-algebra/)
+
+5. [【ACM 算法题单】抽象代数相关问题](https://xingguang641.com/posts/acm/acm-type/math-branch/abstract-algebra/)

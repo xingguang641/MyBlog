@@ -108,8 +108,8 @@ sudo nginx -s reload
 
 ```bash showLineNumbers
 # scp <本地新证书路径> <用户名>@<服务器IP>:<原服务器证书绝对路径>
-scp ./*.crt root@192.168.1.1:/etc/nginx/cert/blog.crt
-scp ./*.key root@192.168.1.1:/etc/nginx/cert/blog.key
+scp ./*.crt user@192.168.1.1:/etc/nginx/cert/blog.crt
+scp ./*.key user@192.168.1.1:/etc/nginx/cert/blog.key
 ```
 
 ### 2. 重新加载证书

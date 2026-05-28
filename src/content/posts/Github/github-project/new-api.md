@@ -11,7 +11,7 @@ draft: false
 
 NewAPI 是一个由 One API 深度二次开发而来的 **统一大模型 API 管理与分发系统** ，它在功能上更完善、在渠道兼容性上也更灵活。通过它，你可以在同一套界面中管理不同来源的模型接口，实现统一鉴权、流量分发、负载均衡以及多渠道容灾，使调用大模型变得更加简单可靠。本文将带你了解如何通过 **Docker Compose** 来快速部署一个环境隔离、配置独立、且易于维护的 NewAPI 实例，适合个人使用，也适合团队在服务器上搭建生产环境。
 
-## 获取项目代码
+## 1. 获取项目代码
 
 项目开源地址如下：
 
@@ -24,7 +24,7 @@ git clone https://github.com/QuantumNous/new-api.git
 cd new-api
 ```
 
-## 配置Docker
+## 2. 配置Docker
 
 为了实现数据与宿主机的解耦，我们将使用 Docker 命名卷（Named Volumes）来替代传统的文件路径映射。请编辑项目根目录下的 `docker-compose.yml` 文件，将其内容替换为以下配置：
 
@@ -119,7 +119,7 @@ volumes:
 上述配置使用了 `volumes` 模块定义了 `pg_data`、`app_data` 等命名卷。这意味着数据库文件和日志只会托管在 Docker 内部，**不会污染你的本地项目目录** 。即使删除了当前的文件夹，只要不手动删除 Docker Volume，数据依然保留在 Docker 中。
 :::
 
-## 启动远程服务
+## 3. 启动远程服务
 
 确保你的服务器已安装 Docker 和 Docker Compose。如果尚未安装，可以参考 [官方文档](https://docs.docker.com/compose/install/) 进行安装。
 
@@ -134,7 +134,7 @@ docker compose up -d
 -   **默认地址**：`http://localhost:3000`
 -   **默认账号**：`root` **默认密码**：`123456`
 
-## 常用维护指令
+## 4. 常用维护指令
 
 由于我们采用了全容器化部署，以下是一些常用的维护指令：
 

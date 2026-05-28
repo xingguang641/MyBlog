@@ -31,7 +31,7 @@ draft: false
 
 在容器化环境中，RAGFlow 可以直接连接本地已配置好的 Ollama 服务和 DeepSeek 模型，实现对模型的调用和管理。借助 Docker Compose 或类似工具，还可以一次性启动数据库、RAGFlow 服务以及其他依赖组件，形成一个完整的、独立可运行的问答系统。这种部署方式不仅提高了系统稳定性，还方便在不同机器或环境间迁移，极大地降低了运维成本。
 
-## 获取项目代码
+## 1. 获取项目代码
 
 项目开源地址如下：
 
@@ -43,7 +43,7 @@ draft: false
 git clone https://github.com/infiniflow/ragflow.git
 ```
 
-## 配置Docker
+## 2. 配置Docker
 
 进入 **docker** 文件夹，利用官方提前构建好的 Docker 镜像即可启动 RAGFlow 服务器。
 
@@ -79,7 +79,7 @@ $ docker compose -f docker-compose.yml up -d
 
 通过以上步骤，即可在 Docker 环境中快速启动 RAGFlow 服务，并可根据实际需求灵活选择 CPU 或 GPU 运行模式。同时该方式能够确保服务配置与镜像版本保持一致，便于后续的升级、使用与维护。需要注意的是，在访问服务时请关闭代理，否则可能导致服务无法正常访问。
 
-## 访问RAGFlow
+## 3. 访问RAGFlow
 
 完成容器化部署后，你可以通过浏览器或 API 直接访问 RAGFlow 服务。Docker Compose 会将 RAGFlow 的 Web 服务端口映射到本地环境中，常用端口如下：
 
