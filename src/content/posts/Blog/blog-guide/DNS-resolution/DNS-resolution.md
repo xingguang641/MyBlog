@@ -43,7 +43,7 @@ scp ./*.key user@192.168.1.1:/etc/nginx/cert/blog.key
 
 使用终端编辑器（如 `sudo nano /etc/nginx/sites-enabled/digvps.conf` ）打开你的博客站点配置文件，清空内容并将以下标准配置完整写入：
 
-```nginx
+```nginx showLineNumbers
 # 1. 拦截 80 端口（HTTP）流量，301 永久重定向至 HTTPS
 server {
     listen 80 default_server;
