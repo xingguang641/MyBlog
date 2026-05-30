@@ -7,7 +7,7 @@ category: Blog Guides
 draft: false 
 ---
 
-> 写在前面：本文将介绍如何在 Fuwari 模板中创建新文章，并将其部署到 Nginx 服务器的完整流程
+> 写在前面：本文将介绍如何在 Fuwari 模板中创建新文章并将其部署到 Nginx 服务器的完整流程
 
 ## 创建文章的方式
 

@@ -8,7 +8,8 @@ category: Blog Guides
 draft: false 
 ---
 
-## GitHub仓库卡片
+## GitHub仓库卡片框
+
 你可以添加链接到 GitHub 仓库的动态卡片；页面加载时会从 GitHub API 拉取该仓库的信息。
 
 ::github{repo="Fabrizz/MMM-OnSpotify"}
@@ -43,7 +44,7 @@ draft: false
 某个操作可能带来的负面后果。
 :::
 
-### 基本语法
+### 1. 基本语法
 
 ```markdown
 :::note
@@ -55,7 +56,7 @@ draft: false
 :::
 ```
 
-### 自定义标题
+### 2. 自定义标题
 
 提示框的标题可以自定义。
 
@@ -69,7 +70,7 @@ draft: false
 :::
 ```
 
-### GitHub 语法
+### 3. GitHub语法
 
 > [!TIP]
 > 同样支持 [GitHub 语法](https://github.com/orgs/community/discussions/16925)
@@ -82,7 +83,7 @@ draft: false
 > 同样支持 GitHub 的语法。
 ```
 
-### 隐藏内容
+### 4. 隐藏内容
 
 你可以在文本中隐藏内容。文本同样支持 **Markdown** 语法。
 
