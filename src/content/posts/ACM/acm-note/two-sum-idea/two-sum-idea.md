@@ -336,7 +336,7 @@ $$
 
 若当前两数之和不满足条件，则向右移动 $i$ 以增大数值。
 
-```cpp frame="code" title="solution_2.cpp"
+```cpp frame="code" title="main.cpp"
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -421,7 +421,7 @@ int main() {
 
 这种设计的巧妙之处在于，查询操作发生在当前元素更新数组之前，从而满足 $i < j < k$ 的下标序关系。为了实现 $O(1)$ 的区间检索，我们利用前缀和数组 `pre` 来维护当前状态下 $\leq \text{num}$ 的元素个数。此时，第一个不等式约束 $|arr[i] - arr[j]| \leq a$ 便可转化为值域区间 $[arr[j]-a, \, arr[j]+a]$ 的范围计数问题，通过前缀差分即可快速获取答案。这种方法将复杂度优化至 $O(N^2 + N \cdot \text{maxVal})$ ，在值域较小时表现卓越。
 
-```cpp frame="code" title="solution_1.cpp"
+```cpp frame="code" title="main.cpp"
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -436,7 +436,7 @@ int main() {
 
 由于我们是按照 `idx` 的升序逻辑进行遍历，每次提取出的历史元素本身就具备单调性，这使得生成的 **left** 和 **right** 集合 **天然具备有序性** 。为了满足最后一个约束 $|arr[i] - arr[k]| \leq c$ ，需要通过枚举 left 中的每个元素 $x$ ，将问题转化为在 right 中寻找落在区间 $[x-c, \, x+c]$ 内的合法对象。利用 **三指针技巧** 维护两个在 **right** 上单调滑动的边界，即可在摆脱值域依赖的前提下，以 $O(N^2)$ 的复杂度完成所有配对统计。
 
-```cpp frame="code" title="solution_2.cpp"
+```cpp frame="code" title="main.cpp"
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -1522,7 +1522,7 @@ $$
 
 在 $Sub_v$ 的贡献统计完成后，我们再将其信息合并到 $T_x$ 中。通过这种子树合并的方式，我们成功将原本复杂的跨越不同子树的合法点对计数问题，转化为各子树的信息合并问题。
 
-```cpp frame="code" title="solution_2.cpp"
+```cpp frame="code" title="main.cpp"
 #include <bits/stdc++.h>
 using namespace std;
 
