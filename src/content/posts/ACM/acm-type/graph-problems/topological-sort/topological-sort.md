@@ -420,6 +420,16 @@ $Curtis \, Nishikino$ 已经知道了一些风筝间的关系，比如给出一�
 
 
 
+## 最少的染色轮数
+
+[题目链接](https://ac.nowcoder.com/acm/contest/127146/C)
+
+
+
+## 题目要点解析
+
+
+
 ---
 
 # 参考文献列表
