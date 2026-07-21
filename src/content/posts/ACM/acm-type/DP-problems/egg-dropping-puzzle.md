@@ -15,4 +15,8 @@ draft: false
 
 <iframe width="100%" height="468" src="//player.bilibili.com/player.html?isOutside=true&aid=96214853&bvid=BV1KE41137PK&cid=164251653&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
+---
 
+# 参考文献列表
+
+1. [【知乎专栏】动态规划问题之高楼扔鸡蛋](https://zhuanlan.zhihu.com/p/92288604)

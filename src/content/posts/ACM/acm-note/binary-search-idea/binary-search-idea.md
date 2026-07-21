@@ -1056,8 +1056,4 @@ int main() {
 
 1. [【OI WiKi】二分查找相关知识](https://oi-wiki.org/basic/binary/)
 
-2. [【CSDN 博客】二分查找超级详细的图解](https://blog.csdn.net/qq_45978890/article/details/116094046)
-
-3. [【MarisaMagic】二分查找的四种写法](https://www.cnblogs.com/MarisaMagic/p/17093253.html)
-
-4. [【知乎专栏】动态规划问题之高楼扔鸡蛋](https://zhuanlan.zhihu.com/p/92288604)
+2. [【Luogu 博客】二分算法讲解](https://www.luogu.com.cn/article/gp2mquii)
