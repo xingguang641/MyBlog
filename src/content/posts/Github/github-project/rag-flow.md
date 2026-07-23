@@ -4,7 +4,7 @@ published: 2025-12-10
 description: 基于 Docker Compose 的 RAGFlow 独立部署教程
 tags: [RAG, Docker, Github, Agent]
 category: Github Project
-draft: false 
+draft: true 
 ---
 
 > 写在前面：本篇博客教程来自于该视频

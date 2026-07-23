@@ -44,7 +44,7 @@ draft: false
 某个操作可能带来的负面后果。
 :::
 
-### 1. 基本语法
+### 1. 基本语法功能
 
 ```markdown
 :::note
@@ -56,7 +56,7 @@ draft: false
 :::
 ```
 
-### 2. 自定义标题
+### 2. 修改标题功能
 
 提示框的标题可以自定义。
 
@@ -70,7 +70,7 @@ draft: false
 :::
 ```
 
-### 3. GitHub语法
+### 3. GitH语法功能
 
 > [!TIP]
 > 同样支持 [GitHub 语法](https://github.com/orgs/community/discussions/16925)
@@ -83,7 +83,7 @@ draft: false
 > 同样支持 GitHub 的语法。
 ```
 
-### 4. 隐藏内容
+### 4. 隐藏文字功能
 
 你可以在文本中隐藏内容。文本同样支持 **Markdown** 语法。
 
@@ -91,5 +91,4 @@ The content :spoiler[is hidden **ayyy**]!
 
 ```markdown
 The content :spoiler[is hidden **ayyy**]!
-
 ```

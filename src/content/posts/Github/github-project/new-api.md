@@ -4,7 +4,7 @@ published: 2025-10-22
 description: 基于 Docker Compose 的 NewAPI 独立部署教程，实现数据与宿主机环境的完全隔离
 tags: [API, Docker, Github]
 category: Github Project
-draft: false 
+draft: true 
 ---
 
 # NewAPI项目部署

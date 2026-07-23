@@ -4,7 +4,7 @@ published: 2025-10-21
 description: 基于 LLM 和阿里云机器翻译的 Jupyter Notebook 翻译工具部署指南
 tags: [Translate, Python, Github]
 category: Github Project
-draft: false 
+draft: true 
 ---
 
 # JupyTran项目部署

@@ -403,13 +403,13 @@ $$
 \binom{n}{m} = \binom{n-1}{m} + \binom{n-1}{m-1}
 $$
 
-我们可以得到：
+移项变形后我们可以得到：
 
 $$
 \binom{k+x}{x} - \binom{k+x-1}{x-1} = \binom{k+x-1}{x}
 $$
 
-因此对该序列进行一次差分后：
+对该序列进行一次差分：
 
 $$
 \binom{k+x}{x} \rightarrow \binom{k+x-1}{x}
