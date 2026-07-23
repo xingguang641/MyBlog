@@ -4,7 +4,7 @@ published: 2025-11-05
 description: 介绍机器学习常见的模型
 tags: [Machine Learning, Course]
 category: ML Model
-draft: false
+draft: true
 ---
 
 > 写在前面：本篇延续上一篇的 MEMM 进行拓展，CRF 本质上就是为了解决 MEMM 的痛点而产生的。此外，虽然 CRF 来源于 MRF，但理解 CRF 并不需要完全了解 MRF 是什么。因此本篇博客不会介绍 MRF 的相关知识，具体会在后续的概率图算法章节进行介绍。

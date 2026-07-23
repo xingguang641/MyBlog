@@ -4,7 +4,7 @@ published: 2025-10-30
 description: 介绍机器学习常见的模型
 tags: [Machine Learning, Course]
 category: ML Model
-draft: false
+draft: true
 ---
 
 > 写在前面：隐马尔可夫模型是机器学习基本模型中的第二个大难点，也是我们讲到的第一个概率图模型。

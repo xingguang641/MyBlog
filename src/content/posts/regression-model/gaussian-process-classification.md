@@ -4,7 +4,7 @@ published: 2025-11-12
 description: 介绍机器学习常见的模型
 tags: [Machine Learning, Course]
 category: ML Model
-draft: false
+draft: true
 ---
 
 # 高斯分类基本原理

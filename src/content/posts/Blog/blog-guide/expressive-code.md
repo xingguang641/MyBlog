@@ -9,9 +9,9 @@ draft: false
 
 > 写在前面：本文将展示基于 [Expressive Code](https://expressive-code.com/) 构建的增强型代码块显示效果。以下示例涵盖了从基础高亮到高级交互的各类场景，更多详细参数配置可参考官方文档。
 
-## 核心功能演示
+## 核心语法功能演示
 
-### 1. 语法高亮
+### 1. 语法高亮功能
 
 [📚 官方文档：语法高亮](https://expressive-code.com/key-features/syntax-highlighting/)
 
@@ -42,7 +42,7 @@ Full RGB colors:
 Text formatting: [1mBold[0m [2mDimmed[0m [3mItalic[0m [4mUnderline[0m
 ```
 
-### 2. 终端样式
+### 2. 终端样式功能
 
 [📚 官方文档：窗口框架](https://expressive-code.com/key-features/frames/)
 
@@ -82,12 +82,12 @@ function Watch-Tail { Get-Content -Tail 20 -Wait $args }
 New-Alias tail Watch-Tail
 ```
 
-### 3. 文本标记
+### 3. 文本标记功能
 
 [📚 官方文档：文本标记](https://expressive-code.com/key-features/text-markers/)
 
 #### 标记整行与多行
-通过行号或范围（如 `7-8`）来高亮特定代码行。
+通过行号或范围（如 `7-8` ）来高亮特定代码行。
 
 ```js {1, 4, 7-8}
 // Line 1 - 通过行号 {1} 选中
@@ -219,7 +219,7 @@ function demo() {
 }
 ```
 
-### 4. 自动换行
+### 4. 自动换行功能
 
 [📚 官方文档：自动换行](https://expressive-code.com/key-features/word-wrap/)
 
@@ -257,9 +257,9 @@ function getLongString() {
 }
 ```
 
-## 插件功能演示
+## 插件语法功能演示
 
-### 1. 代码折叠
+### 1. 代码折叠功能
 
 [📚 官方文档：代码折叠](https://expressive-code.com/plugins/collapsible-sections/)
 
@@ -292,7 +292,7 @@ engine.freeMemory()
 engine.shutdown({ reason: 'End of example boilerplate code' })
 ```
 
-### 2. 代码行号
+### 2. 代码行号功能
 
 [📚 官方文档：行号显示](https://expressive-code.com/plugins/line-numbers/)
 

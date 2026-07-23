@@ -11,7 +11,7 @@ draft: false
 
 ### 1. 创建配置目录
 
-在创建文件夹之前，我们需要先确认 Nginx 的核心配置目录位置。通常情况下，Linux 系统的 Nginx 根目录为 `/etc/nginx` 。你可以通过在服务器终端执行以下命令来验证该目录是否存在：
+在创建新的存储文件夹之前，我们需要先确认 Nginx 的核心配置目录的具体位置。通常情况下，Linux 系统的 Nginx 根目录为 `/etc/nginx` 。你可以通过在服务器终端执行以下命令来验证该目录是否存在：
 
 ```bash showLineNumbers
 ls -d /etc/nginx

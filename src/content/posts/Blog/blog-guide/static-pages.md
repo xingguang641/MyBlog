@@ -17,9 +17,9 @@ draft: false
 
 ## 创建页面组件
 
-接下来，我们需要创建一个 Astro 页面文件来渲染上述内容。在 `src/pages` 目录下新建一个 `.astro` 文件（推荐与你的 Markdown 文件名一致，例如 `achievements.astro`）。
+接下来，我们需要创建一个 Astro 页面文件来渲染上述内容。在 `src/pages` 目录下新建一个 `.astro` 文件（推荐与你的 Markdown 文件名一致，例如 `achievements.astro` ）。
 
-你可以直接复制 `about.astro` 的样例代码并稍作修改，或者使用下面的自定义模板代码。该代码会自动获取 `src/content/spec` 中的内容并渲染到主布局中。
+你可以直接复制 `about.astro` 的样例代码手动进行修改，或者使用下面专门修改过的自定义模板代码。该代码会自动获取 `src/content/spec` 中的内容并渲染到主布局中。
 
 ```astro frame="code" title="src/pages/achievements.astro"
 ---

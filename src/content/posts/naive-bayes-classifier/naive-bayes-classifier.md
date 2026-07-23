@@ -4,7 +4,7 @@ published: 2025-10-25
 description: 介绍机器学习常见的模型
 tags: [Machine Learning, Course]
 category: ML Model
-draft: false
+draft: true
 ---
 
 # 朴素贝叶斯分类器基本原理

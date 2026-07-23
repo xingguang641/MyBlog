@@ -4,7 +4,7 @@ published: 2025-11-23
 description: 介绍深度学习常见的模型
 tags: [Deep Learning, Course]
 category: DL Model
-draft: false
+draft: true
 ---
 
 # 神经网络基本结构

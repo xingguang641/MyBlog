@@ -4,7 +4,7 @@ published: 2025-12-07
 description: 深度探究过拟合现象与正则化方法
 tags: [Deap Learning, Regularization, Note]
 category: DL Note
-draft: false 
+draft: true 
 ---
 
 # 参考文献

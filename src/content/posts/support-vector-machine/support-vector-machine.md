@@ -4,7 +4,7 @@ published: 2025-10-25
 description: 介绍机器学习常见的模型
 tags: [Machine Learning, Course]
 category: ML Model
-draft: false
+draft: true
 ---
 
 > 写在前面：我们的教程终于来到了机器学习的第一个大难点 ———— 支持向量机。在深度学习盛行的今天，支持向量机是为数不多还能继续使用的传统机器学习算法之一，就让我们来看看大名鼎鼎的支持向量机到底是什么吧！（注意本篇的配图都在文字的下方）

@@ -25,7 +25,7 @@ draft: false
 
 ### 2. 添加修改规则
 
-安装完成后，点击插件图标进入管理界面，点击右下角或右上角的 **“添加”** 按钮。
+安装完成后，点击插件图标进入管理界面，点击右下角或右上角的 **添加** 按钮。
 
 ![插件商城图像](src\content\posts\Blog\blog-guide\healing-layer\Header-Editor2.jpg)
 
@@ -35,17 +35,17 @@ draft: false
 
 -   **规则类型**：选择 **修改请求头** 。
 -   **匹配规则**：选择 **域名** 。
--   **头名称**：输入 `Referer` 。
--   **头内容**：输入 `https://weibo.com` 。
+-   **头部名称**：输入 `Referer` 。
+-   **头部内容**：输入 `https://weibo.com` 。
 
 ![插件商城图像](src\content\posts\Blog\blog-guide\healing-layer\Header-Editor3.jpg)
 
 ![插件商城图像](src\content\posts\Blog\blog-guide\healing-layer\Header-Editor4.jpg)
 
-**关于匹配规则的说明**：在 **“匹配类型”** 一栏中，你需要填入图片链接的域名。你可以按 `F12` 打开开发者工具，选中无法显示的图片，就能查看其 URL。如果图片地址是 `https://ws1.sinaimg.cn/large/...` ，那么你应该填入 `ws1.sinaimg.cn` 或 `sinaimg.cn` 。
+**关于匹配规则的说明**：在 **匹配类型** 一栏中，你需要填入图片链接所属的域名。你可以按 `F12` 打开浏览器的开发者工具，选中无法显示的图片，就能查看其 URL。如果图片地址是 `https://ws1.sinaimg.cn/large/...` ，那么你应该填入 `ws1.sinaimg.cn` 或 `sinaimg.cn` 。
 
 ### 4. 保存运行测试
 
-点击保存，确保插件处于 **“启用”** 状态。刷新你的博客页面，原本裂开的图片应该就能正常加载了。
+点击保存，确保插件处于 **启用** 状态。刷新你的博客页面，原本裂开的图片应该就能正常加载了。
 
-> **进阶提示**：如果你的博客引用了多个不同服务器的新浪图片（如 `ws1.sinaimg.cn` ，`wx3.sinaimg.cn` 等），建议将匹配规则改为正则表达式，并输入 `.*sinaimg.cn.*` ，这样可以一次性匹配所有新浪图床的子域名。
+> **进阶提示**：如果博客引用了多个不同服务器的新浪图片（如 `ws1.sinaimg.cn` ，`wx3.sinaimg.cn` 等），建议将匹配规则改为正则表达式并输入 `.*sinaimg.cn.*` ，这样可以一次性匹配所有新浪图床的子域名。

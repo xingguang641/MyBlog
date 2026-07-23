@@ -4,7 +4,7 @@ published: 2025-11-02
 description: 介绍机器学习常见的模型
 tags: [Machine Learning, Course]
 category: ML Model
-draft: false
+draft: true
 ---
 
 > 写在前面：本篇延续上一篇的 HMM 进行拓展，MEMM 本质上就是为了解决 HMM 的痛点而产生的。
