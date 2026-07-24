@@ -4,7 +4,7 @@ published: 2026-02-26
 description: 记录一些 ACM 常用技巧
 tags: [Algorithm, Trick, Note, ACM]
 category: ACM Note
-draft: false
+draft: true
 ---
 
 > 写在前面：本篇博客写作灵感来源于 N 神的动态规划概述
@@ -841,11 +841,7 @@ int main() {
 
 3. [【ACM 算法题单】最长递增子序列问题](https://xingguang641.com/posts/acm/acm-type/dp-problems/longest-increasing-subsequence/)
 
-4. [【ACM 算法题单】整数拆分问题](https://xingguang641.com/posts/acm/acm-type/dp-problems/integer-partition/integer-partition/)
-
-5. [【ACM 算法题单】有效括号问题](https://xingguang641.com/posts/acm/acm-type/dp-problems/regular-bracket/)
-
-6. [【ACM 算法题单】双蛋搜索问题](https://xingguang641.com/posts/acm/acm-type/dp-problems/egg-dropping-puzzle/)
+4. [【ACM 算法题单】双蛋搜索问题](https://xingguang641.com/posts/acm/acm-type/dp-problems/egg-dropping-puzzle/)
 
 ## 经典的DP优化
 

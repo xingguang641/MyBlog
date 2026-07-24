@@ -4,7 +4,7 @@ published: 2026-01-15
 description: 记录一些 ACM 常用技巧
 tags: [Algorithm, Trick, Note, ACM]
 category: ACM Note
-draft: false
+draft: true
 ---
 
 # 基础枚举技巧论

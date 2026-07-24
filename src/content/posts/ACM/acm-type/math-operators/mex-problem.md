@@ -4,7 +4,7 @@ published: 2025-12-11
 description: 记录一些 ACM 常见题型
 tags: [Algorithm, Problem Type]
 category: ACM Type
-draft: false
+draft: true
 ---
 
 # MEX区间构造问题
