@@ -180,6 +180,71 @@ int main(){
 }
 ```
 
+## 元素相同的数组
+
+[题目链接](https://www.luogu.com.cn/problem/solution/P4552)
+
+### Problem Statement
+
+给定一个长度为 $N$ 的数列 $a$ 。
+
+每次操作可以选择一个区间 $[l,r]$ ，将区间内所有元素同时加 $1$ 或同时减 $1$ 。
+
+请你求出以下问题的结果：
+
+- 至少需要多少次操作才能使数列中的所有元素都相等
+- 在保证操作次数最少的前提下最终得到的数列共有多少种
+
+### Constraints
+
+- $1 \leq N \leq 10^5$
+- $0 \leq a_i \leq 2^{31}$
+
+### Input
+
+输入包含多行：
+
+- 第一行包含一个整数 $N$ ，表示数列的长度。
+- 接下来 $N$ 行，每行包含一个整数，表示数组中的元素。
+
+> $N$
+>
+> $a_1$
+>
+> $a_2$
+>
+> $\ldots$
+>
+> $a_N$
+
+### Output
+
+输出包含两行：
+
+- 第一行输出使数列所有元素都相等的最少操作次数。
+- 第二行输出在最少操作次数下最终得到的数列种数。
+
+### Sample Input
+
+```txt showLineNumbers=false
+4
+1
+1
+2
+2
+```
+
+### Sample Output
+
+```txt showLineNumbers=false
+1
+2
+```
+
+## 题目要点解析
+
+计算有多少种，就是计算出差分数组第一项/最后一项有多少种情况
+
 ## 使数列递增所需的最少操作次数
 
 [题目链接](https://atcoder.jp/contests/abc421/tasks/abc421_g)
@@ -432,6 +497,81 @@ $$
 $$
 
 经过 $k$ 次差分后，该序列最终退化为常数。因此杨辉三角组合数序列同样具有有限阶差分性质，只需维护对应阶数的差分数组，便能够将复杂的组合数区间叠加转化为有限次单点修改。
+
+## 三步必杀的招数
+
+[题目链接](https://www.luogu.com.cn/problem/P4231)
+
+### Problem Statement
+
+给定一个长度为 $N$ 的数组，初始时所有元素均为 $0$ 。
+
+接下来进行 $M$ 次区间加操作，每次操作由四个整数 $l, r, s, e$ 表示：
+
+- 第 $l$ 个位置增加 $s$
+- 第 $r$ 个位置增加 $e$
+- 区间内增加的值构成一个等差数列
+
+保证每次操作对应等差数列的所有项均为整数。
+
+所有操作完成后，请输出 **数组所有元素的异或和** 以及 **数组中的最大值** 。
+
+### Constraints
+
+- $1 \leq N \leq 10^7$
+- $1 \leq M \leq 3 \times 10^5$
+- $1 \leq l < r \leq N$
+
+### Input
+
+输入包含多行：
+
+- 第一行包含两个整数 $N$ 和 $M$ ，分别表示数组长度和操作次数。
+- 接下来 $M$ 行，每行包含四个整数 $l, r, s, e$ ，描述一次区间修改操作。
+
+> $N \quad M$
+>
+> $l_1 \quad r_1 \quad s_1 \quad e_1$
+>
+> $\ldots$
+>
+> $l_M \quad r_M \quad s_M \quad e_M$
+
+### Output
+
+输出两个整数，分别表示最终数组所有元素的按位异或和以及数组中的最大值。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+5 2
+1 5 2 10
+2 4 1 1
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+3 10
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+6 2
+1 5 2 10
+2 4 1 1
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+3 10
+```
+
+## 题目要点解析
+
+等差数列区间加
 
 ## 有趣的组合数组
 
