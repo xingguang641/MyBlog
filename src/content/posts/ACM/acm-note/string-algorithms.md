@@ -2,7 +2,7 @@
 title: 【ACM 算法随笔】String算法汇总
 published: 2026-05-09
 description: 记录一些 ACM 常用技巧
-tags: [Algorithm, Trick, Note, ACM]
+tags: [Algorithm, Trick, Note]
 category: ACM Note
 draft: true
 ---

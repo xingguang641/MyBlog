@@ -2,7 +2,7 @@
 title: 【ACM 算法随笔】枚举技巧与枚举优化
 published: 2026-01-15
 description: 记录一些 ACM 常用技巧
-tags: [Algorithm, Trick, Note, ACM]
+tags: [Algorithm, Trick, Note]
 category: ACM Note
 draft: true
 ---

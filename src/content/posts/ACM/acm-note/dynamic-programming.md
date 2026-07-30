@@ -2,7 +2,7 @@
 title: 【ACM 算法随笔】动态规划思想
 published: 2026-02-26
 description: 记录一些 ACM 常用技巧
-tags: [Algorithm, Trick, Note, ACM]
+tags: [Algorithm, Trick, Note]
 category: ACM Note
 draft: true
 ---
