@@ -1071,7 +1071,7 @@ int main() {
 
 ---
 
-# 参考文献列表
+# 参考文献引用列表
 
 1. [【OI WiKi】二分查找相关知识](https://oi-wiki.org/basic/binary/)
 

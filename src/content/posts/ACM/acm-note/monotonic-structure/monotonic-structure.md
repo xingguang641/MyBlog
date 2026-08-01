@@ -4,7 +4,7 @@ published: 2025-11-27
 description: 记录一些 ACM 常用技巧
 tags: [Algorithm, Trick, Note]
 category: ACM Note
-draft: true
+draft: false
 ---
 
 # 单调数据结构介绍
