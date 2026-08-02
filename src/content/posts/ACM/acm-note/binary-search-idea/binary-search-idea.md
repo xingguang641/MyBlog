@@ -1077,4 +1077,4 @@ int main() {
 
 2. [【Luogu 博客】二分算法讲解](https://www.luogu.com.cn/article/gp2mquii)
 
-3. [【dbywsc】中位数问题二值化技巧](https://www.cnblogs.com/dbywsc/p/19065445)
+3. [【Dbywsc】中位数问题二值化技巧](https://www.cnblogs.com/dbywsc/p/19065445)
