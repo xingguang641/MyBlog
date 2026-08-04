@@ -9,7 +9,7 @@ draft: false
 
 [比赛链接](https://ac.nowcoder.com/acm/contest/133876)
 
-## Problem F Nowcoder
+## Problem F
 
 [题目链接](https://ac.nowcoder.com/acm/contest/133876/F)
 
