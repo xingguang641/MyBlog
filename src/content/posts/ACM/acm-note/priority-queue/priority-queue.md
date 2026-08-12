@@ -13,6 +13,10 @@ draft: false
 
 在实际应用中，最优状态维护问题通常与 **状态扩展** 和 **搜索剪枝** 深度结合。在这种寻优模式下，堆顶始终维持着当前全局最优的状态；当该状态被取出后，算法通过精心设计的变换逻辑生成其后续候选状态并重新入堆。通过合理的算法设计，我们能够确保从最优状态扩展出的新状态依然具有较强的竞争力，从而在 **优中选优** 的过程中自然实现剪枝。通过这种方式，算法能够逐步提取前 $K$ 个结果。
 
+### 合并多个升序数组
+
+
+
 ## 数组的第K大和
 
 [题目链接](https://leetcode.cn/problems/find-the-k-sum-of-an-array/description)
@@ -289,96 +293,6 @@ Bessie 需要建造 $K$ 头不同的机器人奶牛。每头机器人奶牛有 $
 ## 题目要点解析
 
 状态转移设计，如何设计有限的状态转移得到所有状态是这类问题的难点
-
----
-
-# 区间最优调度问题
-
-排序其中一端，然后维护另一端
-
-## 会议室安排问题
-
-[题目链接](https://leetcode.doocs.org/lc/253/)
-
-
-
-## 题目要点解析
-
-这题就是经典的区间调度问题
-
-## 最大的会议数量
-
-[题目链接](https://leetcode.cn/problems/maximum-number-of-events-that-can-be-attended/description/)
-
-### Problem Statement
-
-给你一个数组 $events$ ，其中 $events[i] = [startDay_i, endDay_i]$ ，表示会议 $i$ 开始于 $startDay_i$ ，结束于 $endDay_i$ 。你可以在 $startDay_i \leq d \leq endDay_i$ 中的任意一天 $d$ 参加会议 $i$ 。每场会议你只需参加 **一天** 就可以算作已参加。每天你最多只能参加一场会议。
-
-请返回你能参加的最大会议数目。
-
-### Constraints
-
-- $1 \leq events.length \leq 10^5$
-- $events[i].length == 2$
-- $1 \leq startDay_i \leq endDay_i \leq 10^5$
-
-### Input
-
-输入包含多行：
-
-- 第一行包含一个整数 $n$ ，表示会议的总数。
-- 接下来的 $n$ 行，每行包含两个整数，分别表示第 $i$ 场会议的开始时间 $startDay_i$ 和结束时间 $endDay_i$ 。
-
-> $n$
-> 
-> $startDay_1 \quad endDay_1$
-> 
-> $startDay_2 \quad endDay_2$
-> 
-> $\ldots$
-> 
-> $startDay_n \quad endDay_n$
-
-### Output
-
-输出一个整数，表示你能参加的最大会议数目。
-
-### Sample Input 1
-
-```txt showLineNumbers=false
-4
-1 2
-2 3
-3 4
-1 2
-```
-
-### Sample Output 1
-
-```txt showLineNumbers=false
-4
-```
-
-### Sample Input 2
-
-```txt showLineNumbers=false
-5
-1 4
-4 4
-2 2
-3 4
-1 1
-```
-
-### Sample Output 2
-
-```txt showLineNumbers=false
-4
-```
-
-## 题目要点解析
-
-这题就是经典的区间调度问题（排序两段都可以做，记得看灵神题解）
 
 ---
 

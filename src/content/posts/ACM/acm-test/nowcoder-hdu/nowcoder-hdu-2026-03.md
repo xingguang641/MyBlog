@@ -9,8 +9,6 @@ draft: false
 
 # 比赛题目讲解
 
-[比赛链接](https://ac.nowcoder.com/acm/contest/133878)
-
 ## Problem A
 
 [题目链接](https://ac.nowcoder.com/acm/contest/133878/A)
