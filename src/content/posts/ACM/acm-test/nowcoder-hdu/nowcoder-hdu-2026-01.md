@@ -7,11 +7,11 @@ category: ACM Test
 draft: false
 ---
 
-# 比赛题目讲解
+# 重点题目详解
+
+[这里是比赛链接](https://ac.nowcoder.com/acm/contest/133876)
 
 ## Problem F
-
-[题目链接](https://ac.nowcoder.com/acm/contest/133876/F)
 
 ### Problem Statement
 
@@ -90,3 +90,53 @@ int main() {
 }
 ```
 
+## Problem C
+
+
+
+## Solution
+
+Kruskal 重构树
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem L
+
+
+
+## Solution
+
+AC 自动机
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem H
+
+
+
+## Solution
+
+随机博弈 DP + MDP 优化
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```

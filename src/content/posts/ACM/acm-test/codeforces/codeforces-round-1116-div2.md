@@ -7,3 +7,13 @@ category: ACM Test
 draft: false
 ---
 
+# 重点题目详解
+
+[这里是比赛链接](https://codeforces.com/contest/2256)
+
+## Problem D
+
+
+
+## Solution
+

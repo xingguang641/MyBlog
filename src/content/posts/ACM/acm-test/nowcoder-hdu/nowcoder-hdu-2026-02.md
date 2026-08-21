@@ -7,11 +7,11 @@ category: ACM Test
 draft: false
 ---
 
-# 比赛题目讲解
+# 重点题目详解
+
+[这里是比赛链接](https://ac.nowcoder.com/acm/contest/133877)
 
 ## Problem N
-
-[题目链接](https://ac.nowcoder.com/acm/contest/133877/N)
 
 ### Problem Statement
 
@@ -183,11 +183,45 @@ $$
 
 异或线性基
 
-## Problem L
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
 
-[题目链接](https://ac.nowcoder.com/acm/contest/133877/L)
+int main(){
+
+}
+```
+
+## Problem G
 
 
 
 ## Solution
 
+神秘题目，有取巧做法和反演做法
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem L
+
+
+
+## Solution
+
+逆序对 DP，从小数字考虑到大数字即可
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
