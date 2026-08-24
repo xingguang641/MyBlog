@@ -519,7 +519,7 @@ int main() {
 
 - $2 \leq n \leq 10^4$
 - $0 \leq nums[i] \leq 10^6$
-- $1 \leq k \leq n * (n - 1) / 2$
+- $1 \leq k \leq n \times (n - 1) / 2$
 
 ### Input
 
@@ -852,7 +852,7 @@ int main() {
 
 ### Constraints
 
-- $1 \leq n.length \leq 10^5$
+- $1 \leq nums.length \leq 10^5$
 - $0 \leq nums[i] \leq 10^9$
 - $0 \leq k \leq (nums.length + 1) / 2$
 
@@ -982,7 +982,7 @@ int main() {
 
 - $n == tasks.length$
 - $m == workers.length$
-- $1 \leq n, m \leq 5 * 10^4$
+- $1 \leq n, m \leq 5 \times 10^4$
 - $0 \leq pills \leq m$
 - $0 \leq tasks[i], workers[j], strength \leq 10^9$
 

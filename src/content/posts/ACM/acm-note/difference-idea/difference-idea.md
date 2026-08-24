@@ -860,7 +860,7 @@ $$
 
 ### Constraints
 
-- $1 \leq nums.length \leq 2 * 10^4$
+- $1 \leq nums.length \leq 2 \times 10^4$
 - $1 \leq nums[i], k \leq nums.length$
 
 ### Input

@@ -592,7 +592,7 @@ int main() {
 
 ### Constraints
 
-- $1 \leq nums.length \leq 2 * 10^4$
+- $1 \leq nums.length \leq 2 \times 10^4$
 - $-1000 \leq nums[i] \leq 1000$
 - $-10^7 \leq k \leq 10^7$
 
