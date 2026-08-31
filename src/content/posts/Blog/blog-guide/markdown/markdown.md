@@ -1,5 +1,5 @@
 ---
-title: 【博客指南】Markdown示例
+title: 【博客指南】Markdown的语法示例
 published: 2023-10-01
 description: 一个简单的 Markdown 博客文章示例
 tags: [Markdown, Blogging, Demo]
