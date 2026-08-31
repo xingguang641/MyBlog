@@ -11,7 +11,7 @@ draft: false
 
 经常浏览网页博客的读者可能会发现，某些博客中使用的图片有时无法正常显示，这通常是因为这些图片都托管在新浪微博上，而新浪微博早在某次更新后就启用了 **防盗链** 机制。简单来说，当浏览器请求图片时，新浪服务器会校验 HTTP 请求头中的 `Referer` 字段（即请求来源）。如果 `Referer` 显示请求来源于你的个人博客域名，而非新浪微博的官方域名，服务器就会拦截请求并返回 403 错误。
 
-![图片报错示例](src\content\posts\Blog\blog-guide\healing-layer\图片报错1.png)
+![图片报错示例](.\图片报错1.png)
 
 要解决这一问题，核心在于 **重构请求的上下文信息** 。既然问题的根源在于新浪服务器对请求来源的审计，我们完全可以通过浏览器扩展来实时干预：利用插件动态篡改发往新浪域名的 HTTP 请求头，将 `Referer` 字段重置为合法的官方域名。通过这种身份伪装，我们即可实时绕过服务端的校验机制。
 
@@ -21,13 +21,13 @@ draft: false
 
 在 Chrome、Edge 或 Firefox 的扩展商店中搜索并安装 **Header Editor** 插件。
 
-![插件商城图像](src\content\posts\Blog\blog-guide\healing-layer\Header-Editor1.jpg)
+![插件商城图像](.\Header-Editor1.jpg)
 
 ### 2. 添加修改规则
 
 安装完成后，点击插件图标进入管理界面，点击右下角或右上角的 **添加** 按钮。
 
-![插件商城图像](src\content\posts\Blog\blog-guide\healing-layer\Header-Editor2.jpg)
+![插件商城图像](.\Header-Editor2.jpg)
 
 ### 3. 配置规则详情
 
@@ -38,9 +38,9 @@ draft: false
 -   **头部名称**：输入 `Referer` 。
 -   **头部内容**：输入 `https://weibo.com` 。
 
-![插件商城图像](src\content\posts\Blog\blog-guide\healing-layer\Header-Editor3.jpg)
+![插件商城图像](.\Header-Editor3.jpg)
 
-![插件商城图像](src\content\posts\Blog\blog-guide\healing-layer\Header-Editor4.jpg)
+![插件商城图像](.\Header-Editor4.jpg)
 
 **关于匹配规则的说明**：在 **匹配类型** 一栏中，你需要填入图片链接所属的域名。你可以按 `F12` 打开浏览器的开发者工具，选中无法显示的图片，就能查看其 URL。如果图片地址是 `https://ws1.sinaimg.cn/large/...` ，那么你应该填入 `ws1.sinaimg.cn` 或 `sinaimg.cn` 。
 
