@@ -10,3 +10,37 @@ draft: false
 # 重点题目详解
 
 [这里是比赛链接](https://codeforces.com/contest/2257)
+
+## Problem D
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem E
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```

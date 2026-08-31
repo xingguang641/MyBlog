@@ -112,3 +112,26 @@ int main(){
 
 }
 ```
+
+## Problem M
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+---
+
+# 参考文献列表
+
+1. [【Luogu 博客】随机游走](https://www.luogu.com.cn/article/pl73yj93)
