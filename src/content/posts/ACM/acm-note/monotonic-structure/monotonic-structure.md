@@ -68,7 +68,7 @@ draft: false
 - $2 \leq n \leq 10^5$
 - $1 \leq k \leq n$
 - $0 \leq startTime[i] < endTime[i] \leq eventTime$
-- 会议按 `startTime` 升序排列且不重叠
+- 会议按 $startTime$ 升序排列且不重叠
 
 ### Input
 
@@ -317,7 +317,7 @@ int main() {
 ### Constraints
 
 - $1 \leq s.length \leq 10^5$
-- `s[i]` 为 `'0'` 或 `'1'`
+- $s[i]$ 为 `'0'` 或 `'1'`
 
 ### Input
 
@@ -564,7 +564,7 @@ int main(){
 
 - $1 \leq word.length \leq 10^5$
 - $1 \leq k \leq word.length$
-- `word` 仅由小写英文字母组成
+- $word$ 仅由小写英文字母组成
 
 ### Input
 
@@ -1119,7 +1119,7 @@ int main(){
 - $points[i].length == 2$
 - $-10^8 \leq points[i][0], points[i][1] \leq 10^8$
 - $0 \leq k \leq 2 \times 10^8$
-- `points` 中的所有点坐标 $xi$ 互不相同，且按 $xi$ 升序排列
+- $points$ 中的所有点坐标 $xi$ 互不相同，且按 $xi$ 升序排列
 
 ### Input
 

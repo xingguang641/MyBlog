@@ -532,7 +532,7 @@ int main(){
 - $1 \leq T \leq 10^4$
 - $3 \leq n \leq 10^5$
 - $1 \leq u_i, v_i \leq n$
-- $0 \leq w_{u_i, v_i} \leq 5000$
+- $0 \leq w_{u_i, \, v_i} \leq 5000$
 - 所有测试用例中 $n$ 的总和不超过 $\displaystyle \min \left(\frac{3 \times 10^7}{\max(1, W)}, 10^5 \right)$
 
 ### Input
@@ -554,7 +554,7 @@ int main(){
 - 对于每个测试用例：
 
     - 第一行包含一个整数 $n$ ，表示树的节点数量。
-    - 接下来 $n - 1$ 行，第 $i$ 行包含三个整数 $u_i$ 、$v_i$ 和 $w_{u_i, v_i}$ 。
+    - 接下来 $n - 1$ 行，第 $i$ 行包含三个整数 $u_i$ 、$v_i$ 和 $w_{u_i, \, v_i}$ 。
 
 > $n$
 >

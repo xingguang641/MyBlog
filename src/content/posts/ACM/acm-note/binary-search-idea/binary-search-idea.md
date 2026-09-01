@@ -249,7 +249,7 @@ if (a[m] < K) {
 - $1 \leq s.length \leq 10^4$
 - $1 \leq words.length \leq 5000$
 - $1 \leq words[i].length \leq 30$
-- `s` 和 `words[i]` 仅由小写英文字母组成
+- $s$ 和 $words[i]$ 仅由小写英文字母组成
 
 ### Input
 

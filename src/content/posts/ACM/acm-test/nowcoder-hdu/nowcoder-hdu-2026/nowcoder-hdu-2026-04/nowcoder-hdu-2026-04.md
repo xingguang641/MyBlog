@@ -250,7 +250,7 @@ int main(){
 
 在一场大型比赛结束后，评测集群需要进行最后一次复核：在相同的 $m$ 个测试点上重新运行 $n$ 个程序。
 
-所有程序使用相同的测试点队列，当评测机处理一个程序时，它会从队列头部开始按顺序运行测试点。一旦某个测试点返回拒绝（Rejected）结果，评测机在运行完该测试点后会立即停止处理该程序。被所有测试点通过（Accepted）的程序则会运行完整个测试点队列。
+所有程序使用相同的测试点队列，当评测机处理一个程序时，它会从队列头部开始按顺序运行测试点。一旦某个测试点返回拒绝（Rejected）结果，评测机在运行完该测试点后会立即停止。被所有测试点通过（Accepted）的程序则会正常运行完整个测试点队列才会结束。
 
 在复核开始之前，历史日志中已经记录了每个程序在每个测试点上的表现。程序 $i$ 在测试点 $j$ 上运行需要耗费 $d_{i, j}$ 的时间，结果要么是通过，要么是被拒绝。无论测试点运行结果如何，耗时 $d_{i, j}$ 都会累加到集群的总时间中。
 
@@ -260,7 +260,7 @@ int main(){
 
 - $1 \leq n \leq 2 \times 10^4$
 - $1 \leq m \leq 20$
-- $1 \leq d_{i, j} \leq 10^9$
+- $1 \leq d_{i, \, j} \leq 10^9$
 
 ### Input
 
@@ -335,11 +335,9 @@ $$
 - $2 \leq n \leq m \leq 2000$
 - $1 \leq q \leq 2000$
 - $\sum n, \sum m, \sum q \leq 2000$
-- $1 \leq u_k, v_k \leq n$
-- $u_k \neq v_k$
-- $1 \leq w_k \leq 10^9$
 - $1 \leq k \leq m$
-- $1 \leq x < w_k$
+- $1 \leq u_k, v_k \leq n$
+- $1 \leq x < w_k \leq 10^9$
 - 绝对或相对误差不超过 $10^{-6}$
 
 ### Input
@@ -436,24 +434,93 @@ int main(){
 
 ## Problem H
 
+### Problem Statement
 
+给定 $n$ 个字符串 $s_1, s_2, \ldots, s_n$ 。
 
-## Solution
+你可以按任意顺序重新排列这 $n$ 个字符串，并将它们按该顺序拼接起来得到一个字符串 $S$ 。
 
+对于从 $0$ 到 $L$ 的每个整数 $k$（其中 $\displaystyle L = \sum_{i = 1}^{n} |s_i|$ ），在每次独立询问中，你都可以按任意顺序重新排列这 $n$ 个字符串，将其拼接得到字符串 $S$ ，然后最多修改 $S$ 中的 $k$ 个字符。在一次修改中，你可以将 $S$ 中的一个字符替换为另一个小写英文字母。你的任务是对于从 $0$ 到 $L$ 的每个 $k$ ，求出可以获得的字典序最小的字符串。
 
+### Constraints
 
-```cpp frame="code" title="main.cpp"
-#include <bits/stdc++.h>
-using namespace std;
+- $1 \leq T \leq 500$
+- $1 \leq n \leq 500$
+- $\displaystyle L = \sum_{i = 1}^{n} |s_i|$
+- $s_i$ 仅由小写英文字母组成
+- 所有测试用例中 $n$ 的总和不超过 $500$
+- 所有测试用例中 $L$ 的总和不超过 $500$
 
-int main(){
+### Input
 
-}
+输入包含多个测试用例：
+
+- 第一行包含一个整数 $T$ ，表示测试用例的数量。
+
+> $T$
+>
+> $case_1$
+>
+> $case_2$
+>
+> $\ldots$
+>
+> $case_T$
+
+- 对于每个测试用例：
+
+    - 第一行包含一个整数 $n$ ，表示字符串的数量。
+    - 第二行包含 $n$ 个非空字符串 $s_1, \, s_2, \, \ldots, \, s_n$ 。
+
+> $n$
+>
+> $s_1 \quad s_2 \quad \ldots \quad s_n$
+
+### Output
+
+对于每个测试用例，输出 $L + 1$ 行，第 $k$ 行输出通过最多修改 $k$ 个字符所能得到的字典序最小的字符串。
+
+### Sample Input
+
+```txt showLineNumbers=false
+3
+5
+bca a zz ab c
+4
+ba b aa aba
+3
+az za m
 ```
 
-## Problem J
+### Sample Output
 
-
+```txt showLineNumbers=false
+aabbcaczz
+aaabbcazz
+aaaaabczz
+aaaaaabbz
+aaaaaaabc
+aaaaaaaab
+aaaaaaaaa
+aaaaaaaaa
+aaaaaaaaa
+aaaaaaaaa
+aaababab
+aaaaabab
+aaaaaaab
+aaaaaaaa
+aaaaaaaa
+aaaaaaaa
+aaaaaaaa
+aaaaaaaa
+aaaaaaaa
+azmza
+aaazm
+aaaam
+aaaaa
+aaaaa
+aaaaa
+```
 
 ## Solution
 
