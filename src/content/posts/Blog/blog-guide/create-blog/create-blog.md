@@ -48,9 +48,7 @@ scp -r ./dist/* user@192.168.1.1:/var/www/html/blog
 
 ## 配置访问的权限
 
-如果你使用 Nginx，由于上传文件的所有者通常与 Nginx 用户不同，可能会导致访问出现 `403 Forbidden` 。因此，需要调整目录的权限。
-
-首先登录服务器：
+如果你使用 Nginx，由于上传文件的所有者通常与 Nginx 用户不同，可能会导致访问出现 `403 Forbidden` 。因此，需要调整目录的权限。首先登录服务器：
 
 ```bash showLineNumbers
 ssh user@192.168.1.1

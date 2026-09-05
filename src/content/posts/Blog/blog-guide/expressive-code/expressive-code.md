@@ -7,7 +7,7 @@ category: Blog Guides
 draft: false
 ---
 
-> 写在前面：本文将展示基于 [Expressive Code](https://expressive-code.com/) 构建的增强型代码块显示效果。以下示例涵盖了从基础高亮到高级交互的各类场景，更多详细参数配置可参考官方文档。
+> 写在前面：本文将展示基于 [Expressive Code](https://expressive-code.com/) 构建的增强型代码块显示效果
 
 ## 核心语法功能演示
 
