@@ -1,8 +1,8 @@
 ---
 title: 【ACM 算法比赛】Codeforces Round 1117 div2
 published: 2026-08-22
-description: 记录一些 ACM 常见竞赛
-tags: [Algorithm, CodeForces, Contest]
+description: 记录一些 ACM 常规比赛
+tags: [Algorithm, Contest, CodeForces]
 category: ACM Test
 draft: false
 ---

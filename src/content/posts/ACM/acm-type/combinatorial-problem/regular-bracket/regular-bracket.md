@@ -1,10 +1,10 @@
 ---
-title: 【ACM 算法题单】有效括号与前缀约束
-published: 2026-03-18
-description: 记录一些 ACM 常用技巧
-tags: [Algorithm, Trick, Note]
+title: 【组合数学专题】有效括号相关问题
+published: 2026-09-16
+description: 记录一些 ACM 常见题型
+tags: [Algorithm, Problem Type, Combinatorial]
 category: ACM Type
-draft: true
+draft: false
 ---
 
 # 有效括号基础问题
