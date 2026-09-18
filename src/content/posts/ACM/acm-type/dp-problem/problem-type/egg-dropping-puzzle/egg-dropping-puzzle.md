@@ -1,8 +1,8 @@
 ---
-title: 【ACM 算法题单】双蛋搜索问题
+title: 【动态规划·题型】双蛋搜索相关问题
 published: 2026-05-27
 description: 记录一些 ACM 常见题型
-tags: [Algorithm, Problem Type]
+tags: [Algorithm, Problem Type, DP]
 category: ACM Type
 draft: true
 ---

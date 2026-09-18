@@ -1,5 +1,5 @@
 ---
-title: 【组合数学专题】有效括号相关问题
+title: 【组合数学·题型】有效括号相关问题
 published: 2026-09-16
 description: 记录一些 ACM 常见题型
 tags: [Algorithm, Problem Type, Combinatorial]

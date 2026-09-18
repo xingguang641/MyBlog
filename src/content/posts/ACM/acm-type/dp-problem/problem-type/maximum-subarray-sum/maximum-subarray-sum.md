@@ -1,8 +1,8 @@
 ---
-title: 【ACM 算法题单】子数组最大累加和问题
+title: 【动态规划·题型】数组最大累加和相关问题
 published: 2026-02-07
 description: 记录一些 ACM 常见题型
-tags: [Algorithm, Problem Type]
+tags: [Algorithm, Problem Type, DP]
 category: ACM Type
 draft: true
 ---
