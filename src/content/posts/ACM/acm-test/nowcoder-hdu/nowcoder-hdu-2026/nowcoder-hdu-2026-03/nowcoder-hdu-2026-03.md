@@ -242,7 +242,7 @@ int main(){
 
 ## Solution
 
-
+每一行/每一列单独做贡献即可（矩形覆盖、矩形面积并的核心思想）
 
 ```cpp frame="code" title="main.cpp"
 #include <bits/stdc++.h>
@@ -292,90 +292,7 @@ int main(){
 
 ## Solution
 
-
-
-```cpp frame="code" title="main.cpp"
-#include <bits/stdc++.h>
-using namespace std;
-
-int main(){
-
-}
-```
-
-## Problem J
-
-### Problem Statement
-
-给定一棵以节点 $1$ 为根的树，顶点编号为 $1$ 到 $n$ 。你需要构建一棵新树，新树同样以节点 $1$ 为根且包含相同的 $n$ 个节点，并满足以下条件：对于每个节点 $x \neq 1$ ，它在新树中的父节点必须是它在原树中的祖先。
-
-此外还给定了 $q$ 个限制条件，每个限制条件的形式为 $(u, v)$ ，表示在新树中 $u$ 必须是 $v$ 的后代。
-
-设 $dep_i$ 表示节点 $i$ 在新树中的深度，其中根节点 $1$ 的深度为 $0$ 。请最小化 $\displaystyle \sum_{i = 1}^{n} dep_i$ ，并输出该最小值。
-
-### Constraints
-
-- $2 \leq n \leq 500 000$
-- $0 \leq q \leq 500 000$
-- $1 \leq p_i < i$
-- $1 < u \leq n$
-- $1 \leq v \leq n$
-
-### Input
-
-输入包含多行：
-
-- 第一行包含两个整数 $n$ 和 $q$ 。
-- 接下来 $n - 1$ 行，第 $i - 1$ 行包含一个整数 $p_i$ ，表示在原树中节点 $i$ 的父节点为 $p_i$ 。
-- 接下来 $q$ 行，每行包含两个整数 $u$ 和 $v$ ，表示一个限制条件。
-
-> $n \quad q$
->
-> $p_2$
->
-> $p_3$
->
-> $\ldots$
->
-> $p_n$
->
-> $u_1 \quad v_1$
->
-> $u_2 \quad v_2$
->
-> $\ldots$
->
-> $u_q \quad v_q$
-
-### Output
-
-输出一个整数，表示 $\sum dep_i$ 可能的最小值。
-
-### Sample Input
-
-```txt showLineNumbers=false
-7 4
-1
-2
-3
-3
-2
-6
-4 2
-4 3
-5 2
-7 2
-```
-
-### Sample Output
-
-```txt showLineNumbers=false
-11
-```
-
-## Solution
-
-
+转移优化+状态优化，转移优化是矩阵快速幂优化，状态优化非常重要需要总结
 
 ```cpp frame="code" title="main.cpp"
 #include <bits/stdc++.h>
@@ -454,7 +371,7 @@ int main(){
 
 ## Solution
 
-
+两数之和思想，但是要解耦，非常难想到的过程
 
 ```cpp frame="code" title="main.cpp"
 #include <bits/stdc++.h>
