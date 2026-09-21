@@ -76,85 +76,7 @@ draft: false
 
 ## Solution
 
-
-
-```cpp frame="code" title="main.cpp"
-#include <bits/stdc++.h>
-using namespace std;
-
-int main(){
-
-}
-```
-
-## Problem D
-
-### Problem Statement
-
-Alice 和 Bob 在玩一个游戏，Alice 先手。初始有一个空序列，给定一个整数 $n$ ，他们将共同构建一个长度为 $n$ 的排列 $p$ 。每次操作中，当前玩家从 $1$ 到 $n$ 中选择一个之前未被选择过的整数，并将其追加到序列的末尾。恰好经过 $n$ 次操作后，序列变成 $1, 2, \ldots, n$ 的一个排列 $p$ 。
-
-排列 $p = (p_1, p_2, \ldots, p_n)$ 的循环移位是指通过选择一个索引 $i$ 并写作 $(p_i, p_{i + 1}, \ldots, p_n, p_1, p_2, \ldots, p_{i - 1})$ 所得到的序列。例如 $(2, 3, 1)$ 的循环移位为 $(2, 3, 1)$ 、$(3, 1, 2)$ 和 $(1, 2, 3)$ 。
-
-对于一个排列 $p$ ，定义 $f(p)$ 为 $p$ 的所有循环移位中字典序最小的那一个。
-
-Alice 希望使 $f(p)$ 的字典序尽可能小，而 Bob 希望使 $f(p)$ 的字典序尽可能大。
-
-假设双方均采取最优策略，求最终得到的排列 $f(p)$ 。
-
-### Constraints
-
-- $1 \leq T \leq 10^5$
-- $1 \leq n \leq 5 \times 10^5$
-- 所有测试用例中 $n$ 的总和不超过 $5 \times 10^5$
-
-### Input
-
-输入包含多个测试用例：
-
-- 第一行包含一个整数 $T$ ，表示测试用例的数量。
-
-> $T$
->
-> $case_1$
->
-> $case_2$
->
-> $\ldots$
->
-> $case_T$
-
-- 对于每个测试用例：
-
-    - 第一行包含一个整数 $n$ 。
-
-> $n$
-
-### Output
-
-对于每个测试用例，输出 $n$ 个整数，表示双方采取最优策略时最终得到的排列 $f(p)$ 。
-
-### Sample Input
-
-```txt showLineNumbers=false
-4
-1
-2
-3
-4
-```
-
-### Sample Output
-
-```txt showLineNumbers=false
-1
-1 2
-1 3 2
-1 3 2 4
-```
-
-## Solution
-
-
+mod p 余 q、mod q 余 p 具有对称性，所以可以构造 p + q 或者 pq 之类的。
 
 ```cpp frame="code" title="main.cpp"
 #include <bits/stdc++.h>
@@ -233,7 +155,11 @@ $$
 
 ## Solution
 
+[处理区间查询的常见思路之一](https://www.luogu.com.cn/problem/P8773)
 
+适用这个思路的原因就是以某个位置结尾的答案很多，贪心选取最好的那个即可。
+
+为什么要从 “以某个位置结尾” 这个角度切入题目呢？F 题本质就是 LIS 的特殊形式，因此沿用以某个位置结尾的思路切入，而 Luogu 这道题就是两数之和，也是类似的这个思路。
 
 ```cpp frame="code" title="main.cpp"
 #include <bits/stdc++.h>
@@ -300,7 +226,15 @@ int main(){
 
 ## Solution
 
+状压DP中的排序类型题，可以说是排序问题的状压DP优化。
 
+使用状压DP的前提是判断“对于后面的决策来说，前面的具体顺序无关”成立。
+
+“对于相同的状态 $S$，前面的具体顺序虽然可能影响已经产生的代价，但如果不会影响后续的决策，那么就可以把这些不同的历史合并起来，只保留其中的最优结果。”
+
+注意！这不是说S前面的顺序对答案没用，只要不对后面产生影响就行！
+
+状压DP排序类型题还有一个小分支就是逆序对DP，这个比起排序类型题的性质更好，就是每次选择的数一定是从小到大或者从大到小的，不然没办法求解每次操作产生的逆序对。
 
 ```cpp frame="code" title="main.cpp"
 #include <bits/stdc++.h>
@@ -421,7 +355,7 @@ $$
 
 ## Solution
 
-
+强连通图先考虑圆环，然后在圆环上任取俩个点使得题目要求最大，显然这两个点必然相邻，也就是分母必然是一条相邻边，把这个结论推广至一般图就能搞定这个问题。
 
 ```cpp frame="code" title="main.cpp"
 #include <bits/stdc++.h>
@@ -524,7 +458,9 @@ aaaaa
 
 ## Solution
 
+非常难的背包DP，要学会建模。
 
+首先假设没有修改，那就是正常排序，然后加入修改操作，实际上最优操作绝对不是按顺序进行修改，因此加入dp，当你选择第 i 个字符要变的时候，这个字符串就会“易位”。
 
 ```cpp frame="code" title="main.cpp"
 #include <bits/stdc++.h>
@@ -534,3 +470,7 @@ int main(){
 
 }
 ```
+
+# 参考文献列表
+
+1. [【MisaUdon】2026牛客多校R4](https://www.cnblogs.com/MisakiUdon/p/22083465)
