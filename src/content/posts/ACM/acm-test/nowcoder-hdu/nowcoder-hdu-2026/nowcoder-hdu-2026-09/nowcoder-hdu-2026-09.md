@@ -11,3 +11,138 @@ draft: false
 
 [这里是比赛链接](https://ac.nowcoder.com/acm/contest/133884)
 
+## Problem H
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem I
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem D
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem F
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem L
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem A
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem C
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem E
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```

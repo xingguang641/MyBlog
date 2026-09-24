@@ -62,3 +62,53 @@ int main(){
 }
 ```
 
+## Problem D
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem C
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem H
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
