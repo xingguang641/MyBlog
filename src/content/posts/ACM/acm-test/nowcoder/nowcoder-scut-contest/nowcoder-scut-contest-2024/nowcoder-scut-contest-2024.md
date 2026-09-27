@@ -11,3 +11,172 @@ draft: false
 
 [这里是比赛链接](https://ac.nowcoder.com/acm/contest/131454)
 
+## Problem A
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem H
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem K
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem M
+
+https://codeforces.com/contest/2256/problem/B
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem J
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem F
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem L
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem B
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem D
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## Problem C
+
+
+
+## Solution
+
+
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
