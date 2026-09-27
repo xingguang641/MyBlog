@@ -1,5 +1,5 @@
 ---
-title: 【ACM 算法题单】字符串嵌套相关问题
+title: 【ACM 算法题单】字符嵌套相关问题
 published: 2026-05-18
 description: 记录一些 ACM 常见题型
 tags: [Algorithm, Problem Type]
