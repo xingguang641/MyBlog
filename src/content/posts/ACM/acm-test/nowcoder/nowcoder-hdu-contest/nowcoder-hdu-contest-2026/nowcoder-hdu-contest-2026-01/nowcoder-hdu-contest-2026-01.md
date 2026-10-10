@@ -13,6 +13,8 @@ draft: false
 
 ## Problem F
 
+> `数论` &nbsp;&nbsp; `构造`
+
 ### Problem Statement
 
 对于一个由 $0$ 到 $n - 1$ 组成的排列 $P$ ，定义其价值为：
