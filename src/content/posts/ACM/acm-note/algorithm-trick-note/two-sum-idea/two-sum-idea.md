@@ -1060,7 +1060,7 @@ int main() {
 
 **路径** 不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。
 
-![树上的路径问题图像](src\content\posts\ACM\acm-note\two-sum-idea\树上的路径问题.png)
+![树上的路径问题图像](.\树上的路径问题.png)
 
 ### Constraints
 
