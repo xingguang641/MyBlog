@@ -1042,6 +1042,15 @@ int main() {
 
 尾概率公式
 
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+
+}
+```
+
 ---
 
 # 区间求和变为前缀求和相关题目收集
@@ -1311,80 +1320,6 @@ $$
 
 值得一提的是，这类双边约束条件在[数位 DP 问题](https://xingguang641.com/posts/acm/acm-type/dp-classification/digit-dp/)中十分常见。然而数位 DP 问题中的双边约束条件的上下界通常超出了普通整数的表示范围，如果直接计算 $f(\text{lower} - 1)$ 则可能涉及到高精度计算。为了避免这种情况，我们可以先计算 $f(\text{upper}) - f(\text{lower})$ ，再单独判断 $lower$ 是否满足要求。
 
-## 统计完全K次幂
-
-[题目链接](https://leetcode.cn/problems/count-k-th-roots-in-a-range/description/)
-
-### Problem Statement
-
-给你两个正整数 `l` 和 `r` ，以及一个整数 `k` 。
-
-如果一个整数 $x$ 满足 $x = y^k$ ，其中 $y$ 也是一个整数，那么我们称 $x$ 是一个 **完全 k 次幂** 。
-
-请你统计并返回闭区间 $[l, r]$ 内 **完全 k 次幂** 的数量。
-
-### Constraints
-
-- $1 \leq l \leq r \leq 10^9$
-- $1 \leq k \leq 30$
-
-### Input
-
-输入仅包含一行：
-
-> $l \quad r \quad k$
-
-### Output
-
-输出一个整数，表示区间内完全 $k$ 次幂的数量。
-
-### Sample Input 1
-
-```txt showLineNumbers=false
-1 9 3
-```
-
-### Sample Output 1
-
-```txt showLineNumbers=false
-2
-```
-
-### Sample Input 2
-
-```txt showLineNumbers=false
-8 30 2
-```
-
-### Sample Output 2
-
-```txt showLineNumbers=false
-3
-```
-
-## 题目要点解析
-
-根据差分思想，区间计数问题可以转化为两个前缀计数之差。设 `count(n)` 表示闭区间 $[0, n]$ 内完全 $k$ 次幂的数量，那么题目要求的闭区间 $[l, r]$ 内的答案就可以表示为：
-
-$$
-count(r) - count(l - 1)
-$$
-
-对于给定的上限 $n$ ，我们需要寻找有多少个正整数 $y$ 满足 $y^k \leq n$ 。对两边同时开 $k$ 次方，问题就转化为求解满足 $y \leq \lfloor n^{1 / k} \rfloor$ 的正整数 $y$ 的个数。由于 $y \geq 1$ ，这个答案恰好就等于 $\lfloor n^{1 / k} \rfloor$ 的值。
-
-当 $k \geq 2$ 时，最简单的方法是利用内置的浮点数函数 $pow(n, 1.0 / k)$ 进行计算，但这种方法会引入浮点数精度误差。在计算机内部，二进制浮点数表示会导致精度截断。例如，原本应该得到整数 $7$ ，但浮点数计算的实际结果可能是 $6.999999999$ ，直接向下取整就会错误地得到 $6$ 。
-
-为了消除这种精度隐患，我们需要在浮点数粗略估值的基础上进行二次验证与边界微调。首先利用浮点数函数得到一个初始估值 $y$ ，由于浮点误差的绝对值极小，该估值与真实值的偏差只会是 $0$ 或 $1$ 。此时我们可以通过整数乘法或快速幂来计算其确切的 $k$ 次幂值，如果发现 $(y + 1)^k \leq n$ ，说明初始估值偏小，应将 $y$ 向上修正。
-
-```cpp frame="code" title="main.cpp"
-#include <bits/stdc++.h>
-using namespace std;
-
-int main(){
-
-}
-```
-
 ## 统计公平的数对
 
 [题目链接](https://leetcode.cn/problems/count-the-number-of-fair-pairs/description/)
@@ -1461,6 +1396,80 @@ $$
 为了计算 `count(x)` ，首先应对数组进行排序。排序后数组满足单调递增的特性，如果固定左端点 $i$ ，随着右端点 $j$ 的增大，`nums[i] + nums[j]` 也会单调增加，因此可以使用 **双指针** 来统计合法的数对数量。
 
 分别计算 `count(upper)` 和 `count(lower - 1)` 后，两者相减即可得到最终答案。
+
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+## 统计完全K次幂
+
+[题目链接](https://leetcode.cn/problems/count-k-th-roots-in-a-range/description/)
+
+### Problem Statement
+
+给你两个正整数 `l` 和 `r` ，以及一个整数 `k` 。
+
+如果一个整数 $x$ 满足 $x = y^k$ ，其中 $y$ 也是一个整数，那么我们称 $x$ 是一个 **完全 k 次幂** 。
+
+请你统计并返回闭区间 $[l, r]$ 内 **完全 k 次幂** 的数量。
+
+### Constraints
+
+- $1 \leq l \leq r \leq 10^9$
+- $1 \leq k \leq 30$
+
+### Input
+
+输入仅包含一行：
+
+> $l \quad r \quad k$
+
+### Output
+
+输出一个整数，表示区间内完全 $k$ 次幂的数量。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+1 9 3
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+2
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+8 30 2
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+3
+```
+
+## 题目要点解析
+
+根据差分思想，区间计数问题可以转化为两个前缀计数之差。设 `count(n)` 表示闭区间 $[0, n]$ 内完全 $k$ 次幂的数量，那么题目要求的闭区间 $[l, r]$ 内的答案就可以表示为：
+
+$$
+count(r) - count(l - 1)
+$$
+
+对于给定的上限 $n$ ，我们需要寻找有多少个正整数 $y$ 满足 $y^k \leq n$ 。对两边同时开 $k$ 次方，问题就转化为求解满足 $y \leq \lfloor n^{1 / k} \rfloor$ 的正整数 $y$ 的个数。由于 $y \geq 1$ ，这个答案恰好就等于 $\lfloor n^{1 / k} \rfloor$ 的值。
+
+当 $k \geq 2$ 时，最简单的方法是利用内置的浮点数函数 $pow(n, 1.0 / k)$ 进行计算，但这种方法会引入浮点数精度误差。在计算机内部，二进制浮点数表示会导致精度截断。例如，原本应该得到整数 $7$ ，但浮点数计算的实际结果可能是 $6.999999999$ ，直接向下取整就会错误地得到 $6$ 。
+
+为了消除这种精度隐患，我们需要在浮点数粗略估值的基础上进行二次验证与边界微调。首先利用浮点数函数得到一个初始估值 $y$ ，由于浮点误差的绝对值极小，该估值与真实值的偏差只会是 $0$ 或 $1$ 。此时我们可以通过整数乘法或快速幂来计算其确切的 $k$ 次幂值，如果发现 $(y + 1)^k \leq n$ ，说明初始估值偏小，应将 $y$ 向上修正。
 
 ```cpp frame="code" title="main.cpp"
 #include <bits/stdc++.h>

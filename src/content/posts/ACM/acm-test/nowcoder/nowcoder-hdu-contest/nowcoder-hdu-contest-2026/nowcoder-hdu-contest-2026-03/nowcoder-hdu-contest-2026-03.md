@@ -13,6 +13,8 @@ draft: false
 
 ## Problem A
 
+> `位运算技巧`
+
 ### Problem Statement
 
 对于非负整数 $x$ ，定义 $f(x)$ 为 $x$ 在无前导零的二进制表示中极大幅度连续 $1$ 段的数量。例如 $f(23) = 2$ ，因为 $23 = (10111)_2$ ，其二进制表示中包含 $2$ 个连续的 $1$ 段。
@@ -116,6 +118,8 @@ int main(){
 
 ## Problem B
 
+> `前缀约束` &nbsp;&nbsp; `扩展卡特兰数`
+
 ### Problem Statement
 
 一瓶饮料的价格为 $1$ 美元。小明每喝完一瓶饮料，有 $a \mathbin{/} b$ 的概率中奖。如果中奖，他将获得 $c$ 美元，否则什么也得不到。获得的奖金可以用来购买更多的饮料，每瓶饮料的中奖事件彼此独立。
@@ -190,6 +194,8 @@ int main(){
 
 ## Problem G
 
+> `差分技巧` &nbsp;&nbsp; `矩形覆盖`
+
 ### Problem Statement
 
 给定一个 $n \times m$ 的网格，每个单元格中包含一个正整数。
@@ -255,6 +261,8 @@ int main(){
 
 ## Problem F
 
+> `状压 DP` &nbsp;&nbsp; `矩阵快速幂`
+
 ### Problem Statement
 
 给定一个 $n \times m$ 的网格，你需要向每个单元格中填入一个来自 $\{0, 1, 2\}$ 的整数。
@@ -304,6 +312,8 @@ int main(){
 ```
 
 ## Problem I
+
+> `贡献分析`
 
 ### Problem Statement
 
@@ -383,6 +393,8 @@ int main(){
 ```
 
 ## Problem M
+
+> `随机游走`
 
 ### Problem Statement
 

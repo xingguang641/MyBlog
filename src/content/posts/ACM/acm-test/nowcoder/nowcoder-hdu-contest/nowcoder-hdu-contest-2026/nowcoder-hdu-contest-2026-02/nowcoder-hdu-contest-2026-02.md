@@ -13,6 +13,8 @@ draft: false
 
 ## Problem N
 
+> `贪心算法`
+
 ### Problem Statement
 
 给定一个长度为 $n$ 的数组 $a$ 。一次操作中，你可以选择数组中的任意 $k$ 个元素，并将这 $k$ 个元素全部替换为它们的中位数。你必须恰好执行一次操作，请求出操作后数组所有元素之和的最大值。
@@ -114,6 +116,8 @@ int main(){
 ```
 
 ## Problem B
+
+> `异或线性基`
 
 ### Problem Statement
 
@@ -243,6 +247,8 @@ int main(){
 
 ## Problem G
 
+> `质数分布` &nbsp;&nbsp; `莫比乌斯反演`
+
 ### Problem Statement
 
 给定一个包含无限个顶点的有向图，顶点用正整数 $1, 2, \ldots$ 编号。
@@ -319,6 +325,8 @@ int main(){
 ```
 
 ## Problem L
+
+> `逆序对 DP`
 
 ### Problem Statement
 
@@ -447,6 +455,8 @@ int main(){
 ```
 
 ## Problem F
+
+> `树型 DP`
 
 ### Problem Statement
 
@@ -580,6 +590,8 @@ int main(){
 ```
 
 ## Problem A
+
+> `期望 DP`
 
 ### Problem Statement
 

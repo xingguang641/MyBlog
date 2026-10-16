@@ -13,7 +13,7 @@ draft: false
 
 ## Problem F
 
-> `数论` &nbsp;&nbsp; `构造`
+> `排列构造`
 
 ### Problem Statement
 
@@ -147,6 +147,8 @@ int main() {
 ```
 
 ## Problem C
+
+> `Kruskal 重构树`
 
 ### Problem Statement
 
@@ -288,6 +290,8 @@ int main(){
 ```
 
 ## Problem L
+
+> `AC 自动机` &nbsp;&nbsp; `前缀和技巧`
 
 ### Problem Statement
 
@@ -469,6 +473,8 @@ int main(){
 ```
 
 ## Problem H
+
+> `随机博弈` &nbsp;&nbsp; `马尔可夫随机过程`
 
 ### Problem Statement
 
