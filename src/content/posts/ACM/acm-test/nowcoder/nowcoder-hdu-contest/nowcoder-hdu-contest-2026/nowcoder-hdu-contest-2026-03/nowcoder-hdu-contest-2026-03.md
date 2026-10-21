@@ -13,7 +13,7 @@ draft: false
 
 ## Problem A
 
-> `位运算技巧`
+> `连续段处理`
 
 ### Problem Statement
 
@@ -118,7 +118,7 @@ int main(){
 
 ## Problem B
 
-> `前缀约束` &nbsp;&nbsp; `扩展卡特兰数`
+> `扩展卡特兰数`
 
 ### Problem Statement
 

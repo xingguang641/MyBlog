@@ -13,6 +13,8 @@ draft: false
 
 ## Problem D
 
+> `连续段处理` &nbsp;&nbsp; `隔板法`
+
 ### Problem Statement
 
 奈芙莲从不喜欢长久的告别。在珂朵莉出发执行下一个任务之前，她什么也没说，而是开始为她准备一条小丝带。
@@ -87,14 +89,124 @@ draft: false
 
 ## Solution
 
+做这道题需要积累相应的经验，连续段的数量与相邻不同位置的数量线性相关：连续段数恰好等于相邻不同位置数加一。仔细观察题目中的条件，翻转满足 $s_l = s_r$ 的区间并不会改变相邻不同的位置数量，因此连续段数不变。
 
+翻转 $s_l \ldots s_r$ 时，区间内部的相邻关系只是整体反序，相邻不同的数量不变，区间外部的字符没有移动，相邻关系也不受影响。真正可能变化的只有区间两端与外部相接的位置，但翻转后位置 $l$ 和 $r$ 上的字符仍然是原来的 $s_l$ 和 $s_r$ ，所以边界处是否相同也不会改变。于是整个字符串中相邻不同的位置总数不变，连续段数也不变。
+
+接下来看翻转操作究竟会改变什么，考虑三个相邻的连续段，长度分别为 $A, B, C$ ，颜色分别为 $X, Y, X$ ：
+
+$$
+X^A Y^B X^C
+$$
+
+取第一段末尾 $x$ 个字符、整个第二段以及第三段开头 $y$ 个字符进行翻转。因为两端都是颜色 $X$ ，所以这次操作合法。翻转前这一段是 $X^x Y^B X^y$ ，翻转后变成 $X^y Y^B X^x$ ，于是三段的长度变化为：
+
+$$
+(A, B, C) \longrightarrow (A - x + y, \, B, \, C - y + x)
+$$
+
+其中 $x$ 和 $y$ 可以自由选取，因此中间那一段的长度保持不变，而两个同色段可以在保持长度为正的前提下任意搬运长度。于是问题转化为一个组合问题：给定字符串长度 $n$ 、$1$ 的个数 $k$ 、连续段数 $m$ 以及首字符 $s_1$ ，统计有多少个长度为 $n$ 的 01 串，满足 $1$ 的个数恰好为 $k$ ，连续段数恰好为 $m$ ，且首字符等于 $s_1$ 。
+
+设由 $1$ 组成的连续段数为 $r_1$ ，由 $0$ 组成的连续段数为 $r_0$ 。由于颜色交替：
+
+- 当 $s_1 = 0$ 时
+
+$$
+r_0 = \left \lceil \frac m2 \right \rceil = \frac{m + 1}{2} \quad r_1 = \left \lfloor \frac m2 \right \rfloor = \frac m2
+$$
+
+- 当 $s_1 = 1$ 时
+
+$$
+r_1 = \left \lceil \frac m2 \right \rceil = \frac{m + 1}{2} \quad r_0 = \left \lfloor \frac m2 \right \rfloor = \frac m2
+$$
+
+把 $k$ 个 $1$ 分给 $r_1$ 个连续段，每段至少一个，由隔板法有：
+
+$$
+\binom{k - 1}{r_1 - 1}
+$$
+
+把 $n - k$ 个 $0$ 分给 $r_0$ 个连续段，每段至少一个，由隔板法有：
+
+$$
+\binom{n - k - 1}{r_0 - 1}
+$$
+
+两个部分互相独立，每一种分配方式都唯一对应一个字符串，所以答案为：
+
+$$
+\binom{k - 1}{r_1 - 1} \binom{n - k - 1}{r_0 - 1} \pmod{998244353}
+$$
+
+时间复杂度为 $O(n)$ 统计连续段，组合数通过预处理阶乘和逆元做到 $O(1)$ 查询，总复杂度为 $O \left( \sum n + 10^6 \right)$ 。
 
 ```cpp frame="code" title="main.cpp"
 #include <bits/stdc++.h>
 using namespace std;
+typedef long long ll;
+const int MAXN = 1000000 + 5;
+const int MOD = 998244353;
+ll fact[MAXN], invfact[MAXN];
 
-int main(){
+ll qpow(ll a, ll b) {
+    ll res = 1;
+    while (b) {
+        if (b & 1) res = res * a % MOD;
+        a = a * a % MOD;
+        b >>= 1;
+    }
+    return res;
+}
 
+ll C(int n, int k) {
+    if (k < 0 || k > n) return 0;
+    return fact[n] * invfact[k] % MOD * invfact[n - k] % MOD;
+}
+
+int main() {
+    fact[0] = 1;
+    for (int i = 1; i < MAXN; i++) {
+        fact[i] = fact[i - 1] * i % MOD;
+    }
+
+    invfact[MAXN - 1] = qpow(fact[MAXN - 1], MOD - 2);
+    for (int i = MAXN - 1; i >= 1; i--) {
+        invfact[i - 1] = invfact[i] * i % MOD;
+    }
+
+    int T; cin >> T;
+    while (T--) {
+        int n; string s;
+        cin >> n >> s;
+
+        int k = 0;
+        for (char c : s) {
+            if (c == '1') k++;
+        }
+
+        int m = 1;
+        for (int i = 1; i < n; i++) {
+            if (s[i] != s[i - 1]) m++;
+        }
+
+        if (m == 1) {
+            cout << 1 << '\n';
+            continue;
+        }
+
+        int r1, r0;
+        if (s[0] == '0') {
+            r0 = (m + 1) / 2;
+            r1 = m / 2;
+        } else {
+            r1 = (m + 1) / 2;
+            r0 = m / 2;
+        }
+
+        ll ans = C(k - 1, r1 - 1) * C(n - k - 1, r0 - 1) % MOD;
+        cout << ans << endl;
+    }
 }
 ```
 
