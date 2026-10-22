@@ -1,13 +1,13 @@
 ---
-title: 【ACM 算法随笔】并查集的应用
+title: 【ACM 算法随笔】并查数据结构的应用
 published: 2026-04-03
 description: 记录一些 ACM 常用技巧
 tags: [Algorithm, Trick, Note]
 category: ACM Note
-draft: true
+draft: false
 ---
 
-# 并查集等价类维护
+# 并查集等价性维护
 
 
 
