@@ -752,6 +752,19 @@ int main(){
 
 仅有删边的题目转成加边题（逆向思维）
 
+```cpp frame="code" title="main.cpp"
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+}
+```
+
+:::tip
+本题涉及上文提及的「时光倒流」技巧
+:::
+
 ## 情侣的牵手难题
 
 [题目链接](https://leetcode.cn/problems/couples-holding-hands/description/)
@@ -1345,7 +1358,7 @@ YES
 
 输出 $Q$ 行，第 $i$ 行包含第 $i$ 次操作后 $G$ 的边数。
 
-### Sample Input 1
+### Sample Input
 
 ```txt showLineNumbers=false
 7 7
@@ -1360,7 +1373,7 @@ YES
 1 2 3 1 5
 ```
 
-### Sample Output 1
+### Sample Output
 
 ```txt showLineNumbers=false
 4
@@ -1647,7 +1660,68 @@ YES
 
 [题目链接](https://www.luogu.com.cn/problem/P8779)
 
+### Problem Statement
 
+对于一个长度为 $N$ 的整数数列 $A_1, A_2, \ldots, A_N$ ，小蓝想知道下标 $l$ 到 $r$ 的部分和 $\sum_{i = l}^{r} A_i$ 是多少。然而小蓝并不知道数列中每个数的值是多少，他只知道它的 $M$ 个部分和的值。
+
+请对每个询问求出对应的部分和。数据保证没有矛盾。
+
+### Constraints
+
+- $1 \leq N, M, Q \leq 10^5$
+- $-10^{12} \leq S_i \leq 10^{12}$
+- $1 \leq l_i \leq r_i \leq N$
+- $1 \leq l \leq r \leq N$
+
+### Input
+
+输入包含多行：
+
+- 第一行包含三个整数 $N$ 、$M$ 和 $Q$ ，分别表示数组长度、已知的部分和数量和询问的部分和数量。
+- 接下来 $M$ 行，第 $i$ 行包含三个整数 $l_i$ 、$r_i$ 和 $S_i$ ，表示第 $i$ 个已知的部分和。
+- 接下来 $Q$ 行，第 $i$ 行包含两个整数 $l$ 和 $r$ ，表示第 $i$ 个询问。
+
+> $N \quad M \quad Q$
+>
+> $l_1 \quad r_1 \quad S_1$
+>
+> $l_2 \quad r_2 \quad S_2$
+>
+> $\ldots$
+>
+> $l_M \quad r_M \quad S_M$
+>
+> $l_1 \quad r_1$
+>
+> $l_2 \quad r_2$
+>
+> $\ldots$
+>
+> $l_Q \quad r_Q$
+
+### Output
+
+输出 $Q$ 行，第 $i$ 行包含第 $i$ 个询问的答案，若答案无法确定则输出 `UNKNOWN` 。
+
+### Sample Input
+
+```txt showLineNumbers=false
+5 3 3
+1 5 15
+4 5 9
+2 3 5
+1 5
+1 3
+1 2
+```
+
+### Sample Output
+
+```txt showLineNumbers=false
+15
+6
+UNKNOWN
+```
 
 ## 题目要点解析
 
@@ -1657,7 +1731,121 @@ YES
 
 [题目链接](https://leetcode.cn/problems/evaluate-division/description/)
 
+### Problem Statement
 
+给你 $n$ 个已知条件和一个实数值，其中第 $i$ 个条件表示等式 $A_i / B_i = v_i$ 。每个 $A_i$ 或 $B_i$ 是一个表示单个变量的字符串。另有 $m$ 个问题，第 $j$ 个问题给出 $C_j$ 和 $D_j$ ，请根据已知条件求出 $C_j / D_j$ 的结果作为答案。
+
+请求出 **所有问题的答案** 。如果存在某个无法确定的答案，则用 $-1$ 替代这个答案。如果问题中出现了给定的已知条件中没有出现的字符串，也需要用 $-1$ 替代这个答案。
+
+**注意**：输入总是有效的，除法运算中不会出现除数为 $0$ 的情况，且不存在任何矛盾的结果。
+
+### Constraints
+
+- $1 \leq n \leq 20$
+- $1 \leq m \leq 20$
+- $0 < v_i \leq 20$
+- 绝对或相对误差不超过 $10^{-5}$
+
+### Input
+
+输入包含多行：
+
+- 第一行包含一个整数 $n$ ，表示已知条件的数量。
+- 接下来 $n$ 行，第 $i$ 行包含两个字符串 $A_i$ 、$B_i$ 和一个实数 $v_i$ ，表示等式 $A_i / B_i = v_i$ 。
+- 接下来一行包含一个整数 $m$ ，表示问题的数量。
+- 接下来 $m$ 行，第 $j$ 行包含两个字符串 $C_j$ 和 $D_j$ ，表示第 $j$ 个问题。
+
+> $n$
+>
+> $A_1 \quad B_1 \quad v_1$
+>
+> $A_2 \quad B_2 \quad v_2$
+>
+> $\ldots$
+>
+> $A_n \quad B_n \quad v_n$
+>
+> $m$
+>
+> $C_1 \quad D_1$
+>
+> $C_2 \quad D_2$
+>
+> $\ldots$
+>
+> $C_m \quad D_m$
+
+### Output
+
+输出 $m$ 行，第 $j$ 行包含第 $j$ 个问题的答案，若无法确定则输出 $-1$ 。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+2
+a b 2.0
+b c 3.0
+5
+a c
+b a
+a e
+a a
+x x
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+6.00000
+0.50000
+-1.00000
+1.00000
+-1.00000
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+3
+a b 1.5
+b c 2.5
+bc cd 5.0
+4
+a c
+c b
+bc cd
+cd bc
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+3.75000
+0.40000
+5.00000
+0.20000
+```
+
+### Sample Input 3
+
+```markdown showLineNumbers=false
+1
+a b 0.5
+4
+a b
+b a
+a c
+x y
+```
+
+### Sample Output 3
+
+```txt showLineNumbers=false
+0.50000
+2.00000
+-1.00000
+-1.00000
+```
 
 ## 题目要点解析
 
@@ -1667,7 +1855,94 @@ YES
 
 [题目链接](https://www.luogu.com.cn/problem/CF776D)
 
+### Problem Statement
 
+Moriarty 把 $n$ 个人分别困在酒店的 $n$ 个不同房间里，其中一些房间的门是锁着的，另外一些是开着的。但有一个条件：只有当所有房间的门同时都是打开的时候，这些人才能逃脱。
+
+酒店里有 $m$ 个开关，每个开关可以控制一些房间的门，但每扇门恰好被两个开关控制。
+
+你得到了门的初始状态。每当你切换一个开关时，该开关所控制的所有房门的状态都会发生改变。
+
+你需要告诉 Sherlock，是否存在一种切换开关的方式，使得所有门同时都被打开。
+
+### Constraints
+
+- $2 \leq n \leq 10^5$
+- $2 \leq m \leq 10^5$
+- $0 \leq r_i \leq 1$
+- $0 \leq x_i \leq n$
+
+### Input
+
+输入包含多行：
+
+- 第一行包含两个整数 $n$ 和 $m$ ，分别表示房间数和开关数。
+- 第二行包含 $n$ 个整数，第 $i$ 个整数表示第 $i$ 个房间门的当前状态。
+- 接下来 $m$ 行，第 $i$ 行先给出一个整数 $x_i$ ，随后给出 $x_i$ 个互不相同的整数。
+
+> $n \quad m$
+>
+> $r_1 \quad r_2 \quad \ldots \quad r_n$
+>
+> $x_1 \quad p_{1, 1} \quad p_{1, 2} \quad \ldots \quad p_{1, x_1}$
+>
+> $x_2 \quad p_{2, 1} \quad p_{2, 2} \quad \ldots \quad p_{2, x_2}$
+>
+> $\ldots$
+>
+> $x_m \quad p_{m, 1} \quad p_{m, 2} \quad \ldots \quad p_{m, x_m}$
+
+### Output
+
+输出一行一个字符串，`YES` 表示存在一种切换开关的方式可以同时打开所有房门，`NO` 表示不存在。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+3 3
+1 0 1
+2 1 3
+2 1 2
+2 2 3
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+NO
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+3 3
+1 0 1
+3 1 2 3
+1 2
+2 1 3
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+YES
+```
+
+### Sample Input 3
+
+```txt showLineNumbers=false
+3 3
+1 0 1
+3 1 2 3
+2 1 2
+1 3
+```
+
+### Sample Output 3
+
+```txt showLineNumbers=false
+NO
+```
 
 ## 题目要点解析
 
@@ -1679,7 +1954,73 @@ YES
 
 [题目链接](https://leetcode.cn/problems/incremental-even-weighted-cycle-queries/description/)
 
+### Problem Statement
 
+有一个由 $n$ 个节点组成的 **无向图** ，节点的编号从 $0$ 到 $n - 1$ 。最初，这个图没有任何边。
+
+另外给定 $m$ 条边，第 $i$ 条边连接节点 $u_i$ 和 $v_i$ ，边权为 $w_i$ 。边权 $w_i$ 要么是 $0$ ，要么是 $1$ 。
+
+对于每条边，如果将其添加到图中后，图中的 **每个环** 的边权和依然是 **偶数** ，那么将这条边添加到图中。
+
+请求出最终成功添加到图中的边的数量。
+
+### Constraints
+
+- $3 \leq n \leq 5 \times 10^4$
+- $1 \leq m \leq 5 \times 10^4$
+- $0 \leq u_i < v_i < n$
+- $w_i \in \{0, 1\}$
+
+### Input
+
+输入包含多行：
+
+- 第一行包含两个整数 $n$ 和 $m$ ，分别表示节点数和边数。
+- 接下来 $m$ 行，第 $i$ 行包含三个整数 $u_i$ 、$v_i$ 和 $w_i$ ，表示第 $i$ 条边。
+
+> $n \quad m$
+>
+> $u_1 \quad v_1 \quad w_1$
+>
+> $u_2 \quad v_2 \quad w_2$
+>
+> $\ldots$
+>
+> $u_m \quad v_m \quad w_m$
+
+### Output
+
+输出一个整数，表示最终成功添加到图中的边的数量。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+3 3
+0 1 1
+1 2 1
+0 2 1
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+2
+```
+
+### Sample Input 2
+
+```txt showLineNumbers=false
+3 3
+0 1 1
+1 2 1
+0 2 0
+```
+
+### Sample Output 2
+
+```txt showLineNumbers=false
+3
+```
 
 ## 题目要点解析
 
@@ -1689,7 +2030,60 @@ YES
 
 [题目链接](https://www.luogu.com.cn/problem/P1196)
 
+### Problem Statement
 
+公元 $5801$ 年，地球居民迁至金牛座 $\alpha$ 第二行星，在那里发表银河联邦创立宣言，同年改元为宇宙历元年，并开始向银河系深处拓展。宇宙历 $799$ 年，银河系的两大军事集团在巴米利恩星域爆发战争。泰山压顶集团派宇宙舰队司令莱因哈特率领十万余艘战舰出征，气吞山河集团点名将杨威利组织麾下三万艘战舰迎敌。
+
+杨威利将巴米利恩星域战场划分成 $30000$ 列，每列依次编号为 $1, 2, \ldots, 30000$ 。之后，他把自己的战舰也依次编号为 $1, 2, \ldots, 30000$ ，让第 $i$ 号战舰处于第 $i$ 列，形成 “一字长蛇阵”，诱敌深入。这是初始阵形。
+
+当进犯之敌到达时，杨威利会多次发布合并指令，将大部分战舰集中在某几列上。合并指令为 `M i j` ，含义为第 $i$ 号战舰所在的整个战舰队列，作为一个整体（头在前尾在后）接至第 $j$ 号战舰所在的战舰队列的尾部。
+
+然而，老谋深算的莱因哈特早已在战略上取得了主动。在交战中，他可以通过庞大的情报网络随时监听杨威利的舰队调动指令。在杨威利发布指令调动舰队的同时，莱因哈特为了及时了解当前杨威利的战舰分布情况，也会发出一些询问指令 `C i j` 用于询问第 $i$ 号战舰与第 $j$ 号战舰是否在同一列，如果在同一列，那么它们之间有多少战舰。
+
+作为一个资深的高级程序设计员，你被要求编写程序分析杨威利的指令，以及回答莱因哈特的询问。
+
+### Constraints
+
+- $1 \leq T \leq 5 \times 10^5$
+- $1 \leq i, j \leq 30000$
+
+### Input
+
+输入包含多行：
+
+- 第一行包含一个整数 $T$ ，表示指令总数。
+- 接下来 $T$ 行，每行包含一条指令，格式为 `M i j` 或 `C i j` ，其中 $i$ 和 $j$ 为两个战舰编号。
+
+> $T$
+>
+> $op_1 \quad i_1 \quad j_1$
+>
+> $op_2 \quad i_2 \quad j_2$
+>
+> $\ldots$
+>
+> $op_T \quad i_T \quad j_T$
+
+### Output
+
+输出若干行，每行包含一个整数，表示同一列上第 $i$ 号与第 $j$ 号战舰之间的战舰数，若不在同一列则输出 $-1$ 。
+
+### Sample Input
+
+```txt showLineNumbers=false
+4
+M 2 3
+C 1 2
+M 2 4
+C 4 2
+```
+
+### Sample Output
+
+```txt showLineNumbers=false
+-1
+1
+```
 
 ## 题目要点解析
 
@@ -1699,7 +2093,70 @@ YES
 
 [题目链接](https://www.luogu.com.cn/problem/P2024)
 
+### Problem Statement
 
+动物王国中有三类动物 $A, B, C$ ，这三类动物的食物链构成了有趣的环形：$A$ 吃 $B$ ，$B$ 吃 $C$ ，$C$ 吃 $A$ 。
+
+现有 $N$ 个动物，以 $1 \sim N$ 编号。每个动物都是 $A, B, C$ 中的一种，但是我们并不知道它到底是哪一种。
+
+有人用两种说法对这 $N$ 个动物所构成的食物链关系进行描述：
+
+- 第一种说法是 `1 X Y` ，表示 $X$ 和 $Y$ 是同类。
+- 第二种说法是 `2 X Y` ，表示 $X$ 吃 $Y$ 。
+
+此人对 $N$ 个动物，用上述两种说法，一句接一句地说出 $K$ 句话，这 $K$ 句话有的是真的，有的是假的。当一句话满足下列三条之一时，这句话就是假话，否则就是真话：
+
+- 当前的话与前面的某些真的话冲突，就是假话。
+- 当前的话中 $X$ 或 $Y$ 比 $N$ 大，就是假话。
+- 当前的话表示 $X$ 吃 $X$ ，就是假话。
+
+你的任务是根据给定的 $N$ 和 $K$ 句话，输出假话的总数。
+
+### Constraints
+
+- $1 \leq N \leq 5 \times 10^4$
+- $1 \leq K \leq 10^5$
+- $|X|, |Y| < 2^{32}$
+
+### Input
+
+输入包含多行：
+
+- 第一行包含两个整数 $N$ 和 $K$ ，分别表示动物数量和说法数量。
+- 接下来 $K$ 行，第 $i$ 行包含三个整数 $op_i$ 、$X_i$ 和 $Y_i$ 。
+
+> $N \quad K$
+>
+> $op_1 \quad X_1 \quad Y_1$
+>
+> $op_2 \quad X_2 \quad Y_2$
+>
+> $\ldots$
+>
+> $op_K \quad X_K \quad Y_K$
+
+### Output
+
+输出一行一个整数，表示假话的总数。
+
+### Sample Input
+
+```txt showLineNumbers=false
+100 7
+1 101 1
+2 1 2
+2 2 3
+2 3 3
+1 1 3
+2 3 1
+1 5 5
+```
+
+### Sample Output
+
+```txt showLineNumbers=false
+3
+```
 
 ## 题目要点解析
 
@@ -1709,7 +2166,65 @@ YES
 
 [题目链接](https://www.luogu.com.cn/problem/P1525)
 
+### Problem Statement
 
+S 城现有两座监狱，一共关押着 $N$ 名罪犯，编号分别为 $1 \sim N$ 。他们之间的关系自然也极不和谐。很多罪犯之间甚至积怨已久，如果客观条件具备则随时可能爆发冲突。
+
+我们用 “怨气值（一个正整数值）” 来表示某两名罪犯之间的仇恨程度，怨气值越大，则这两名罪犯之间的积怨越多。如果两名怨气值为 $c$ 的罪犯被关押在同一监狱，他们俩之间会发生摩擦，并造成影响力为 $c$ 的冲突事件。
+
+每年年末，警察局会将本年内监狱中的所有冲突事件按影响力从大到小排成一个列表，然后上报到 S 城 Z 市长那里。公务繁忙的 Z 市长只会去看列表中的第一个事件的影响力，如果影响很坏，他就会考虑撤换警察局长。
+
+在详细考察了 $N$ 名罪犯间的矛盾关系后，警察局长觉得压力巨大。他准备将罪犯们在两座监狱内重新分配，以求产生的冲突事件影响力都较小，从而保住自己的乌纱帽。
+
+假设只要处于同一监狱内的某两个罪犯间有仇恨，那么他们一定会在每年的某个时候发生摩擦。
+
+那么应如何分配罪犯，才能使 Z 市长看到的那个冲突事件的影响力最小？这个最小值是多少？
+
+### Constraints
+
+- $1 \leq N \leq 2 \times 10^4$
+- $0 \leq M \leq 10^5$
+- $1 \leq a_j < b_j \leq N$
+- $0 < c_j \leq 10^9$
+
+### Input
+
+输入包含多行：
+
+- 第一行包含两个正整数 $N$ 和 $M$ ，分别表示罪犯的数目以及存在仇恨的罪犯对数。
+- 接下来 $M$ 行，第 $j$ 行包含三个正整数 $a_j$ 、$b_j$ 、$c_j$ ，表示 $a_j$ 号和 $b_j$ 号罪犯之间存在仇恨，怨气值为 $c_j$ 。
+
+> $N \quad M$
+>
+> $a_1 \quad b_1 \quad c_1$
+>
+> $a_2 \quad b_2 \quad c_2$
+>
+> $\ldots$
+>
+> $a_M \quad b_M \quad c_M$
+
+### Output
+
+输出一行一个整数，表示 Z 市长看到的那个冲突事件的影响力，如果本年内监狱中未发生冲突事件则输出 $0$ 。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+4 6
+1 4 2534
+2 3 3512
+1 2 28351
+1 3 6618
+2 4 1805
+3 4 12884
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+3512
+```
 
 ## 题目要点解析
 
@@ -1719,7 +2234,63 @@ YES
 
 [题目链接](https://www.luogu.com.cn/problem/P1892)
 
+### Problem Statement
 
+现在有 $n$ 个人，他们之间有可能两种关系：朋友和敌人，当然他们可能没有直接关系。我们 **只** 知道：
+
+- 一个人的朋友的朋友是朋友。
+- 一个人的敌人的敌人是朋友。
+
+现在要对这些人进行组团，如果两个人是朋友，那么这两个人一定在同一个团体中，一个人只能加入一个团体。
+
+请求出这些人中最多可能有的团体数。
+
+### Constraints
+
+- $2 \leq n \leq 1000$
+- $1 \leq m \leq 5000$
+- $1 \leq p_i, q_i \leq n$
+
+### Input
+
+输入包含多行：
+
+- 第一行包含一个整数 $n$ ，表示人数。
+- 第二行包含一个整数 $m$ ，表示接下来要列出的关系数量。
+- 接下来 $m$ 行，第 $i$ 行包含一个字符 $opt_i$ 和两个整数 $p_i$ 、$q_i$ 。
+
+> $n$
+>
+> $m$
+>
+> $opt_1 \quad p_1 \quad q_1$
+>
+> $opt_2 \quad p_2 \quad q_2$
+>
+> $\ldots$
+>
+> $opt_m \quad p_m \quad q_m$
+
+### Output
+
+输出一行一个整数，表示最多的团体数。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+6
+4
+E 1 4
+F 3 5
+F 4 6
+E 1 2
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+3
+```
 
 ## 题目要点解析
 
@@ -1729,7 +2300,58 @@ YES
 
 [题目链接](https://www.luogu.com.cn/problem/P5937)
 
+### Problem Statement
 
+Alice 和 Bob 在玩一个游戏：Bob 写一个由 $0$ 和 $1$ 组成的序列。Alice 选其中的一段（比如第 $3$ 位到第 $5$ 位），问他这段里面有奇数个 $1$ 还是偶数个 $1$ 。Bob 回答 Alice 的问题，然后 Alice 继续问。
+
+Alice 要检查 Bob 的答案，指出在 Bob 的第几个回答一定有问题。有问题的意思就是存在一个 $01$ 序列满足这个回答前的所有回答，而且不存在序列满足这个回答前的所有回答及这个回答。
+
+### Constraints
+
+- $1 \leq n \leq 10^9$
+- $1 \leq m \leq 5 \times 10^3$
+
+### Input
+
+输入包含多行：
+
+- 第一行包含一个整数 $n$ ，表示这个 $01$ 序列的长度。
+- 第二行包含一个整数 $m$ ，表示问题和答案的个数。
+- 接下来 $m$ 行，第 $i$ 行包含两个整数 $l_i$ 和 $r_i$ ，以及一个字符串表示 Bob 的回答。
+
+> $n$
+>
+> $m$
+>
+> $l_1 \quad r_1 \quad ans_1$
+>
+> $l_2 \quad r_2 \quad ans_2$
+>
+> $\ldots$
+>
+> $l_m \quad r_m \quad ans_m$
+
+### Output
+
+输出一行一个整数 $x$ ，表示存在 $01$ 序列满足第 $1$ 到第 $x$ 个回答，但不存在序列满足第 $1$ 到第 $x + 1$ 个回答。
+
+### Sample Input 1
+
+```txt showLineNumbers=false
+10
+5
+1 2 even
+3 4 odd
+5 6 even
+1 6 even
+7 10 odd
+```
+
+### Sample Output 1
+
+```txt showLineNumbers=false
+3
+```
 
 ## 题目要点解析
 
